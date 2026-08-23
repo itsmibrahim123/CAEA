@@ -1,0 +1,16 @@
+# Context documentation (local working notes)
+context/
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+
+# Node / Build artifacts (if added later)
+node_modules/
+dist/
+.cache/
+
+# Editor & History
+.history/
+.vscode/
+.idea/
