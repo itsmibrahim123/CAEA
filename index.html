@@ -1,23 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="CAEA — Not only must we be good, but we must also be good for something." />
+  <meta name="theme-color" content="#000000" />
   <title>CAEA</title>
   <link rel="icon" type="image/png" href="Assets/CAEA-Navbar-Logo.png" />
   <link rel="apple-touch-icon" href="Assets/CAEA-Navbar-Logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Roboto:wght@400;500&display=swap"
+    rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
   <!-- Header / Navbar Section -->
   <header class="site-header">
     <nav class="navbar" aria-label="Main Navigation">
       <!-- 1st Column: Logo -->
       <div class="nav-col nav-col-start">
-        <a href="#" class="brand-link">
+        <a href="#" class="brand-link" aria-label="CAEA Home">
           <img src="Assets/CAEA-Navbar-Logo.png" alt="CAEA Logo" class="brand-logo" />
         </a>
       </div>
@@ -40,23 +46,113 @@
 
   <!-- Hero Section -->
   <main>
-    <section class="hero-section">
+    <section class="hero-section" aria-label="Hero">
       <div class="hero-wrapper">
         <div class="hero-image-container">
-          <img 
-            src="Assets/Hero-image.png" 
-            alt="CAEA Hero" 
-            class="hero-image" 
-            fetchpriority="high"
-          />
+          <img src="Assets/Hero-image.png" alt="CAEA Hero" class="hero-image" fetchpriority="high" decoding="async" />
         </div>
         <div class="hero-text-container">
           <h1 class="hero-quote">
-            Not only must we be good, but we<br />must also be good for something.
+            Not only must we be good, but we<br class="quote-break" />must also be <em>good for something.</em>
           </h1>
+        </div>
+      </div>
+    </section>
+    <!-- Bottom Header / Section: Be A Part Of Our Latest -->
+    <section class="bottom-header-section" id="latest-section" aria-label="Latest Updates">
+      <div class="bottom-header-container">
+        <!-- Serrated / Wave Top Edge Pattern (Group 9) -->
+        <div class="sawtooth-pattern-wrapper" aria-hidden="true">
+          <svg class="sawtooth-svg" viewBox="0 0 1523.17 57.37" preserveAspectRatio="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="sawtooth-pattern" width="54.399" height="57.37" patternUnits="userSpaceOnUse">
+                <path d="M 0 57.37 C 22 57.37 44 30 54.399 0 L 54.399 57.37 Z" fill="#A3D88D" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="57.37" fill="url(#sawtooth-pattern)" />
+          </svg>
+        </div>
+
+        <!-- Green Content Card Container -->
+        <div class="bottom-header-body">
+          <div class="bottom-header-inner-card">
+            <h2 class="bottom-header-title">BE A PART OF OUR LATEST</h2>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pakistan Map / Our Stories Section -->
+    <section class="map-section" id="our-stories" aria-label="Our Stories — Pakistan Locations">
+      <div class="map-frame">
+        <div class="map-pin-area">
+          <img src="Assets/Pak-map.png" alt="Map of Pakistan highlighting CAEA project locations" class="map-bg"
+            aria-hidden="true" />
+
+          <!-- City: HUNZA (northern Pakistan, Gilgit-Baltistan) -->
+          <div class="city-marker" id="marker-hunza" style="left:53%;top:19%" role="button" tabindex="0"
+            aria-label="HUNZA project location">
+            <div class="city-ripples" aria-hidden="true">
+              <span class="ripple r1"></span>
+              <span class="ripple r2"></span>
+              <span class="ripple r3"></span>
+            </div>
+            <img src="Assets/Map-leaf.png" alt="" class="city-leaf" aria-hidden="true" />
+            <div class="city-label">HUNZA</div>
+          </div>
+
+          <!-- City: JALALPUR (Punjab) -->
+          <div class="city-marker" id="marker-jalalpur" style="left:62%;top:41%" role="button" tabindex="0"
+            aria-label="JALALPUR project location">
+            <div class="city-ripples" aria-hidden="true">
+              <span class="ripple r1"></span>
+              <span class="ripple r2"></span>
+              <span class="ripple r3"></span>
+            </div>
+            <img src="Assets/Map-leaf.png" alt="" class="city-leaf" aria-hidden="true" />
+            <div class="city-label">JALALPUR</div>
+          </div>
+
+          <!-- City: MANCHHAR (Sindh) -->
+          <div class="city-marker" id="marker-manchhar" style="left:45%;top:60%" role="button" tabindex="0"
+            aria-label="MANCHHAR project location">
+            <div class="city-ripples" aria-hidden="true">
+              <span class="ripple r1"></span>
+              <span class="ripple r2"></span>
+              <span class="ripple r3"></span>
+            </div>
+            <img src="Assets/Map-leaf.png" alt="" class="city-leaf" aria-hidden="true" />
+            <div class="city-label">MANCHHAR</div>
+          </div>
+
+          <!-- City: THAR (Sindh, Thar desert) -->
+          <div class="city-marker" id="marker-thar" style="left:33%;top:78%" role="button" tabindex="0"
+            aria-label="THAR project location">
+            <div class="city-ripples" aria-hidden="true">
+              <span class="ripple r1"></span>
+              <span class="ripple r2"></span>
+              <span class="ripple r3"></span>
+            </div>
+            <img src="Assets/Map-leaf.png" alt="" class="city-leaf" aria-hidden="true" />
+            <div class="city-label">THAR</div>
+          </div>
+
+          <!-- City: Placeholder (Balochistan area) -->
+          <div class="city-marker" id="marker-xyzxyz" style="left:22%;top:50%" role="button" tabindex="0"
+            aria-label="Upcoming project location">
+            <div class="city-ripples" aria-hidden="true">
+              <span class="ripple r1"></span>
+              <span class="ripple r2"></span>
+              <span class="ripple r3"></span>
+            </div>
+            <img src="Assets/Map-leaf.png" alt="" class="city-leaf" aria-hidden="true" />
+            <div class="city-label">XYZXYZ</div>
+          </div>
         </div>
       </div>
     </section>
   </main>
 </body>
+
 </html>
