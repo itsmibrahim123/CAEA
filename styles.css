@@ -1607,8 +1607,9 @@ body {
    ========================================================================== */
 
 .get-involved-outer-wrapper {
-  background-color: #000000;
-  padding: 24px var(--page-margin) 60px;
+  background-color: #ffffff;
+  padding: 40px var(--page-margin) 80px;
+  width: 100%;
 }
 
 .get-involved-top-label {
@@ -1624,10 +1625,9 @@ body {
 
 .get-involved-container {
   background-color: #ffffff;
-  border-radius: 36px;
-  padding: 48px 48px 56px;
   max-width: var(--max-width);
   margin: 0 auto;
+  padding: 0;
 }
 
 .get-involved-heading {
