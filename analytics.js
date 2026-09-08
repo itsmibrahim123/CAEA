@@ -1,6 +1,7 @@
 /**
  * CAEA — Our Analytics Dashboard Engine
- * Handles Plotly.js, D3.js, Leaflet, and PapaParse rendering for Pakistan Gas & Energy Visualizations
+ * Static Data Visualizations & Replicated Energy Charts
+ * All Zoom, Pan, and Interactivity Disabled for Static Display
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -9,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderAllVisualizations();
 });
 
-// Tab Filter Navigation Logic
+// Tab Navigation Logic
 function initTabNavigation() {
   const tabs = document.querySelectorAll('.tab-btn');
   const sections = document.querySelectorAll('.analytics-section');
@@ -29,7 +30,7 @@ function initTabNavigation() {
         }
       });
 
-      // Trigger Plotly relayout to fit updated container dimensions
+      // Relayout Plotly charts on tab change
       window.dispatchEvent(new Event('resize'));
     });
   });
@@ -57,6 +58,15 @@ function initSearchFilter() {
   });
 }
 
+// Default Plotly Options for Static Non-Interactive Rendering
+const staticPlotOptions = {
+  staticPlot: true,
+  responsive: true,
+  displayModeBar: false,
+  scrollZoom: false,
+  doubleClick: false
+};
+
 // Master Render Dispatcher
 function renderAllVisualizations() {
   // A. Production Visualizations
@@ -83,7 +93,7 @@ function renderAllVisualizations() {
 }
 
 /* ==========================================================================
-   A. PRODUCTION SECTION CHARTS
+   A. PRODUCTION SECTION CHARTS (STATIC / NO ZOOM / NO INTERACTIVITY)
    ========================================================================== */
 
 // 1. Natural Gas Production by Gas Field (Stacked Area / Line)
@@ -111,8 +121,7 @@ function renderGasProductionByField() {
     type: 'scatter',
     mode: 'lines',
     stackgroup: 'one',
-    line: { color: colors[idx % colors.length], width: 2 },
-    hovertemplate: `<b>${field}</b><br>Year: %{x}<br>Production: %{y} MMCFD<extra></extra>`
+    line: { color: colors[idx % colors.length], width: 2 }
   }));
 
   const layout = {
@@ -121,15 +130,16 @@ function renderGasProductionByField() {
     autosize: true,
     font: { color: '#e5e5e7', family: 'Plus Jakarta Sans' },
     margin: { l: 50, r: 20, t: 20, b: 40 },
-    xaxis: { title: 'Year', gridcolor: 'rgba(255,255,255,0.08)' },
-    yaxis: { title: 'Production (MMCFD)', gridcolor: 'rgba(255,255,255,0.08)' },
-    legend: { orientation: 'h', y: -0.2, x: 0 }
+    xaxis: { title: 'Year', gridcolor: 'rgba(255,255,255,0.08)', fixedrange: true },
+    yaxis: { title: 'Production (MMCFD)', gridcolor: 'rgba(255,255,255,0.08)', fixedrange: true },
+    legend: { orientation: 'h', y: -0.2, x: 0 },
+    dragmode: false
   };
 
-  Plotly.newPlot(container, traces, layout, { responsive: true, displayModeBar: false });
+  Plotly.newPlot(container, traces, layout, staticPlotOptions);
 }
 
-// 2. Natural Gas Production by Province (Stacked Bar / Sankey Toggle)
+// 2. Natural Gas Production by Province (Bar Chart)
 function renderProvinceProductionChart() {
   const container = document.getElementById('chart-province-production');
   if (!container) return;
@@ -147,8 +157,7 @@ function renderProvinceProductionChart() {
       line: { color: '#ffffff', width: 1 }
     },
     text: values.map(v => `${v} MMCFD`),
-    textposition: 'auto',
-    hovertemplate: '<b>%{x}</b><br>Production: %{y} MMCFD<extra></extra>'
+    textposition: 'auto'
   };
 
   const layout = {
@@ -157,11 +166,12 @@ function renderProvinceProductionChart() {
     autosize: true,
     font: { color: '#e5e5e7', family: 'Plus Jakarta Sans' },
     margin: { l: 50, r: 20, t: 20, b: 40 },
-    xaxis: { title: 'Province', gridcolor: 'rgba(255,255,255,0.08)' },
-    yaxis: { title: 'Production (MMCFD)', gridcolor: 'rgba(255,255,255,0.08)' }
+    xaxis: { title: 'Province', gridcolor: 'rgba(255,255,255,0.08)', fixedrange: true },
+    yaxis: { title: 'Production (MMCFD)', gridcolor: 'rgba(255,255,255,0.08)', fixedrange: true },
+    dragmode: false
   };
 
-  Plotly.newPlot(container, [trace], layout, { responsive: true, displayModeBar: false });
+  Plotly.newPlot(container, [trace], layout, staticPlotOptions);
 }
 
 // 3. Dual Axis Bar/Line: Natural Gas Production and HDI by District
@@ -178,8 +188,7 @@ function renderDistrictProductionHDI() {
     y: production,
     name: 'Gas Production (MMCFD)',
     type: 'bar',
-    marker: { color: 'rgba(111, 162, 151, 0.85)' },
-    hovertemplate: '<b>%{x}</b><br>Production: %{y} MMCFD<extra></extra>'
+    marker: { color: 'rgba(111, 162, 151, 0.85)' }
   };
 
   const traceLine = {
@@ -187,11 +196,12 @@ function renderDistrictProductionHDI() {
     y: hdi,
     name: 'Human Development Index (HDI)',
     type: 'scatter',
-    mode: 'lines+markers',
+    mode: 'lines+markers+text',
+    text: hdi.map(v => v.toFixed(2)),
+    textposition: 'top center',
     yaxis: 'y2',
     line: { color: '#E8EFC2', width: 3 },
-    marker: { size: 8, color: '#A3D88D' },
-    hovertemplate: '<b>%{x}</b><br>HDI Score: %{y}<extra></extra>'
+    marker: { size: 8, color: '#A3D88D' }
   };
 
   const layout = {
@@ -199,23 +209,25 @@ function renderDistrictProductionHDI() {
     plot_bgcolor: 'transparent',
     autosize: true,
     font: { color: '#e5e5e7', family: 'Plus Jakarta Sans' },
-    margin: { l: 50, r: 50, t: 20, b: 50 },
-    xaxis: { title: 'District', gridcolor: 'rgba(255,255,255,0.08)' },
-    yaxis: { title: 'Gas Production (MMCFD)', gridcolor: 'rgba(255,255,255,0.08)' },
+    margin: { l: 50, r: 50, t: 30, b: 50 },
+    xaxis: { title: 'District', gridcolor: 'rgba(255,255,255,0.08)', fixedrange: true },
+    yaxis: { title: 'Gas Production (MMCFD)', gridcolor: 'rgba(255,255,255,0.08)', fixedrange: true },
     yaxis2: {
       title: 'HDI Index (0 - 1)',
       overlaying: 'y',
       side: 'right',
       range: [0, 1.0],
-      gridcolor: 'transparent'
+      gridcolor: 'transparent',
+      fixedrange: true
     },
-    legend: { orientation: 'h', y: -0.25, x: 0 }
+    legend: { orientation: 'h', y: -0.25, x: 0 },
+    dragmode: false
   };
 
-  Plotly.newPlot(container, [traceBar, traceLine], layout, { responsive: true, displayModeBar: false });
+  Plotly.newPlot(container, [traceBar, traceLine], layout, staticPlotOptions);
 }
 
-// 4. Interactive Map: Major Gas Wells (Leaflet / Plotly Map)
+// 4. Major Gas Wells Map (Static Non-Zoomable Map)
 function renderMajorGasWellsMap() {
   const container = document.getElementById('map-major-gas-wells');
   if (!container) return;
@@ -232,7 +244,15 @@ function renderMajorGasWellsMap() {
 
   if (window.L) {
     container.innerHTML = '';
-    const map = L.map(container).setView([28.5, 69.0], 6);
+    const map = L.map(container, {
+      zoomControl: false,
+      scrollWheelZoom: false,
+      doubleClickZoom: false,
+      dragging: false,
+      touchZoom: false,
+      boxZoom: false,
+      keyboard: false
+    }).setView([28.5, 69.0], 6);
 
     L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; OpenStreetMap &copy; CARTO',
@@ -246,46 +266,37 @@ function renderMajorGasWellsMap() {
         color: '#4C6646',
         weight: 2,
         opacity: 1,
-        fillOpacity: 0.8
+        fillOpacity: 0.85
       }).addTo(map);
 
-      circle.bindPopup(`
-        <div style="color:#111; font-family:sans-serif; padding:4px;">
-          <h4 style="margin:0 0 4px 0; font-size:14px; font-weight:700;">${well.name} (${well.field})</h4>
-          <p style="margin:0; font-size:12px;"><b>Province:</b> ${well.prov}</p>
-          <p style="margin:0; font-size:12px;"><b>Production:</b> ${well.mmcfd} MMCFD</p>
-          <p style="margin:0; font-size:12px;"><b>Operator:</b> ${well.operator}</p>
-        </div>
-      `);
+      circle.bindTooltip(`<b>${well.name} (${well.field})</b>: ${well.mmcfd} MMCFD`, {
+        permanent: true,
+        direction: 'top',
+        className: 'static-map-tooltip'
+      });
     });
   } else {
-    // Plotly Geo Fallback
-    const lats = wells.map(w => w.lat);
-    const lons = wells.map(w => w.lng);
-    const texts = wells.map(w => `<b>${w.name}</b><br>${w.field}, ${w.prov}<br>${w.mmcfd} MMCFD`);
-
-    const data = [{
-      type: 'scattergeo',
-      mode: 'markers+text',
-      lat: lats,
-      lon: lons,
-      hovertext: texts,
-      marker: { size: 12, color: 'rgb(163, 216, 141)' }
-    }];
-
-    const layout = {
-      geo: {
-        scope: 'asia',
-        showland: true,
-        landcolor: 'rgb(24, 26, 28)',
-        center: { lon: 69.0, lat: 28.5 },
-        projection: { scale: 5 }
-      },
-      paper_bgcolor: 'transparent',
-      margin: { l: 0, r: 0, t: 0, b: 0 }
+    // Fallback Bar Representation
+    const trace = {
+      x: wells.map(w => w.name),
+      y: wells.map(w => w.mmcfd),
+      type: 'bar',
+      marker: { color: '#A3D88D' },
+      text: wells.map(w => `${w.mmcfd} MMCFD`),
+      textposition: 'auto'
     };
 
-    Plotly.newPlot(container, data, layout, { responsive: true });
+    const layout = {
+      paper_bgcolor: 'transparent',
+      plot_bgcolor: 'transparent',
+      autosize: true,
+      font: { color: '#e5e5e7', family: 'Plus Jakarta Sans' },
+      margin: { l: 50, r: 20, t: 20, b: 40 },
+      xaxis: { fixedrange: true },
+      yaxis: { title: 'MMCFD', fixedrange: true }
+    };
+
+    Plotly.newPlot(container, [trace], layout, staticPlotOptions);
   }
 }
 
@@ -295,16 +306,16 @@ function renderMajorGasfieldsReservesMap() {
   if (!container) return;
 
   const fields = [
-    { field: "Sui", prov: "Balochistan", reserves: 12.0, lat: 28.636, lng: 66.388 },
-    { field: "Mari", prov: "Sindh", reserves: 10.5, lat: 27.962, lng: 69.753 },
-    { field: "Qadirpur", prov: "Sindh", reserves: 4.8, lat: 28.041, lng: 69.341 },
-    { field: "Uch", prov: "Balochistan", reserves: 3.9, lat: 28.520, lng: 68.180 },
-    { field: "Badin", prov: "Sindh", reserves: 2.2, lat: 24.630, lng: 68.830 },
-    { field: "Kandhkot", prov: "Sindh", reserves: 1.8, lat: 28.245, lng: 69.215 },
-    { field: "Sawan", prov: "Sindh", reserves: 1.5, lat: 26.980, lng: 68.890 },
-    { field: "Adhi", prov: "Punjab", reserves: 1.1, lat: 33.150, lng: 73.160 },
-    { field: "Nashpa", prov: "KPK", reserves: 0.9, lat: 33.150, lng: 71.180 },
-    { field: "Miano", prov: "Sindh", reserves: 0.8, lat: 27.360, lng: 69.210 }
+    { field: "Sui", prov: "Balochistan", reserves: 12.0 },
+    { field: "Mari", prov: "Sindh", reserves: 10.5 },
+    { field: "Qadirpur", prov: "Sindh", reserves: 4.8 },
+    { field: "Uch", prov: "Balochistan", reserves: 3.9 },
+    { field: "Badin", prov: "Sindh", reserves: 2.2 },
+    { field: "Kandhkot", prov: "Sindh", reserves: 1.8 },
+    { field: "Sawan", prov: "Sindh", reserves: 1.5 },
+    { field: "Adhi", prov: "Punjab", reserves: 1.1 },
+    { field: "Nashpa", prov: "KPK", reserves: 0.9 },
+    { field: "Miano", prov: "Sindh", reserves: 0.8 }
   ];
 
   const trace = {
@@ -315,9 +326,7 @@ function renderMajorGasfieldsReservesMap() {
       color: fields.map(f => f.reserves > 3.0 ? 'rgb(76, 102, 70)' : 'rgb(111, 162, 151)')
     },
     text: fields.map(f => `${f.reserves} TCF`),
-    textposition: 'outside',
-    hovertemplate: '<b>%{x}</b><br>Province: %{customdata}<br>Original Reserves: %{y} TCF<extra></extra>',
-    customdata: fields.map(f => f.prov)
+    textposition: 'outside'
   };
 
   const layout = {
@@ -326,11 +335,12 @@ function renderMajorGasfieldsReservesMap() {
     autosize: true,
     font: { color: '#e5e5e7', family: 'Plus Jakarta Sans' },
     margin: { l: 50, r: 20, t: 20, b: 50 },
-    xaxis: { title: 'Gas Field', gridcolor: 'rgba(255,255,255,0.08)' },
-    yaxis: { title: 'Original Reserves (TCF)', gridcolor: 'rgba(255,255,255,0.08)' }
+    xaxis: { title: 'Gas Field', gridcolor: 'rgba(255,255,255,0.08)', fixedrange: true },
+    yaxis: { title: 'Original Reserves (TCF)', gridcolor: 'rgba(255,255,255,0.08)', fixedrange: true },
+    dragmode: false
   };
 
-  Plotly.newPlot(container, [trace], layout, { responsive: true, displayModeBar: false });
+  Plotly.newPlot(container, [trace], layout, staticPlotOptions);
 }
 
 // 6. LNG Terminals Bar Chart
@@ -338,24 +348,28 @@ function renderLngTerminalsChart() {
   const container = document.getElementById('chart-lng-terminals');
   if (!container) return;
 
-  const terminals = ['Engro Elengy Terminal (EETL)', 'Pakistan GasPort Consortium (PGPCL)'];
-  const capacity = [690, 750]; // MMCFD
-  const currentUtil = [620, 580]; // MMCFD
+  const terminals = ['Engro Elengy (EETL)', 'Pakistan GasPort (PGPCL)'];
+  const capacity = [690, 750];
+  const currentUtil = [620, 580];
 
   const trace1 = {
     x: terminals,
     y: capacity,
-    name: 'Re-gasification Capacity (MMCFD)',
+    name: 'Capacity (MMCFD)',
     type: 'bar',
-    marker: { color: 'rgb(76, 102, 70)' }
+    marker: { color: 'rgb(76, 102, 70)' },
+    text: capacity.map(v => `${v} MMCFD`),
+    textposition: 'auto'
   };
 
   const trace2 = {
     x: terminals,
     y: currentUtil,
-    name: 'Current Import Throughput (MMCFD)',
+    name: 'Import Throughput (MMCFD)',
     type: 'bar',
-    marker: { color: 'rgb(111, 162, 151)' }
+    marker: { color: 'rgb(111, 162, 151)' },
+    text: currentUtil.map(v => `${v} MMCFD`),
+    textposition: 'auto'
   };
 
   const layout = {
@@ -365,14 +379,16 @@ function renderLngTerminalsChart() {
     barmode: 'group',
     font: { color: '#e5e5e7', family: 'Plus Jakarta Sans' },
     margin: { l: 50, r: 20, t: 20, b: 40 },
-    yaxis: { title: 'Volume (MMCFD)', gridcolor: 'rgba(255,255,255,0.08)' },
-    legend: { orientation: 'h', y: -0.2, x: 0 }
+    yaxis: { title: 'Volume (MMCFD)', gridcolor: 'rgba(255,255,255,0.08)', fixedrange: true },
+    xaxis: { fixedrange: true },
+    legend: { orientation: 'h', y: -0.2, x: 0 },
+    dragmode: false
   };
 
-  Plotly.newPlot(container, [trace1, trace2], layout, { responsive: true, displayModeBar: false });
+  Plotly.newPlot(container, [trace1, trace2], layout, staticPlotOptions);
 }
 
-// 7. Pie Chart #1: Fossil Gas Production in Pakistan (EXACT PROMPT SPECIFICATION)
+// 7. Pie Chart #1: Fossil Gas Production in Pakistan (EXACT PROMPT SPECIFICATION - STATIC)
 function renderPieChart1_FossilGasProduction() {
   const container = document.getElementById('pie-fossil-gas-production');
   if (!container) return;
@@ -382,9 +398,8 @@ function renderPieChart1_FossilGasProduction() {
     labels: ['Associated', 'Non-Associated'],
     values: [1025769, 37691757],
     marker: { colors: ['rgb(111, 162, 151)', 'rgb(76, 102, 70)'] },
-    textinfo: 'none',
-    text: ['2.65%', '97.35%'],
-    hovertemplate: '<b>%{label}</b><br>Volume: %{value:,.0f} million ft³<br>Percentage: %{text}<extra></extra>',
+    textinfo: 'label+percent',
+    textposition: 'inside',
     hole: 0
   }];
 
@@ -395,14 +410,15 @@ function renderPieChart1_FossilGasProduction() {
     font: { color: '#1e1e1e', family: 'Plus Jakarta Sans' },
     showlegend: true,
     margin: { l: 20, r: 20, t: 20, b: 40 },
-    legend: { x: 0.5, xanchor: 'center', y: -0.1, yanchor: 'top', orientation: 'h' }
+    legend: { x: 0.5, xanchor: 'center', y: -0.1, yanchor: 'top', orientation: 'h' },
+    dragmode: false
   };
 
-  Plotly.newPlot(container, pieData, layout, { responsive: true, displayModeBar: false });
+  Plotly.newPlot(container, pieData, layout, staticPlotOptions);
 }
 
 /* ==========================================================================
-   B. CONSUMPTION SECTION CHARTS
+   B. CONSUMPTION SECTION CHARTS (STATIC / NO ZOOM / NO INTERACTIVITY)
    ========================================================================== */
 
 // 1. Energy Supply by Source (Stacked Area)
@@ -429,8 +445,7 @@ function renderEnergySupplyBySource() {
     type: 'scatter',
     mode: 'lines',
     stackgroup: 'one',
-    line: { color: colors[idx % colors.length], width: 2 },
-    hovertemplate: `<b>${src}</b><br>Year: %{x}<br>Supply: %{y:,.0f} KTOE<extra></extra>`
+    line: { color: colors[idx % colors.length], width: 2 }
   }));
 
   const layout = {
@@ -439,15 +454,16 @@ function renderEnergySupplyBySource() {
     autosize: true,
     font: { color: '#e5e5e7', family: 'Plus Jakarta Sans' },
     margin: { l: 50, r: 20, t: 20, b: 40 },
-    xaxis: { title: 'Year', gridcolor: 'rgba(255,255,255,0.08)' },
-    yaxis: { title: 'Supply (KTOE)', gridcolor: 'rgba(255,255,255,0.08)' },
-    legend: { orientation: 'h', y: -0.2, x: 0 }
+    xaxis: { title: 'Year', gridcolor: 'rgba(255,255,255,0.08)', fixedrange: true },
+    yaxis: { title: 'Supply (KTOE)', gridcolor: 'rgba(255,255,255,0.08)', fixedrange: true },
+    legend: { orientation: 'h', y: -0.2, x: 0 },
+    dragmode: false
   };
 
-  Plotly.newPlot(container, traces, layout, { responsive: true, displayModeBar: false });
+  Plotly.newPlot(container, traces, layout, staticPlotOptions);
 }
 
-// 2. LNG Imports by Year (Bar Chart)
+// 2. LNG Imports by Year (Bar & Line Chart)
 function renderLngImportsByYear() {
   const container = document.getElementById('chart-lng-imports');
   if (!container) return;
@@ -462,7 +478,8 @@ function renderLngImportsByYear() {
     name: 'Import Volume (Million Tons)',
     type: 'bar',
     marker: { color: 'rgb(111, 162, 151)' },
-    hovertemplate: '<b>Year %{x}</b><br>Volume: %{y} Million Tons<extra></extra>'
+    text: volumeMT.map(v => `${v} MT`),
+    textposition: 'auto'
   };
 
   const traceLine = {
@@ -473,8 +490,7 @@ function renderLngImportsByYear() {
     mode: 'lines+markers',
     yaxis: 'y2',
     line: { color: '#A3D88D', width: 3 },
-    marker: { size: 8, color: '#ffffff' },
-    hovertemplate: '<b>Year %{x}</b><br>Cargoes: %{y}<extra></extra>'
+    marker: { size: 6, color: '#ffffff' }
   };
 
   const layout = {
@@ -483,21 +499,23 @@ function renderLngImportsByYear() {
     autosize: true,
     font: { color: '#e5e5e7', family: 'Plus Jakarta Sans' },
     margin: { l: 50, r: 50, t: 20, b: 40 },
-    xaxis: { title: 'Year', gridcolor: 'rgba(255,255,255,0.08)' },
-    yaxis: { title: 'Volume (Million Tons)', gridcolor: 'rgba(255,255,255,0.08)' },
+    xaxis: { title: 'Year', gridcolor: 'rgba(255,255,255,0.08)', fixedrange: true },
+    yaxis: { title: 'Volume (Million Tons)', gridcolor: 'rgba(255,255,255,0.08)', fixedrange: true },
     yaxis2: {
       title: 'Cargo Count',
       overlaying: 'y',
       side: 'right',
-      gridcolor: 'transparent'
+      gridcolor: 'transparent',
+      fixedrange: true
     },
-    legend: { orientation: 'h', y: -0.2, x: 0 }
+    legend: { orientation: 'h', y: -0.2, x: 0 },
+    dragmode: false
   };
 
-  Plotly.newPlot(container, [traceBar, traceLine], layout, { responsive: true, displayModeBar: false });
+  Plotly.newPlot(container, [traceBar, traceLine], layout, staticPlotOptions);
 }
 
-// 3. LNG Consumption by Sector (Grouped/Stacked Bar)
+// 3. LNG Consumption by Sector (Stacked Bar)
 function renderLngConsumptionBySector() {
   const container = document.getElementById('chart-lng-consumption-sector');
   if (!container) return;
@@ -518,8 +536,7 @@ function renderLngConsumptionBySector() {
     y: sectors[sec],
     name: sec,
     type: 'bar',
-    marker: { color: colors[idx % colors.length] },
-    hovertemplate: `<b>${sec}</b><br>Year: %{x}<br>Consumption: %{y} MMCFD<extra></extra>`
+    marker: { color: colors[idx % colors.length] }
   }));
 
   const layout = {
@@ -529,12 +546,13 @@ function renderLngConsumptionBySector() {
     barmode: 'stack',
     font: { color: '#e5e5e7', family: 'Plus Jakarta Sans' },
     margin: { l: 50, r: 20, t: 20, b: 40 },
-    xaxis: { title: 'Year', gridcolor: 'rgba(255,255,255,0.08)' },
-    yaxis: { title: 'Consumption (MMCFD)', gridcolor: 'rgba(255,255,255,0.08)' },
-    legend: { orientation: 'h', y: -0.2, x: 0 }
+    xaxis: { title: 'Year', gridcolor: 'rgba(255,255,255,0.08)', fixedrange: true },
+    yaxis: { title: 'Consumption (MMCFD)', gridcolor: 'rgba(255,255,255,0.08)', fixedrange: true },
+    legend: { orientation: 'h', y: -0.2, x: 0 },
+    dragmode: false
   };
 
-  Plotly.newPlot(container, traces, layout, { responsive: true, displayModeBar: false });
+  Plotly.newPlot(container, traces, layout, staticPlotOptions);
 }
 
 // 4. Energy Consumption by Source (Stacked Bar)
@@ -557,8 +575,7 @@ function renderEnergyConsumptionBySource() {
     y: sources[src],
     name: src,
     type: 'bar',
-    marker: { color: colors[idx % colors.length] },
-    hovertemplate: `<b>${src}</b><br>Year: %{x}<br>Share: %{y}%<extra></extra>`
+    marker: { color: colors[idx % colors.length] }
   }));
 
   const layout = {
@@ -568,12 +585,13 @@ function renderEnergyConsumptionBySource() {
     barmode: 'stack',
     font: { color: '#e5e5e7', family: 'Plus Jakarta Sans' },
     margin: { l: 50, r: 20, t: 20, b: 40 },
-    xaxis: { title: 'Year', gridcolor: 'rgba(255,255,255,0.08)' },
-    yaxis: { title: 'Share (%)', gridcolor: 'rgba(255,255,255,0.08)', range: [0, 100] },
-    legend: { orientation: 'h', y: -0.2, x: 0 }
+    xaxis: { title: 'Year', gridcolor: 'rgba(255,255,255,0.08)', fixedrange: true },
+    yaxis: { title: 'Share (%)', gridcolor: 'rgba(255,255,255,0.08)', range: [0, 100], fixedrange: true },
+    legend: { orientation: 'h', y: -0.2, x: 0 },
+    dragmode: false
   };
 
-  Plotly.newPlot(container, traces, layout, { responsive: true, displayModeBar: false });
+  Plotly.newPlot(container, traces, layout, staticPlotOptions);
 }
 
 // 5. Gas Consumption by Sector (Stacked Bar)
@@ -598,8 +616,7 @@ function renderGasConsumptionBySector() {
     y: sectors[sec],
     name: sec,
     type: 'bar',
-    marker: { color: colors[idx % colors.length] },
-    hovertemplate: `<b>${sec}</b><br>Year: %{x}<br>Share: %{y}%<extra></extra>`
+    marker: { color: colors[idx % colors.length] }
   }));
 
   const layout = {
@@ -609,12 +626,13 @@ function renderGasConsumptionBySector() {
     barmode: 'stack',
     font: { color: '#e5e5e7', family: 'Plus Jakarta Sans' },
     margin: { l: 50, r: 20, t: 20, b: 40 },
-    xaxis: { title: 'Year', gridcolor: 'rgba(255,255,255,0.08)' },
-    yaxis: { title: 'Share (%)', gridcolor: 'rgba(255,255,255,0.08)' },
-    legend: { orientation: 'h', y: -0.2, x: 0 }
+    xaxis: { title: 'Year', gridcolor: 'rgba(255,255,255,0.08)', fixedrange: true },
+    yaxis: { title: 'Share (%)', gridcolor: 'rgba(255,255,255,0.08)', fixedrange: true },
+    legend: { orientation: 'h', y: -0.2, x: 0 },
+    dragmode: false
   };
 
-  Plotly.newPlot(container, traces, layout, { responsive: true, displayModeBar: false });
+  Plotly.newPlot(container, traces, layout, staticPlotOptions);
 }
 
 // 6. Natural Gas Production, Consumption and Losses (Multi-Line Chart)
@@ -634,7 +652,7 @@ function renderProductionConsumptionLossesTimeline() {
     type: 'scatter',
     mode: 'lines+markers',
     line: { color: 'rgba(111, 153, 141, 1)', width: 3 },
-    marker: { size: 8 }
+    marker: { size: 6 }
   };
 
   const t2 = {
@@ -644,7 +662,7 @@ function renderProductionConsumptionLossesTimeline() {
     type: 'scatter',
     mode: 'lines+markers',
     line: { color: 'rgba(63, 104, 91, 1)', width: 3 },
-    marker: { size: 8 }
+    marker: { size: 6 }
   };
 
   const t3 = {
@@ -654,7 +672,7 @@ function renderProductionConsumptionLossesTimeline() {
     type: 'scatter',
     mode: 'lines+markers',
     line: { color: 'rgba(211, 138, 74, 1)', width: 3 },
-    marker: { size: 8 }
+    marker: { size: 6 }
   };
 
   const layout = {
@@ -663,15 +681,16 @@ function renderProductionConsumptionLossesTimeline() {
     autosize: true,
     font: { color: '#e5e5e7', family: 'Plus Jakarta Sans' },
     margin: { l: 60, r: 20, t: 20, b: 40 },
-    xaxis: { title: 'Year', gridcolor: 'rgba(255,255,255,0.08)' },
-    yaxis: { title: 'Volume (Million ft³)', gridcolor: 'rgba(255,255,255,0.08)' },
-    legend: { orientation: 'h', y: -0.2, x: 0 }
+    xaxis: { title: 'Year', gridcolor: 'rgba(255,255,255,0.08)', fixedrange: true },
+    yaxis: { title: 'Volume (Million ft³)', gridcolor: 'rgba(255,255,255,0.08)', fixedrange: true },
+    legend: { orientation: 'h', y: -0.2, x: 0 },
+    dragmode: false
   };
 
-  Plotly.newPlot(container, [t1, t2, t3], layout, { responsive: true, displayModeBar: false });
+  Plotly.newPlot(container, [t1, t2, t3], layout, staticPlotOptions);
 }
 
-// 7. Pie Chart #2: Total Gas Losses and Consumption (1990-2024) (EXACT PROMPT SPECIFICATION)
+// 7. Pie Chart #2: Total Gas Losses and Consumption (1990-2024) (EXACT PROMPT SPECIFICATION - STATIC)
 function renderPieChart2_GasLossesConsumption() {
   const container = document.getElementById('pie-total-gas-losses');
   if (!container) return;
@@ -681,12 +700,8 @@ function renderPieChart2_GasLossesConsumption() {
     labels: ['Consumption', 'Losses', 'Production'],
     values: [35056904, 2010569, 38717527],
     marker: { colors: ['rgba(63, 104, 91, 1)', 'rgba(77, 110, 101, 1)', 'rgba(111, 153, 141, 1)'] },
-    textinfo: 'none',
-    hovertemplate: [
-      '<b>Consumption</b><br>Volume: 35,056,904 million ft³<br>Percentage: %{percent}<extra></extra>',
-      '<b>Losses</b><br>Volume: 2,010,569 million ft³<br>Loss Percentage: 5.19%<extra></extra>',
-      '<b>Production</b><br>Volume: 38,717,527 million ft³<br>Percentage: %{percent}<extra></extra>'
-    ],
+    textinfo: 'label+percent',
+    textposition: 'inside',
     hole: 0
   }];
 
@@ -697,10 +712,11 @@ function renderPieChart2_GasLossesConsumption() {
     font: { color: '#1e1e1e', family: 'Plus Jakarta Sans' },
     showlegend: true,
     margin: { l: 20, r: 20, t: 20, b: 40 },
-    legend: { x: 0.5, xanchor: 'center', y: -0.1, yanchor: 'top', orientation: 'h' }
+    legend: { x: 0.5, xanchor: 'center', y: -0.1, yanchor: 'top', orientation: 'h' },
+    dragmode: false
   };
 
-  Plotly.newPlot(container, pieData, layout, { responsive: true, displayModeBar: false });
+  Plotly.newPlot(container, pieData, layout, staticPlotOptions);
 }
 
 // 8. Consumers by Province (Line Chart)
@@ -725,8 +741,7 @@ function renderConsumersByProvince() {
     type: 'scatter',
     mode: 'lines+markers',
     line: { color: colors[idx % colors.length], width: 3 },
-    marker: { size: 6 },
-    hovertemplate: `<b>${pr}</b><br>Year: %{x}<br>Consumers: %{y} Million<extra></extra>`
+    marker: { size: 6 }
   }));
 
   const layout = {
@@ -735,19 +750,20 @@ function renderConsumersByProvince() {
     autosize: true,
     font: { color: '#e5e5e7', family: 'Plus Jakarta Sans' },
     margin: { l: 50, r: 20, t: 20, b: 40 },
-    xaxis: { title: 'Year', gridcolor: 'rgba(255,255,255,0.08)' },
-    yaxis: { title: 'Consumers (Millions)', gridcolor: 'rgba(255,255,255,0.08)' },
-    legend: { orientation: 'h', y: -0.2, x: 0 }
+    xaxis: { title: 'Year', gridcolor: 'rgba(255,255,255,0.08)', fixedrange: true },
+    yaxis: { title: 'Consumers (Millions)', gridcolor: 'rgba(255,255,255,0.08)', fixedrange: true },
+    legend: { orientation: 'h', y: -0.2, x: 0 },
+    dragmode: false
   };
 
-  Plotly.newPlot(container, traces, layout, { responsive: true, displayModeBar: false });
+  Plotly.newPlot(container, traces, layout, staticPlotOptions);
 }
 
 /* ==========================================================================
-   C. TRANSMISSION SECTION CHARTS
+   C. TRANSMISSION SECTION CHARTS (STATIC SANKEY)
    ========================================================================== */
 
-// 1. Natural Gas Distribution Flow (Sankey Diagram)
+// 1. Natural Gas Distribution Flow (Static Sankey Diagram)
 function renderSankeyDiagram(year) {
   const container = document.getElementById('chart-sankey-distribution');
   if (!container) return;
@@ -796,10 +812,11 @@ function renderSankeyDiagram(year) {
     plot_bgcolor: 'transparent',
     autosize: true,
     font: { color: '#e5e5e7', family: 'Plus Jakarta Sans' },
-    margin: { l: 20, r: 20, t: 20, b: 20 }
+    margin: { l: 20, r: 20, t: 20, b: 20 },
+    dragmode: false
   };
 
-  Plotly.newPlot(container, data, layout, { responsive: true, displayModeBar: false });
+  Plotly.newPlot(container, data, layout, staticPlotOptions);
 }
 
 // Sankey Year Selector Handler

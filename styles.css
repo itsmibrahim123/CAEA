@@ -2150,14 +2150,20 @@ body {
   }
 }
 
-@media (max-width: 640px) {
-  .analytics-controls-bar {
-    border-radius: 16px;
-  }
-  .analytics-search-input {
-    width: 100%;
-  }
-  .analytics-search-input:focus {
-    width: 100%;
-  }
 }
+
+/* Static Leaflet Map Tooltip */
+.static-map-tooltip {
+  background: rgba(20, 22, 25, 0.9) !important;
+  border: 1px solid rgba(163, 216, 141, 0.5) !important;
+  color: #ffffff !important;
+  font-family: var(--font-body) !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  border-radius: 6px !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5) !important;
+}
+.static-map-tooltip::before {
+  border-top-color: rgba(20, 22, 25, 0.9) !important;
+}
+
