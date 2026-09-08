@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Our Analytics — Pakistan Gas & Energy Visualizations, Statistics and Dashboards | Climate Action Energy Access (CAEA)" />
+  <meta name="theme-color" content="#000000" />
+  <title>Our Analytics — CAEA</title>
+  <link rel="icon" type="image/png" href="Assets/CAEA-Navbar-Logo.png" />
+  <link rel="apple-touch-icon" href="Assets/CAEA-Navbar-Logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Data Visualization CDN Libraries -->
+  <script src="https://cdn.plot.ly/plotly-2.30.0.min.js"></script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+
+<body>
+  <!-- Header / Navbar Section -->
+  <header class="site-header">
+    <nav class="navbar" aria-label="Main Navigation">
+      <!-- 1st Column: Logo -->
+      <div class="nav-col nav-col-start">
+        <a href="index.html" class="brand-link" aria-label="CAEA Home">
+          <img src="Assets/CAEA-Navbar-Logo.png" alt="CAEA Logo" class="brand-logo" />
+        </a>
+      </div>
+
+      <!-- Navigation buttons -->
+      <div class="nav-col nav-col-center">
+        <ul class="nav-content">
+          <li><a href="our-story.html" class="nav-item">Our Stories</a></li>
+          <li><a href="index.html#our-work" class="nav-item">Our Work</a></li>
+          <li><a href="our-analytics.html" class="nav-item active">Our Analytics</a></li>
+          <li><a href="get-involved.html" class="nav-item">Get Involved</a></li>
+        </ul>
+      </div>
+
+      <!-- Top Right: CD -->
+      <div class="nav-col nav-col-end">
+        <span class="nav-cd">CD</span>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main Content: Analytics Dashboard -->
+  <main>
+    <section class="analytics-hero-section">
+      <div class="analytics-title-wrapper">
+        <span class="analytics-kicker">DATA & RESEARCH INSTITUTE</span>
+        <h1 class="analytics-main-title">Our Analytics</h1>
+        <p class="analytics-subtitle">
+          Comprehensive empirical dashboard tracking Pakistan’s natural gas production, sector-wise energy consumption, regional distribution, transmission losses, and infrastructure networks.
+        </p>
+      </div>
+
+      <!-- KPI Summary Cards -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-label">Cumulative Production (1990-2024)</div>
+          <div class="kpi-value">38.7<span class="unit">Trillion ft³</span></div>
+          <div class="kpi-subtext">97.35% Non-Associated Gas</div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-label">Net Consumption</div>
+          <div class="kpi-value">35.1<span class="unit">Trillion ft³</span></div>
+          <div class="kpi-subtext">Power &amp; Domestic Dominated</div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-label">Transmission &amp; UFG Losses</div>
+          <div class="kpi-value">5.19<span class="unit">%</span></div>
+          <div class="kpi-subtext">2.01 Trillion ft³ Lost</div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-label">Active Gas Consumers</div>
+          <div class="kpi-value">14.68<span class="unit">Million</span></div>
+          <div class="kpi-subtext">Across 4 Provinces</div>
+        </div>
+      </div>
+
+      <!-- Controls & Filter Bar -->
+      <div class="analytics-controls-bar">
+        <div class="tab-group" role="tablist">
+          <button class="tab-btn active" data-tab="all">All Visualizations</button>
+          <button class="tab-btn" data-tab="production-section">Production Overview</button>
+          <button class="tab-btn" data-tab="consumption-section">Consumption Overview</button>
+          <button class="tab-btn" data-tab="transmission-section">Transmission Overview</button>
+        </div>
+
+        <div class="analytics-search-box">
+          <svg class="analytics-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="analytics-search" class="analytics-search-input" placeholder="Search charts, fields or sectors..." />
+        </div>
+      </div>
+
+      <!-- A. PRODUCTION SECTION -->
+      <section class="analytics-section" id="production-section">
+        <div class="section-header-banner">
+          <h2 class="section-title">Production Overview</h2>
+          <span class="section-badge">Section A</span>
+        </div>
+
+        <div class="charts-grid">
+          <!-- Chart 1: Stacked Area / Line -->
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <div>
+                <h3 class="chart-card-title">Natural Gas Production by Gas Field</h3>
+                <p class="chart-card-subtitle">Historical output timeline across major gas fields (1990–2024)</p>
+              </div>
+            </div>
+            <div class="chart-wrapper" id="chart-gas-field-production"></div>
+          </div>
+
+          <!-- Chart 2: Sankey / Stacked Bar Toggle -->
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <div>
+                <h3 class="chart-card-title">Natural Gas Production by Province</h3>
+                <p class="chart-card-subtitle">Provincial production breakdown (MMCFD)</p>
+              </div>
+            </div>
+            <div class="chart-wrapper" id="chart-province-production"></div>
+          </div>
+
+          <!-- Chart 3: Dual Axis Bar/Line -->
+          <div class="chart-card full-col">
+            <div class="chart-card-header">
+              <div>
+                <h3 class="chart-card-title">Natural Gas Production and HDI by District</h3>
+                <p class="chart-card-subtitle">Comparing district gas yield against Human Development Index (HDI)</p>
+              </div>
+            </div>
+            <div class="chart-wrapper" id="chart-district-hdi"></div>
+          </div>
+
+          <!-- Map 1: Interactive Map -->
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <div>
+                <h3 class="chart-card-title">Major Gas Wells</h3>
+                <p class="chart-card-subtitle">Geographic coordinates &amp; active well statuses across Pakistan</p>
+              </div>
+            </div>
+            <div class="leaflet-map-container" id="map-major-gas-wells"></div>
+          </div>
+
+          <!-- Map 2: Geographical Reserves -->
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <div>
+                <h3 class="chart-card-title">Pakistan's Ten Major Gasfields by Reserves</h3>
+                <p class="chart-card-subtitle">Original recoverable reserves (TCF)</p>
+              </div>
+            </div>
+            <div class="chart-wrapper" id="map-gasfield-reserves"></div>
+          </div>
+
+          <!-- Chart 4: LNG Terminals Bar Chart -->
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <div>
+                <h3 class="chart-card-title">LNG Terminals</h3>
+                <p class="chart-card-subtitle">Capacity vs current re-gasification throughput at Port Qasim</p>
+              </div>
+            </div>
+            <div class="chart-wrapper" id="chart-lng-terminals"></div>
+          </div>
+
+          <!-- Chart 5: Pie Chart #1 (Strict Specification) -->
+          <div class="chart-card pie-chart-card-1">
+            <div class="chart-card-header">
+              <div>
+                <h3 class="chart-card-title">Fossil Gas Production in Pakistan</h3>
+                <p class="chart-card-subtitle">Associated vs Non-Associated gas reserves share</p>
+              </div>
+            </div>
+            <div class="chart-wrapper" id="pie-fossil-gas-production"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- B. CONSUMPTION SECTION -->
+      <section class="analytics-section" id="consumption-section">
+        <div class="section-header-banner">
+          <h2 class="section-title">Consumption Overview</h2>
+          <span class="section-badge">Section B</span>
+        </div>
+
+        <div class="charts-grid">
+          <!-- Chart 1: Energy Supply by Source -->
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <div>
+                <h3 class="chart-card-title">Energy Supply by Source</h3>
+                <p class="chart-card-subtitle">Primary energy mix timeline (KTOE)</p>
+              </div>
+            </div>
+            <div class="chart-wrapper" id="chart-energy-supply-source"></div>
+          </div>
+
+          <!-- Chart 2: LNG Imports by Year -->
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <div>
+                <h3 class="chart-card-title">LNG Imports by Year</h3>
+                <p class="chart-card-subtitle">Annual LNG import volume (Million Tons) &amp; cargoes</p>
+              </div>
+            </div>
+            <div class="chart-wrapper" id="chart-lng-imports"></div>
+          </div>
+
+          <!-- Chart 3: LNG Consumption by Sector -->
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <div>
+                <h3 class="chart-card-title">LNG Consumption by Sector</h3>
+                <p class="chart-card-subtitle">Re-gasified LNG allocation across domestic sectors (MMCFD)</p>
+              </div>
+            </div>
+            <div class="chart-wrapper" id="chart-lng-consumption-sector"></div>
+          </div>
+
+          <!-- Chart 4: Energy Consumption by Source -->
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <div>
+                <h3 class="chart-card-title">Energy Consumption by Source</h3>
+                <p class="chart-card-subtitle">Relative percentage share of energy mix</p>
+              </div>
+            </div>
+            <div class="chart-wrapper" id="chart-energy-consumption-source"></div>
+          </div>
+
+          <!-- Chart 5: Gas Consumption by Sector -->
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <div>
+                <h3 class="chart-card-title">Gas Consumption by Sector</h3>
+                <p class="chart-card-subtitle">Natural gas share by sector (Power, Domestic, Fertilizer, Industry)</p>
+              </div>
+            </div>
+            <div class="chart-wrapper" id="chart-gas-consumption-sector"></div>
+          </div>
+
+          <!-- Chart 6: Production, Consumption and Losses Timeline -->
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <div>
+                <h3 class="chart-card-title">Natural Gas Production, Consumption and Losses</h3>
+                <p class="chart-card-subtitle">Comparison timeline (2018–2024)</p>
+              </div>
+            </div>
+            <div class="chart-wrapper" id="chart-prod-cons-losses"></div>
+          </div>
+
+          <!-- Chart 7: Pie Chart #2 (Strict Specification) -->
+          <div class="chart-card pie-chart-card-2">
+            <div class="chart-card-header">
+              <div>
+                <h3 class="chart-card-title">Total Gas Losses and Consumption (1990-2024)</h3>
+                <p class="chart-card-subtitle">Proportion of net consumption, system losses, and total production</p>
+              </div>
+            </div>
+            <div class="chart-wrapper" id="pie-total-gas-losses"></div>
+          </div>
+
+          <!-- Chart 8: Consumers by Province -->
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <div>
+                <h3 class="chart-card-title">Consumers by Province</h3>
+                <p class="chart-card-subtitle">Total connected domestic, commercial, and industrial gas meters</p>
+              </div>
+            </div>
+            <div class="chart-wrapper" id="chart-consumers-province"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- C. TRANSMISSION SECTION -->
+      <section class="analytics-section" id="transmission-section">
+        <div class="section-header-banner">
+          <h2 class="section-title">Transmission Overview</h2>
+          <span class="section-badge">Section C</span>
+        </div>
+
+        <div class="charts-grid full-width">
+          <!-- Chart 1: Sankey Diagram -->
+          <div class="chart-card full-col">
+            <div class="chart-card-header">
+              <div>
+                <h3 class="chart-card-title">Natural Gas Distribution Flow</h3>
+                <p class="chart-card-subtitle">End-to-end Sankey flow from provincial production and LNG terminals through national grid to consumer sectors</p>
+              </div>
+              <div class="chart-controls">
+                <label for="sankey-year-select" style="font-size:12px; color:rgba(255,255,255,0.7); margin-right:6px;">Select Fiscal Year:</label>
+                <select id="sankey-year-select" class="btn-chart-control" onchange="updateSankeyYear(this)">
+                  <option value="2023-24" selected>2023–24</option>
+                  <option value="2018-19">2018–19</option>
+                </select>
+              </div>
+            </div>
+            <div class="chart-wrapper" id="chart-sankey-distribution" style="min-height:500px;"></div>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <!-- Footer Section -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <!-- Top Section -->
+      <div class="footer-top-section">
+        <div class="footer-brand-col">
+          <a href="index.html" class="footer-brand-link" aria-label="CAEA Home">
+            <img src="Assets/CAEA-Navbar-Logo.png" alt="CAEA Logo" class="footer-brand-logo" />
+          </a>
+          <div class="footer-social-links" aria-label="Social Media Links">
+            <a href="#" class="footer-social-icon" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.64a1.68 1.68 0 1 0 0 3.36 1.68 1.68 0 0 0 0-3.36Z"/></svg>
+            </a>
+            <a href="#" class="footer-social-icon" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <hr class="footer-divider" />
+
+      <!-- Middle Section -->
+      <div class="footer-main-section">
+        <nav class="footer-nav-col" aria-label="Footer Navigation">
+          <ul class="footer-nav-links">
+            <li><a href="our-story.html" class="footer-link">OUR STORY</a></li>
+            <li><a href="index.html#our-work" class="footer-link">OUR WORK</a></li>
+            <li><a href="our-analytics.html" class="footer-link">OUR ANALYTICS</a></li>
+            <li><a href="get-involved.html" class="footer-link">GET INVOLVED</a></li>
+          </ul>
+        </nav>
+
+        <div class="footer-newsletter-col">
+          <h3 class="footer-subscribe-title">SUBSCRIBE TO THE CAUSE</h3>
+          <p class="footer-subscribe-desc">
+            Collective impact overpowers all. Join our newsletter and stay updated with our latest activities, openings and reports.
+          </p>
+          <form class="footer-subscribe-form" onsubmit="event.preventDefault();">
+            <input type="email" class="footer-email-input" placeholder="Enter your email here" aria-label="Email address" required />
+            <button type="submit" class="footer-submit-btn">SUBMIT</button>
+          </form>
+        </div>
+      </div>
+
+      <hr class="footer-divider" />
+
+      <!-- Bottom Section -->
+      <div class="footer-bottom-section">
+        <p class="footer-copyright">© 2024 CLIMATE ACTION ENERGY ACCESS ALL RIGHTS RESERVED</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script src="analytics.js"></script>
+</body>
+
+</html>

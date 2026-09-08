@@ -1,0 +1,32 @@
+{
+  "year": "2022-23",
+  "nodes": [
+    { "name": "Sindh Production" },
+    { "name": "Balochistan Production" },
+    { "name": "KPK Production" },
+    { "name": "Punjab Production" },
+    { "name": "LNG Imports" },
+    { "name": "National Gas Grid" },
+    { "name": "Power Sector" },
+    { "name": "Domestic Sector" },
+    { "name": "Fertilizer Sector" },
+    { "name": "Industrial Sector" },
+    { "name": "Commercial Sector" },
+    { "name": "CNG Sector" },
+    { "name": "System Losses (UFG)" }
+  ],
+  "links": [
+    { "source": 0, "target": 5, "value": 1990 },
+    { "source": 1, "target": 5, "value": 510 },
+    { "source": 2, "target": 5, "value": 220 },
+    { "source": 3, "target": 5, "value": 190 },
+    { "source": 4, "target": 5, "value": 1020 },
+    { "source": 5, "target": 6, "value": 1330 },
+    { "source": 5, "target": 7, "value": 1090 },
+    { "source": 5, "target": 8, "value": 820 },
+    { "source": 5, "target": 9, "value": 580 },
+    { "source": 5, "target": 10, "value": 140 },
+    { "source": 5, "target": 11, "value": 35 },
+    { "source": 5, "target": 12, "value": -55 }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "provinces": [
+    { "name": "Sindh", "production_mmcfd": 1910, "share_percentage": 68.4, "color": "rgb(76, 102, 70)" },
+    { "name": "Balochistan", "production_mmcfd": 490, "share_percentage": 17.5, "color": "rgb(111, 162, 151)" },
+    { "name": "KPK", "production_mmcfd": 210, "share_percentage": 7.5, "color": "rgb(142, 182, 120)" },
+    { "name": "Punjab", "production_mmcfd": 180, "share_percentage": 6.6, "color": "rgb(180, 205, 155)" }
+  ],
+  "years": [2018, 2019, 2020, 2021, 2022, 2023, 2024],
+  "timeline": {
+    "Sindh": [2250, 2180, 2100, 2050, 1990, 1950, 1910],
+    "Balochistan": [610, 580, 550, 530, 510, 500, 490],
+    "KPK": [260, 250, 240, 230, 220, 215, 210],
+    "Punjab": [220, 210, 200, 195, 190, 185, 180]
+  }
+}

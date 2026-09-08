@@ -1,0 +1,11 @@
+Well_Name,Field,Province,Latitude,Longitude,Production_MMCFD,Status,Operator
+Sui-1,Sui,Balochistan,28.636,66.388,145,Active,PPL
+Qadirpur-4,Qadirpur,Sindh,28.041,69.341,180,Active,OGDCL
+Mari-12,Mari,Sindh,27.962,69.753,240,Active,MPCL
+Kandhkot-2,Kandhkot,Sindh,28.245,69.215,65,Active,PPL
+Badin-E1,Badin,Sindh,24.630,68.830,45,Active,UEP
+Adhi-6,Adhi,Punjab,33.150,73.160,55,Active,PPL
+Uch-3,Uch,Balochistan,28.520,68.180,120,Active,OGDCL
+Miano-1,Miano,Sindh,27.360,69.210,40,Active,OMV
+Nashpa-1,Nashpa,KPK,33.150,71.180,85,Active,OGDCL
+Zarrar-1,Zarrar,Balochistan,29.110,67.430,30,Active,OGDCL

@@ -1,0 +1,45 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "name": "Dera Bugti", "province": "Balochistan", "field": "Sui", "reserves_tcf": 1.2 },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[68.5, 28.5], [69.5, 28.5], [69.5, 29.5], [68.5, 29.5], [68.5, 28.5]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Ghotki", "province": "Sindh", "field": "Qadirpur & Mari", "reserves_tcf": 4.9 },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[69.0, 27.5], [70.0, 27.5], [70.0, 28.5], [69.0, 28.5], [69.0, 27.5]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Kashmore", "province": "Sindh", "field": "Kandhkot", "reserves_tcf": 0.4 },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[68.8, 28.0], [69.5, 28.0], [69.5, 28.6], [68.8, 28.6], [68.8, 28.0]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Sanghar", "province": "Sindh", "field": "Badin / Miano", "reserves_tcf": 0.5 },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[68.5, 25.5], [69.5, 25.5], [69.5, 26.5], [68.5, 26.5], [68.5, 25.5]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Rawalpindi", "province": "Punjab", "field": "Adhi", "reserves_tcf": 0.4 },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[72.8, 33.0], [73.5, 33.0], [73.5, 33.8], [72.8, 33.8], [72.8, 33.0]]]
+      }
+    }
+  ]
+}
