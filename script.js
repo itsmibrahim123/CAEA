@@ -108,4 +108,56 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
+
+  /* ============================================================
+     Activities Page Gallery & Video Interactivity
+     ============================================================ */
+  const thumbs = document.querySelectorAll('.activities-gallery-thumbs .thumb-item');
+  const prevBtn = document.getElementById('prev-hero-slide');
+  const nextBtn = document.getElementById('next-hero-slide');
+  let currentSlide = 0;
+
+  function updateGallerySlide(index) {
+    if (!thumbs.length) return;
+    thumbs.forEach((t, idx) => {
+      if (idx === index) {
+        t.classList.add('active');
+      } else {
+        t.classList.remove('active');
+      }
+    });
+    currentSlide = index;
+  }
+
+  if (thumbs.length) {
+    thumbs.forEach((thumb, idx) => {
+      thumb.addEventListener('click', () => {
+        updateGallerySlide(idx);
+      });
+    });
+  }
+
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      let newIdx = currentSlide - 1;
+      if (newIdx < 0) newIdx = thumbs.length - 1;
+      updateGallerySlide(newIdx);
+    });
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      let newIdx = (currentSlide + 1) % thumbs.length;
+      updateGallerySlide(newIdx);
+    });
+  }
+
+  // Video Modal Trigger
+  const videoBtn = document.getElementById('activities-video-btn');
+  if (videoBtn) {
+    videoBtn.addEventListener('click', () => {
+      alert('Playing: More than a retreat (CAEA Community Documentary)');
+    });
+  }
 });
+
