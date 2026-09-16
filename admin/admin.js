@@ -317,6 +317,26 @@ document.addEventListener('DOMContentLoaded', () => {
     // Render Dynamic Form Fields based on Collection
     let fieldsHtml = '';
 
+    const currentImg = item.image || (collection === 'activities' ? 'Assets/Hero-image.png' : collection === 'people' ? 'Assets/Team/grid-1-2-Sanaa.png' : 'Assets/how-water-became-power.jpg');
+    const imageFieldHtml = `
+      <div class="form-group">
+        <label class="form-label">Media / Image Asset</label>
+        <div class="image-upload-wrapper">
+          <div class="image-preview-container">
+            <img id="form-image-preview" src="${currentImg.startsWith('data:') || currentImg.startsWith('http') ? currentImg : '../' + currentImg}" alt="Preview" class="form-img-preview" onerror="this.src='../Assets/CAEA-Navbar-Logo.png'" />
+          </div>
+          <div class="image-upload-controls">
+            <label class="admin-btn admin-btn-secondary upload-file-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              Upload Image File
+              <input type="file" id="form-file-input" accept="image/*" style="display:none;" />
+            </label>
+            <input type="text" name="image" id="form-image-url" class="admin-input" value="${escapeHtml(item.image || '')}" placeholder="Or paste external URL or file path..." />
+          </div>
+        </div>
+      </div>
+    `;
+
     if (collection === 'activities') {
       fieldsHtml = `
         <div class="form-group">
@@ -339,10 +359,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <label class="form-label">Location</label>
           <input type="text" name="location" class="admin-input" value="${escapeHtml(item.location || '')}" placeholder="e.g. Lake Manchhar, Sindh" />
         </div>
-        <div class="form-group">
-          <label class="form-label">Media / Image URL</label>
-          <input type="text" name="image" class="admin-input" value="${escapeHtml(item.image || 'Assets/Hero-image.png')}" />
-        </div>
+        ${imageFieldHtml}
         <div class="form-group">
           <label class="form-label">Description</label>
           <textarea name="description" class="admin-textarea" rows="4" required>${escapeHtml(item.description || '')}</textarea>
@@ -366,10 +383,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <option value="Fellows" ${item.category === 'Fellows' ? 'selected' : ''}>Fellows</option>
           </select>
         </div>
-        <div class="form-group">
-          <label class="form-label">Photo URL</label>
-          <input type="text" name="image" class="admin-input" value="${escapeHtml(item.image || 'Assets/Team/grid-1-2-Sanaa.png')}" />
-        </div>
+        ${imageFieldHtml}
         <div class="form-group">
           <label class="form-label">Biography</label>
           <textarea name="bio" class="admin-textarea" rows="4" required>${escapeHtml(item.bio || '')}</textarea>
@@ -397,10 +411,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <label class="form-label">Date</label>
           <input type="date" name="date" class="admin-input" value="${item.date || ''}" required />
         </div>
-        <div class="form-group">
-          <label class="form-label">Cover Image URL</label>
-          <input type="text" name="image" class="admin-input" value="${escapeHtml(item.image || 'Assets/how-water-became-power.jpg')}" />
-        </div>
+        ${imageFieldHtml}
         <div class="form-group">
           <label class="form-label">Excerpt</label>
           <textarea name="excerpt" class="admin-textarea" rows="2" required>${escapeHtml(item.excerpt || '')}</textarea>
@@ -413,6 +424,39 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     dynamicFieldsContainer.innerHTML = fieldsHtml;
+
+    // Attach File Upload Event Listener
+    const fileInput = document.getElementById('form-file-input');
+    const imageUrlInput = document.getElementById('form-image-url');
+    const imagePreview = document.getElementById('form-image-preview');
+
+    if (fileInput) {
+      fileInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (evt) => {
+            const dataUrl = evt.target.result;
+            imageUrlInput.value = dataUrl;
+            if (imagePreview) {
+              imagePreview.src = dataUrl;
+            }
+            showToast(`File "${file.name}" uploaded to preview!`);
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+    }
+
+    if (imageUrlInput) {
+      imageUrlInput.addEventListener('input', () => {
+        if (imagePreview) {
+          const val = imageUrlInput.value.trim();
+          imagePreview.src = val.startsWith('data:') || val.startsWith('http') ? val : '../' + val;
+        }
+      });
+    }
+
     modalDialog.showModal();
   };
 
