@@ -159,5 +159,53 @@ document.addEventListener('DOMContentLoaded', () => {
       alert('Playing: More than a retreat (CAEA Community Documentary)');
     });
   }
+
+  /* ============================================================
+     Dynamic Activities Feed Rendering (DataStore)
+     ============================================================ */
+  function renderDynamicActivities() {
+    const activitiesContainer = document.querySelector('.activities-list');
+    if (!activitiesContainer || !window.DataStore) return;
+
+    const activities = window.DataStore.get('activities');
+    if (!activities || !activities.length) return;
+
+    activitiesContainer.innerHTML = activities.map(item => `
+      <article class="activity-card" data-id="${item.id}">
+        <div class="activity-media-box">
+          <img src="${item.image || 'Assets/Hero-image.png'}" alt="" style="width:100%; height:100%; object-fit:cover;" onerror="this.style.display='none'" />
+          <div class="activities-placeholder-visual">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="1.5">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+              <circle cx="8.5" cy="8.5" r="1.5"/>
+              <polyline points="21 15 16 10 5 21"/>
+            </svg>
+          </div>
+        </div>
+        <div class="activity-content">
+          <div>
+            <h3 class="activity-item-title">${escapeHtml(item.title)}</h3>
+            <p class="activity-item-desc">${escapeHtml(item.description)}</p>
+          </div>
+          <div class="activity-card-footer">
+            <span class="activity-date">${item.dateFormatted || item.date || ''}</span>
+            <span class="activity-tag">${escapeHtml(item.category || 'RETREAT')}</span>
+          </div>
+        </div>
+      </article>
+    `).join('');
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  renderDynamicActivities();
+  window.addEventListener('caea-datastore-update', renderDynamicActivities);
 });
 
