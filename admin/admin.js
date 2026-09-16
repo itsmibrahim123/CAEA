@@ -1,5 +1,5 @@
 /**
- * CAEA Admin Dashboard Controller
+ * CAEA Admin Dashboard Controller (admin/admin.js)
  * Connects UI interactions to DataStore API.
  */
 
@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <tr>
         <td style="font-family:monospace; font-size:11px; color:#888;">${item.id}</td>
         <td>
-          <img src="${item.image || 'Assets/Hero-image.png'}" alt="" class="table-media-thumb" onerror="this.src='Assets/CAEA-Navbar-Logo.png'" />
+          <img src="../${item.image || 'Assets/Hero-image.png'}" alt="" class="table-media-thumb" onerror="this.src='../Assets/CAEA-Navbar-Logo.png'" />
         </td>
         <td>
           <strong>${escapeHtml(item.title)}</strong>
@@ -219,7 +219,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <tr>
         <td style="font-family:monospace; font-size:11px; color:#888;">${item.id}</td>
         <td>
-          <img src="${item.image || 'Assets/Team/grid-1-2-Sanaa.png'}" alt="" class="table-media-thumb" style="border-radius:50%; width:36px; height:36px;" onerror="this.src='Assets/CAEA-Navbar-Logo.png'" />
+          <img src="../${item.image || 'Assets/Team/grid-1-2-Sanaa.png'}" alt="" class="table-media-thumb" style="border-radius:50%; width:36px; height:36px;" onerror="this.src='../Assets/CAEA-Navbar-Logo.png'" />
         </td>
         <td>
           <strong>${escapeHtml(item.name)}</strong>
@@ -268,7 +268,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <tr>
         <td style="font-family:monospace; font-size:11px; color:#888;">${item.id}</td>
         <td>
-          <img src="${item.image || 'Assets/how-water-became-power.jpg'}" alt="" class="table-media-thumb" onerror="this.src='Assets/CAEA-Navbar-Logo.png'" />
+          <img src="../${item.image || 'Assets/how-water-became-power.jpg'}" alt="" class="table-media-thumb" onerror="this.src='../Assets/CAEA-Navbar-Logo.png'" />
         </td>
         <td>
           <strong>${escapeHtml(item.title)}</strong>
