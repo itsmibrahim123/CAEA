@@ -495,20 +495,32 @@ body.admin-body {
   flex-wrap: wrap;
 }
 
-/* Dialog Modal */
+/* Dialog Modal - Perfectly Centered in Middle of Screen */
 .admin-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
   border: none;
   padding: 0;
   background: transparent;
-  max-width: 560px;
-  width: 90vw;
+  max-width: 580px;
+  width: min(580px, 92vw);
+  max-height: 88vh;
+  overflow-y: auto;
   border-radius: 12px;
   outline: none;
+}
+
+.admin-modal[open] {
+  display: block;
 }
 
 .admin-modal::backdrop {
   background: rgba(0, 0, 0, 0.75);
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .modal-content {
