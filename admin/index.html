@@ -14,8 +14,17 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap"
     rel="stylesheet" />
-  <link rel="stylesheet" href="../styles.css" />
-  <link rel="stylesheet" href="admin.css" />
+  
+  <!-- Deployment-Resilient Stylesheet Resolution -->
+  <link rel="stylesheet" href="../styles.css" onerror="this.onerror=null;this.href='/styles.css';" />
+  <link rel="stylesheet" href="admin.css" onerror="this.onerror=null;this.href='/admin/admin.css';" />
+  
+  <script>
+    // Ensure clean relative resolution on deployed /admin routes
+    if (window.location.pathname === '/admin') {
+      window.history.replaceState(null, '', '/admin/');
+    }
+  </script>
 </head>
 
 <body class="admin-body">
@@ -286,8 +295,8 @@
   <!-- Toast Notifications Container -->
   <div id="admin-toast-container" class="toast-container" aria-live="polite"></div>
 
-  <script src="../data-store.js"></script>
-  <script src="admin.js"></script>
+  <script src="../data-store.js" onerror="this.onerror=null;this.src='/data-store.js';"></script>
+  <script src="admin.js" onerror="this.onerror=null;this.src='/admin/admin.js';"></script>
 </body>
 
 </html>
