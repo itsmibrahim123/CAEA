@@ -164,12 +164,11 @@ document.addEventListener('DOMContentLoaded', () => {
      Dynamic Activities Feed Rendering (DataStore)
      ============================================================ */
   function resolveImagePath(img) {
-    if (!img) return window.location.pathname.includes('/pages/') || window.location.pathname.includes('/admin/') ? '../Assets/Hero-image.png' : 'Assets/Hero-image.png';
-    if (img.startsWith('http://') || img.startsWith('https://') || img.startsWith('data:')) return img;
-    if (window.location.pathname.includes('/pages/') || window.location.pathname.includes('/admin/')) {
-      return img.startsWith('../') ? img : '../' + img;
-    }
-    return img;
+    if (!img) return '/Assets/Hero-image.png';
+    if (img.startsWith('http://') || img.startsWith('https://') || img.startsWith('data:') || img.startsWith('/')) return img;
+    if (img.startsWith('../Assets/')) return img.replace('../Assets/', '/Assets/');
+    if (img.startsWith('Assets/')) return '/' + img;
+    return '/' + img;
   }
 
   function renderDynamicActivities() {

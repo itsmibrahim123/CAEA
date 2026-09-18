@@ -1,6 +1,6 @@
 {
   "cleanUrls": true,
-  "trailingSlash": true,
+  "trailingSlash": false,
   "rewrites": [
     {
       "source": "/admin",
@@ -29,7 +29,10 @@
     {
       "source": "/get-involved",
       "destination": "/pages/get-involved.html"
+    },
+    {
+      "source": "/:file.css",
+      "destination": "/pages/:file.css"
     }
   ]
 }
-
