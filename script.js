@@ -163,6 +163,15 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ============================================================
      Dynamic Activities Feed Rendering (DataStore)
      ============================================================ */
+  function resolveImagePath(img) {
+    if (!img) return window.location.pathname.includes('/pages/') || window.location.pathname.includes('/admin/') ? '../Assets/Hero-image.png' : 'Assets/Hero-image.png';
+    if (img.startsWith('http://') || img.startsWith('https://') || img.startsWith('data:')) return img;
+    if (window.location.pathname.includes('/pages/') || window.location.pathname.includes('/admin/')) {
+      return img.startsWith('../') ? img : '../' + img;
+    }
+    return img;
+  }
+
   function renderDynamicActivities() {
     const activitiesContainer = document.querySelector('.activities-list');
     if (!activitiesContainer || !window.DataStore) return;
@@ -173,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
     activitiesContainer.innerHTML = activities.map(item => `
       <article class="activity-card" data-id="${item.id}">
         <div class="activity-media-box">
-          <img src="${item.image || 'Assets/Hero-image.png'}" alt="" style="width:100%; height:100%; object-fit:cover;" onerror="this.style.display='none'" />
+          <img src="${resolveImagePath(item.image)}" alt="" style="width:100%; height:100%; object-fit:cover;" onerror="this.style.display='none'" />
           <div class="activities-placeholder-visual">
             <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="1.5">
               <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>

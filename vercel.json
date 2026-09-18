@@ -5,6 +5,31 @@
     {
       "source": "/admin",
       "destination": "/admin/index.html"
+    },
+    {
+      "source": "/our-story",
+      "destination": "/pages/our-story.html"
+    },
+    {
+      "source": "/our-stories",
+      "destination": "/pages/our-story.html"
+    },
+    {
+      "source": "/activities",
+      "destination": "/pages/activities.html"
+    },
+    {
+      "source": "/our-work",
+      "destination": "/pages/activities.html"
+    },
+    {
+      "source": "/our-analytics",
+      "destination": "/pages/our-analytics.html"
+    },
+    {
+      "source": "/get-involved",
+      "destination": "/pages/get-involved.html"
     }
   ]
 }
+
