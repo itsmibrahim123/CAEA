@@ -236,7 +236,7 @@ const SEED_DATA = {
     {
       id: 'app-2',
       fullName: 'Bilal Khan',
-      email: 'bilal.k@outlook.com',
+      email: 'bilal.khan@gmail.com',
       phone: '+92 333 9876543',
       city: 'Gilgit, Gilgit-Baltistan',
       opportunityId: 'opp-2',
@@ -254,7 +254,7 @@ const SEED_DATA = {
     {
       id: 'app-3',
       fullName: 'Zainab Fatima',
-      email: 'zainab.fatima@yahoo.com',
+      email: 'zainab.fatima@gmail.com',
       phone: '+92 321 4567890',
       city: 'Lahore, Punjab',
       opportunityId: 'opp-4',

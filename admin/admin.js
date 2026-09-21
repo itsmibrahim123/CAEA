@@ -4,8 +4,6 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  const DEFAULT_PASSCODE = 'caea2024';
-
   // State
   let activeTab = 'activities';
   let activeEditId = null;
@@ -97,6 +95,85 @@ document.addEventListener('DOMContentLoaded', () => {
     return '../' + path;
   }
 
+  // Security Master Hashes (SHA-256)
+  // Primary Master Key: 'CAEA@Admin#2026!'
+  const MASTER_HASH = '0bd52dc00fb3e853b13ee73b111a4d1e7ff453ed865812db6a11a6cee533f221';
+  // Legacy Key Support: 'caea2024'
+  const LEGACY_HASH = 'f8ce72e90f230559f515ee0420e6a4b1b369c733364f849ecb13bd600fae24be';
+
+  const MAX_FAILED_ATTEMPTS = 5;
+  const LOCKOUT_MS = 60 * 1000; // 60 seconds
+  let lockoutTimerInterval = null;
+
+  async function sha256Hex(str) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(str);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  const btnTogglePwd = document.getElementById('btn-toggle-pwd');
+  const btnUnlockAuth = document.getElementById('btn-unlock-auth');
+
+  if (btnTogglePwd && authPasscode) {
+    btnTogglePwd.addEventListener('click', () => {
+      const isPassword = authPasscode.type === 'password';
+      authPasscode.type = isPassword ? 'text' : 'password';
+      const eyeOpen = btnTogglePwd.querySelector('.eye-open');
+      const eyeClosed = btnTogglePwd.querySelector('.eye-closed');
+      if (eyeOpen && eyeClosed) {
+        eyeOpen.style.display = isPassword ? 'none' : 'block';
+        eyeClosed.style.display = isPassword ? 'block' : 'none';
+      }
+    });
+  }
+
+  function checkLockout() {
+    const lockoutUntil = parseInt(sessionStorage.getItem('caea_auth_lockout_until') || '0', 10);
+    const now = Date.now();
+    if (lockoutUntil && lockoutUntil > now) {
+      const remainingSec = Math.ceil((lockoutUntil - now) / 1000);
+      setLockoutState(remainingSec);
+      return true;
+    }
+    clearLockoutState();
+    return false;
+  }
+
+  function setLockoutState(seconds) {
+    if (btnUnlockAuth) btnUnlockAuth.disabled = true;
+    if (authPasscode) authPasscode.disabled = true;
+    if (authError) {
+      authError.classList.add('lockout-active');
+      authError.textContent = `Security lockout active. Too many failed attempts. Try again in ${seconds}s.`;
+    }
+
+    if (lockoutTimerInterval) clearInterval(lockoutTimerInterval);
+    lockoutTimerInterval = setInterval(() => {
+      const lockoutUntil = parseInt(sessionStorage.getItem('caea_auth_lockout_until') || '0', 10);
+      const remaining = Math.ceil((lockoutUntil - Date.now()) / 1000);
+      if (remaining <= 0) {
+        clearInterval(lockoutTimerInterval);
+        clearLockoutState();
+      } else if (authError) {
+        authError.textContent = `Security lockout active. Too many failed attempts. Try again in ${remaining}s.`;
+      }
+    }, 1000);
+  }
+
+  function clearLockoutState() {
+    if (lockoutTimerInterval) clearInterval(lockoutTimerInterval);
+    sessionStorage.removeItem('caea_auth_lockout_until');
+    sessionStorage.setItem('caea_auth_failed_attempts', '0');
+    if (btnUnlockAuth) btnUnlockAuth.disabled = false;
+    if (authPasscode) authPasscode.disabled = false;
+    if (authError) {
+      authError.classList.remove('lockout-active');
+      authError.textContent = '';
+    }
+  }
+
   /* ============================================================
      2. Authentication Gate
      ============================================================ */
@@ -107,21 +184,40 @@ document.addEventListener('DOMContentLoaded', () => {
       initConsole();
     } else {
       authGate.classList.remove('hidden');
+      checkLockout();
     }
   }
 
   if (authForm) {
-    authForm.addEventListener('submit', (e) => {
+    authForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const val = authPasscode.value.trim();
-      if (val === DEFAULT_PASSCODE || val === 'admin') {
+      if (checkLockout()) return;
+
+      const inputVal = authPasscode.value.trim();
+      if (!inputVal) return;
+
+      const inputHash = await sha256Hex(inputVal);
+      const customHash = localStorage.getItem('caea_admin_custom_passhash');
+
+      if (inputHash === MASTER_HASH || inputHash === LEGACY_HASH || (customHash && inputHash === customHash)) {
         sessionStorage.setItem('caea_admin_auth', 'true');
+        sessionStorage.setItem('caea_auth_failed_attempts', '0');
         authError.textContent = '';
         authGate.classList.add('hidden');
         showToast('Console unlocked successfully');
         initConsole();
       } else {
-        authError.textContent = 'Invalid administrative passcode. Please try again.';
+        const failed = parseInt(sessionStorage.getItem('caea_auth_failed_attempts') || '0', 10) + 1;
+        sessionStorage.setItem('caea_auth_failed_attempts', failed.toString());
+
+        if (failed >= MAX_FAILED_ATTEMPTS) {
+          const lockoutUntil = Date.now() + LOCKOUT_MS;
+          sessionStorage.setItem('caea_auth_lockout_until', lockoutUntil.toString());
+          setLockoutState(60);
+        } else {
+          const remainingAttempts = MAX_FAILED_ATTEMPTS - failed;
+          authError.textContent = `Invalid administrative passcode. (${remainingAttempts} ${remainingAttempts === 1 ? 'attempt' : 'attempts'} remaining)`;
+        }
       }
     });
   }
@@ -131,6 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
       sessionStorage.removeItem('caea_admin_auth');
       authPasscode.value = '';
       authGate.classList.remove('hidden');
+      checkLockout();
       showToast('Console locked');
     });
   }
@@ -587,7 +684,7 @@ document.addEventListener('DOMContentLoaded', () => {
               </button>
               <span class="upload-filename-badge" id="upload-filename-badge" style="display:none;"></span>
             </div>
-            <input type="text" name="image" id="form-image-url" class="admin-input" value="${escapeHtml(item.image || '')}" placeholder="Or paste image path / URL (e.g. Assets/Team/sanaa.jpg or https://...)" />
+            <input type="text" name="image" id="form-image-url" class="admin-input" value="${escapeHtml(item.image || '')}" placeholder="Or paste image path / URL (e.g. Assets/Team/member-photo.jpg or https://...)" />
           </div>
         </div>
       </div>
@@ -606,7 +703,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <div class="form-group">
           <label class="form-label">Activity / Work Title</label>
-          <input type="text" name="title" class="admin-input" value="${escapeHtml(item.title || '')}" required />
+          <input type="text" name="title" class="admin-input" value="${escapeHtml(item.title || '')}" placeholder="e.g. Community Climate Dialogue &amp; Workshop" required />
         </div>
         <div class="form-group">
           <label class="form-label">Hero Banner Quote (Optional)</label>
@@ -614,7 +711,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <div class="form-group">
           <label class="form-label">Hero Quote Speaker / Author (Optional)</label>
-          <input type="text" name="quoteAuthor" class="admin-input" value="${escapeHtml(item.quoteAuthor || '')}" placeholder="e.g. Waseem Ul Haq" />
+          <input type="text" name="quoteAuthor" class="admin-input" value="${escapeHtml(item.quoteAuthor || '')}" placeholder="e.g. Author / Speaker Name" />
         </div>
         <div class="form-group">
           <label class="form-label">Category / Tag</label>
@@ -635,23 +732,23 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <div class="form-group">
           <label class="form-label">Location</label>
-          <input type="text" name="location" class="admin-input" value="${escapeHtml(item.location || '')}" placeholder="e.g. Lake Manchhar, Sindh" />
+          <input type="text" name="location" class="admin-input" value="${escapeHtml(item.location || '')}" placeholder="e.g. Venue / City, Region" />
         </div>
         ${imageFieldHtml}
         <div class="form-group">
           <label class="form-label">Description</label>
-          <textarea name="description" class="admin-textarea" rows="4" required>${escapeHtml(item.description || '')}</textarea>
+          <textarea name="description" class="admin-textarea" rows="4" placeholder="Enter activity summary and key highlights..." required>${escapeHtml(item.description || '')}</textarea>
         </div>
       `;
     } else if (collection === 'people') {
       fieldsHtml = `
         <div class="form-group">
           <label class="form-label">Full Name</label>
-          <input type="text" name="name" class="admin-input" value="${escapeHtml(item.name || '')}" required />
+          <input type="text" name="name" class="admin-input" value="${escapeHtml(item.name || '')}" placeholder="e.g. Team Member Name" required />
         </div>
         <div class="form-group">
           <label class="form-label">Role / Title</label>
-          <input type="text" name="role" class="admin-input" value="${escapeHtml(item.role || '')}" required />
+          <input type="text" name="role" class="admin-input" value="${escapeHtml(item.role || '')}" placeholder="e.g. Climate Research Associate" required />
         </div>
         <div class="form-group">
           <label class="form-label">Team Category</label>
@@ -664,26 +761,26 @@ document.addEventListener('DOMContentLoaded', () => {
         ${imageFieldHtml}
         <div class="form-group">
           <label class="form-label">Biography</label>
-          <textarea name="bio" class="admin-textarea" rows="4" required>${escapeHtml(item.bio || '')}</textarea>
+          <textarea name="bio" class="admin-textarea" rows="4" placeholder="Brief biographical overview and focus areas..." required>${escapeHtml(item.bio || '')}</textarea>
         </div>
       `;
     } else if (collection === 'articles') {
       fieldsHtml = `
         <div class="form-group">
           <label class="form-label">Article Title</label>
-          <input type="text" name="title" class="admin-input" value="${escapeHtml(item.title || '')}" required />
+          <input type="text" name="title" class="admin-input" value="${escapeHtml(item.title || '')}" placeholder="e.g. Energy Transition &amp; Community Power" required />
         </div>
         <div class="form-group">
           <label class="form-label">Subtitle</label>
-          <input type="text" name="subtitle" class="admin-input" value="${escapeHtml(item.subtitle || '')}" />
+          <input type="text" name="subtitle" class="admin-input" value="${escapeHtml(item.subtitle || '')}" placeholder="e.g. Policy analysis and field findings" />
         </div>
         <div class="form-group">
           <label class="form-label">Kicker / Tag</label>
-          <input type="text" name="kicker" class="admin-input" value="${escapeHtml(item.kicker || 'CASE STUDY')}" />
+          <input type="text" name="kicker" class="admin-input" value="${escapeHtml(item.kicker || 'CASE STUDY')}" placeholder="e.g. CASE STUDY, REPORT, DISPATCH" />
         </div>
         <div class="form-group">
           <label class="form-label">Author</label>
-          <input type="text" name="author" class="admin-input" value="${escapeHtml(item.author || 'CAEA Team')}" required />
+          <input type="text" name="author" class="admin-input" value="${escapeHtml(item.author || 'CAEA Team')}" placeholder="e.g. CAEA Team / Author Name" required />
         </div>
         <div class="form-group">
           <label class="form-label">Date</label>
@@ -692,26 +789,26 @@ document.addEventListener('DOMContentLoaded', () => {
         ${imageFieldHtml}
         <div class="form-group">
           <label class="form-label">Excerpt</label>
-          <textarea name="excerpt" class="admin-textarea" rows="2" required>${escapeHtml(item.excerpt || '')}</textarea>
+          <textarea name="excerpt" class="admin-textarea" rows="2" placeholder="Brief summary of the article..." required>${escapeHtml(item.excerpt || '')}</textarea>
         </div>
         <div class="form-group">
           <label class="form-label">Full Article Content</label>
-          <textarea name="content" class="admin-textarea" rows="5">${escapeHtml(item.content || '')}</textarea>
+          <textarea name="content" class="admin-textarea" rows="5" placeholder="Full article body content...">${escapeHtml(item.content || '')}</textarea>
         </div>
       `;
     } else if (collection === 'opportunities') {
       fieldsHtml = `
         <div class="form-group">
           <label class="form-label">Opportunity / Position Title</label>
-          <input type="text" name="title" class="admin-input" value="${escapeHtml(item.title || '')}" placeholder="e.g. Climate Justice Junior Associate" required />
+          <input type="text" name="title" class="admin-input" value="${escapeHtml(item.title || '')}" placeholder="e.g. Climate Research Associate" required />
         </div>
         <div class="form-group">
           <label class="form-label">Subtitle / Banner Tag</label>
-          <input type="text" name="subtitle" class="admin-input" value="${escapeHtml(item.subtitle || 'UPCOMING')}" placeholder="e.g. FULL TIME · APPLICATIONS OPEN or UPCOMING" required />
+          <input type="text" name="subtitle" class="admin-input" value="${escapeHtml(item.subtitle || 'UPCOMING')}" placeholder="e.g. FULL TIME · APPLICATIONS OPEN" required />
         </div>
         <div class="form-group">
           <label class="form-label">Category Name</label>
-          <input type="text" name="category" class="admin-input" value="${escapeHtml(item.category || '')}" placeholder="e.g. Core Team &amp; Field Research, Volunteering, Fellowship" required />
+          <input type="text" name="category" class="admin-input" value="${escapeHtml(item.category || '')}" placeholder="e.g. Core Team, Volunteering, Fellowship" required />
         </div>
         <div class="form-group">
           <label class="form-label">Role Type</label>

@@ -142,6 +142,35 @@ body.admin-body {
   background-color: #1a202c;
 }
 
+.auth-input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.auth-password-input {
+  padding-right: 46px !important;
+}
+
+.auth-toggle-pwd-btn {
+  position: absolute;
+  right: 12px;
+  background: transparent;
+  border: none;
+  color: #9da5b4;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: color 0.2s ease;
+}
+
+.auth-toggle-pwd-btn:hover {
+  color: #ffffff;
+}
+
 .auth-error-msg {
   color: #ef4444;
   font-size: 13px;
@@ -149,6 +178,15 @@ body.admin-body {
   min-height: 20px;
   font-weight: 500;
   font-family: var(--admin-font);
+  line-height: 1.4;
+}
+
+.auth-error-msg.lockout-active {
+  color: #fca5a5;
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  padding: 8px 12px;
+  border-radius: 6px;
 }
 
 .auth-form .admin-btn-primary {
@@ -157,6 +195,12 @@ body.admin-body {
   font-weight: 700;
   border-radius: 8px;
   letter-spacing: 0.02em;
+}
+
+.auth-form .admin-btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  filter: grayscale(0.8);
 }
 
 /* Header Navbar */

@@ -443,14 +443,14 @@ document.addEventListener('DOMContentLoaded', () => {
               <label class="caea-form-label" for="apply-name">
                 Full Name <span class="required-star">*</span>
               </label>
-              <input type="text" id="apply-name" name="fullName" class="caea-form-input" placeholder="e.g. Sanaa Muhammad" required />
+              <input type="text" id="apply-name" name="fullName" class="caea-form-input" placeholder="e.g. Jane Doe" required />
             </div>
 
             <div class="caea-form-group">
               <label class="caea-form-label" for="apply-email">
                 Email Address <span class="required-star">*</span>
               </label>
-              <input type="email" id="apply-email" name="email" class="caea-form-input" placeholder="e.g. sanaa@example.com" required />
+              <input type="email" id="apply-email" name="email" class="caea-form-input" placeholder="e.g. name@gmail.com" required />
             </div>
           </div>
 
@@ -459,7 +459,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <label class="caea-form-label" for="apply-phone">
                 Phone / WhatsApp <span class="required-star">*</span>
               </label>
-              <input type="tel" id="apply-phone" name="phone" class="caea-form-input" placeholder="e.g. +92 300 1234567" required />
+              <input type="tel" id="apply-phone" name="phone" class="caea-form-input" placeholder="e.g. +92 300 0000000" required />
             </div>
 
             <div class="caea-form-group">
