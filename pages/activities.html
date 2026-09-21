@@ -51,22 +51,37 @@
     <section class="activities-page-section" aria-label="Activities Hero">
       <div class="activities-grid-container">
         <!-- Column 1: Text Content -->
-        <div class="activities-hero-text-col">
-          <h1 class="activities-hero-quote">
+        <div class="activities-hero-text-col" id="hero-text-col">
+          <div class="hero-event-badge-row">
+            <span class="hero-event-tag" id="hero-event-tag">WORKSHOP</span>
+            <span class="hero-event-date" id="hero-event-date">23.01.2026</span>
+          </div>
+
+          <h1 class="activities-hero-quote" id="hero-event-quote">
             “Those least responsible for climate change are worst affected by it”
           </h1>
-          <span class="activities-hero-author">Waseem Ul Haq</span>
+          <span class="activities-hero-author" id="hero-event-author">Waseem Ul Haq</span>
 
-          <h2 class="activities-hero-subtitle">WORKING TOWARDS CLEAN ENERGY</h2>
-          <p class="activities-hero-description">
-            The lake has been impacted by the reservoir's Lake Manchhar. The discussion focused on the ecological destruction of the lake, severe loss from large development projects have affected the aquatic culture and livelihoods connected to it. Lake Manchhar is located in Sindh between the Dadu and Khanpur districts. The lake is fed by two canals and the Indus river. Manchhar comes from the Sindhi words 'Man' meaning mind and 'Chhar' meaning lake or pond. Manchhar translates to "mindful lake". It is the largest natural freshwater lake in Asia. The lake is 24 kilometres long and 130 kilometres wide. It is the second largest natural freshwater lake in Asia. The word "Manchhar" comes from the Sindhi words Manh meaning pass and Chhar.
+          <h2 class="activities-hero-subtitle" id="hero-event-title">Contested Waters: Rivers, Power and Resistance</h2>
+          <p class="activities-hero-description" id="hero-event-description">
+            Examines how colonial and modern systems of water control through dams, barrages, and canals have transformed river ecosystems, displaced communities, and disrupted cultural relationships with water.
           </p>
+
+          <!-- Interactive Hero Event Changer Controls -->
+          <div class="hero-switch-event-actions">
+            <button class="btn-switch-hero" id="btn-next-hero-event" type="button" aria-label="Change main event">
+              <span>Change Main Event</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+            <span class="hero-event-counter" id="hero-event-counter">Event 1 of 4</span>
+          </div>
         </div>
 
         <!-- Columns 2 & 3: Featured Activity Media Gallery -->
         <div class="activities-hero-gallery-col">
           <div class="activities-gallery-main" id="hero-gallery-main">
-            <div class="activities-placeholder-visual">
+            <img id="hero-gallery-img" src="/Assets/media/events/contested-waters/RAY00190.JPG" alt="Featured Event Gallery" style="width:100%; height:100%; object-fit:cover;" />
+            <div class="activities-placeholder-visual" style="display:none;">
               <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
                 <circle cx="8.5" cy="8.5" r="1.5"/>
@@ -84,17 +99,17 @@
           </div>
 
           <div class="activities-gallery-thumbs">
-            <div class="thumb-item active" data-index="0">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <div class="thumb-item active" data-index="0" data-id="act-1" data-src="/Assets/media/events/contested-waters/RAY00190.JPG" title="Contested Waters">
+              <img src="/Assets/media/events/contested-waters/RAY00190.JPG" alt="Contested Waters" style="width:100%; height:100%; object-fit:cover;" />
             </div>
-            <div class="thumb-item" data-index="1">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <div class="thumb-item" data-index="1" data-id="act-2" data-src="/Assets/media/events/retreat/DSCF4154.JPG" title="Climate Justice Gathering">
+              <img src="/Assets/media/events/retreat/DSCF4154.JPG" alt="Climate Justice Gathering & Retreat" style="width:100%; height:100%; object-fit:cover;" />
             </div>
-            <div class="thumb-item" data-index="2">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <div class="thumb-item" data-index="2" data-id="act-3" data-src="/Assets/media/events/manchar/WhatsApp Image 2026-08-27 at 12.08.18 PM.jpeg" title="Kacheri: Manchar Sunvai">
+              <img src="/Assets/media/events/manchar/WhatsApp Image 2026-08-27 at 12.08.18 PM.jpeg" alt="Kacheri: Manchar Sunvai" style="width:100%; height:100%; object-fit:cover;" />
             </div>
-            <div class="thumb-item" data-index="3">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <div class="thumb-item" data-index="3" data-id="act-4" data-src="/Assets/media/events/exposure-visit/WhatsApp Image 2026-08-27 at 12.16.56 PM.jpeg" title="Exposure Visit to Tarbela Dam">
+              <img src="/Assets/media/events/exposure-visit/WhatsApp Image 2026-08-27 at 12.16.56 PM.jpeg" alt="Exposure Visit to Tarbela Dam" style="width:100%; height:100%; object-fit:cover;" />
             </div>
           </div>
         </div>
@@ -120,130 +135,89 @@
         <div class="activities-feed-header">
           <h2 class="activities-feed-title">Browse Through Our Latest Activity</h2>
           <p class="activities-feed-intro">
-            The lake has been impacted by the reservoir's Lake Manchhar. The discussion focused on the ecological destruction of the lake, severe loss from large development projects have affected the aquatic culture and livelihoods connected to it. Lake Manchhar is located in Sindh between the Dadu and Khanpur districts. The lake is fed by two canals and the Indus river. Manchhar comes from the Sindhi words 'Man' meaning mind and 'Chhar' meaning lake or pond. Manchhar translates to "mindful lake". It is the largest natural freshwater lake in Asia. The word "Manchhar" comes from the Sindhi words Manh meaning pass and Chhar.
+            From grassroots community kacheris to dam exposure visits and policy workshops, explore our initiatives driving climate justice and clean energy accountability across Pakistan.
           </p>
         </div>
 
         <div class="activities-list">
           <!-- Item 1 -->
-          <article class="activity-card">
+          <article class="activity-card" data-id="act-1">
             <div class="activity-media-box">
-              <div class="activities-placeholder-visual">
-                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="1.5">
-                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                  <circle cx="8.5" cy="8.5" r="1.5"/>
-                  <polyline points="21 15 16 10 5 21"/>
-                </svg>
-              </div>
+              <img src="/Assets/media/events/contested-waters/RAY00190.JPG" alt="Contested Waters: Rivers, Power and Resistance" style="width:100%; height:100%; object-fit:cover;" />
             </div>
             <div class="activity-content">
               <div>
-                <h3 class="activity-item-title">Climate Justice Gathering &amp; Retreat</h3>
+                <h3 class="activity-item-title">Contested Waters: Rivers, Power and Resistance</h3>
                 <p class="activity-item-desc">
-                  The lake has been impacted by the reservoir's Lake Manchhar. The discussion focused on the ecological destruction of the lake, severe loss from large development projects have affected the aquatic culture and livelihoods connected to it. Lake Manchhar is located in Sindh between the Dadu and Khanpur districts. The lake is fed by two canals and the Indus river. Manchhar comes from the Sindhi words 'Man' meaning mind and 'Chhar' meaning lake or pond. Manchhar translates to "mindful lake". It is the largest natural freshwater lake in Asia. The lake is 24 kilometres long and 130 kilometres wide. It is the second largest natural freshwater lake in Asia. Manchhar translates to a mind and chhar meaning pass and chhar.
+                  Examines how colonial and modern systems of water control through dams, barrages, and canals have transformed river ecosystems, displaced communities, and disrupted cultural relationships with water.
                 </p>
               </div>
               <div class="activity-card-footer">
-                <span class="activity-date">01.05.2024</span>
-                <span class="activity-tag">RETREAT</span>
+                <span class="activity-date">23.01.2026</span>
+                <span class="activity-tag">WORKSHOP</span>
               </div>
             </div>
           </article>
 
           <!-- Item 2 -->
-          <article class="activity-card">
+          <article class="activity-card" data-id="act-2">
             <div class="activity-media-box">
-              <div class="activities-placeholder-visual">
-                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="1.5">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                </svg>
-              </div>
+              <img src="/Assets/media/events/retreat/DSCF4154.JPG" alt="Climate Justice Gathering & Retreat" style="width:100%; height:100%; object-fit:cover;" />
             </div>
             <div class="activity-content">
               <div>
-                <h3 class="activity-item-title">Contested Waters</h3>
+                <h3 class="activity-item-title">Climate Justice Gathering &amp; Retreat</h3>
                 <p class="activity-item-desc">
-                  The lake has been impacted by the reservoir's Lake Manchhar. The discussion focused on the ecological destruction of the lake, severe loss from large development projects have affected the aquatic culture and livelihoods connected to it. Lake Manchhar is located in Sindh between the Dadu and Khanpur districts. The lake is fed by two canals and the Indus river. Manchhar comes from the Sindhi words 'Man' meaning mind and 'Chhar' meaning lake or pond. Manchhar translates to "mindful lake". It is the largest natural freshwater lake in Asia. The lake is 24 kilometres long and 130 kilometres wide. It is the second largest natural freshwater lake in Asia. Manchhar translates to a mind and chhar meaning pass and chhar.
+                  A 3-day retreat for climate activists and community organizers across Pakistan to reflect, reconnect with nature, and discuss energy, climate stories, burnout, and movement building.
                 </p>
               </div>
               <div class="activity-card-footer">
-                <span class="activity-date">01.05.2024</span>
+                <span class="activity-date">23.04.2026</span>
                 <span class="activity-tag">RETREAT</span>
               </div>
             </div>
           </article>
 
           <!-- Item 3 -->
-          <article class="activity-card">
+          <article class="activity-card" data-id="act-3">
             <div class="activity-media-box">
-              <div class="activities-placeholder-visual">
-                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="1.5">
-                  <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-                </svg>
-              </div>
+              <img src="/Assets/media/events/manchar/WhatsApp Image 2026-08-27 at 12.08.18 PM.jpeg" alt="Kacheri: Manchar Sunvai" style="width:100%; height:100%; object-fit:cover;" />
             </div>
             <div class="activity-content">
               <div>
-                <h3 class="activity-item-title">Working towards clean energy transition</h3>
+                <h3 class="activity-item-title">Kacheri: Manchar Sunvai</h3>
                 <p class="activity-item-desc">
-                  The lake has been impacted by the reservoir's Lake Manchhar. The discussion focused on the ecological destruction of the lake, severe loss from large development projects have affected the aquatic culture and livelihoods connected to it. Lake Manchhar is located in Sindh between the Dadu and Khanpur districts. The lake is fed by two canals and the Indus river. Manchhar comes from the Sindhi words 'Man' meaning mind and 'Chhar' meaning lake or pond. Manchhar translates to "mindful lake". It is the largest natural freshwater lake in Asia. The lake is 24 kilometres long and 130 kilometres wide. It is the second largest natural freshwater lake in Asia. Manchhar translates to a mind and chhar meaning pass and chhar.
+                  Discussion on the ecological destruction of Lake Manchhar, changes in water flow, infrastructure development, agricultural wastewater, and community-led resistance.
                 </p>
               </div>
               <div class="activity-card-footer">
-                <span class="activity-date">21.09.2024</span>
-                <span class="activity-tag">RETREAT</span>
+                <span class="activity-date">20.05.2026</span>
+                <span class="activity-tag">COMMUNITY KACHERI</span>
               </div>
             </div>
           </article>
 
           <!-- Item 4 -->
-          <article class="activity-card">
+          <article class="activity-card" data-id="act-4">
             <div class="activity-media-box">
-              <div class="activities-placeholder-visual">
-                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="1.5">
-                  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                </svg>
-              </div>
+              <img src="/Assets/media/events/exposure-visit/WhatsApp Image 2026-08-27 at 12.16.56 PM.jpeg" alt="Exposure Visit to Tarbela Dam" style="width:100%; height:100%; object-fit:cover;" />
             </div>
             <div class="activity-content">
               <div>
-                <h3 class="activity-item-title">Working towards clean energy transition</h3>
+                <h3 class="activity-item-title">Exposure Visit to Tarbela Dam</h3>
                 <p class="activity-item-desc">
-                  The lake has been impacted by the reservoir's Lake Manchhar. The discussion focused on the ecological destruction of the lake, severe loss from large development projects have affected the aquatic culture and livelihoods connected to it. Lake Manchhar is located in Sindh between the Dadu and Khanpur districts. The lake is fed by two canals and the Indus river. Manchhar comes from the Sindhi words 'Man' meaning mind and 'Chhar' meaning lake or pond. Manchhar translates to "mindful lake". It is the largest natural freshwater lake in Asia. The lake is 24 kilometres long and 130 kilometres wide. It is the second largest natural freshwater lake in Asia. Manchhar translates to a mind and chhar meaning pass and chhar.
+                  Brought together perspectives from WAPDA and displaced communities to examine Tarbela's promises of power vs. its costs on land, livelihoods, culture, and ecosystems.
                 </p>
               </div>
               <div class="activity-card-footer">
-                <span class="activity-date">01.05.2025</span>
-                <span class="activity-tag">RETREAT</span>
+                <span class="activity-date">28.07.2026</span>
+                <span class="activity-tag">EXPOSURE VISIT</span>
               </div>
             </div>
           </article>
-
-          <!-- Item 5 -->
-          <article class="activity-card">
-            <div class="activity-media-box">
-              <div class="activities-placeholder-visual">
-                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="1.5">
-                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                  <circle cx="9" cy="7" r="4"/>
-                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                  <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                </svg>
-              </div>
-            </div>
-            <div class="activity-content">
-              <div>
-                <h3 class="activity-item-title">Climate Justice Gathering &amp; Retreat</h3>
-                <p class="activity-item-desc">
-                  The lake has been impacted by the reservoir's Lake Manchhar. The discussion focused on the ecological destruction of the lake, severe loss from large development projects have affected the aquatic culture and livelihoods connected to it. Lake Manchhar is located in Sindh between the Dadu and Khanpur districts. The lake is fed by two canals and the Indus river. Manchhar comes from the Sindhi words 'Man' meaning mind and 'Chhar' meaning lake or pond. Manchhar translates to "mindful lake". It is the largest natural freshwater lake in Asia. The lake is 24 kilometres long and 130 kilometres wide. It is the second largest natural freshwater lake in Asia. Manchhar translates to a mind and chhar meaning pass and chhar.
-                </p>
-              </div>
-              <div class="activity-card-footer">
-                <span class="activity-date">01.05.2025</span>
-                <span class="activity-tag">RETREAT</span>
-              </div>
-            </div>
-          </article>
+        </div>
+      </div>
+    </section>
         </div>
       </div>
     </section>

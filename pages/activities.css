@@ -33,19 +33,47 @@
 .activities-hero-quote {
   font-family: var(--font-heading);
   font-weight: 400;
-  font-size: clamp(28px, 3.2vw, 48px);
-  line-height: 1.1;
+  font-size: clamp(26px, 3vw, 42px);
+  line-height: 1.15;
   color: #ffffff;
   margin: 0 0 8px 0;
   letter-spacing: -0.01em;
+  transition: opacity 0.25s ease;
 }
 
 .activities-hero-author {
   font-family: var(--font-body);
   font-size: 13px;
   color: #a0a0a0;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   display: block;
+  transition: opacity 0.25s ease;
+}
+
+.hero-event-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.hero-event-tag {
+  background: rgba(163, 216, 141, 0.15);
+  color: #a3d88d;
+  border: 1px solid rgba(163, 216, 141, 0.35);
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-family: 'Roboto', sans-serif;
+}
+
+.hero-event-date {
+  font-size: 12px;
+  color: #8892b0;
+  font-family: monospace;
 }
 
 .activities-hero-subtitle {
@@ -56,6 +84,7 @@
   text-transform: uppercase;
   color: #ffffff;
   margin: 0 0 12px 0;
+  transition: opacity 0.25s ease;
 }
 
 .activities-hero-description {
@@ -64,6 +93,85 @@
   line-height: 1.6;
   color: #cccccc;
   margin: 0;
+  transition: opacity 0.25s ease;
+}
+
+.hero-switch-event-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+
+.btn-switch-hero {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #a3d88d;
+  color: #000000;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 4px;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 14px rgba(163, 216, 141, 0.25);
+}
+
+.btn-switch-hero:hover {
+  background: #bbf0a7;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(163, 216, 141, 0.4);
+}
+
+.btn-switch-hero:active {
+  transform: translateY(0);
+}
+
+.btn-switch-hero svg {
+  transition: transform 0.2s ease;
+}
+
+.btn-switch-hero:hover svg {
+  transform: translateX(3px);
+}
+
+.hero-event-counter {
+  font-size: 12px;
+  color: #8892b0;
+  font-family: monospace;
+  letter-spacing: 0.04em;
+}
+
+.btn-feature-hero {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #a3d88d;
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+}
+
+.btn-feature-hero:hover {
+  background: rgba(163, 216, 141, 0.15);
+  border-color: #a3d88d;
+  color: #ffffff;
+}
+
+.activity-card.is-hero-active {
+  border-left: 3px solid #a3d88d;
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .activities-hero-gallery-col {

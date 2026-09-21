@@ -86,7 +86,7 @@
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
           </div>
           <div class="stat-info">
-            <span class="stat-label">Total Activities</span>
+            <span class="stat-label">Activities &amp; Our Work</span>
             <span class="stat-number" id="stat-activities-count">0</span>
           </div>
         </div>
@@ -110,13 +110,43 @@
             <span class="stat-number" id="stat-articles-count">0</span>
           </div>
         </div>
+
+        <div class="stat-card">
+          <div class="stat-icon icon-applications">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M9 14l2 2 4-4"/></svg>
+          </div>
+          <div class="stat-info">
+            <span class="stat-label">Applied Submissions</span>
+            <span class="stat-number" id="stat-applications-count">0</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon icon-opportunities">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+          </div>
+          <div class="stat-info">
+            <span class="stat-label">Get Involved Categories</span>
+            <span class="stat-number" id="stat-opportunities-count">0</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon icon-media" style="color:#798dff; background:rgba(121,141,255,0.12);">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          </div>
+          <div class="stat-info">
+            <span class="stat-label">Media &amp; Assets</span>
+            <span class="stat-number" id="stat-media-count">0</span>
+          </div>
+        </div>
       </section>
 
       <!-- Main Navigation Tabs -->
       <nav class="admin-tab-nav" aria-label="Console Navigation">
         <button class="tab-btn active" data-tab="activities">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
-          Activities
+          Activities &amp; Our Work
         </button>
         <button class="tab-btn" data-tab="people">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
@@ -126,28 +156,43 @@
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
           Articles &amp; Publications
         </button>
+        <button class="tab-btn" data-tab="applications">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M9 14l2 2 4-4"/></svg>
+          Applied Fields / Submissions
+          <span class="tab-badge-pill" id="tab-badge-applications">0</span>
+        </button>
+        <button class="tab-btn" data-tab="opportunities">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+          Get Involved Positions
+        </button>
+        <button class="tab-btn" data-tab="media">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Media &amp; Assets
+        </button>
       </nav>
 
       <!-- COLLECTION PANELS -->
 
-      <!-- 1. ACTIVITIES PANEL -->
+      <!-- 1. ACTIVITIES & OUR WORK PANEL -->
       <section class="admin-panel active" id="panel-activities">
         <div class="panel-header">
           <div class="panel-controls">
             <div class="search-box">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-              <input type="text" id="search-activities" class="admin-input search-input" placeholder="Search activities by title, location or description..." />
+              <input type="text" id="search-activities" class="admin-input search-input" placeholder="Search activities & our work by title, location or description..." />
             </div>
             <select id="filter-activities-tag" class="admin-select">
               <option value="">All Categories</option>
               <option value="RETREAT">RETREAT</option>
               <option value="WORKSHOP">WORKSHOP</option>
               <option value="RESEARCH">RESEARCH</option>
+              <option value="FIELD PROJECT">FIELD PROJECT</option>
+              <option value="POLICY">POLICY</option>
             </select>
           </div>
           <button class="admin-btn admin-btn-primary" id="btn-add-activity">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            Add New Activity
+            Add Activity / Work Item
           </button>
         </div>
 
@@ -244,6 +289,161 @@
         </div>
       </section>
 
+      <!-- 4. APPLIED FIELDS & SUBMISSIONS PANEL -->
+      <section class="admin-panel" id="panel-applications">
+        <div class="panel-header">
+          <div class="panel-controls">
+            <div class="search-box">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" id="search-applications" class="admin-input search-input" placeholder="Search applications by name, email, phone, city, notes..." />
+            </div>
+            <select id="filter-applications-status" class="admin-select">
+              <option value="">All Statuses</option>
+              <option value="Pending">Pending</option>
+              <option value="Under Review">Under Review</option>
+              <option value="Shortlisted">Shortlisted</option>
+              <option value="Accepted">Accepted</option>
+              <option value="Archived">Archived</option>
+            </select>
+            <select id="filter-applications-category" class="admin-select">
+              <option value="">All Categories / Roles</option>
+              <!-- Dynamically populated -->
+            </select>
+          </div>
+          <div class="panel-actions-group">
+            <button class="admin-btn admin-btn-secondary" id="btn-export-applications-csv">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Export CSV
+            </button>
+          </div>
+        </div>
+
+        <div class="table-wrapper">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Date &amp; ID</th>
+                <th>Applicant</th>
+                <th>Contact Info</th>
+                <th>Applied Category / Role</th>
+                <th>Commitment</th>
+                <th>Status</th>
+                <th class="text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="table-applications-body">
+              <!-- Dynamically Populated -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 5. GET INVOLVED POSITIONS / CATEGORIES (ORIGINAL STRUCTURE CRUD) -->
+      <section class="admin-panel" id="panel-opportunities">
+        <div class="panel-header">
+          <div class="panel-controls">
+            <div class="search-box">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" id="search-opportunities" class="admin-input search-input" placeholder="Search opportunities by title, category or description..." />
+            </div>
+            <select id="filter-opportunities-status" class="admin-select">
+              <option value="">All Statuses</option>
+              <option value="Open">Open</option>
+              <option value="Upcoming">Upcoming</option>
+              <option value="Closed">Closed</option>
+            </select>
+          </div>
+          <button class="admin-btn admin-btn-primary" id="btn-add-opportunity">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add Position / Category
+          </button>
+        </div>
+
+        <div class="table-wrapper">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Style</th>
+                <th>Title &amp; Subtitle</th>
+                <th>Category &amp; Type</th>
+                <th>Status</th>
+                <th class="text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="table-opportunities-body">
+              <!-- Dynamically Populated -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 6. MEDIA & ASSETS PANEL -->
+      <section class="admin-panel" id="panel-media">
+        <div class="panel-header">
+          <div class="panel-controls">
+            <div class="search-box">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" id="search-media" class="admin-input search-input" placeholder="Search media by filename, tag, or category..." />
+            </div>
+            <select id="filter-media-category" class="admin-select">
+              <option value="">All Media Folders</option>
+              <option value="Events">Events &amp; Gatherings</option>
+              <option value="Team">Team Photos</option>
+              <option value="Graphics">Graphics &amp; Banners</option>
+              <option value="Articles">Articles &amp; Publications</option>
+            </select>
+          </div>
+          <div class="panel-actions-group">
+            <label class="admin-btn admin-btn-primary file-upload-btn" style="cursor:pointer;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              Upload Images
+              <input type="file" id="media-bulk-upload-input" accept="image/*" multiple style="display:none;" />
+            </label>
+            <button class="admin-btn admin-btn-secondary" id="btn-add-media-url">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Add Image URL
+            </button>
+          </div>
+        </div>
+
+        <div class="media-library-toolbar">
+          <span class="media-count-indicator" id="media-library-count-text">Showing 0 media items</span>
+          <div class="media-view-switcher">
+            <button class="view-switch-btn active" id="btn-view-media-grid" title="Grid Gallery View">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            </button>
+            <button class="view-switch-btn" id="btn-view-media-table" title="List Table View">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Grid View -->
+        <div class="media-grid" id="media-grid-view">
+          <!-- Dynamically Populated -->
+        </div>
+
+        <!-- Table View -->
+        <div class="table-responsive" id="media-table-view" style="display:none;">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Preview</th>
+                <th>Asset Title &amp; File</th>
+                <th>Category</th>
+                <th>Media Path / URL</th>
+                <th>Date Added</th>
+                <th class="text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="table-media-body">
+              <!-- Dynamically Populated -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
       <!-- System Backups & Seed Tools Footer Bar -->
       <footer class="admin-tools-bar">
         <div class="tools-info">
@@ -289,6 +489,195 @@
           <button type="submit" class="admin-btn admin-btn-primary" id="btn-save-record">Save Changes</button>
         </div>
       </form>
+    </div>
+  </dialog>
+
+  <!-- Add Image URL Modal Dialog -->
+  <dialog id="admin-add-media-dialog" class="admin-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Add Media Asset URL</h3>
+        <button class="modal-close-btn" id="btn-close-add-media" aria-label="Close Modal">&times;</button>
+      </div>
+      <form id="form-add-media-url" class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Asset Title / Description</label>
+          <input type="text" id="add-media-title" class="admin-input" placeholder="e.g. Tarbela Dam Group Photo" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Category</label>
+          <select id="add-media-category" class="admin-select">
+            <option value="Events">Events &amp; Gatherings</option>
+            <option value="Team">Team Photos</option>
+            <option value="Graphics">Graphics &amp; Banners</option>
+            <option value="Articles">Articles &amp; Publications</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Image URL or Relative Path</label>
+          <input type="text" id="add-media-path" class="admin-input" placeholder="e.g. Assets/media/events/tarbela-dam.jpg or https://..." required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tags (comma separated)</label>
+          <input type="text" id="add-media-tags" class="admin-input" placeholder="e.g. event, dams, workshop" />
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="admin-btn admin-btn-secondary" id="btn-cancel-add-media">Cancel</button>
+          <button type="submit" class="admin-btn admin-btn-primary">Add to Library</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- Media Asset Detail / Lightbox Dialog -->
+  <dialog id="admin-media-detail-dialog" class="admin-modal admin-modal-wide">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="media-detail-title">Media Asset Details</h3>
+        <button class="modal-close-btn" id="btn-close-media-detail" aria-label="Close Modal">&times;</button>
+      </div>
+      <div class="modal-body media-detail-modal-body">
+        <div class="media-detail-preview-box">
+          <img id="media-detail-img" src="" alt="Media Preview" />
+        </div>
+        <div class="media-detail-info-col">
+          <div class="detail-block">
+            <span class="detail-label">Asset Title</span>
+            <strong class="detail-val" id="media-detail-name">—</strong>
+          </div>
+          <div class="detail-block">
+            <span class="detail-label">Category</span>
+            <span class="table-badge" id="media-detail-category">—</span>
+          </div>
+          <div class="detail-block">
+            <span class="detail-label">File Path / Source URL</span>
+            <input type="text" id="media-detail-path-input" class="admin-input" readonly style="font-family:monospace; font-size:11.5px;" />
+          </div>
+          <div class="detail-block">
+            <span class="detail-label">Date Added</span>
+            <span class="detail-val" id="media-detail-date">—</span>
+          </div>
+          <div class="modal-footer" style="margin-top:20px; padding-top:14px; border-top:1px solid #2d3748;">
+            <button type="button" class="admin-btn admin-btn-danger" id="btn-delete-media-item">Delete Asset</button>
+            <button type="button" class="admin-btn admin-btn-secondary" id="btn-copy-media-path">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy Link
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Media Library Picker Dialog (For Form Selection) -->
+  <dialog id="admin-media-picker-dialog" class="admin-modal admin-modal-wide">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Select Image from Media Library</h3>
+        <button class="modal-close-btn" id="btn-close-media-picker" aria-label="Close Modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="panel-controls" style="margin-bottom:16px;">
+          <input type="text" id="search-media-picker" class="admin-input search-input" placeholder="Search images..." />
+          <select id="filter-media-picker-category" class="admin-select">
+            <option value="">All Categories</option>
+            <option value="Events">Events</option>
+            <option value="Team">Team</option>
+            <option value="Graphics">Graphics</option>
+            <option value="Articles">Articles</option>
+          </select>
+        </div>
+        <div class="media-picker-grid" id="media-picker-grid">
+          <!-- Dynamically Populated -->
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="admin-btn admin-btn-secondary" id="btn-cancel-media-picker">Cancel</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Application Review & Full Detail Modal Dialog -->
+  <dialog id="admin-app-detail-dialog" class="admin-modal admin-modal-wide">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <span class="detail-kicker" id="detail-app-kicker">APPLICATION SUBMISSION</span>
+          <h3 class="modal-title" id="detail-app-title">Applicant Details</h3>
+        </div>
+        <button class="modal-close-btn" id="btn-close-app-detail" aria-label="Close Modal">&times;</button>
+      </div>
+      <div class="modal-body app-detail-body">
+        <div class="app-detail-grid">
+          <div class="detail-block">
+            <span class="detail-label">Full Name</span>
+            <strong class="detail-val" id="detail-app-name">—</strong>
+          </div>
+          <div class="detail-block">
+            <span class="detail-label">Email Address</span>
+            <span class="detail-val" id="detail-app-email">—</span>
+          </div>
+          <div class="detail-block">
+            <span class="detail-label">Phone / WhatsApp</span>
+            <span class="detail-val" id="detail-app-phone">—</span>
+          </div>
+          <div class="detail-block">
+            <span class="detail-label">City / Location</span>
+            <span class="detail-val" id="detail-app-city">—</span>
+          </div>
+          <div class="detail-block">
+            <span class="detail-label">Applied Category / Role</span>
+            <strong class="detail-val" id="detail-app-opp">—</strong>
+          </div>
+          <div class="detail-block">
+            <span class="detail-label">Time Commitment</span>
+            <span class="detail-val" id="detail-app-commitment">—</span>
+          </div>
+          <div class="detail-block">
+            <span class="detail-label">Submission Date</span>
+            <span class="detail-val" id="detail-app-date">—</span>
+          </div>
+          <div class="detail-block">
+            <span class="detail-label">Current Status</span>
+            <div id="detail-app-status-badge"></div>
+          </div>
+        </div>
+
+        <div class="detail-section">
+          <span class="detail-label">Statement of Interest / Motivation</span>
+          <div class="detail-content-box" id="detail-app-message">—</div>
+        </div>
+
+        <div class="detail-section">
+          <span class="detail-label">Relevant Background, Skills or Portfolio</span>
+          <div class="detail-content-box" id="detail-app-experience">—</div>
+        </div>
+
+        <form id="app-status-form" class="app-status-update-form">
+          <input type="hidden" id="detail-app-id" value="" />
+          <div class="form-group">
+            <label class="form-label" for="detail-status-select">Update Application Status</label>
+            <select id="detail-status-select" class="admin-select full-width">
+              <option value="Pending">Pending</option>
+              <option value="Under Review">Under Review</option>
+              <option value="Shortlisted">Shortlisted</option>
+              <option value="Accepted">Accepted</option>
+              <option value="Archived">Archived</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="detail-admin-notes">Internal Administrative Notes</label>
+            <textarea id="detail-admin-notes" class="admin-textarea" rows="3" placeholder="Add private notes for this candidate (e.g. interview scheduled, resume verified, etc.)..."></textarea>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="admin-btn admin-btn-danger" id="btn-delete-app">Delete Submission</button>
+            <button type="button" class="admin-btn admin-btn-secondary" id="btn-cancel-app-detail">Close</button>
+            <button type="submit" class="admin-btn admin-btn-primary" id="btn-save-app-status">Update Application</button>
+          </div>
+        </form>
+      </div>
     </div>
   </dialog>
 
