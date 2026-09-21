@@ -24,23 +24,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const statArticles = document.getElementById('stat-articles-count');
   const statApplications = document.getElementById('stat-applications-count');
   const statOpportunities = document.getElementById('stat-opportunities-count');
-  const statMedia = document.getElementById('stat-media-count');
   const tabBadgeApplications = document.getElementById('tab-badge-applications');
 
   // Tabs
   const tabBtns = document.querySelectorAll('.tab-btn');
   const panels = document.querySelectorAll('.admin-panel');
 
-  // Tables & Grids
+  // Tables
   const tableActivitiesBody = document.getElementById('table-activities-body');
   const tablePeopleBody = document.getElementById('table-people-body');
   const tableArticlesBody = document.getElementById('table-articles-body');
   const tableApplicationsBody = document.getElementById('table-applications-body');
   const tableOpportunitiesBody = document.getElementById('table-opportunities-body');
-  const tableMediaBody = document.getElementById('table-media-body');
-  const mediaGridView = document.getElementById('media-grid-view');
-  const mediaTableView = document.getElementById('media-table-view');
-  const mediaLibraryCountText = document.getElementById('media-library-count-text');
 
   // Filters & Search
   const searchActivities = document.getElementById('search-activities');
@@ -59,35 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const searchOpportunities = document.getElementById('search-opportunities');
   const filterOpportunitiesStatus = document.getElementById('filter-opportunities-status');
 
-  const searchMedia = document.getElementById('search-media');
-  const filterMediaCategory = document.getElementById('filter-media-category');
-  const mediaBulkUploadInput = document.getElementById('media-bulk-upload-input');
-  const btnAddMediaUrl = document.getElementById('btn-add-media-url');
-  const btnViewMediaGrid = document.getElementById('btn-view-media-grid');
-  const btnViewMediaTable = document.getElementById('btn-view-media-table');
-
-  // Media Modals
-  const dialogAddMedia = document.getElementById('admin-add-media-dialog');
-  const formAddMediaUrl = document.getElementById('form-add-media-url');
-  const btnCloseAddMedia = document.getElementById('btn-close-add-media');
-  const btnCancelAddMedia = document.getElementById('btn-cancel-add-media');
-
-  const dialogMediaDetail = document.getElementById('admin-media-detail-dialog');
-  const btnCloseMediaDetail = document.getElementById('btn-close-media-detail');
-  const btnDeleteMediaItem = document.getElementById('btn-delete-media-item');
-  const btnCopyMediaPath = document.getElementById('btn-copy-media-path');
-
-  const dialogMediaPicker = document.getElementById('admin-media-picker-dialog');
-  const btnCloseMediaPicker = document.getElementById('btn-close-media-picker');
-  const btnCancelMediaPicker = document.getElementById('btn-cancel-media-picker');
-  const searchMediaPicker = document.getElementById('search-media-picker');
-  const filterMediaPickerCategory = document.getElementById('filter-media-picker-category');
-  const mediaPickerGrid = document.getElementById('media-picker-grid');
-
-  let activeMediaPickerTargetInput = null;
-  let activeMediaPickerTargetPreview = null;
-  let activeDetailMediaId = null;
-
   // Universal CRUD Modal
   const modalDialog = document.getElementById('admin-modal-dialog');
   const crudForm = document.getElementById('admin-crud-form');
@@ -105,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnCancelAppDetail = document.getElementById('btn-cancel-app-detail');
   const btnDeleteApp = document.getElementById('btn-delete-app');
 
-  // Buttons
+  // Action Buttons
   const btnAddActivity = document.getElementById('btn-add-activity');
   const btnAddPerson = document.getElementById('btn-add-person');
   const btnAddArticle = document.getElementById('btn-add-article');
@@ -115,7 +81,24 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnResetData = document.getElementById('btn-reset-data');
 
   /* ============================================================
-     1. Authentication Gate
+     1. Image Resolution Helper
+     ============================================================ */
+  function resolveAdminImg(path, fallback = 'Assets/CAEA-Navbar-Logo.png') {
+    if (!path) return '../' + fallback;
+    if (path.startsWith('data:') || path.startsWith('http://') || path.startsWith('https://') || path.startsWith('//')) {
+      return path;
+    }
+    if (path.startsWith('../')) {
+      return path;
+    }
+    if (path.startsWith('/')) {
+      return '..' + path;
+    }
+    return '../' + path;
+  }
+
+  /* ============================================================
+     2. Authentication Gate
      ============================================================ */
   function checkAuth() {
     const isAuth = sessionStorage.getItem('caea_admin_auth');
@@ -153,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ============================================================
-     2. Main Console Initialization
+     3. Main Console Initialization
      ============================================================ */
   function initConsole() {
     updateStats();
@@ -168,19 +151,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const articlesCount = window.DataStore.get('articles').length;
     const applicationsCount = window.DataStore.get('applications').length;
     const opportunitiesCount = window.DataStore.get('opportunities').length;
-    const mediaCount = (window.DataStore.get('media') || []).length;
 
     if (statActivities) statActivities.textContent = activitiesCount;
     if (statPeople) statPeople.textContent = peopleCount;
     if (statArticles) statArticles.textContent = articlesCount;
     if (statApplications) statApplications.textContent = applicationsCount;
     if (statOpportunities) statOpportunities.textContent = opportunitiesCount;
-    if (statMedia) statMedia.textContent = mediaCount;
     if (tabBadgeApplications) tabBadgeApplications.textContent = applicationsCount;
   }
 
   /* ============================================================
-     3. Tab Switching
+     4. Tab Switching
      ============================================================ */
   tabBtns.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -201,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ============================================================
-     4. Table & Media Rendering
+     5. Table Rendering Functions
      ============================================================ */
   function renderAllTables() {
     renderActivitiesTable();
@@ -209,10 +190,9 @@ document.addEventListener('DOMContentLoaded', () => {
     renderArticlesTable();
     renderApplicationsTable();
     renderOpportunitiesTable();
-    renderMediaLibrary();
   }
 
-  // Activities Table
+  // 5.1 Activities & Our Work Table
   window.setActivityAsHero = function(actId) {
     if (!window.DataStore) return;
     const items = window.DataStore.get('activities');
@@ -257,7 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <tr style="${item.featured ? 'background: rgba(163, 216, 141, 0.05);' : ''}">
         <td style="font-family:monospace; font-size:11px; color:#888;">${item.id}</td>
         <td>
-          <img src="../${item.image || 'Assets/Hero-image.png'}" alt="" class="table-media-thumb" onerror="this.src='../Assets/CAEA-Navbar-Logo.png'" />
+          <img src="${resolveAdminImg(item.image, 'Assets/Hero-image.png')}" alt="" class="table-media-thumb" onerror="this.src='../Assets/CAEA-Navbar-Logo.png'" />
         </td>
         <td>
           <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
@@ -267,7 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div style="font-size:12px; color:#9da5b4;">${escapeHtml(item.location || 'N/A')}</div>
         </td>
         <td>
-          <span class="table-badge ${ (item.category || '').toLowerCase() }">${item.category || 'RETREAT'}</span>
+          <span class="table-badge ${ (item.category || '').toLowerCase().replace(/\s+/g, '-') }">${escapeHtml(item.category || 'RETREAT')}</span>
         </td>
         <td>${item.dateFormatted || item.date || 'N/A'}</td>
         <td class="text-right">
@@ -287,7 +267,7 @@ document.addEventListener('DOMContentLoaded', () => {
     `).join('');
   }
 
-  // People Table
+  // 5.2 People & Team Table
   function renderPeopleTable() {
     if (!tablePeopleBody || !window.DataStore) return;
     let items = window.DataStore.get('people');
@@ -314,14 +294,14 @@ document.addEventListener('DOMContentLoaded', () => {
       <tr>
         <td style="font-family:monospace; font-size:11px; color:#888;">${item.id}</td>
         <td>
-          <img src="../${item.image || 'Assets/Team/grid-1-2-Sanaa.png'}" alt="" class="table-media-thumb" style="border-radius:50%; width:36px; height:36px;" onerror="this.src='../Assets/CAEA-Navbar-Logo.png'" />
+          <img src="${resolveAdminImg(item.image, 'Assets/Team/grid-1-2-Sanaa.png')}" alt="" class="table-media-thumb" style="border-radius:50%; width:36px; height:36px;" onerror="this.src='../Assets/CAEA-Navbar-Logo.png'" />
         </td>
         <td>
           <strong>${escapeHtml(item.name)}</strong>
           <div style="font-size:12px; color:#9da5b4;">${escapeHtml(item.role || 'N/A')}</div>
         </td>
         <td>
-          <span class="table-badge">${item.category || 'Core Team'}</span>
+          <span class="table-badge">${escapeHtml(item.category || 'Core Team')}</span>
         </td>
         <td style="max-width:280px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:#9da5b4;">
           ${escapeHtml(item.bio || 'N/A')}
@@ -340,7 +320,7 @@ document.addEventListener('DOMContentLoaded', () => {
     `).join('');
   }
 
-  // Articles Table
+  // 5.3 Articles & Publications Table
   function renderArticlesTable() {
     if (!tableArticlesBody || !window.DataStore) return;
     let items = window.DataStore.get('articles');
@@ -363,14 +343,14 @@ document.addEventListener('DOMContentLoaded', () => {
       <tr>
         <td style="font-family:monospace; font-size:11px; color:#888;">${item.id}</td>
         <td>
-          <img src="../${item.image || 'Assets/how-water-became-power.jpg'}" alt="" class="table-media-thumb" onerror="this.src='../Assets/CAEA-Navbar-Logo.png'" />
+          <img src="${resolveAdminImg(item.image, 'Assets/how-water-became-power.jpg')}" alt="" class="table-media-thumb" onerror="this.src='../Assets/CAEA-Navbar-Logo.png'" />
         </td>
         <td>
           <strong>${escapeHtml(item.title)}</strong>
           <div style="font-size:12px; color:#9da5b4;">By ${escapeHtml(item.author || 'CAEA Team')}</div>
         </td>
         <td>
-          <span class="table-badge">${item.kicker || 'CASE STUDY'}</span>
+          <span class="table-badge">${escapeHtml(item.kicker || 'CASE STUDY')}</span>
         </td>
         <td>${item.dateFormatted || item.date || 'N/A'}</td>
         <td class="text-right">
@@ -387,7 +367,7 @@ document.addEventListener('DOMContentLoaded', () => {
     `).join('');
   }
 
-  // 4. Applied Fields (Applications) Table
+  // 5.4 Applied Fields (Applications) Table
   function renderApplicationsTable() {
     if (!tableApplicationsBody || !window.DataStore) return;
     let items = window.DataStore.get('applications');
@@ -449,7 +429,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </td>
           <td class="text-right">
             <div class="table-actions">
-              <button class="action-icon-btn edit-btn" onclick="openAppDetailModal('${item.id}')" title="Review Submission & Notes">
+              <button class="action-icon-btn edit-btn" onclick="openAppDetailModal('${item.id}')" title="Review &amp; Update Application">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
               </button>
               <button class="action-icon-btn delete-btn" onclick="confirmDelete('applications', '${item.id}')" title="Delete Application">
@@ -464,25 +444,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function populateApplicationCategoryFilter() {
     if (!filterApplicationsCategory || !window.DataStore) return;
-    const apps = window.DataStore.get('applications') || [];
     const opps = window.DataStore.get('opportunities') || [];
+    const activities = window.DataStore.get('activities') || [];
+    const existingVal = filterApplicationsCategory.value;
 
-    const categoriesSet = new Set();
-    apps.forEach(a => {
-      if (a.opportunityTitle) categoriesSet.add(a.opportunityTitle);
-    });
+    let options = '<option value="">All Categories / Roles</option>';
+    const added = new Set();
+
     opps.forEach(o => {
-      if (o.title) categoriesSet.add(o.title);
+      if (o.title && !added.has(o.title)) {
+        added.add(o.title);
+        options += `<option value="${escapeHtml(o.title)}">${escapeHtml(o.title)}</option>`;
+      }
     });
 
-    let html = `<option value="">All Categories / Roles</option>`;
-    categoriesSet.forEach(cat => {
-      html += `<option value="${escapeHtml(cat)}">${escapeHtml(cat)}</option>`;
+    activities.forEach(a => {
+      if (a.title && !added.has(a.title)) {
+        added.add(a.title);
+        options += `<option value="${escapeHtml(a.title)}">[Activity] ${escapeHtml(a.title)}</option>`;
+      }
     });
-    filterApplicationsCategory.innerHTML = html;
+
+    filterApplicationsCategory.innerHTML = options;
+    filterApplicationsCategory.value = existingVal;
   }
 
-  // 5. Get Involved Positions Table (Original Structure)
+  // 5.5 Get Involved Positions / Opportunities Table
   function renderOpportunitiesTable() {
     if (!tableOpportunitiesBody || !window.DataStore) return;
     let items = window.DataStore.get('opportunities');
@@ -492,7 +479,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (query) {
       items = items.filter(i =>
         (i.title && i.title.toLowerCase().includes(query)) ||
-        (i.subtitle && i.subtitle.toLowerCase().includes(query)) ||
         (i.category && i.category.toLowerCase().includes(query)) ||
         (i.description && i.description.toLowerCase().includes(query))
       );
@@ -543,289 +529,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }).join('');
   }
 
-  // 6. Media Library Renderer & Manager
-  function renderMediaLibrary() {
-    if (!mediaGridView || !window.DataStore) return;
-    let items = window.DataStore.get('media') || [];
-    const query = searchMedia ? searchMedia.value.toLowerCase().trim() : '';
-    const cat = filterMediaCategory ? filterMediaCategory.value : '';
-
-    if (query) {
-      items = items.filter(i =>
-        (i.title && i.title.toLowerCase().includes(query)) ||
-        (i.path && i.path.toLowerCase().includes(query)) ||
-        (i.category && i.category.toLowerCase().includes(query)) ||
-        (i.tags && i.tags.some(t => t.toLowerCase().includes(query)))
-      );
-    }
-    if (cat) {
-      items = items.filter(i => i.category === cat);
-    }
-
-    if (mediaLibraryCountText) {
-      mediaLibraryCountText.textContent = `Showing ${items.length} media ${items.length === 1 ? 'asset' : 'assets'}`;
-    }
-
-    // Render Grid View
-    if (items.length === 0) {
-      mediaGridView.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:48px; color:#888;">No media assets found matching criteria.</div>`;
-    } else {
-      mediaGridView.innerHTML = items.map(item => {
-        const fullSrc = item.path.startsWith('data:') || item.path.startsWith('http') ? item.path : '../' + item.path;
-        return `
-          <div class="media-card" data-id="${item.id}">
-            <div class="media-card-img-wrap">
-              <img src="${fullSrc}" alt="${escapeHtml(item.title)}" class="media-card-img" onerror="this.src='../Assets/CAEA-Navbar-Logo.png'" />
-              <div class="media-card-overlay">
-                <button class="media-overlay-btn" onclick="openMediaDetailModal('${item.id}')" title="Inspect & Full View">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                </button>
-                <button class="media-overlay-btn" onclick="copyMediaPath('${item.path}')" title="Copy Path/URL">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                </button>
-                <button class="media-overlay-btn delete-btn" onclick="confirmDelete('media', '${item.id}')" title="Delete Asset">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-                </button>
-              </div>
-            </div>
-            <div class="media-card-body">
-              <span class="media-card-title" title="${escapeHtml(item.title)}">${escapeHtml(item.title)}</span>
-              <div class="media-card-footer">
-                <span class="media-card-tag">${escapeHtml(item.category || 'General')}</span>
-                <span class="media-card-date">${item.dateFormatted || item.date || ''}</span>
-              </div>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    // Render Table View
-    if (tableMediaBody) {
-      if (items.length === 0) {
-        tableMediaBody.innerHTML = `<tr><td colspan="6" class="text-center" style="padding:28px; color:#888;">No media found.</td></tr>`;
-      } else {
-        tableMediaBody.innerHTML = items.map(item => {
-          const fullSrc = item.path.startsWith('data:') || item.path.startsWith('http') ? item.path : '../' + item.path;
-          return `
-            <tr>
-              <td>
-                <img src="${fullSrc}" alt="" class="table-media-thumb" style="width:48px; height:36px; border-radius:4px; object-fit:cover;" onerror="this.src='../Assets/CAEA-Navbar-Logo.png'" />
-              </td>
-              <td>
-                <strong>${escapeHtml(item.title)}</strong>
-                <div style="font-family:monospace; font-size:11px; color:#888;">${item.id}</div>
-              </td>
-              <td><span class="table-badge">${escapeHtml(item.category || 'General')}</span></td>
-              <td style="font-family:monospace; font-size:11.5px; color:#a0aec0; max-width:240px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
-                ${escapeHtml(item.path)}
-              </td>
-              <td>${item.dateFormatted || item.date || 'N/A'}</td>
-              <td class="text-right">
-                <div class="table-actions">
-                  <button class="action-icon-btn" onclick="openMediaDetailModal('${item.id}')" title="View Details">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                  </button>
-                  <button class="action-icon-btn" onclick="copyMediaPath('${item.path}')" title="Copy Path">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                  </button>
-                  <button class="action-icon-btn delete-btn" onclick="confirmDelete('media', '${item.id}')" title="Delete Asset">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-                  </button>
-                </div>
-              </td>
-            </tr>
-          `;
-        }).join('');
-      }
-    }
-  }
-
-  // Media Helpers
-  window.copyMediaPath = function(path) {
-    if (!path) return;
-    navigator.clipboard.writeText(path).then(() => {
-      showToast(`Copied "${path}" to clipboard!`);
-    }).catch(() => {
-      showToast(`Path: ${path}`);
-    });
-  };
-
-  window.openMediaDetailModal = function(id) {
-    activeDetailMediaId = id;
-    const item = window.DataStore.getById('media', id);
-    if (!item || !dialogMediaDetail) return;
-
-    const fullSrc = item.path.startsWith('data:') || item.path.startsWith('http') ? item.path : '../' + item.path;
-    const imgEl = document.getElementById('media-detail-img');
-    const nameEl = document.getElementById('media-detail-name');
-    const catEl = document.getElementById('media-detail-category');
-    const pathEl = document.getElementById('media-detail-path-input');
-    const dateEl = document.getElementById('media-detail-date');
-
-    if (imgEl) imgEl.src = fullSrc;
-    if (nameEl) nameEl.textContent = item.title || 'Untitled Asset';
-    if (catEl) catEl.textContent = item.category || 'General';
-    if (pathEl) pathEl.value = item.path || '';
-    if (dateEl) dateEl.textContent = item.dateFormatted || item.date || 'N/A';
-
-    dialogMediaDetail.showModal();
-  };
-
-  if (btnCloseMediaDetail) btnCloseMediaDetail.addEventListener('click', () => dialogMediaDetail.close());
-  if (btnCopyMediaPath) {
-    btnCopyMediaPath.addEventListener('click', () => {
-      const pathEl = document.getElementById('media-detail-path-input');
-      if (pathEl) copyMediaPath(pathEl.value);
-    });
-  }
-  if (btnDeleteMediaItem) {
-    btnDeleteMediaItem.addEventListener('click', () => {
-      if (activeDetailMediaId) {
-        dialogMediaDetail.close();
-        confirmDelete('media', activeDetailMediaId);
-      }
-    });
-  }
-
-  // Media Picker Logic
-  window.openMediaPicker = function(targetInputId, targetPreviewId) {
-    activeMediaPickerTargetInput = document.getElementById(targetInputId);
-    activeMediaPickerTargetPreview = document.getElementById(targetPreviewId);
-    renderMediaPickerGrid();
-    if (dialogMediaPicker) dialogMediaPicker.showModal();
-  };
-
-  function renderMediaPickerGrid() {
-    if (!mediaPickerGrid || !window.DataStore) return;
-    let items = window.DataStore.get('media') || [];
-    const query = searchMediaPicker ? searchMediaPicker.value.toLowerCase().trim() : '';
-    const cat = filterMediaPickerCategory ? filterMediaPickerCategory.value : '';
-
-    if (query) {
-      items = items.filter(i =>
-        (i.title && i.title.toLowerCase().includes(query)) ||
-        (i.path && i.path.toLowerCase().includes(query))
-      );
-    }
-    if (cat) {
-      items = items.filter(i => i.category === cat);
-    }
-
-    if (items.length === 0) {
-      mediaPickerGrid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:30px; color:#888;">No matching media assets found.</div>`;
-      return;
-    }
-
-    mediaPickerGrid.innerHTML = items.map(item => {
-      const fullSrc = item.path.startsWith('data:') || item.path.startsWith('http') ? item.path : '../' + item.path;
-      return `
-        <div class="media-picker-item" onclick="selectMediaForInput('${escapeHtml(item.path)}')" title="${escapeHtml(item.title)}">
-          <img src="${fullSrc}" alt="" onerror="this.src='../Assets/CAEA-Navbar-Logo.png'" />
-          <span class="media-picker-item-label">${escapeHtml(item.title)}</span>
-        </div>
-      `;
-    }).join('');
-  }
-
-  window.selectMediaForInput = function(mediaPath) {
-    if (activeMediaPickerTargetInput) {
-      activeMediaPickerTargetInput.value = mediaPath;
-    }
-    if (activeMediaPickerTargetPreview) {
-      activeMediaPickerTargetPreview.src = mediaPath.startsWith('data:') || mediaPath.startsWith('http') ? mediaPath : '../' + mediaPath;
-    }
-    if (dialogMediaPicker) dialogMediaPicker.close();
-    showToast(`Media selected: ${mediaPath}`);
-  };
-
-  if (btnCloseMediaPicker) btnCloseMediaPicker.addEventListener('click', () => dialogMediaPicker.close());
-  if (btnCancelMediaPicker) btnCancelMediaPicker.addEventListener('click', () => dialogMediaPicker.close());
-  if (searchMediaPicker) searchMediaPicker.addEventListener('input', renderMediaPickerGrid);
-  if (filterMediaPickerCategory) filterMediaPickerCategory.addEventListener('change', renderMediaPickerGrid);
-
-  // View Switcher (Grid vs Table)
-  if (btnViewMediaGrid && btnViewMediaTable) {
-    btnViewMediaGrid.addEventListener('click', () => {
-      btnViewMediaGrid.classList.add('active');
-      btnViewMediaTable.classList.remove('active');
-      if (mediaGridView) mediaGridView.style.display = 'grid';
-      if (mediaTableView) mediaTableView.style.display = 'none';
-    });
-    btnViewMediaTable.addEventListener('click', () => {
-      btnViewMediaTable.classList.add('active');
-      btnViewMediaGrid.classList.remove('active');
-      if (mediaGridView) mediaGridView.style.display = 'none';
-      if (mediaTableView) mediaTableView.style.display = 'block';
-    });
-  }
-
-  // Bulk Upload Images to Media Library
-  if (mediaBulkUploadInput) {
-    mediaBulkUploadInput.addEventListener('change', (e) => {
-      const files = Array.from(e.target.files);
-      if (!files.length) return;
-
-      let processed = 0;
-      files.forEach(file => {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          const dataUrl = event.target.result;
-          const cleanName = file.name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ');
-          window.DataStore.add('media', {
-            title: cleanName.charAt(0).toUpperCase() + cleanName.slice(1),
-            category: 'Uploads',
-            path: dataUrl,
-            tags: ['upload', cleanName.toLowerCase()]
-          });
-          processed++;
-          if (processed === files.length) {
-            updateStats();
-            renderMediaLibrary();
-            showToast(`Uploaded ${files.length} new ${files.length === 1 ? 'image' : 'images'} to Media Library!`);
-            mediaBulkUploadInput.value = '';
-          }
-        };
-        reader.readAsDataURL(file);
-      });
-    });
-  }
-
-  // Add Media URL Form
-  if (btnAddMediaUrl && dialogAddMedia) {
-    btnAddMediaUrl.addEventListener('click', () => {
-      if (formAddMediaUrl) formAddMediaUrl.reset();
-      dialogAddMedia.showModal();
-    });
-  }
-  if (btnCloseAddMedia) btnCloseAddMedia.addEventListener('click', () => dialogAddMedia.close());
-  if (btnCancelAddMedia) btnCancelAddMedia.addEventListener('click', () => dialogAddMedia.close());
-
-  if (formAddMediaUrl) {
-    formAddMediaUrl.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const title = document.getElementById('add-media-title').value.trim();
-      const category = document.getElementById('add-media-category').value;
-      const path = document.getElementById('add-media-path').value.trim();
-      const tagsStr = document.getElementById('add-media-tags').value.trim();
-      const tags = tagsStr ? tagsStr.split(',').map(t => t.trim().toLowerCase()).filter(Boolean) : [];
-
-      if (!title || !path) return;
-
-      window.DataStore.add('media', {
-        title,
-        category,
-        path,
-        tags
-      });
-
-      updateStats();
-      renderMediaLibrary();
-      dialogAddMedia.close();
-      showToast(`Added "${title}" to Media Library!`);
-    });
-  }
-
   // Filter Listeners
   if (searchActivities) searchActivities.addEventListener('input', renderActivitiesTable);
   if (filterActivitiesTag) filterActivitiesTag.addEventListener('change', renderActivitiesTable);
@@ -842,11 +545,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if (searchOpportunities) searchOpportunities.addEventListener('input', renderOpportunitiesTable);
   if (filterOpportunitiesStatus) filterOpportunitiesStatus.addEventListener('change', renderOpportunitiesTable);
 
-  if (searchMedia) searchMedia.addEventListener('input', renderMediaLibrary);
-  if (filterMediaCategory) filterMediaCategory.addEventListener('change', renderMediaLibrary);
-
   /* ============================================================
-     5. Universal CRUD Form Dialog (Activities, People, Articles, Opportunities)
+     6. Universal CRUD Form Dialog with Direct File Upload
      ============================================================ */
   window.openEditModal = function(collection, id = null) {
     activeEditId = id;
@@ -863,34 +563,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
     modalTitle.textContent = `${isEdit ? 'Edit' : 'Add New'} ${collectionName}`;
 
-    // Render Dynamic Form Fields based on Collection
-    let fieldsHtml = '';
-
+    // Image preview resolution
     const currentImg = item.image || (collection === 'activities' ? 'Assets/Hero-image.png' : collection === 'people' ? 'Assets/Team/sanaa-muhammad.jpg' : 'Assets/how-water-became-power.jpg');
+    const previewSrc = resolveAdminImg(currentImg);
+
     const imageFieldHtml = `
       <div class="form-group">
         <label class="form-label">Media / Image Asset</label>
-        <div class="image-upload-wrapper">
+        <div class="image-upload-wrapper" id="modal-image-dropzone">
           <div class="image-preview-container">
-            <img id="form-image-preview" src="${currentImg.startsWith('data:') || currentImg.startsWith('http') ? currentImg : '../' + currentImg}" alt="Preview" class="form-img-preview" onerror="this.src='../Assets/CAEA-Navbar-Logo.png'" />
+            <img id="form-image-preview" src="${previewSrc}" alt="Preview" class="form-img-preview" onerror="this.src='../Assets/CAEA-Navbar-Logo.png'" />
           </div>
           <div class="image-upload-controls">
-            <div style="display:flex; gap:8px; flex-wrap:wrap;">
-              <label class="admin-btn admin-btn-secondary upload-file-btn">
+            <div class="upload-actions-row">
+              <label class="upload-file-btn">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-                Upload File
+                <span>Upload File</span>
                 <input type="file" id="form-file-input" accept="image/*" style="display:none;" />
               </label>
-              <button type="button" class="btn-open-media-picker" onclick="openMediaPicker('form-image-url', 'form-image-preview')">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-                Choose from Media Library
+              <button type="button" class="btn-clear-img" id="btn-clear-form-image" title="Clear image">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                Clear
               </button>
+              <span class="upload-filename-badge" id="upload-filename-badge" style="display:none;"></span>
             </div>
-            <input type="text" name="image" id="form-image-url" class="admin-input" value="${escapeHtml(item.image || '')}" placeholder="Or paste external URL or file path..." />
+            <input type="text" name="image" id="form-image-url" class="admin-input" value="${escapeHtml(item.image || '')}" placeholder="Or paste image path / URL (e.g. Assets/Team/sanaa.jpg or https://...)" />
           </div>
         </div>
       </div>
     `;
+
+    // Render Dynamic Form Fields based on Collection
+    let fieldsHtml = '';
 
     if (collection === 'activities') {
       fieldsHtml = `
@@ -1007,7 +711,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <div class="form-group">
           <label class="form-label">Category Name</label>
-          <input type="text" name="category" class="admin-input" value="${escapeHtml(item.category || '')}" placeholder="e.g. Core Team & Field Research, Volunteering, Fellowship" required />
+          <input type="text" name="category" class="admin-input" value="${escapeHtml(item.category || '')}" placeholder="e.g. Core Team &amp; Field Research, Volunteering, Fellowship" required />
         </div>
         <div class="form-group">
           <label class="form-label">Role Type</label>
@@ -1044,26 +748,75 @@ document.addEventListener('DOMContentLoaded', () => {
 
     dynamicFieldsContainer.innerHTML = fieldsHtml;
 
-    // Attach File Upload Event Listener
+    // Attach File Upload, Drag & Drop, and Preview Listeners
     const fileInput = document.getElementById('form-file-input');
     const imageUrlInput = document.getElementById('form-image-url');
     const imagePreview = document.getElementById('form-image-preview');
+    const filenameBadge = document.getElementById('upload-filename-badge');
+    const btnClearImage = document.getElementById('btn-clear-form-image');
+    const dropzone = document.getElementById('modal-image-dropzone');
+
+    function handleUploadedFile(file) {
+      if (!file || !file.type.startsWith('image/')) {
+        alert('Please select a valid image file (PNG, JPG, WEBP, GIF, SVG).');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        const dataUrl = evt.target.result;
+        if (imageUrlInput) imageUrlInput.value = dataUrl;
+        if (imagePreview) imagePreview.src = dataUrl;
+        if (filenameBadge) {
+          filenameBadge.textContent = file.name;
+          filenameBadge.style.display = 'inline-block';
+        }
+        showToast(`Uploaded "${file.name}" to preview!`);
+      };
+      reader.readAsDataURL(file);
+    }
 
     if (fileInput) {
       fileInput.addEventListener('change', (e) => {
         const file = e.target.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = (evt) => {
-            const dataUrl = evt.target.result;
-            imageUrlInput.value = dataUrl;
-            if (imagePreview) {
-              imagePreview.src = dataUrl;
-            }
-            showToast(`File "${file.name}" uploaded to preview!`);
-          };
-          reader.readAsDataURL(file);
+        if (file) handleUploadedFile(file);
+      });
+    }
+
+    if (dropzone) {
+      ['dragenter', 'dragover'].forEach(eventName => {
+        dropzone.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          dropzone.style.borderColor = '#a3d88d';
+          dropzone.style.background = 'rgba(163, 216, 141, 0.08)';
+        });
+      });
+      ['dragleave', 'drop'].forEach(eventName => {
+        dropzone.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          dropzone.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+          dropzone.style.background = '#14171d';
+        });
+      });
+      dropzone.addEventListener('drop', (e) => {
+        const files = e.dataTransfer.files;
+        if (files && files.length > 0) {
+          handleUploadedFile(files[0]);
         }
+      });
+    }
+
+    if (btnClearImage) {
+      btnClearImage.addEventListener('click', () => {
+        if (imageUrlInput) imageUrlInput.value = '';
+        if (imagePreview) imagePreview.src = '../Assets/CAEA-Navbar-Logo.png';
+        if (fileInput) fileInput.value = '';
+        if (filenameBadge) {
+          filenameBadge.textContent = '';
+          filenameBadge.style.display = 'none';
+        }
+        showToast('Image cleared');
       });
     }
 
@@ -1071,7 +824,7 @@ document.addEventListener('DOMContentLoaded', () => {
       imageUrlInput.addEventListener('input', () => {
         if (imagePreview) {
           const val = imageUrlInput.value.trim();
-          imagePreview.src = val.startsWith('data:') || val.startsWith('http') ? val : '../' + val;
+          imagePreview.src = resolveAdminImg(val);
         }
       });
     }
@@ -1127,7 +880,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ============================================================
-     6. Application Review & Details Modal
+     7. Application Review & Details Modal
      ============================================================ */
   window.openAppDetailModal = function(id) {
     activeAppDetailId = id;
@@ -1172,7 +925,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (id && window.DataStore) {
         window.DataStore.update('applications', id, { status, notes });
-        showToast(`Updated application for status: ${status}`);
+        showToast(`Updated application status to ${status}`);
         updateStats();
         renderApplicationsTable();
         closeAppDetailModal();
@@ -1194,7 +947,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ============================================================
-     7. CSV Export for Applications
+     8. CSV Export for Applications
      ============================================================ */
   function exportApplicationsToCSV() {
     const apps = window.DataStore.get('applications');
@@ -1256,7 +1009,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   /* ============================================================
-     8. Export & Import Utilities
+     9. Export & Import Utilities
      ============================================================ */
   if (btnExportData) {
     btnExportData.addEventListener('click', () => {
@@ -1312,7 +1065,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ============================================================
-     9. Toast Notification Helper
+     10. Toast Notification & String Helpers
      ============================================================ */
   function showToast(msg) {
     const container = document.getElementById('admin-toast-container');

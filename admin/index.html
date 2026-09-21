@@ -130,16 +130,6 @@
             <span class="stat-number" id="stat-opportunities-count">0</span>
           </div>
         </div>
-
-        <div class="stat-card">
-          <div class="stat-icon icon-media" style="color:#798dff; background:rgba(121,141,255,0.12);">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          </div>
-          <div class="stat-info">
-            <span class="stat-label">Media &amp; Assets</span>
-            <span class="stat-number" id="stat-media-count">0</span>
-          </div>
-        </div>
       </section>
 
       <!-- Main Navigation Tabs -->
@@ -164,10 +154,6 @@
         <button class="tab-btn" data-tab="opportunities">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
           Get Involved Positions
-        </button>
-        <button class="tab-btn" data-tab="media">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          Media &amp; Assets
         </button>
       </nav>
 
@@ -378,72 +364,6 @@
         </div>
       </section>
 
-      <!-- 6. MEDIA & ASSETS PANEL -->
-      <section class="admin-panel" id="panel-media">
-        <div class="panel-header">
-          <div class="panel-controls">
-            <div class="search-box">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-              <input type="text" id="search-media" class="admin-input search-input" placeholder="Search media by filename, tag, or category..." />
-            </div>
-            <select id="filter-media-category" class="admin-select">
-              <option value="">All Media Folders</option>
-              <option value="Events">Events &amp; Gatherings</option>
-              <option value="Team">Team Photos</option>
-              <option value="Graphics">Graphics &amp; Banners</option>
-              <option value="Articles">Articles &amp; Publications</option>
-            </select>
-          </div>
-          <div class="panel-actions-group">
-            <label class="admin-btn admin-btn-primary file-upload-btn" style="cursor:pointer;">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-              Upload Images
-              <input type="file" id="media-bulk-upload-input" accept="image/*" multiple style="display:none;" />
-            </label>
-            <button class="admin-btn admin-btn-secondary" id="btn-add-media-url">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              Add Image URL
-            </button>
-          </div>
-        </div>
-
-        <div class="media-library-toolbar">
-          <span class="media-count-indicator" id="media-library-count-text">Showing 0 media items</span>
-          <div class="media-view-switcher">
-            <button class="view-switch-btn active" id="btn-view-media-grid" title="Grid Gallery View">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-            </button>
-            <button class="view-switch-btn" id="btn-view-media-table" title="List Table View">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-            </button>
-          </div>
-        </div>
-
-        <!-- Grid View -->
-        <div class="media-grid" id="media-grid-view">
-          <!-- Dynamically Populated -->
-        </div>
-
-        <!-- Table View -->
-        <div class="table-responsive" id="media-table-view" style="display:none;">
-          <table class="admin-table">
-            <thead>
-              <tr>
-                <th>Preview</th>
-                <th>Asset Title &amp; File</th>
-                <th>Category</th>
-                <th>Media Path / URL</th>
-                <th>Date Added</th>
-                <th class="text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody id="table-media-body">
-              <!-- Dynamically Populated -->
-            </tbody>
-          </table>
-        </div>
-      </section>
-
       <!-- System Backups & Seed Tools Footer Bar -->
       <footer class="admin-tools-bar">
         <div class="tools-info">
@@ -489,111 +409,6 @@
           <button type="submit" class="admin-btn admin-btn-primary" id="btn-save-record">Save Changes</button>
         </div>
       </form>
-    </div>
-  </dialog>
-
-  <!-- Add Image URL Modal Dialog -->
-  <dialog id="admin-add-media-dialog" class="admin-modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title">Add Media Asset URL</h3>
-        <button class="modal-close-btn" id="btn-close-add-media" aria-label="Close Modal">&times;</button>
-      </div>
-      <form id="form-add-media-url" class="modal-body">
-        <div class="form-group">
-          <label class="form-label">Asset Title / Description</label>
-          <input type="text" id="add-media-title" class="admin-input" placeholder="e.g. Tarbela Dam Group Photo" required />
-        </div>
-        <div class="form-group">
-          <label class="form-label">Category</label>
-          <select id="add-media-category" class="admin-select">
-            <option value="Events">Events &amp; Gatherings</option>
-            <option value="Team">Team Photos</option>
-            <option value="Graphics">Graphics &amp; Banners</option>
-            <option value="Articles">Articles &amp; Publications</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Image URL or Relative Path</label>
-          <input type="text" id="add-media-path" class="admin-input" placeholder="e.g. Assets/media/events/tarbela-dam.jpg or https://..." required />
-        </div>
-        <div class="form-group">
-          <label class="form-label">Tags (comma separated)</label>
-          <input type="text" id="add-media-tags" class="admin-input" placeholder="e.g. event, dams, workshop" />
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="admin-btn admin-btn-secondary" id="btn-cancel-add-media">Cancel</button>
-          <button type="submit" class="admin-btn admin-btn-primary">Add to Library</button>
-        </div>
-      </form>
-    </div>
-  </dialog>
-
-  <!-- Media Asset Detail / Lightbox Dialog -->
-  <dialog id="admin-media-detail-dialog" class="admin-modal admin-modal-wide">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title" id="media-detail-title">Media Asset Details</h3>
-        <button class="modal-close-btn" id="btn-close-media-detail" aria-label="Close Modal">&times;</button>
-      </div>
-      <div class="modal-body media-detail-modal-body">
-        <div class="media-detail-preview-box">
-          <img id="media-detail-img" src="" alt="Media Preview" />
-        </div>
-        <div class="media-detail-info-col">
-          <div class="detail-block">
-            <span class="detail-label">Asset Title</span>
-            <strong class="detail-val" id="media-detail-name">—</strong>
-          </div>
-          <div class="detail-block">
-            <span class="detail-label">Category</span>
-            <span class="table-badge" id="media-detail-category">—</span>
-          </div>
-          <div class="detail-block">
-            <span class="detail-label">File Path / Source URL</span>
-            <input type="text" id="media-detail-path-input" class="admin-input" readonly style="font-family:monospace; font-size:11.5px;" />
-          </div>
-          <div class="detail-block">
-            <span class="detail-label">Date Added</span>
-            <span class="detail-val" id="media-detail-date">—</span>
-          </div>
-          <div class="modal-footer" style="margin-top:20px; padding-top:14px; border-top:1px solid #2d3748;">
-            <button type="button" class="admin-btn admin-btn-danger" id="btn-delete-media-item">Delete Asset</button>
-            <button type="button" class="admin-btn admin-btn-secondary" id="btn-copy-media-path">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-              Copy Link
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </dialog>
-
-  <!-- Media Library Picker Dialog (For Form Selection) -->
-  <dialog id="admin-media-picker-dialog" class="admin-modal admin-modal-wide">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title">Select Image from Media Library</h3>
-        <button class="modal-close-btn" id="btn-close-media-picker" aria-label="Close Modal">&times;</button>
-      </div>
-      <div class="modal-body">
-        <div class="panel-controls" style="margin-bottom:16px;">
-          <input type="text" id="search-media-picker" class="admin-input search-input" placeholder="Search images..." />
-          <select id="filter-media-picker-category" class="admin-select">
-            <option value="">All Categories</option>
-            <option value="Events">Events</option>
-            <option value="Team">Team</option>
-            <option value="Graphics">Graphics</option>
-            <option value="Articles">Articles</option>
-          </select>
-        </div>
-        <div class="media-picker-grid" id="media-picker-grid">
-          <!-- Dynamically Populated -->
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="admin-btn admin-btn-secondary" id="btn-cancel-media-picker">Cancel</button>
-      </div>
     </div>
   </dialog>
 
