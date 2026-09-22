@@ -52,14 +52,15 @@ The Our Story page details CAEA's history, theoretical foundation, community-fir
   - Traces the history of energy privatization, water rights in Sindh, and community mobilization in Pakistan.
 - **Leadership & Team Bios Grid**:
   - Comprehensive bio profiles and photography for:
-    - **Sanaa Muhammad** — Research Director
-    - **Hamna Anwaar** — Policy Lead
-    - **Asad Juttah** — Field Operations Lead
-    - **Muaaz Khan** — Energy Analyst
-    - **Hina Yousaf** — Community Organizer
-    - **Muhammad Saeed** — Environmental Researcher
-    - **Nabeel Ahmad** — Advocacy Specialist
-    - **Kamran Aziz** — Research Fellow
+    - **Sanaa’i Muhammad** — Founder & CEO (`Assets/Team/sanaa-muhammad.jpg`)
+    - **Kamran Aziz** — Founding Partner & Director Research (`Assets/Team/kamran-aziz.jpg`)
+    - **Muhammad Asad** — Research Associate (`Assets/Team/asad-juttah.jpg`)
+    - **Hamna Anwaar** — Textile Associate (`Assets/Team/hamna-anwaar.jpg`)
+    - **Muhammad Saeed** — Climate Justice Lead (`Assets/Team/muhammad-saeed.jpg`)
+    - **Muaaz Ahmad Khan** — Communication Lead (`Assets/Team/muaaz-khan.jpg`)
+    - **Fizza Aman Bhutto** — Admin & HR Officer (`Assets/Team/grid-1-3-fiza.png`)
+    - **Manahil Usman** — Associate Fossil Fuel Phaseout (`Assets/Team/hina-yousaf.jpg`)
+    - **Abid Azim** — Finance Officer / CPA (`Assets/Team/nabeel-ahmad.jpg`)
 - **Allies & Partners Section**:
   - Showcases civil society alliances and grassroots coalitions (e.g., *Alternative Law Collective*).
 
