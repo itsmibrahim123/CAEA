@@ -46,6 +46,10 @@ The navigation bar (`.admin-tab-nav`) is designed with a sleek, compact gap (`6p
    - One-click **CSV Export** (`caea-applications-YYYY-MM-DD.csv`).
 5. **Get Involved Positions** (`#panel-opportunities`):
    - Manage the public position structure (Blue Card vs Black Card theme, status, categories, role types).
+6. **Page Settings & Media** (`#panel-settings`):
+   - **Video Section Management**: Toggle video section visibility on `pages/activities.html`, set video documentary title, description, and source (direct URL or MP4/WebM file upload), plus cover thumbnail.
+   - **Slideshow Controls**: Enable/disable automated image & general info cycling for the activities hero gallery, and configure rotation speed (seconds).
+   - **Our Story Customization**: Configure team section heading and philosophical quotes.
 
 ---
 

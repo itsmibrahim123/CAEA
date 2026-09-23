@@ -13,9 +13,13 @@ The Activities page serves as the public repository and journal of CAEA's field 
 - **Dynamic Activity Feed**:
   - Populates directly from `window.DataStore.get('activities')`.
   - Filterable by category tag (`RETREAT`, `WORKSHOP`, `COMMUNITY KACHERI`, `EXPOSURE VISIT`, `RESEARCH`, `FIELD PROJECT`, `POLICY`, `CASE STUDY`).
-- **Hero Feature Switcher**:
+- **Hero Feature Switcher & Auto-Cycling Slideshow**:
   - Each activity card includes a **"Show in Hero"** interactive button.
   - Clicking spotlights the event on the main hero banner across the site and saves the preference to `DataStore`.
+  - Configurable automated hero slideshow rotates featured events smoothly and pauses on hover.
+- **Dynamic Video Documentary System**:
+  - Fully manageable video documentary card (`#activities-video-section`) powered by `DataStore.getPageSettings('activities')`.
+  - Supports custom video URLs (YouTube, Vimeo, MP4) and uploaded video files with interactive playback modal (`#caea-video-modal-overlay`).
 - **Direct Application Triggers**:
   - Community gatherings and open workshop sessions link to the **Universal Apply Modal** (`#caea-apply-modal-overlay`), pre-filling the activity category.
 - **Media Assets**:

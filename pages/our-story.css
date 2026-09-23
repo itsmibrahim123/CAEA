@@ -439,13 +439,27 @@
   aspect-ratio: 16 / 9;
   overflow: hidden;
   background-color: #f1f5f9;
+  border-radius: 8px;
 }
 
 .accordion-photo {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 20%;
   display: block;
+}
+
+.accordion-photo.pos-top-15 {
+  object-position: center 15%;
+}
+
+.accordion-photo.pos-top-20 {
+  object-position: center 20%;
+}
+
+.accordion-photo.pos-top-25 {
+  object-position: center 25%;
 }
 
 .accordion-bio {

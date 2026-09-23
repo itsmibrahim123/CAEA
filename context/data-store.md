@@ -109,6 +109,26 @@ interface Application {
 }
 ```
 
+### 2.6 `pageSettings` Structure (`caea_page_settings`)
+```typescript
+interface PageSettings {
+  activities: {
+    showVideo: boolean;          // Toggle documentary section on activities page
+    videoTitle: string;          // "More than a retreat (CAEA Community Documentary)"
+    videoDescription: string;    // Caption / overview
+    videoUrl: string;            // Direct video link or uploaded Data URI / MP4
+    videoThumbnail: string;      // Cover image path or Data URL
+    autoplayImages: boolean;     // Enable auto-cycling hero slideshow
+    imageCycleInterval: number;  // Interval in milliseconds (e.g. 5000)
+  };
+  ourStory: {
+    teamHeaderTitle: string;     // Heading text for team section
+    quoteText: string;           // Featured quote
+    quoteAuthor: string;         // Attribution
+  };
+}
+```
+
 ---
 
 ## 3. Public DataStore API Methods
@@ -120,6 +140,8 @@ interface Application {
 | `DataStore.add(collection, itemData)` | `collection: string, itemData: Object` | `Object` | Creates and persists a new item with an auto-generated unique ID and timestamps. |
 | `DataStore.update(collection, id, updates)`| `collection: string, id: string, updates: Object` | `Object \| null` | Merges updates into an existing item and persists changes. |
 | `DataStore.delete(collection, id)` | `collection: string, id: string` | `boolean` | Permanently deletes a record by ID. |
+| `DataStore.getPageSettings(page?)` | `page?: string` | `Object` | Retrieves page-level configuration (e.g. `'activities'`, `'ourStory'`). |
+| `DataStore.savePageSettings(page, settings)` | `page: string, settings: Object` | `Object` | Updates and persists page settings, broadcasting reactive update event. |
 | `DataStore.reset()` | *None* | `void` | Resets all collections in `localStorage` back to factory seed defaults. |
 | `DataStore.exportJSON()` | *None* | `string` | Serializes the complete database snapshot into a JSON string. |
 | `DataStore.importJSON(jsonString)` | `jsonString: string` | `boolean` | Validates and restores a JSON database backup. |

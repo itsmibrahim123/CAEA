@@ -9,7 +9,8 @@ const STORAGE_KEYS = {
   ARTICLES: 'caea_articles_data',
   OPPORTUNITIES: 'caea_opportunities_data',
   APPLICATIONS: 'caea_applications_data',
-  MEDIA: 'caea_media_data'
+  MEDIA: 'caea_media_data',
+  PAGE_SETTINGS: 'caea_page_settings'
 };
 
 // Seed default data
@@ -513,7 +514,24 @@ const SEED_DATA = {
       tags: ['logo', 'brand', 'navigation'],
       date: '2024-01-01'
     }
-  ]
+  ],
+
+  pageSettings: {
+    activities: {
+      showVideo: true,
+      videoTitle: 'More than a retreat (CAEA Community Documentary)',
+      videoDescription: 'No experience needed. Just a willingness to show up and act. Reconnecting with nature, exploring movement building, and building resilience against climate burnout.',
+      videoUrl: '', // Video URL or uploaded data URI / file path
+      videoThumbnail: 'Assets/how-water-became-power-ai.jpg',
+      autoplayImages: true,
+      imageCycleInterval: 5000 // In milliseconds
+    },
+    ourStory: {
+      teamHeaderTitle: 'The People Who Make It Happen',
+      quoteText: 'What we cannot imagine cannot come into being.',
+      quoteAuthor: 'Hellen Keller'
+    }
+  }
 };
 
 class CAEADataStore {
@@ -523,11 +541,11 @@ class CAEADataStore {
 
   init() {
     const DATA_VERSION_KEY = 'caea_data_version';
-    const CURRENT_VERSION = 'v4_media_library';
+    const CURRENT_VERSION = 'v5_page_settings';
     const storedVersion = localStorage.getItem(DATA_VERSION_KEY);
 
     if (storedVersion !== CURRENT_VERSION) {
-      // Refresh seed activities, people, and media to the new real dataset
+      // Refresh seed activities, people, and media to the updated dataset
       localStorage.setItem(STORAGE_KEYS.ACTIVITIES, JSON.stringify(SEED_DATA.activities));
       localStorage.setItem(STORAGE_KEYS.PEOPLE, JSON.stringify(SEED_DATA.people));
       localStorage.setItem(STORAGE_KEYS.MEDIA, JSON.stringify(SEED_DATA.media));
@@ -539,6 +557,9 @@ class CAEADataStore {
       }
       if (!localStorage.getItem(STORAGE_KEYS.APPLICATIONS)) {
         localStorage.setItem(STORAGE_KEYS.APPLICATIONS, JSON.stringify(SEED_DATA.applications));
+      }
+      if (!localStorage.getItem(STORAGE_KEYS.PAGE_SETTINGS)) {
+        localStorage.setItem(STORAGE_KEYS.PAGE_SETTINGS, JSON.stringify(SEED_DATA.pageSettings));
       }
       localStorage.setItem(DATA_VERSION_KEY, CURRENT_VERSION);
     } else {
@@ -560,6 +581,9 @@ class CAEADataStore {
       if (!localStorage.getItem(STORAGE_KEYS.MEDIA)) {
         localStorage.setItem(STORAGE_KEYS.MEDIA, JSON.stringify(SEED_DATA.media));
       }
+      if (!localStorage.getItem(STORAGE_KEYS.PAGE_SETTINGS)) {
+        localStorage.setItem(STORAGE_KEYS.PAGE_SETTINGS, JSON.stringify(SEED_DATA.pageSettings));
+      }
     }
   }
 
@@ -578,6 +602,9 @@ class CAEADataStore {
       case 'media':
       case 'assets':
       case 'images': return STORAGE_KEYS.MEDIA;
+      case 'page_settings':
+      case 'pagesettings':
+      case 'settings': return STORAGE_KEYS.PAGE_SETTINGS;
       default: throw new Error(`Unknown collection: ${collection}`);
     }
   }
@@ -596,6 +623,48 @@ class CAEADataStore {
   getById(collection, id) {
     const items = this.get(collection);
     return items.find(item => item.id === id) || null;
+  }
+
+  getPageSettings(page = null) {
+    try {
+      const data = localStorage.getItem(STORAGE_KEYS.PAGE_SETTINGS);
+      const parsed = data ? JSON.parse(data) : JSON.parse(JSON.stringify(SEED_DATA.pageSettings));
+      const defaults = SEED_DATA.pageSettings;
+      
+      const merged = {
+        activities: { ...defaults.activities, ...(parsed.activities || {}) },
+        ourStory: { ...defaults.ourStory, ...(parsed.ourStory || {}) }
+      };
+
+      if (page) {
+        return merged[page] || null;
+      }
+      return merged;
+    } catch (e) {
+      console.error('Error reading pageSettings from DataStore:', e);
+      return page ? (SEED_DATA.pageSettings[page] || null) : SEED_DATA.pageSettings;
+    }
+  }
+
+  savePageSettings(page, settings) {
+    try {
+      const current = this.getPageSettings();
+      if (page && typeof settings === 'object') {
+        current[page] = {
+          ...(current[page] || {}),
+          ...settings,
+          updatedAt: new Date().toISOString()
+        };
+      } else if (!page && typeof settings === 'object') {
+        Object.assign(current, settings);
+      }
+      localStorage.setItem(STORAGE_KEYS.PAGE_SETTINGS, JSON.stringify(current));
+      this.dispatchUpdate('page_settings');
+      return page ? current[page] : current;
+    } catch (e) {
+      console.error('Error saving pageSettings to DataStore:', e);
+      return null;
+    }
   }
 
   add(collection, item) {
@@ -677,6 +746,7 @@ class CAEADataStore {
     localStorage.setItem(STORAGE_KEYS.OPPORTUNITIES, JSON.stringify(SEED_DATA.opportunities));
     localStorage.setItem(STORAGE_KEYS.APPLICATIONS, JSON.stringify(SEED_DATA.applications));
     localStorage.setItem(STORAGE_KEYS.MEDIA, JSON.stringify(SEED_DATA.media));
+    localStorage.setItem(STORAGE_KEYS.PAGE_SETTINGS, JSON.stringify(SEED_DATA.pageSettings));
     this.dispatchUpdate('all');
   }
 
@@ -688,6 +758,7 @@ class CAEADataStore {
       opportunities: this.get('opportunities'),
       applications: this.get('applications'),
       media: this.get('media'),
+      pageSettings: this.getPageSettings(),
       exportedAt: new Date().toISOString()
     }, null, 2);
   }
@@ -712,6 +783,9 @@ class CAEADataStore {
       }
       if (data.media && Array.isArray(data.media)) {
         localStorage.setItem(STORAGE_KEYS.MEDIA, JSON.stringify(data.media));
+      }
+      if (data.pageSettings && typeof data.pageSettings === 'object') {
+        localStorage.setItem(STORAGE_KEYS.PAGE_SETTINGS, JSON.stringify(data.pageSettings));
       }
       this.dispatchUpdate('all');
       return true;

@@ -259,6 +259,7 @@ document.addEventListener('DOMContentLoaded', () => {
       switchHeroBtn.addEventListener('click', (e) => {
         e.preventDefault();
         setHeroEvent(currentHeroEventIndex + 1);
+        startHeroAutoCycling();
       });
     }
 
@@ -266,6 +267,7 @@ document.addEventListener('DOMContentLoaded', () => {
       nextBtn.addEventListener('click', (e) => {
         e.preventDefault();
         setHeroEvent(currentHeroEventIndex + 1);
+        startHeroAutoCycling();
       });
     }
 
@@ -273,6 +275,7 @@ document.addEventListener('DOMContentLoaded', () => {
       prevBtn.addEventListener('click', (e) => {
         e.preventDefault();
         setHeroEvent(currentHeroEventIndex - 1);
+        startHeroAutoCycling();
       });
     }
 
@@ -285,6 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
           } else {
             setHeroEvent(idx);
           }
+          startHeroAutoCycling();
         });
       });
     }
@@ -293,14 +297,233 @@ document.addEventListener('DOMContentLoaded', () => {
     let initialIdx = activities.findIndex(a => a.featured === true);
     if (initialIdx === -1) initialIdx = 0;
     setHeroEvent(initialIdx);
+
+    setupHeroHoverPause();
+    startHeroAutoCycling();
   }
 
-  // Video Modal Trigger
-  const videoBtn = document.getElementById('activities-video-btn');
-  if (videoBtn) {
-    videoBtn.addEventListener('click', () => {
-      alert('Playing: More than a retreat (CAEA Community Documentary)');
+  /* ============================================================
+     Dynamic Video Management & Modal System
+     ============================================================ */
+  function ensureVideoModalExists() {
+    let modalOverlay = document.getElementById('caea-video-modal-overlay');
+    if (modalOverlay) return modalOverlay;
+
+    modalOverlay = document.createElement('div');
+    modalOverlay.id = 'caea-video-modal-overlay';
+    modalOverlay.className = 'caea-modal-overlay';
+    modalOverlay.setAttribute('role', 'dialog');
+    modalOverlay.setAttribute('aria-modal', 'true');
+    modalOverlay.setAttribute('aria-hidden', 'true');
+
+    modalOverlay.innerHTML = `
+      <div class="caea-video-modal-card" id="caea-video-modal-card">
+        <div class="video-modal-header">
+          <h3 class="video-modal-title" id="video-modal-title">Featured Documentary</h3>
+          <button type="button" class="caea-modal-close-btn" id="video-modal-close-btn" aria-label="Close Video">&times;</button>
+        </div>
+        <div class="video-modal-container" id="video-modal-media-container">
+          <!-- Video Player or Iframe injected here -->
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(modalOverlay);
+
+    const closeBtn = modalOverlay.querySelector('#video-modal-close-btn');
+    if (closeBtn) closeBtn.addEventListener('click', closeVideoModal);
+
+    modalOverlay.addEventListener('click', (e) => {
+      if (e.target === modalOverlay) closeVideoModal();
     });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modalOverlay.classList.contains('is-active')) {
+        closeVideoModal();
+      }
+    });
+
+    return modalOverlay;
+  }
+
+  function formatVideoEmbed(url) {
+    if (!url) return null;
+    const trimmed = url.trim();
+
+    // YouTube
+    if (trimmed.includes('youtube.com/watch')) {
+      const match = trimmed.match(/[?&]v=([^&]+)/);
+      if (match && match[1]) {
+        return `<iframe src="https://www.youtube.com/embed/${match[1]}?autoplay=1&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+      }
+    }
+    if (trimmed.includes('youtu.be/')) {
+      const match = trimmed.match(/youtu\.be\/([^?&]+)/);
+      if (match && match[1]) {
+        return `<iframe src="https://www.youtube.com/embed/${match[1]}?autoplay=1&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+      }
+    }
+
+    // Vimeo
+    if (trimmed.includes('vimeo.com/')) {
+      const match = trimmed.match(/vimeo\.com\/(\d+)/);
+      if (match && match[1]) {
+        return `<iframe src="https://player.vimeo.com/video/${match[1]}?autoplay=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
+      }
+    }
+
+    // HTML5 Video file or data URI
+    return `<video controls autoplay playsinline style="width:100%; height:100%; object-fit:contain; background:#000;">
+      <source src="${trimmed}" type="video/mp4" />
+      Your browser does not support HTML5 video.
+    </video>`;
+  }
+
+  function openVideoModal(title, videoUrl) {
+    const overlay = ensureVideoModalExists();
+    const titleEl = document.getElementById('video-modal-title');
+    const mediaContainer = document.getElementById('video-modal-media-container');
+
+    if (titleEl) titleEl.textContent = title || 'More than a retreat (CAEA Community Documentary)';
+
+    if (mediaContainer) {
+      if (videoUrl && videoUrl.trim()) {
+        mediaContainer.innerHTML = formatVideoEmbed(videoUrl);
+      } else {
+        mediaContainer.innerHTML = `
+          <div style="text-align:center; padding:36px 20px; color:#fff; display:flex; flex-direction:column; align-items:center; gap:16px;">
+            <div style="width:64px; height:64px; border-radius:50%; background:rgba(77,100,216,0.2); border:1px solid #4d64d8; display:flex; align-items:center; justify-content:center;">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="#4d64d8"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+            <h4 style="margin:0; font-size:18px;">${escapeHtml(title || 'More than a retreat')}</h4>
+            <p style="margin:0; max-width:480px; font-size:13.5px; color:#9da5b4; line-height:1.5;">
+              This documentary explores community experiences from the Lake Manchhar and Tarbela Dam delegations. Add or upload a custom video link via the Admin Panel under <strong>Page Settings &amp; Media</strong>.
+            </p>
+          </div>
+        `;
+      }
+    }
+
+    overlay.classList.add('is-active');
+    overlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeVideoModal() {
+    const overlay = document.getElementById('caea-video-modal-overlay');
+    if (!overlay) return;
+
+    const mediaContainer = document.getElementById('video-modal-media-container');
+    if (mediaContainer) {
+      const videoEl = mediaContainer.querySelector('video');
+      if (videoEl) videoEl.pause();
+      mediaContainer.innerHTML = '';
+    }
+
+    overlay.classList.remove('is-active');
+    overlay.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  function applyActivitiesVideoSettings() {
+    const videoSection = document.getElementById('activities-video-section');
+    const videoBtn = document.getElementById('activities-video-btn');
+    const videoTitleEl = document.getElementById('activities-video-title');
+    const videoDescEl = document.getElementById('activities-video-desc');
+    const videoCoverEl = document.getElementById('activities-video-cover');
+
+    if (!videoBtn && !videoSection) return;
+
+    const settings = window.DataStore ? window.DataStore.getPageSettings('activities') : {
+      showVideo: true,
+      videoTitle: 'More than a retreat (CAEA Community Documentary)',
+      videoDescription: 'No experience needed. Just a willingness to show up and act. Reconnecting with nature, exploring movement building, and building resilience against climate burnout.',
+      videoUrl: '',
+      videoThumbnail: 'Assets/how-water-became-power-ai.jpg'
+    };
+
+    if (!settings.showVideo) {
+      if (videoSection) videoSection.style.display = 'none';
+      if (videoBtn) videoBtn.style.display = 'none';
+    } else {
+      if (videoSection) videoSection.style.display = 'block';
+      if (videoBtn) videoBtn.style.display = 'flex';
+      if (videoTitleEl && settings.videoTitle) videoTitleEl.textContent = settings.videoTitle;
+      if (videoDescEl && settings.videoDescription) videoDescEl.textContent = settings.videoDescription;
+      if (videoCoverEl && settings.videoThumbnail) {
+        videoCoverEl.src = resolveImagePath(settings.videoThumbnail);
+      }
+    }
+
+    // Rebind video click
+    if (videoBtn && !videoBtn.dataset.bound) {
+      videoBtn.dataset.bound = 'true';
+      videoBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const currentSettings = window.DataStore ? window.DataStore.getPageSettings('activities') : settings;
+        openVideoModal(currentSettings.videoTitle, currentSettings.videoUrl);
+      });
+    }
+  }
+
+  /* ============================================================
+     Automatic Hero Slideshow Cycling
+     ============================================================ */
+  let heroCycleTimer = null;
+  let isHeroHovered = false;
+
+  function startHeroAutoCycling() {
+    stopHeroAutoCycling();
+    if (!window.DataStore) return;
+
+    const settings = window.DataStore.getPageSettings('activities');
+    if (!settings || settings.autoplayImages === false) return;
+
+    const interval = Math.max(2000, settings.imageCycleInterval || 5000);
+
+    heroCycleTimer = setInterval(() => {
+      if (!isHeroHovered) {
+        const activities = getHeroActivities();
+        if (activities && activities.length > 1) {
+          setHeroEvent(currentHeroEventIndex + 1);
+        }
+      }
+    }, interval);
+  }
+
+  function stopHeroAutoCycling() {
+    if (heroCycleTimer) {
+      clearInterval(heroCycleTimer);
+      heroCycleTimer = null;
+    }
+  }
+
+  function setupHeroHoverPause() {
+    const heroSection = document.querySelector('.activities-page-section');
+    if (!heroSection || heroSection.dataset.hoverBound) return;
+    heroSection.dataset.hoverBound = 'true';
+
+    heroSection.addEventListener('mouseenter', () => {
+      isHeroHovered = true;
+    });
+
+    heroSection.addEventListener('mouseleave', () => {
+      isHeroHovered = false;
+    });
+  }
+
+  function applyOurStoryPageSettings() {
+    if (!window.DataStore) return;
+    const settings = window.DataStore.getPageSettings('ourStory');
+    if (!settings) return;
+
+    const teamHeader = document.querySelector('.team-card-header .team-header-title');
+    const teamQuote = document.querySelector('.team-narrative-col .team-quote em');
+    const quoteAuthor = document.querySelector('.team-narrative-col .team-quote-author');
+
+    if (teamHeader && settings.teamHeaderTitle) teamHeader.textContent = settings.teamHeaderTitle;
+    if (teamQuote && settings.quoteText) teamQuote.textContent = settings.quoteText;
+    if (quoteAuthor && settings.quoteAuthor) quoteAuthor.textContent = settings.quoteAuthor;
   }
 
   /* ============================================================
@@ -694,12 +917,27 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeroEventSwitcher();
   renderDynamicActivities();
   renderDynamicOpportunities();
+  applyActivitiesVideoSettings();
+  applyOurStoryPageSettings();
 
-  // Listen to DataStore updates to keep everything in sync
-  window.addEventListener('caea-datastore-update', () => {
+  function syncAllViews() {
     initHeroEventSwitcher();
     renderDynamicActivities();
     renderDynamicOpportunities();
+    applyActivitiesVideoSettings();
+    applyOurStoryPageSettings();
+  }
+
+  // Listen to DataStore updates to keep everything in sync
+  window.addEventListener('caea-datastore-update', () => {
+    syncAllViews();
+  });
+
+  // Cross-tab synchronization via localStorage storage event
+  window.addEventListener('storage', (e) => {
+    if (e.key && (e.key.startsWith('caea_') || e.key === 'caea_page_settings')) {
+      syncAllViews();
+    }
   });
 });
 

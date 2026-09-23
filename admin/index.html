@@ -159,6 +159,10 @@
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
           Get Involved Positions
         </button>
+        <button class="tab-btn" data-tab="settings">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          Page Settings &amp; Media
+        </button>
       </nav>
 
       <!-- COLLECTION PANELS -->
@@ -365,6 +369,159 @@
               <!-- Dynamically Populated -->
             </tbody>
           </table>
+        </div>
+      </section>
+ 
+      <!-- 6. PAGE SETTINGS & MEDIA MANAGEMENT PANEL -->
+      <section class="admin-panel" id="panel-settings">
+        <div class="panel-header">
+          <div>
+            <h2 class="panel-heading-title" style="font-size:20px; font-weight:700; color:#fff; margin:0 0 4px 0;">Page Content &amp; Media Settings</h2>
+            <p style="font-size:13px; color:#9da5b4; margin:0;">Configure page-level video documentaries, media players, and automated slideshow settings.</p>
+          </div>
+          <button class="admin-btn admin-btn-primary" id="btn-save-page-settings" type="button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Save Page Settings
+          </button>
+        </div>
+
+        <div class="settings-cards-grid">
+          <!-- Card 1: Our Activities Page Settings -->
+          <div class="settings-card">
+            <div class="settings-card-header">
+              <div class="settings-card-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>
+              </div>
+              <div>
+                <h3 class="settings-card-title">Our Activities &amp; Work Page (<code>pages/activities.html</code>)</h3>
+                <p class="settings-card-subtitle">Manage the featured documentary video and dynamic image slideshow.</p>
+              </div>
+            </div>
+
+            <div class="settings-card-body">
+              <!-- Video Toggle -->
+              <div class="settings-toggle-row">
+                <div class="toggle-info">
+                  <strong>Show Video Section &amp; Play Trigger</strong>
+                  <span>Enable or disable the video documentary card on the Activities page.</span>
+                </div>
+                <label class="switch-toggle">
+                  <input type="checkbox" id="setting-act-show-video" checked />
+                  <span class="slider round"></span>
+                </label>
+              </div>
+
+              <!-- Video Details -->
+              <div class="settings-subgroup" id="settings-video-details-group">
+                <div class="form-group">
+                  <label class="form-label" for="setting-act-video-title">Video Documentary Title</label>
+                  <input type="text" id="setting-act-video-title" class="admin-input" placeholder="e.g. More than a retreat (CAEA Community Documentary)" />
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="setting-act-video-desc">Video Description / Caption</label>
+                  <textarea id="setting-act-video-desc" class="admin-textarea" rows="2" placeholder="Brief caption describing the documentary..."></textarea>
+                </div>
+
+                <!-- Video Source: URL or File Upload -->
+                <div class="form-group">
+                  <label class="form-label">Video Source / Media</label>
+                  <div class="video-upload-wrapper">
+                    <div class="upload-actions-row">
+                      <label class="upload-file-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                        <span>Upload Video File (MP4, WebM)</span>
+                        <input type="file" id="setting-act-video-file" accept="video/mp4,video/webm,video/ogg,video/*" style="display:none;" />
+                      </label>
+                      <button type="button" class="btn-clear-img" id="btn-clear-act-video" title="Clear video">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                        Clear
+                      </button>
+                      <span class="upload-filename-badge" id="setting-act-video-filename" style="display:none;"></span>
+                    </div>
+                    <input type="text" id="setting-act-video-url" class="admin-input" placeholder="Or paste video link (YouTube, Vimeo, MP4 file path / URL)" />
+                  </div>
+                </div>
+
+                <!-- Video Thumbnail Cover -->
+                <div class="form-group">
+                  <label class="form-label">Video Cover Thumbnail</label>
+                  <div class="image-upload-wrapper" id="setting-video-thumb-dropzone">
+                    <div class="image-preview-container">
+                      <img id="setting-act-thumb-preview" src="../Assets/how-water-became-power-ai.jpg" alt="Video Thumbnail" class="form-img-preview" onerror="this.src='../Assets/CAEA-Navbar-Logo.png'" />
+                    </div>
+                    <div class="image-upload-controls">
+                      <div class="upload-actions-row">
+                        <label class="upload-file-btn">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                          <span>Upload Thumbnail</span>
+                          <input type="file" id="setting-act-thumb-file" accept="image/*" style="display:none;" />
+                        </label>
+                        <button type="button" class="btn-clear-img" id="btn-clear-act-thumb" title="Clear thumbnail">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                          Clear
+                        </button>
+                        <span class="upload-filename-badge" id="setting-act-thumb-filename" style="display:none;"></span>
+                      </div>
+                      <input type="text" id="setting-act-thumb-url" class="admin-input" placeholder="Or paste image path / URL (e.g. Assets/how-water-became-power-ai.jpg)" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Automated Slideshow Controls -->
+              <div class="settings-divider"></div>
+
+              <div class="settings-toggle-row">
+                <div class="toggle-info">
+                  <strong>Auto-Cycling Activity Hero Slideshow</strong>
+                  <span>Automatically rotate featured events and stories across the activities gallery and hero header.</span>
+                </div>
+                <label class="switch-toggle">
+                  <input type="checkbox" id="setting-act-autoplay" checked />
+                  <span class="slider round"></span>
+                </label>
+              </div>
+
+              <div class="form-group" style="margin-top: 14px;">
+                <label class="form-label" for="setting-act-interval">Cycle Interval / Rotation Speed (seconds)</label>
+                <div style="display:flex; align-items:center; gap:10px; max-width:280px;">
+                  <input type="number" id="setting-act-interval" class="admin-input" min="2" max="30" step="1" value="5" />
+                  <span style="font-size:13px; color:#9da5b4; white-space:nowrap;">seconds (e.g. 5s)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2: Our Story Page Settings -->
+          <div class="settings-card">
+            <div class="settings-card-header">
+              <div class="settings-card-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+              </div>
+              <div>
+                <h3 class="settings-card-title">Our Story &amp; People Page (<code>pages/our-story.html</code>)</h3>
+                <p class="settings-card-subtitle">Manage featured narrative quotes and team section branding.</p>
+              </div>
+            </div>
+
+            <div class="settings-card-body">
+              <div class="form-group">
+                <label class="form-label" for="setting-story-header">Team Section Heading</label>
+                <input type="text" id="setting-story-header" class="admin-input" placeholder="e.g. The People Who Make It Happen" />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="setting-story-quote">Featured Philosophy Quote</label>
+                <textarea id="setting-story-quote" class="admin-textarea" rows="2" placeholder="e.g. What we cannot imagine cannot come into being."></textarea>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="setting-story-author">Quote Author / Attribution</label>
+                <input type="text" id="setting-story-author" class="admin-input" placeholder="e.g. Hellen Keller" />
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 

@@ -239,6 +239,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateStats();
     renderAllTables();
     populateApplicationCategoryFilter();
+    loadPageSettingsIntoUI();
   }
 
   function updateStats() {
@@ -1159,10 +1160,211 @@ document.addEventListener('DOMContentLoaded', () => {
     updateStats();
     renderAllTables();
     populateApplicationCategoryFilter();
+    loadPageSettingsIntoUI();
   });
 
   /* ============================================================
-     10. Toast Notification & String Helpers
+     10. Page Content & Media Settings Management
+     ============================================================ */
+  const settingActShowVideo = document.getElementById('setting-act-show-video');
+  const settingsVideoGroup = document.getElementById('settings-video-details-group');
+  const settingActVideoTitle = document.getElementById('setting-act-video-title');
+  const settingActVideoDesc = document.getElementById('setting-act-video-desc');
+  const settingActVideoUrl = document.getElementById('setting-act-video-url');
+  const settingActVideoFile = document.getElementById('setting-act-video-file');
+  const settingActVideoFilename = document.getElementById('setting-act-video-filename');
+  const btnClearActVideo = document.getElementById('btn-clear-act-video');
+
+  const settingActThumbUrl = document.getElementById('setting-act-thumb-url');
+  const settingActThumbFile = document.getElementById('setting-act-thumb-file');
+  const settingActThumbPreview = document.getElementById('setting-act-thumb-preview');
+  const settingActThumbFilename = document.getElementById('setting-act-thumb-filename');
+  const btnClearActThumb = document.getElementById('btn-clear-act-thumb');
+  const settingVideoThumbDropzone = document.getElementById('setting-video-thumb-dropzone');
+
+  const settingActAutoplay = document.getElementById('setting-act-autoplay');
+  const settingActInterval = document.getElementById('setting-act-interval');
+
+  const settingStoryHeader = document.getElementById('setting-story-header');
+  const settingStoryQuote = document.getElementById('setting-story-quote');
+  const settingStoryAuthor = document.getElementById('setting-story-author');
+  const btnSavePageSettings = document.getElementById('btn-save-page-settings');
+
+  function loadPageSettingsIntoUI() {
+    if (!window.DataStore) return;
+    const settings = window.DataStore.getPageSettings();
+    const act = settings.activities || {};
+    const story = settings.ourStory || {};
+
+    if (settingActShowVideo) {
+      settingActShowVideo.checked = act.showVideo !== false;
+      if (settingsVideoGroup) {
+        settingsVideoGroup.style.display = settingActShowVideo.checked ? 'flex' : 'none';
+      }
+    }
+    if (settingActVideoTitle) settingActVideoTitle.value = act.videoTitle || '';
+    if (settingActVideoDesc) settingActVideoDesc.value = act.videoDescription || '';
+    if (settingActVideoUrl) settingActVideoUrl.value = act.videoUrl || '';
+    if (settingActThumbUrl) settingActThumbUrl.value = act.videoThumbnail || '';
+    if (settingActThumbPreview) {
+      settingActThumbPreview.src = resolveAdminImg(act.videoThumbnail || 'Assets/how-water-became-power-ai.jpg');
+    }
+    if (settingActAutoplay) settingActAutoplay.checked = act.autoplayImages !== false;
+    if (settingActInterval) {
+      const sec = Math.round((act.imageCycleInterval || 5000) / 1000);
+      settingActInterval.value = sec > 0 ? sec : 5;
+    }
+
+    if (settingStoryHeader) settingStoryHeader.value = story.teamHeaderTitle || '';
+    if (settingStoryQuote) settingStoryQuote.value = story.quoteText || '';
+    if (settingStoryAuthor) settingStoryAuthor.value = story.quoteAuthor || '';
+  }
+
+  // Toggle video details visibility
+  if (settingActShowVideo && settingsVideoGroup) {
+    settingActShowVideo.addEventListener('change', () => {
+      settingsVideoGroup.style.display = settingActShowVideo.checked ? 'flex' : 'none';
+    });
+  }
+
+  // Video File Upload
+  if (settingActVideoFile) {
+    settingActVideoFile.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      if (file.size > 25 * 1024 * 1024) {
+        alert('Notice: Large video files (>25MB) may exceed browser localStorage limits. Consider using a direct video URL or linking an external video (YouTube/Vimeo/Cloud).');
+      }
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        const dataUrl = evt.target.result;
+        if (settingActVideoUrl) settingActVideoUrl.value = dataUrl;
+        if (settingActVideoFilename) {
+          settingActVideoFilename.textContent = file.name;
+          settingActVideoFilename.style.display = 'inline-block';
+        }
+        showToast(`Loaded video file "${file.name}"`);
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  if (btnClearActVideo) {
+    btnClearActVideo.addEventListener('click', () => {
+      if (settingActVideoUrl) settingActVideoUrl.value = '';
+      if (settingActVideoFile) settingActVideoFile.value = '';
+      if (settingActVideoFilename) {
+        settingActVideoFilename.textContent = '';
+        settingActVideoFilename.style.display = 'none';
+      }
+      showToast('Cleared video source');
+    });
+  }
+
+  // Video Thumbnail File Upload
+  function handleUploadedVideoThumb(file) {
+    if (!file || !file.type.startsWith('image/')) {
+      alert('Please select a valid image file (PNG, JPG, WEBP, GIF, SVG).');
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (evt) => {
+      const dataUrl = evt.target.result;
+      if (settingActThumbUrl) settingActThumbUrl.value = dataUrl;
+      if (settingActThumbPreview) settingActThumbPreview.src = dataUrl;
+      if (settingActThumbFilename) {
+        settingActThumbFilename.textContent = file.name;
+        settingActThumbFilename.style.display = 'inline-block';
+      }
+      showToast(`Loaded thumbnail "${file.name}"`);
+    };
+    reader.readAsDataURL(file);
+  }
+
+  if (settingActThumbFile) {
+    settingActThumbFile.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) handleUploadedVideoThumb(file);
+    });
+  }
+
+  if (btnClearActThumb) {
+    btnClearActThumb.addEventListener('click', () => {
+      if (settingActThumbUrl) settingActThumbUrl.value = '';
+      if (settingActThumbPreview) settingActThumbPreview.src = '../Assets/CAEA-Navbar-Logo.png';
+      if (settingActThumbFile) settingActThumbFile.value = '';
+      if (settingActThumbFilename) {
+        settingActThumbFilename.textContent = '';
+        settingActThumbFilename.style.display = 'none';
+      }
+      showToast('Cleared video thumbnail');
+    });
+  }
+
+  if (settingActThumbUrl) {
+    settingActThumbUrl.addEventListener('input', () => {
+      if (settingActThumbPreview) {
+        const val = settingActThumbUrl.value.trim();
+        settingActThumbPreview.src = resolveAdminImg(val);
+      }
+    });
+  }
+
+  if (settingVideoThumbDropzone) {
+    ['dragenter', 'dragover'].forEach(eventName => {
+      settingVideoThumbDropzone.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        settingVideoThumbDropzone.style.borderColor = '#a3d88d';
+      });
+    });
+    ['dragleave', 'drop'].forEach(eventName => {
+      settingVideoThumbDropzone.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        settingVideoThumbDropzone.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+      });
+    });
+    settingVideoThumbDropzone.addEventListener('drop', (e) => {
+      const files = e.dataTransfer.files;
+      if (files && files.length > 0) {
+        handleUploadedVideoThumb(files[0]);
+      }
+    });
+  }
+
+  if (btnSavePageSettings) {
+    btnSavePageSettings.addEventListener('click', () => {
+      if (!window.DataStore) return;
+
+      const intervalSec = parseFloat(settingActInterval.value) || 5;
+      const intervalMs = Math.max(2000, Math.round(intervalSec * 1000));
+
+      const activitiesSettings = {
+        showVideo: settingActShowVideo ? settingActShowVideo.checked : true,
+        videoTitle: (settingActVideoTitle.value || '').trim(),
+        videoDescription: (settingActVideoDesc.value || '').trim(),
+        videoUrl: (settingActVideoUrl.value || '').trim(),
+        videoThumbnail: (settingActThumbUrl.value || '').trim(),
+        autoplayImages: settingActAutoplay ? settingActAutoplay.checked : true,
+        imageCycleInterval: intervalMs
+      };
+
+      const ourStorySettings = {
+        teamHeaderTitle: (settingStoryHeader.value || '').trim(),
+        quoteText: (settingStoryQuote.value || '').trim(),
+        quoteAuthor: (settingStoryAuthor.value || '').trim()
+      };
+
+      window.DataStore.savePageSettings('activities', activitiesSettings);
+      window.DataStore.savePageSettings('ourStory', ourStorySettings);
+
+      showToast('Page content & media settings saved successfully!');
+    });
+  }
+
+  /* ============================================================
+     11. Toast Notification & String Helpers
      ============================================================ */
   function showToast(msg) {
     const container = document.getElementById('admin-toast-container');
