@@ -5,7 +5,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   // State
-  let activeTab = 'activities';
+  let activeTab = 'applications';
   let activeEditId = null;
   let activeAppDetailId = null;
 

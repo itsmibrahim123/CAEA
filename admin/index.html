@@ -86,12 +86,12 @@
       <!-- KPI Summary Cards -->
       <section class="admin-stats-grid" aria-label="Quick Summary Statistics">
         <div class="stat-card">
-          <div class="stat-icon icon-activities">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <div class="stat-icon icon-applications">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M9 14l2 2 4-4"/></svg>
           </div>
           <div class="stat-info">
-            <span class="stat-label">Activities &amp; Our Work</span>
-            <span class="stat-number" id="stat-activities-count">0</span>
+            <span class="stat-label">Applied Submissions</span>
+            <span class="stat-number" id="stat-applications-count">0</span>
           </div>
         </div>
 
@@ -100,8 +100,18 @@
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           </div>
           <div class="stat-info">
-            <span class="stat-label">Team &amp; People</span>
+            <span class="stat-label">Our Story &amp; Team</span>
             <span class="stat-number" id="stat-people-count">0</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon icon-activities">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <div class="stat-info">
+            <span class="stat-label">Our Work &amp; Activities</span>
+            <span class="stat-number" id="stat-activities-count">0</span>
           </div>
         </div>
 
@@ -116,21 +126,11 @@
         </div>
 
         <div class="stat-card">
-          <div class="stat-icon icon-applications">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M9 14l2 2 4-4"/></svg>
-          </div>
-          <div class="stat-info">
-            <span class="stat-label">Applied Submissions</span>
-            <span class="stat-number" id="stat-applications-count">0</span>
-          </div>
-        </div>
-
-        <div class="stat-card">
           <div class="stat-icon icon-opportunities">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
           </div>
           <div class="stat-info">
-            <span class="stat-label">Get Involved Categories</span>
+            <span class="stat-label">Get Involved Positions</span>
             <span class="stat-number" id="stat-opportunities-count">0</span>
           </div>
         </div>
@@ -138,22 +138,22 @@
 
       <!-- Main Navigation Tabs -->
       <nav class="admin-tab-nav" aria-label="Console Navigation">
-        <button class="tab-btn active" data-tab="activities">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
-          Activities &amp; Our Work
+        <button class="tab-btn active" data-tab="applications">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M9 14l2 2 4-4"/></svg>
+          Applied Forms / Submissions
+          <span class="tab-badge-pill" id="tab-badge-applications">0</span>
         </button>
         <button class="tab-btn" data-tab="people">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-          People &amp; Team
+          Our Story &amp; Team
+        </button>
+        <button class="tab-btn" data-tab="activities">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+          Our Work &amp; Activities
         </button>
         <button class="tab-btn" data-tab="articles">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
           Articles &amp; Publications
-        </button>
-        <button class="tab-btn" data-tab="applications">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M9 14l2 2 4-4"/></svg>
-          Applied Fields / Submissions
-          <span class="tab-badge-pill" id="tab-badge-applications">0</span>
         </button>
         <button class="tab-btn" data-tab="opportunities">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
@@ -167,124 +167,8 @@
 
       <!-- COLLECTION PANELS -->
 
-      <!-- 1. ACTIVITIES & OUR WORK PANEL -->
-      <section class="admin-panel active" id="panel-activities">
-        <div class="panel-header">
-          <div class="panel-controls">
-            <div class="search-box">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-              <input type="text" id="search-activities" class="admin-input search-input" placeholder="Search activities & our work by title, location or description..." />
-            </div>
-            <select id="filter-activities-tag" class="admin-select">
-              <option value="">All Categories</option>
-              <option value="RETREAT">RETREAT</option>
-              <option value="WORKSHOP">WORKSHOP</option>
-              <option value="RESEARCH">RESEARCH</option>
-              <option value="FIELD PROJECT">FIELD PROJECT</option>
-              <option value="POLICY">POLICY</option>
-            </select>
-          </div>
-          <button class="admin-btn admin-btn-primary" id="btn-add-activity">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            Add Activity / Work Item
-          </button>
-        </div>
-
-        <div class="table-wrapper">
-          <table class="admin-table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Media</th>
-                <th>Title &amp; Location</th>
-                <th>Category</th>
-                <th>Date</th>
-                <th class="text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody id="table-activities-body">
-              <!-- Dynamically Populated -->
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <!-- 2. PEOPLE PANEL -->
-      <section class="admin-panel" id="panel-people">
-        <div class="panel-header">
-          <div class="panel-controls">
-            <div class="search-box">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-              <input type="text" id="search-people" class="admin-input search-input" placeholder="Search people by name, role or bio..." />
-            </div>
-            <select id="filter-people-category" class="admin-select">
-              <option value="">All Roles</option>
-              <option value="Executive">Executive</option>
-              <option value="Core Team">Core Team</option>
-              <option value="Fellows">Fellows</option>
-            </select>
-          </div>
-          <button class="admin-btn admin-btn-primary" id="btn-add-person">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            Add Team Member
-          </button>
-        </div>
-
-        <div class="table-wrapper">
-          <table class="admin-table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Photo</th>
-                <th>Name &amp; Role</th>
-                <th>Category</th>
-                <th>Bio Summary</th>
-                <th class="text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody id="table-people-body">
-              <!-- Dynamically Populated -->
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <!-- 3. ARTICLES PANEL -->
-      <section class="admin-panel" id="panel-articles">
-        <div class="panel-header">
-          <div class="panel-controls">
-            <div class="search-box">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-              <input type="text" id="search-articles" class="admin-input search-input" placeholder="Search articles by title, author or excerpt..." />
-            </div>
-          </div>
-          <button class="admin-btn admin-btn-primary" id="btn-add-article">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            Add New Article
-          </button>
-        </div>
-
-        <div class="table-wrapper">
-          <table class="admin-table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Cover</th>
-                <th>Title &amp; Author</th>
-                <th>Tag / Kicker</th>
-                <th>Date</th>
-                <th class="text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody id="table-articles-body">
-              <!-- Dynamically Populated -->
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <!-- 4. APPLIED FIELDS & SUBMISSIONS PANEL -->
-      <section class="admin-panel" id="panel-applications">
+      <!-- 1. APPLIED FIELDS & SUBMISSIONS PANEL (PRIMARY) -->
+      <section class="admin-panel active" id="panel-applications">
         <div class="panel-header">
           <div class="panel-controls">
             <div class="search-box">
@@ -332,7 +216,123 @@
         </div>
       </section>
 
-      <!-- 5. GET INVOLVED POSITIONS / CATEGORIES (ORIGINAL STRUCTURE CRUD) -->
+      <!-- 2. OUR STORY & PEOPLE PANEL -->
+      <section class="admin-panel" id="panel-people">
+        <div class="panel-header">
+          <div class="panel-controls">
+            <div class="search-box">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" id="search-people" class="admin-input search-input" placeholder="Search people by name, role or bio..." />
+            </div>
+            <select id="filter-people-category" class="admin-select">
+              <option value="">All Roles</option>
+              <option value="Executive">Executive</option>
+              <option value="Core Team">Core Team</option>
+              <option value="Fellows">Fellows</option>
+            </select>
+          </div>
+          <button class="admin-btn admin-btn-primary" id="btn-add-person">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add Team Member
+          </button>
+        </div>
+
+        <div class="table-wrapper">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Photo</th>
+                <th>Name &amp; Role</th>
+                <th>Category</th>
+                <th>Bio Summary</th>
+                <th class="text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="table-people-body">
+              <!-- Dynamically Populated -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 3. OUR WORK & ACTIVITIES PANEL -->
+      <section class="admin-panel" id="panel-activities">
+        <div class="panel-header">
+          <div class="panel-controls">
+            <div class="search-box">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" id="search-activities" class="admin-input search-input" placeholder="Search activities & our work by title, location or description..." />
+            </div>
+            <select id="filter-activities-tag" class="admin-select">
+              <option value="">All Categories</option>
+              <option value="RETREAT">RETREAT</option>
+              <option value="WORKSHOP">WORKSHOP</option>
+              <option value="RESEARCH">RESEARCH</option>
+              <option value="FIELD PROJECT">FIELD PROJECT</option>
+              <option value="POLICY">POLICY</option>
+            </select>
+          </div>
+          <button class="admin-btn admin-btn-primary" id="btn-add-activity">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add Activity / Work Item
+          </button>
+        </div>
+
+        <div class="table-wrapper">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Media</th>
+                <th>Title &amp; Location</th>
+                <th>Category</th>
+                <th>Date</th>
+                <th class="text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="table-activities-body">
+              <!-- Dynamically Populated -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 4. ARTICLES & PUBLICATIONS PANEL -->
+      <section class="admin-panel" id="panel-articles">
+        <div class="panel-header">
+          <div class="panel-controls">
+            <div class="search-box">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" id="search-articles" class="admin-input search-input" placeholder="Search articles by title, author or excerpt..." />
+            </div>
+          </div>
+          <button class="admin-btn admin-btn-primary" id="btn-add-article">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add New Article
+          </button>
+        </div>
+
+        <div class="table-wrapper">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Cover</th>
+                <th>Title &amp; Author</th>
+                <th>Tag / Kicker</th>
+                <th>Date</th>
+                <th class="text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="table-articles-body">
+              <!-- Dynamically Populated -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 5. GET INVOLVED POSITIONS PANEL -->
       <section class="admin-panel" id="panel-opportunities">
         <div class="panel-header">
           <div class="panel-controls">

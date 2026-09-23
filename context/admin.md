@@ -27,25 +27,25 @@ This document details the administrative console architecture, cryptographic aut
 
 ## 2. Admin Navigation & Tab Architecture
 
-The navigation bar (`.admin-tab-nav`) is designed with a sleek, compact gap (`6px`) and contains 5 core operational panels:
+The navigation bar (`.admin-tab-nav`) is designed with a sleek, compact gap (`6px`) and contains 6 core operational panels ordered by applied forms first, followed by website page flow:
 
-1. **Activities & Our Work** (`#panel-activities`):
-   - Manage field projects, workshops, retreats, and research expeditions.
-   - **Main Hero Event Spotlight**: Includes a dedicated star action (`setActivityAsHero(id)`) to toggle which event appears in the hero banner of the live homepage.
-   - Edit custom hero banner quotes and speaker attributions per activity.
-2. **People & Team** (`#panel-people`):
-   - Manage Executive Leadership, Core Team, and Research Fellows.
-   - Edit full names, roles, team categories, biographical summaries, and photos.
-3. **Articles & Publications** (`#panel-articles`):
-   - Manage articles, case studies, policy briefs, and reports.
-   - Edit titles, kickers, authors, dates, excerpts, full body content, and cover imagery.
-4. **Applied Fields / Submissions** (`#panel-applications`):
+1. **Applied Forms / Submissions** (`#panel-applications`):
    - Review all candidate submissions submitted via the public "Apply Now" modal dialog.
    - Status transitions: `Pending`, `Under Review`, `Shortlisted`, `Accepted`, `Archived`.
    - Private administrative notes field for interview tracking and candidate vetting.
    - One-click **CSV Export** (`caea-applications-YYYY-MM-DD.csv`).
+2. **Our Story & Team** (`#panel-people`):
+   - Manage Executive Leadership, Core Team, and Research Fellows (`/pages/our-story.html`).
+   - Edit full names, roles, team categories, biographical summaries, and photos.
+3. **Our Work & Activities** (`#panel-activities`):
+   - Manage field projects, workshops, retreats, and research expeditions (`/pages/activities.html`).
+   - **Main Hero Event Spotlight**: Includes a dedicated star action (`setActivityAsHero(id)`) to toggle which event appears in the hero banner of the live homepage.
+   - Edit custom hero banner quotes and speaker attributions per activity.
+4. **Articles & Publications** (`#panel-articles`):
+   - Manage articles, case studies, policy briefs, and reports (`/pages/our-analytics.html`).
+   - Edit titles, kickers, authors, dates, excerpts, full body content, and cover imagery.
 5. **Get Involved Positions** (`#panel-opportunities`):
-   - Manage the public position structure (Blue Card vs Black Card theme, status, categories, role types).
+   - Manage the public position structure on `/pages/get-involved.html` (Blue Card vs Black Card theme, status, categories, role types).
 6. **Page Settings & Media** (`#panel-settings`):
    - **Video Section Management**: Toggle video section visibility on `pages/activities.html`, set video documentary title, description, and source (direct URL or MP4/WebM file upload), plus cover thumbnail.
    - **Slideshow Controls**: Enable/disable automated image & general info cycling for the activities hero gallery, and configure rotation speed (seconds).
