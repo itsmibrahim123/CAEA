@@ -70,8 +70,30 @@
 
         <!-- Green Content Card Container -->
         <div class="bottom-header-body">
-          <div class="bottom-header-inner-card">
-            <h2 class="bottom-header-title">BE A PART OF OUR LATEST</h2>
+          <div class="bottom-header-inner-card" id="latest-content-card">
+            <div class="latest-card-layout">
+              <div class="latest-card-header">
+                <h2 class="bottom-header-title" id="latest-section-title">BE A PART OF OUR LATEST</h2>
+                <p class="latest-section-desc" id="latest-section-desc">Watch our latest field updates, community kacheri highlights, and climate documentaries across Pakistan.</p>
+              </div>
+              <div class="latest-video-preview-wrapper" id="latest-video-preview-wrapper">
+                <div class="latest-video-card" id="home-latest-video-btn" role="button" tabindex="0" aria-label="Play featured video">
+                  <div class="latest-video-thumb-wrap">
+                    <img id="home-latest-video-cover" src="/Assets/how-water-became-power.jpg" alt="Latest video preview" class="latest-video-cover-img" onerror="this.src='/Assets/Hero-image.png'" />
+                    <div class="video-play-btn" aria-hidden="true">
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                      </svg>
+                    </div>
+                  </div>
+                  <div class="latest-video-info">
+                    <span class="latest-video-badge">FEATURED VIDEO</span>
+                    <h3 class="latest-video-heading" id="home-latest-video-title">Community Kacheri &amp; Field Briefing</h3>
+                    <p class="latest-video-summary" id="home-latest-video-desc">Experience our frontline grassroots gatherings across Pakistan, exploring public energy ownership and water justice.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -80,7 +102,7 @@
     <!-- Pakistan Map / Our Stories Section -->
     <section class="map-section" id="our-stories" aria-label="Our Stories — Pakistan Locations">
       <div class="map-frame">
-        <div class="map-pin-area">
+        <div class="map-pin-area" id="map-pins-container">
           <img src="/Assets/Pak-map.png" alt="Map of Pakistan highlighting CAEA project locations" class="map-bg"
             aria-hidden="true" />
 

@@ -10,7 +10,8 @@ const STORAGE_KEYS = {
   OPPORTUNITIES: 'caea_opportunities_data',
   APPLICATIONS: 'caea_applications_data',
   MEDIA: 'caea_media_data',
-  PAGE_SETTINGS: 'caea_page_settings'
+  PAGE_SETTINGS: 'caea_page_settings',
+  MAP_PINS: 'caea_map_pins_data'
 };
 
 // Seed default data
@@ -516,7 +517,62 @@ const SEED_DATA = {
     }
   ],
 
+  mapPins: [
+    {
+      id: 'pin-hunza',
+      city: 'HUNZA',
+      left: '53%',
+      top: '19%',
+      badge: 'HUNZA',
+      description: 'Our team comes from diverse backgrounds across Gilgit-Baltistan. Climate Action & Energy Access (CAEA) is a Pakistan-based research and advocacy institute committed to empowering mountain communities through renewable energy.'
+    },
+    {
+      id: 'pin-jalalpur',
+      city: 'JALALPUR',
+      left: '62%',
+      top: '41%',
+      badge: 'JALALPUR',
+      description: 'Our team works closely with agrarian communities in Jalalpur advancing decentralized solar irrigation, groundwater conservation, and community energy governance.'
+    },
+    {
+      id: 'pin-manchhar',
+      city: 'MANCHHAR',
+      left: '45%',
+      top: '60%',
+      badge: 'MANCHHAR',
+      description: 'Our team works directly with freshwater fishing communities around Lake Manchhar. CAEA focuses on resilient water-energy solutions and ecological preservation.'
+    },
+    {
+      id: 'pin-thar',
+      city: 'THAR',
+      left: '33%',
+      top: '78%',
+      badge: 'THAR',
+      description: 'In the Thar desert, CAEA is leading research into off-grid solar microgrids and clean drinking water access for rural and indigenous desert settlements.'
+    },
+    {
+      id: 'pin-balochistan',
+      city: 'BALOCHISTAN',
+      left: '22%',
+      top: '50%',
+      badge: 'BALOCHISTAN',
+      description: 'Our upcoming project initiative exploring distributed solar and wind energy potential across western and pastoral regions.'
+    }
+  ],
+
   pageSettings: {
+    home: {
+      heroQuote: 'Not only must we be good, but we must also be good for something.',
+      heroQuoteAuthor: '',
+      showLatestSection: true,
+      latestTitle: 'BE A PART OF OUR LATEST',
+      latestSubtitle: 'Watch our latest field updates, community kacheri highlights, and climate documentaries across Pakistan.',
+      showLatestVideo: true,
+      latestVideoTitle: 'Community Kacheri & Field Briefing',
+      latestVideoDescription: 'Experience our frontline grassroots gatherings across Pakistan, exploring public energy ownership and water justice.',
+      latestVideoUrl: '',
+      latestVideoThumbnail: 'Assets/how-water-became-power.jpg'
+    },
     activities: {
       showVideo: true,
       videoTitle: 'More than a retreat (CAEA Community Documentary)',
@@ -541,14 +597,15 @@ class CAEADataStore {
 
   init() {
     const DATA_VERSION_KEY = 'caea_data_version';
-    const CURRENT_VERSION = 'v5_page_settings';
+    const CURRENT_VERSION = 'v6_map_pins_and_latest_videos';
     const storedVersion = localStorage.getItem(DATA_VERSION_KEY);
 
     if (storedVersion !== CURRENT_VERSION) {
-      // Refresh seed activities, people, and media to the updated dataset
+      // Refresh seed activities, people, media, mapPins, and pageSettings
       localStorage.setItem(STORAGE_KEYS.ACTIVITIES, JSON.stringify(SEED_DATA.activities));
       localStorage.setItem(STORAGE_KEYS.PEOPLE, JSON.stringify(SEED_DATA.people));
       localStorage.setItem(STORAGE_KEYS.MEDIA, JSON.stringify(SEED_DATA.media));
+      localStorage.setItem(STORAGE_KEYS.MAP_PINS, JSON.stringify(SEED_DATA.mapPins));
       if (!localStorage.getItem(STORAGE_KEYS.OPPORTUNITIES)) {
         localStorage.setItem(STORAGE_KEYS.OPPORTUNITIES, JSON.stringify(SEED_DATA.opportunities));
       }
@@ -558,9 +615,7 @@ class CAEADataStore {
       if (!localStorage.getItem(STORAGE_KEYS.APPLICATIONS)) {
         localStorage.setItem(STORAGE_KEYS.APPLICATIONS, JSON.stringify(SEED_DATA.applications));
       }
-      if (!localStorage.getItem(STORAGE_KEYS.PAGE_SETTINGS)) {
-        localStorage.setItem(STORAGE_KEYS.PAGE_SETTINGS, JSON.stringify(SEED_DATA.pageSettings));
-      }
+      localStorage.setItem(STORAGE_KEYS.PAGE_SETTINGS, JSON.stringify(SEED_DATA.pageSettings));
       localStorage.setItem(DATA_VERSION_KEY, CURRENT_VERSION);
     } else {
       if (!localStorage.getItem(STORAGE_KEYS.ACTIVITIES)) {
@@ -580,6 +635,9 @@ class CAEADataStore {
       }
       if (!localStorage.getItem(STORAGE_KEYS.MEDIA)) {
         localStorage.setItem(STORAGE_KEYS.MEDIA, JSON.stringify(SEED_DATA.media));
+      }
+      if (!localStorage.getItem(STORAGE_KEYS.MAP_PINS)) {
+        localStorage.setItem(STORAGE_KEYS.MAP_PINS, JSON.stringify(SEED_DATA.mapPins));
       }
       if (!localStorage.getItem(STORAGE_KEYS.PAGE_SETTINGS)) {
         localStorage.setItem(STORAGE_KEYS.PAGE_SETTINGS, JSON.stringify(SEED_DATA.pageSettings));
@@ -602,6 +660,10 @@ class CAEADataStore {
       case 'media':
       case 'assets':
       case 'images': return STORAGE_KEYS.MEDIA;
+      case 'mappins':
+      case 'map_pins':
+      case 'pins':
+      case 'map': return STORAGE_KEYS.MAP_PINS;
       case 'page_settings':
       case 'pagesettings':
       case 'settings': return STORAGE_KEYS.PAGE_SETTINGS;
@@ -632,6 +694,7 @@ class CAEADataStore {
       const defaults = SEED_DATA.pageSettings;
       
       const merged = {
+        home: { ...defaults.home, ...(parsed.home || {}) },
         activities: { ...defaults.activities, ...(parsed.activities || {}) },
         ourStory: { ...defaults.ourStory, ...(parsed.ourStory || {}) }
       };
@@ -672,6 +735,7 @@ class CAEADataStore {
     const prefix = collection.toLowerCase().startsWith('app') ? 'app' :
                    collection.toLowerCase().startsWith('opp') ? 'opp' :
                    collection.toLowerCase().startsWith('med') ? 'med' :
+                   collection.toLowerCase().startsWith('map') || collection.toLowerCase().startsWith('pin') ? 'pin' :
                    collection.substring(0, 3);
     const newItem = {
       id: `${prefix}-${Date.now()}`,
@@ -746,6 +810,7 @@ class CAEADataStore {
     localStorage.setItem(STORAGE_KEYS.OPPORTUNITIES, JSON.stringify(SEED_DATA.opportunities));
     localStorage.setItem(STORAGE_KEYS.APPLICATIONS, JSON.stringify(SEED_DATA.applications));
     localStorage.setItem(STORAGE_KEYS.MEDIA, JSON.stringify(SEED_DATA.media));
+    localStorage.setItem(STORAGE_KEYS.MAP_PINS, JSON.stringify(SEED_DATA.mapPins));
     localStorage.setItem(STORAGE_KEYS.PAGE_SETTINGS, JSON.stringify(SEED_DATA.pageSettings));
     this.dispatchUpdate('all');
   }
@@ -758,6 +823,7 @@ class CAEADataStore {
       opportunities: this.get('opportunities'),
       applications: this.get('applications'),
       media: this.get('media'),
+      mapPins: this.get('mapPins'),
       pageSettings: this.getPageSettings(),
       exportedAt: new Date().toISOString()
     }, null, 2);
@@ -783,6 +849,9 @@ class CAEADataStore {
       }
       if (data.media && Array.isArray(data.media)) {
         localStorage.setItem(STORAGE_KEYS.MEDIA, JSON.stringify(data.media));
+      }
+      if (data.mapPins && Array.isArray(data.mapPins)) {
+        localStorage.setItem(STORAGE_KEYS.MAP_PINS, JSON.stringify(data.mapPins));
       }
       if (data.pageSettings && typeof data.pageSettings === 'object') {
         localStorage.setItem(STORAGE_KEYS.PAGE_SETTINGS, JSON.stringify(data.pageSettings));

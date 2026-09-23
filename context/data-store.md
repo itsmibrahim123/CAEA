@@ -109,9 +109,33 @@ interface Application {
 }
 ```
 
-### 2.6 `pageSettings` Structure (`caea_page_settings`)
+### 2.6 `mapPins` Collection (Pakistan Map Locations)
+```typescript
+interface MapPin {
+  id: string;              // e.g. "pin-hunza"
+  city: string;            // "HUNZA", "JALALPUR", "MANCHHAR", "THAR", "BALOCHISTAN"
+  left: string;            // CSS position percentage e.g. "53%"
+  top: string;             // CSS position percentage e.g. "19%"
+  badge: string;           // Popup header badge label e.g. "HUNZA"
+  description: string;     // Narrative background and community story
+}
+```
+
+### 2.7 `pageSettings` Structure (`caea_page_settings`)
 ```typescript
 interface PageSettings {
+  home: {
+    heroQuote: string;           // Homepage banner quote
+    heroQuoteAuthor: string;     // Quote attribution
+    showLatestSection: boolean;  // Toggle latest section visibility
+    latestTitle: string;         // "BE A PART OF OUR LATEST"
+    latestSubtitle: string;      // Subtitle / overview
+    showLatestVideo: boolean;    // Toggle video preview card
+    latestVideoTitle: string;    // "Community Kacheri & Field Briefing"
+    latestVideoDescription: string; // Summary of video
+    latestVideoUrl: string;      // Video URL or uploaded Data URI / MP4
+    latestVideoThumbnail: string;// Video thumbnail cover image
+  };
   activities: {
     showVideo: boolean;          // Toggle documentary section on activities page
     videoTitle: string;          // "More than a retreat (CAEA Community Documentary)"

@@ -18,11 +18,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Stats
   const statActivities = document.getElementById('stat-activities-count');
+  const statMapPins = document.getElementById('stat-mappins-count');
   const statPeople = document.getElementById('stat-people-count');
   const statArticles = document.getElementById('stat-articles-count');
   const statApplications = document.getElementById('stat-applications-count');
   const statOpportunities = document.getElementById('stat-opportunities-count');
   const tabBadgeApplications = document.getElementById('tab-badge-applications');
+  const tabBadgeMapPins = document.getElementById('tab-badge-mappins');
 
   // Tabs
   const tabBtns = document.querySelectorAll('.tab-btn');
@@ -30,6 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Tables
   const tableActivitiesBody = document.getElementById('table-activities-body');
+  const tableMapPinsBody = document.getElementById('table-mappins-body');
   const tablePeopleBody = document.getElementById('table-people-body');
   const tableArticlesBody = document.getElementById('table-articles-body');
   const tableApplicationsBody = document.getElementById('table-applications-body');
@@ -38,6 +41,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // Filters & Search
   const searchActivities = document.getElementById('search-activities');
   const filterActivitiesTag = document.getElementById('filter-activities-tag');
+
+  const searchMapPins = document.getElementById('search-mappins');
+  const btnAddMapPin = document.getElementById('btn-add-map-pin');
 
   const searchPeople = document.getElementById('search-people');
   const filterPeopleCategory = document.getElementById('filter-people-category');
@@ -245,17 +251,20 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateStats() {
     if (!window.DataStore) return;
     const activitiesCount = window.DataStore.get('activities').length;
+    const mapPinsCount = window.DataStore.get('mapPins').length;
     const peopleCount = window.DataStore.get('people').length;
     const articlesCount = window.DataStore.get('articles').length;
     const applicationsCount = window.DataStore.get('applications').length;
     const opportunitiesCount = window.DataStore.get('opportunities').length;
 
     if (statActivities) statActivities.textContent = activitiesCount;
+    if (statMapPins) statMapPins.textContent = mapPinsCount;
     if (statPeople) statPeople.textContent = peopleCount;
     if (statArticles) statArticles.textContent = articlesCount;
     if (statApplications) statApplications.textContent = applicationsCount;
     if (statOpportunities) statOpportunities.textContent = opportunitiesCount;
     if (tabBadgeApplications) tabBadgeApplications.textContent = applicationsCount;
+    if (tabBadgeMapPins) tabBadgeMapPins.textContent = mapPinsCount;
   }
 
   /* ============================================================
@@ -283,14 +292,70 @@ document.addEventListener('DOMContentLoaded', () => {
      5. Table Rendering Functions
      ============================================================ */
   function renderAllTables() {
-    renderActivitiesTable();
-    renderPeopleTable();
-    renderArticlesTable();
     renderApplicationsTable();
+    renderMapPinsTable();
+    renderPeopleTable();
+    renderActivitiesTable();
+    renderArticlesTable();
     renderOpportunitiesTable();
   }
 
-  // 5.1 Activities & Our Work Table
+  // 5.1 Pakistan Map Location Pins Table
+  function renderMapPinsTable() {
+    if (!tableMapPinsBody || !window.DataStore) return;
+    let items = window.DataStore.get('mapPins');
+    const query = searchMapPins ? searchMapPins.value.toLowerCase().trim() : '';
+
+    if (query) {
+      items = items.filter(i =>
+        (i.city && i.city.toLowerCase().includes(query)) ||
+        (i.badge && i.badge.toLowerCase().includes(query)) ||
+        (i.description && i.description.toLowerCase().includes(query))
+      );
+    }
+
+    if (items.length === 0) {
+      tableMapPinsBody.innerHTML = `<tr><td colspan="6" class="text-center" style="padding:24px; color:#888;">No map pins found matching criteria.</td></tr>`;
+      return;
+    }
+
+    tableMapPinsBody.innerHTML = items.map(item => `
+      <tr>
+        <td style="font-family:monospace; font-size:11px; color:#888;">${item.id}</td>
+        <td>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#a3d88d; box-shadow:0 0 6px rgba(163,216,141,0.6);"></span>
+            <strong style="color:#ffffff;">${escapeHtml(item.city)}</strong>
+          </div>
+        </td>
+        <td>
+          <span style="font-family:monospace; font-size:12px; color:#798dff; background:rgba(79,103,237,0.1); padding:3px 8px; border-radius:4px;">
+            Left: ${escapeHtml(item.left || '50%')}, Top: ${escapeHtml(item.top || '50%')}
+          </span>
+        </td>
+        <td>
+          <span class="table-badge" style="background:rgba(163,216,141,0.15); color:#a3d88d; border:1px solid rgba(163,216,141,0.3);">
+            ${escapeHtml(item.badge || item.city)}
+          </span>
+        </td>
+        <td style="max-width:280px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:#9da5b4;">
+          ${escapeHtml(item.description || '—')}
+        </td>
+        <td class="text-right">
+          <div class="table-actions">
+            <button class="action-icon-btn edit-btn" onclick="openEditModal('mapPins', '${item.id}')" title="Edit Map Pin">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            </button>
+            <button class="action-icon-btn delete-btn" onclick="confirmDelete('mapPins', '${item.id}')" title="Delete Map Pin">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            </button>
+          </div>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  // 5.2 Activities & Our Work Table
   window.setActivityAsHero = function(actId) {
     if (!window.DataStore) return;
     const items = window.DataStore.get('activities');
@@ -631,6 +696,9 @@ document.addEventListener('DOMContentLoaded', () => {
   if (searchActivities) searchActivities.addEventListener('input', renderActivitiesTable);
   if (filterActivitiesTag) filterActivitiesTag.addEventListener('change', renderActivitiesTable);
 
+  if (searchMapPins) searchMapPins.addEventListener('input', renderMapPinsTable);
+  if (btnAddMapPin) btnAddMapPin.addEventListener('click', () => openEditModal('mapPins'));
+
   if (searchPeople) searchPeople.addEventListener('input', renderPeopleTable);
   if (filterPeopleCategory) filterPeopleCategory.addEventListener('change', renderPeopleTable);
 
@@ -657,7 +725,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const collectionName = collection === 'opportunities' ? 'Get Involved Position' :
                            collection === 'activities' ? 'Activity / Work Item' :
                            collection === 'people' ? 'Team Member' :
-                           collection === 'articles' ? 'Article' : collection;
+                           collection === 'articles' ? 'Article' :
+                           collection === 'mapPins' || collection === 'mappins' ? 'Pakistan Map Location Pin' : collection;
 
     modalTitle.textContent = `${isEdit ? 'Edit' : 'Add New'} ${collectionName}`;
 
@@ -694,7 +763,35 @@ document.addEventListener('DOMContentLoaded', () => {
     // Render Dynamic Form Fields based on Collection
     let fieldsHtml = '';
 
-    if (collection === 'activities') {
+    if (collection === 'mapPins' || collection === 'mappins') {
+      fieldsHtml = `
+        <div class="form-group">
+          <label class="form-label">City / Region Name</label>
+          <input type="text" name="city" class="admin-input" value="${escapeHtml(item.city || '')}" placeholder="e.g. HUNZA, JALALPUR, MANCHHAR, THAR" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Popup Badge Label</label>
+          <input type="text" name="badge" class="admin-input" value="${escapeHtml(item.badge || item.city || '')}" placeholder="e.g. HUNZA" required />
+        </div>
+        <div class="form-row" style="display:flex; gap:16px;">
+          <div class="form-group flex-1" style="flex:1;">
+            <label class="form-label">Position Left % (X Coordinate)</label>
+            <input type="text" name="left" class="admin-input" value="${escapeHtml(item.left || '50%')}" placeholder="e.g. 53%" required />
+          </div>
+          <div class="form-group flex-1" style="flex:1;">
+            <label class="form-label">Position Top % (Y Coordinate)</label>
+            <input type="text" name="top" class="admin-input" value="${escapeHtml(item.top || '50%')}" placeholder="e.g. 19%" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Location Story / Popup Description</label>
+          <textarea name="description" class="admin-textarea" rows="4" placeholder="Story, background, or community initiative details shown on pin click..." required>${escapeHtml(item.description || '')}</textarea>
+        </div>
+        <div style="font-size:12px; color:#9da5b4; background:rgba(255,255,255,0.03); padding:10px 14px; border-radius:6px; border:1px solid rgba(255,255,255,0.08); line-height:1.4;">
+          <strong style="color:#a3d88d;">Coordinates Guide:</strong> Northern GB: ~53% Left, 19% Top &bull; Punjab: ~62% Left, 41% Top &bull; Sindh: ~45% Left, 60% Top &bull; Thar: ~33% Left, 78% Top &bull; Balochistan: ~22% Left, 50% Top.
+        </div>
+      `;
+    } else if (collection === 'activities') {
       fieldsHtml = `
         <div class="form-group" style="display:flex; align-items:center; gap:10px; background:rgba(163,216,141,0.08); padding:12px 14px; border-radius:6px; border:1px solid rgba(163,216,141,0.3);">
           <input type="checkbox" name="featured" id="act-featured-cb" value="true" ${item.featured ? 'checked' : ''} style="width:18px; height:18px; cursor:pointer;" />
@@ -962,12 +1059,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
 
+      const label = collection === 'mapPins' || collection === 'mappins' ? 'location pin' :
+                    collection === 'opportunities' ? 'position' :
+                    collection === 'activities' ? 'activity' :
+                    collection === 'people' ? 'team member' :
+                    collection.slice(0, -1);
+
       if (recordId) {
         window.DataStore.update(collection, recordId, dataObj);
-        showToast(`Updated ${collection.slice(0, -1)} successfully`);
+        showToast(`Updated ${label} successfully`);
       } else {
         window.DataStore.add(collection, dataObj);
-        showToast(`Added new ${collection.slice(0, -1)} successfully`);
+        showToast(`Added new ${label} successfully`);
       }
 
       updateStats();
@@ -1166,6 +1269,30 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ============================================================
      10. Page Content & Media Settings Management
      ============================================================ */
+  // 10.1 Home Page Settings
+  const settingHomeLatestTitle = document.getElementById('setting-home-latest-title');
+  const settingHomeLatestSubtitle = document.getElementById('setting-home-latest-subtitle');
+  const settingHomeShowVideo = document.getElementById('setting-home-show-video');
+  const settingsHomeVideoGroup = document.getElementById('settings-home-video-group');
+  const settingHomeVideoTitle = document.getElementById('setting-home-video-title');
+  const settingHomeVideoDesc = document.getElementById('setting-home-video-desc');
+  const settingHomeVideoUrl = document.getElementById('setting-home-video-url');
+  const settingHomeVideoFile = document.getElementById('setting-home-video-file');
+  const settingHomeVideoFilename = document.getElementById('setting-home-video-filename');
+  const btnClearHomeVideo = document.getElementById('btn-clear-home-video');
+
+  const settingHomeThumbUrl = document.getElementById('setting-home-thumb-url');
+  const settingHomeThumbFile = document.getElementById('setting-home-thumb-file');
+  const settingHomeThumbPreview = document.getElementById('setting-home-thumb-preview');
+  const settingHomeThumbFilename = document.getElementById('setting-home-thumb-filename');
+  const btnClearHomeThumb = document.getElementById('btn-clear-home-thumb');
+  const settingHomeThumbDropzone = document.getElementById('setting-home-thumb-dropzone');
+
+  const settingHomeHeroQuote = document.getElementById('setting-home-hero-quote');
+  const settingHomeHeroAuthor = document.getElementById('setting-home-hero-author');
+  const btnSaveHomeSettings = document.getElementById('btn-save-home-settings');
+
+  // 10.2 Activities Page Settings
   const settingActShowVideo = document.getElementById('setting-act-show-video');
   const settingsVideoGroup = document.getElementById('settings-video-details-group');
   const settingActVideoTitle = document.getElementById('setting-act-video-title');
@@ -1185,6 +1312,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const settingActAutoplay = document.getElementById('setting-act-autoplay');
   const settingActInterval = document.getElementById('setting-act-interval');
 
+  // 10.3 Our Story Page Settings
   const settingStoryHeader = document.getElementById('setting-story-header');
   const settingStoryQuote = document.getElementById('setting-story-quote');
   const settingStoryAuthor = document.getElementById('setting-story-author');
@@ -1193,9 +1321,30 @@ document.addEventListener('DOMContentLoaded', () => {
   function loadPageSettingsIntoUI() {
     if (!window.DataStore) return;
     const settings = window.DataStore.getPageSettings();
+    const home = settings.home || {};
     const act = settings.activities || {};
     const story = settings.ourStory || {};
 
+    // Home Page
+    if (settingHomeLatestTitle) settingHomeLatestTitle.value = home.latestTitle || '';
+    if (settingHomeLatestSubtitle) settingHomeLatestSubtitle.value = home.latestSubtitle || '';
+    if (settingHomeShowVideo) {
+      settingHomeShowVideo.checked = home.showLatestVideo !== false;
+      if (settingsHomeVideoGroup) {
+        settingsHomeVideoGroup.style.display = settingHomeShowVideo.checked ? 'flex' : 'none';
+      }
+    }
+    if (settingHomeVideoTitle) settingHomeVideoTitle.value = home.latestVideoTitle || '';
+    if (settingHomeVideoDesc) settingHomeVideoDesc.value = home.latestVideoDescription || '';
+    if (settingHomeVideoUrl) settingHomeVideoUrl.value = home.latestVideoUrl || '';
+    if (settingHomeThumbUrl) settingHomeThumbUrl.value = home.latestVideoThumbnail || '';
+    if (settingHomeThumbPreview) {
+      settingHomeThumbPreview.src = resolveAdminImg(home.latestVideoThumbnail || 'Assets/how-water-became-power.jpg');
+    }
+    if (settingHomeHeroQuote) settingHomeHeroQuote.value = home.heroQuote || '';
+    if (settingHomeHeroAuthor) settingHomeHeroAuthor.value = home.heroQuoteAuthor || '';
+
+    // Activities Page
     if (settingActShowVideo) {
       settingActShowVideo.checked = act.showVideo !== false;
       if (settingsVideoGroup) {
@@ -1215,19 +1364,155 @@ document.addEventListener('DOMContentLoaded', () => {
       settingActInterval.value = sec > 0 ? sec : 5;
     }
 
+    // Story Page
     if (settingStoryHeader) settingStoryHeader.value = story.teamHeaderTitle || '';
     if (settingStoryQuote) settingStoryQuote.value = story.quoteText || '';
     if (settingStoryAuthor) settingStoryAuthor.value = story.quoteAuthor || '';
   }
 
-  // Toggle video details visibility
+  // Home Page Video Toggle
+  if (settingHomeShowVideo && settingsHomeVideoGroup) {
+    settingHomeShowVideo.addEventListener('change', () => {
+      settingsHomeVideoGroup.style.display = settingHomeShowVideo.checked ? 'flex' : 'none';
+    });
+  }
+
+  // Home Page Video File Upload
+  if (settingHomeVideoFile) {
+    settingHomeVideoFile.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      if (file.size > 25 * 1024 * 1024) {
+        alert('Notice: Large video files (>25MB) may exceed browser localStorage limits. Consider using a direct video URL or linking an external video (YouTube/Vimeo/Cloud).');
+      }
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        const dataUrl = evt.target.result;
+        if (settingHomeVideoUrl) settingHomeVideoUrl.value = dataUrl;
+        if (settingHomeVideoFilename) {
+          settingHomeVideoFilename.textContent = file.name;
+          settingHomeVideoFilename.style.display = 'inline-block';
+        }
+        showToast(`Loaded home video "${file.name}"`);
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  if (btnClearHomeVideo) {
+    btnClearHomeVideo.addEventListener('click', () => {
+      if (settingHomeVideoUrl) settingHomeVideoUrl.value = '';
+      if (settingHomeVideoFile) settingHomeVideoFile.value = '';
+      if (settingHomeVideoFilename) {
+        settingHomeVideoFilename.textContent = '';
+        settingHomeVideoFilename.style.display = 'none';
+      }
+      showToast('Cleared home video source');
+    });
+  }
+
+  // Home Video Thumbnail File Upload
+  function handleUploadedHomeThumb(file) {
+    if (!file || !file.type.startsWith('image/')) {
+      alert('Please select a valid image file (PNG, JPG, WEBP, GIF, SVG).');
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (evt) => {
+      const dataUrl = evt.target.result;
+      if (settingHomeThumbUrl) settingHomeThumbUrl.value = dataUrl;
+      if (settingHomeThumbPreview) settingHomeThumbPreview.src = dataUrl;
+      if (settingHomeThumbFilename) {
+        settingHomeThumbFilename.textContent = file.name;
+        settingHomeThumbFilename.style.display = 'inline-block';
+      }
+      showToast(`Loaded home thumbnail "${file.name}"`);
+    };
+    reader.readAsDataURL(file);
+  }
+
+  if (settingHomeThumbFile) {
+    settingHomeThumbFile.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) handleUploadedHomeThumb(file);
+    });
+  }
+
+  if (btnClearHomeThumb) {
+    btnClearHomeThumb.addEventListener('click', () => {
+      if (settingHomeThumbUrl) settingHomeThumbUrl.value = '';
+      if (settingHomeThumbPreview) settingHomeThumbPreview.src = '../Assets/CAEA-Navbar-Logo.png';
+      if (settingHomeThumbFile) settingHomeThumbFile.value = '';
+      if (settingHomeThumbFilename) {
+        settingHomeThumbFilename.textContent = '';
+        settingHomeThumbFilename.style.display = 'none';
+      }
+      showToast('Cleared home video thumbnail');
+    });
+  }
+
+  if (settingHomeThumbUrl) {
+    settingHomeThumbUrl.addEventListener('input', () => {
+      if (settingHomeThumbPreview) {
+        const val = settingHomeThumbUrl.value.trim();
+        settingHomeThumbPreview.src = resolveAdminImg(val);
+      }
+    });
+  }
+
+  if (settingHomeThumbDropzone) {
+    ['dragenter', 'dragover'].forEach(eventName => {
+      settingHomeThumbDropzone.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        settingHomeThumbDropzone.style.borderColor = '#a3d88d';
+      });
+    });
+    ['dragleave', 'drop'].forEach(eventName => {
+      settingHomeThumbDropzone.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        settingHomeThumbDropzone.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+      });
+    });
+    settingHomeThumbDropzone.addEventListener('drop', (e) => {
+      const files = e.dataTransfer.files;
+      if (files && files.length > 0) {
+        handleUploadedHomeThumb(files[0]);
+      }
+    });
+  }
+
+  // Save Home Page Settings
+  if (btnSaveHomeSettings) {
+    btnSaveHomeSettings.addEventListener('click', () => {
+      if (!window.DataStore) return;
+
+      const homeSettings = {
+        latestTitle: (settingHomeLatestTitle ? settingHomeLatestTitle.value : '').trim(),
+        latestSubtitle: (settingHomeLatestSubtitle ? settingHomeLatestSubtitle.value : '').trim(),
+        showLatestVideo: settingHomeShowVideo ? settingHomeShowVideo.checked : true,
+        latestVideoTitle: (settingHomeVideoTitle ? settingHomeVideoTitle.value : '').trim(),
+        latestVideoDescription: (settingHomeVideoDesc ? settingHomeVideoDesc.value : '').trim(),
+        latestVideoUrl: (settingHomeVideoUrl ? settingHomeVideoUrl.value : '').trim(),
+        latestVideoThumbnail: (settingHomeThumbUrl ? settingHomeThumbUrl.value : '').trim(),
+        heroQuote: (settingHomeHeroQuote ? settingHomeHeroQuote.value : '').trim(),
+        heroQuoteAuthor: (settingHomeHeroAuthor ? settingHomeHeroAuthor.value : '').trim()
+      };
+
+      window.DataStore.savePageSettings('home', homeSettings);
+      showToast('Home page settings saved successfully!');
+    });
+  }
+
+  // Toggle Activities video details visibility
   if (settingActShowVideo && settingsVideoGroup) {
     settingActShowVideo.addEventListener('change', () => {
       settingsVideoGroup.style.display = settingActShowVideo.checked ? 'flex' : 'none';
     });
   }
 
-  // Video File Upload
+  // Activities Video File Upload
   if (settingActVideoFile) {
     settingActVideoFile.addEventListener('change', (e) => {
       const file = e.target.files[0];

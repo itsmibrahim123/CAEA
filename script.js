@@ -1,75 +1,130 @@
 document.addEventListener('DOMContentLoaded', () => {
   /* ============================================================
-     Map Markers Dropdown Popups
+     Map Markers & Interactive Locations on Pakistan Map
      ============================================================ */
-  const markers = document.querySelectorAll('.city-marker');
+  function bindMapMarkerListeners() {
+    const markers = document.querySelectorAll('.city-marker');
 
-  function closeAllPopups() {
+    function closeAllPopups() {
+      markers.forEach(marker => {
+        marker.classList.remove('is-open');
+        marker.setAttribute('aria-expanded', 'false');
+        const popup = marker.querySelector('.city-popup');
+        if (popup) {
+          popup.setAttribute('aria-hidden', 'true');
+        }
+      });
+    }
+
     markers.forEach(marker => {
-      marker.classList.remove('is-open');
-      marker.setAttribute('aria-expanded', 'false');
-      const popup = marker.querySelector('.city-popup');
-      if (popup) {
-        popup.setAttribute('aria-hidden', 'true');
+      marker.addEventListener('click', (e) => {
+        const isPopup = e.target.closest('.city-popup');
+        const isOpen = marker.classList.contains('is-open');
+
+        // If clicking on the badge inside the popup, close it
+        if (isPopup && e.target.closest('.popup-badge')) {
+          closeAllPopups();
+          e.stopPropagation();
+          return;
+        }
+
+        // If clicking inside popup content, do not propagate
+        if (isPopup) {
+          e.stopPropagation();
+          return;
+        }
+
+        e.stopPropagation();
+
+        if (isOpen) {
+          marker.classList.remove('is-open');
+          marker.setAttribute('aria-expanded', 'false');
+          const popup = marker.querySelector('.city-popup');
+          if (popup) popup.setAttribute('aria-hidden', 'true');
+        } else {
+          closeAllPopups();
+          marker.classList.add('is-open');
+          marker.setAttribute('aria-expanded', 'true');
+          const popup = marker.querySelector('.city-popup');
+          if (popup) popup.setAttribute('aria-hidden', 'false');
+        }
+      });
+
+      marker.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          marker.click();
+        }
+      });
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.city-marker')) {
+        closeAllPopups();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeAllPopups();
       }
     });
   }
 
-  markers.forEach(marker => {
-    marker.addEventListener('click', (e) => {
-      const isPopup = e.target.closest('.city-popup');
-      const isOpen = marker.classList.contains('is-open');
+  function renderPakistanMapPins() {
+    const container = document.getElementById('map-pins-container');
+    if (!container) return;
 
-      // If clicking on the badge inside the popup, close it
-      if (isPopup && e.target.closest('.popup-badge')) {
-        closeAllPopups();
-        e.stopPropagation();
-        return;
-      }
+    const pins = window.DataStore ? window.DataStore.get('mapPins') : [];
+    if (!pins || pins.length === 0) {
+      bindMapMarkerListeners();
+      return;
+    }
 
-      // If clicking inside popup content, do not propagate
-      if (isPopup) {
-        e.stopPropagation();
-        return;
-      }
+    // Retain or recreate the map background image
+    const bgImg = container.querySelector('.map-bg');
+    container.innerHTML = '';
+    if (bgImg) {
+      container.appendChild(bgImg);
+    } else {
+      const newBg = document.createElement('img');
+      newBg.src = '/Assets/Pak-map.png';
+      newBg.alt = 'Map of Pakistan highlighting CAEA project locations';
+      newBg.className = 'map-bg';
+      newBg.setAttribute('aria-hidden', 'true');
+      container.appendChild(newBg);
+    }
 
-      e.stopPropagation();
+    pins.forEach(pin => {
+      const markerEl = document.createElement('div');
+      markerEl.className = 'city-marker';
+      markerEl.id = `marker-${pin.id || pin.city.toLowerCase().replace(/[^a-z0-9]/g, '')}`;
+      markerEl.style.left = pin.left || '50%';
+      markerEl.style.top = pin.top || '50%';
+      markerEl.setAttribute('role', 'button');
+      markerEl.setAttribute('tabindex', '0');
+      markerEl.setAttribute('aria-expanded', 'false');
+      markerEl.setAttribute('aria-label', `${escapeHtml(pin.city)} project location`);
 
-      if (isOpen) {
-        marker.classList.remove('is-open');
-        marker.setAttribute('aria-expanded', 'false');
-        const popup = marker.querySelector('.city-popup');
-        if (popup) popup.setAttribute('aria-hidden', 'true');
-      } else {
-        closeAllPopups();
-        marker.classList.add('is-open');
-        marker.setAttribute('aria-expanded', 'true');
-        const popup = marker.querySelector('.city-popup');
-        if (popup) popup.setAttribute('aria-hidden', 'false');
-      }
+      markerEl.innerHTML = `
+        <div class="city-ripples" aria-hidden="true">
+          <span class="ripple r1"></span>
+          <span class="ripple r2"></span>
+          <span class="ripple r3"></span>
+        </div>
+        <img src="/Assets/Map-leaf.png" alt="" class="city-leaf" aria-hidden="true" />
+        <div class="city-label">${escapeHtml(pin.city)}</div>
+        <div class="city-popup" aria-hidden="true">
+          <span class="popup-badge">${escapeHtml(pin.badge || pin.city)}</span>
+          <p class="popup-text">${escapeHtml(pin.description || '')}</p>
+        </div>
+      `;
+
+      container.appendChild(markerEl);
     });
 
-    marker.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        marker.click();
-      }
-    });
-  });
-
-  // Close map popup when clicking anywhere outside of a marker
-  document.addEventListener('click', (e) => {
-    if (!e.target.closest('.city-marker')) {
-      closeAllPopups();
-    }
-  });
-
-  // Close map popup on Escape key press
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      closeAllPopups();
-    }
-  });
+    bindMapMarkerListeners();
+  }
 
   /* ============================================================
      Core Team Accordion Interaction
@@ -512,6 +567,75 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  function applyHomePageSettings() {
+    if (!window.DataStore) return;
+    const homeSettings = window.DataStore.getPageSettings('home');
+    if (!homeSettings) return;
+
+    const latestSection = document.getElementById('latest-section');
+    const latestTitle = document.getElementById('latest-section-title');
+    const latestDesc = document.getElementById('latest-section-desc');
+    const videoWrap = document.getElementById('latest-video-preview-wrapper');
+    const videoBtn = document.getElementById('home-latest-video-btn');
+    const videoCover = document.getElementById('home-latest-video-cover');
+    const videoTitle = document.getElementById('home-latest-video-title');
+    const videoSummary = document.getElementById('home-latest-video-desc');
+    const heroQuoteEl = document.querySelector('.hero-quote');
+
+    if (latestSection && homeSettings.showLatestSection === false) {
+      latestSection.style.display = 'none';
+    } else if (latestSection) {
+      latestSection.style.display = 'block';
+    }
+
+    if (latestTitle && homeSettings.latestTitle) {
+      latestTitle.textContent = homeSettings.latestTitle;
+    }
+    if (latestDesc && homeSettings.latestSubtitle) {
+      latestDesc.textContent = homeSettings.latestSubtitle;
+    }
+
+    if (videoWrap) {
+      if (homeSettings.showLatestVideo === false) {
+        videoWrap.style.display = 'none';
+      } else {
+        videoWrap.style.display = 'block';
+        if (videoCover && homeSettings.latestVideoThumbnail) {
+          videoCover.src = resolveImagePath(homeSettings.latestVideoThumbnail);
+        }
+        if (videoTitle && homeSettings.latestVideoTitle) {
+          videoTitle.textContent = homeSettings.latestVideoTitle;
+        }
+        if (videoSummary && homeSettings.latestVideoDescription) {
+          videoSummary.textContent = homeSettings.latestVideoDescription;
+        }
+      }
+    }
+
+    if (videoBtn && !videoBtn.dataset.bound) {
+      videoBtn.dataset.bound = 'true';
+      videoBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const curSettings = window.DataStore ? window.DataStore.getPageSettings('home') : homeSettings;
+        openVideoModal(curSettings.latestVideoTitle || 'Featured Video', curSettings.latestVideoUrl || '');
+      });
+      videoBtn.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          videoBtn.click();
+        }
+      });
+    }
+
+    if (heroQuoteEl && homeSettings.heroQuote) {
+      let quoteHtml = escapeHtml(homeSettings.heroQuote);
+      if (quoteHtml.includes('good for something')) {
+        quoteHtml = quoteHtml.replace('good for something', '<em>good for something.</em>');
+      }
+      heroQuoteEl.innerHTML = quoteHtml;
+    }
+  }
+
   function applyOurStoryPageSettings() {
     if (!window.DataStore) return;
     const settings = window.DataStore.getPageSettings('ourStory');
@@ -914,6 +1038,8 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Initial dynamic renders & event switcher
+  renderPakistanMapPins();
+  applyHomePageSettings();
   initHeroEventSwitcher();
   renderDynamicActivities();
   renderDynamicOpportunities();
@@ -921,6 +1047,8 @@ document.addEventListener('DOMContentLoaded', () => {
   applyOurStoryPageSettings();
 
   function syncAllViews() {
+    renderPakistanMapPins();
+    applyHomePageSettings();
     initHeroEventSwitcher();
     renderDynamicActivities();
     renderDynamicOpportunities();

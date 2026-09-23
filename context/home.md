@@ -56,9 +56,23 @@ This document specifies the layout geometry, component architecture, dynamic dat
 
 ---
 
-### 2.3 Community Quotes & Philosophy Section (`.quote-section`)
-- Typography-focused quote presentation in `Playfair Display`.
-- Emphasizes grassroots accountability, public energy ownership, and regional water justice.
+### 2.3 "Catch Up on Our Latest" Video Section (`.bottom-header-section` / `#latest-section`)
+- **Repeating Banner**: Green leaf pattern (`Assets/Home_Catch_up.png`).
+- **Dynamic Content**:
+  - Title: Controlled by `DataStore.getPageSettings('home').latestTitle` (`#latest-section-title`).
+  - Subtitle: Controlled by `DataStore.getPageSettings('home').latestSubtitle` (`#latest-section-desc`).
+  - Video Preview Card: Controlled by `DataStore.getPageSettings('home').showLatestVideo` (`#latest-video-preview-wrapper`).
+  - Interactive click on `#home-latest-video-btn` triggers modal video player (`openVideoModal(title, url)`) supporting MP4 uploads, YouTube, and Vimeo embeds.
+
+---
+
+### 2.4 Pakistan Map Location Pins (`.map-section` / `#our-stories`)
+- **Base Visual**: High-resolution Pakistan map (`Assets/Pak-map.png`).
+- **Dynamic Markers**:
+  - Rendered dynamically via `renderPakistanMapPins()` from `DataStore.get('mapPins')`.
+  - Configurable coordinates: `left: X%`, `top: Y%`.
+  - Animated ripple pulses (`.ripple.r1`, `.ripple.r2`, `.ripple.r3`), leaf marker icon (`Assets/Map-leaf.png`), and label badge.
+  - Interactive Story Popup: Shows city badge and community background on click / Enter key, with full external click dismiss and Escape key handlers.
 
 ---
 
