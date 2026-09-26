@@ -205,6 +205,24 @@ document.addEventListener('DOMContentLoaded', () => {
       const inputHash = await sha256Hex(inputVal);
       const customHash = localStorage.getItem('caea_admin_custom_passhash');
 
+      // Server-side authentication when connected
+      if (window.DataStore && window.DataStore.apiBase) {
+        try {
+          const sAuth = await window.DataStore.login(inputVal, inputHash);
+          if (sAuth && sAuth.success) {
+            sessionStorage.setItem('caea_admin_auth', 'true');
+            sessionStorage.setItem('caea_auth_failed_attempts', '0');
+            authError.textContent = '';
+            authGate.classList.add('hidden');
+            showToast('Console unlocked successfully (PHP Session Verified)');
+            initConsole();
+            return;
+          }
+        } catch (err) {
+          console.warn('Server auth check encountered issue, verifying client fallback:', err);
+        }
+      }
+
       if (inputHash === MASTER_HASH || inputHash === LEGACY_HASH || (customHash && inputHash === customHash)) {
         sessionStorage.setItem('caea_admin_auth', 'true');
         sessionStorage.setItem('caea_auth_failed_attempts', '0');
@@ -230,6 +248,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (btnLock) {
     btnLock.addEventListener('click', () => {
+      if (window.DataStore && window.DataStore.apiBase) {
+        window.DataStore.logout();
+      }
       sessionStorage.removeItem('caea_admin_auth');
       authPasscode.value = '';
       authGate.classList.remove('hidden');
@@ -951,10 +972,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnClearImage = document.getElementById('btn-clear-form-image');
     const dropzone = document.getElementById('modal-image-dropzone');
 
-    function handleUploadedFile(file) {
+    async function handleUploadedFile(file) {
       if (!file || !file.type.startsWith('image/')) {
         alert('Please select a valid image file (PNG, JPG, WEBP, GIF, SVG).');
         return;
+      }
+      if (filenameBadge) {
+        filenameBadge.textContent = file.name + ' (Uploading...)';
+        filenameBadge.style.display = 'inline-block';
+      }
+      if (window.DataStore && window.DataStore.apiBase) {
+        try {
+          const uploaded = await window.DataStore.uploadMedia(file, { category: 'Admin Upload', title: file.name });
+          if (uploaded && uploaded.path) {
+            if (imageUrlInput) imageUrlInput.value = uploaded.path;
+            if (imagePreview) imagePreview.src = uploaded.path.startsWith('http') || uploaded.path.startsWith('/') ? uploaded.path : `../${uploaded.path}`;
+            if (filenameBadge) {
+              filenameBadge.textContent = file.name + ' (Server Stored)';
+            }
+            showToast(`Uploaded "${file.name}" to server!`);
+            return;
+          }
+        } catch (err) {
+          console.warn('Server upload failed, falling back to data URL:', err);
+        }
       }
       const reader = new FileReader();
       reader.onload = (evt) => {
@@ -1379,11 +1420,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Home Page Video File Upload
   if (settingHomeVideoFile) {
-    settingHomeVideoFile.addEventListener('change', (e) => {
+    settingHomeVideoFile.addEventListener('change', async (e) => {
       const file = e.target.files[0];
       if (!file) return;
+
+      if (settingHomeVideoFilename) {
+        settingHomeVideoFilename.textContent = file.name + ' (Uploading...)';
+        settingHomeVideoFilename.style.display = 'inline-block';
+      }
+
+      if (window.DataStore && window.DataStore.apiBase) {
+        try {
+          const uploaded = await window.DataStore.uploadMedia(file, { category: 'Video', title: file.name });
+          if (uploaded && uploaded.path) {
+            if (settingHomeVideoUrl) settingHomeVideoUrl.value = uploaded.path;
+            if (settingHomeVideoFilename) {
+              settingHomeVideoFilename.textContent = file.name + ' (Server Stored)';
+            }
+            showToast(`Uploaded video "${file.name}" to server`);
+            return;
+          }
+        } catch (err) {
+          console.warn('Server video upload failed, using FileReader fallback:', err);
+        }
+      }
+
       if (file.size > 25 * 1024 * 1024) {
-        alert('Notice: Large video files (>25MB) may exceed browser localStorage limits. Consider using a direct video URL or linking an external video (YouTube/Vimeo/Cloud).');
+        alert('Notice: Large video files (>25MB) may exceed browser localStorage limits. Consider using a direct video URL or uploading via PHP server.');
       }
       const reader = new FileReader();
       reader.onload = (evt) => {
@@ -1412,11 +1475,34 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Home Video Thumbnail File Upload
-  function handleUploadedHomeThumb(file) {
+  async function handleUploadedHomeThumb(file) {
     if (!file || !file.type.startsWith('image/')) {
       alert('Please select a valid image file (PNG, JPG, WEBP, GIF, SVG).');
       return;
     }
+
+    if (settingHomeThumbFilename) {
+      settingHomeThumbFilename.textContent = file.name + ' (Uploading...)';
+      settingHomeThumbFilename.style.display = 'inline-block';
+    }
+
+    if (window.DataStore && window.DataStore.apiBase) {
+      try {
+        const uploaded = await window.DataStore.uploadMedia(file, { category: 'Thumbnail', title: file.name });
+        if (uploaded && uploaded.path) {
+          if (settingHomeThumbUrl) settingHomeThumbUrl.value = uploaded.path;
+          if (settingHomeThumbPreview) settingHomeThumbPreview.src = uploaded.path.startsWith('http') || uploaded.path.startsWith('/') ? uploaded.path : `../${uploaded.path}`;
+          if (settingHomeThumbFilename) {
+            settingHomeThumbFilename.textContent = file.name + ' (Server Stored)';
+          }
+          showToast(`Uploaded home thumbnail "${file.name}" to server`);
+          return;
+        }
+      } catch (err) {
+        console.warn('Server thumb upload failed, falling back to local FileReader:', err);
+      }
+    }
+
     const reader = new FileReader();
     reader.onload = (evt) => {
       const dataUrl = evt.target.result;
@@ -1514,11 +1600,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Activities Video File Upload
   if (settingActVideoFile) {
-    settingActVideoFile.addEventListener('change', (e) => {
+    settingActVideoFile.addEventListener('change', async (e) => {
       const file = e.target.files[0];
       if (!file) return;
+
+      if (settingActVideoFilename) {
+        settingActVideoFilename.textContent = file.name + ' (Uploading...)';
+        settingActVideoFilename.style.display = 'inline-block';
+      }
+
+      if (window.DataStore && window.DataStore.apiBase) {
+        try {
+          const uploaded = await window.DataStore.uploadMedia(file, { category: 'Video', title: file.name });
+          if (uploaded && uploaded.path) {
+            if (settingActVideoUrl) settingActVideoUrl.value = uploaded.path;
+            if (settingActVideoFilename) {
+              settingActVideoFilename.textContent = file.name + ' (Server Stored)';
+            }
+            showToast(`Uploaded video "${file.name}" to server`);
+            return;
+          }
+        } catch (err) {
+          console.warn('Server video upload failed, using FileReader fallback:', err);
+        }
+      }
+
       if (file.size > 25 * 1024 * 1024) {
-        alert('Notice: Large video files (>25MB) may exceed browser localStorage limits. Consider using a direct video URL or linking an external video (YouTube/Vimeo/Cloud).');
+        alert('Notice: Large video files (>25MB) may exceed browser localStorage limits. Consider using a direct video URL or uploading to server.');
       }
       const reader = new FileReader();
       reader.onload = (evt) => {
@@ -1547,11 +1655,34 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Video Thumbnail File Upload
-  function handleUploadedVideoThumb(file) {
+  async function handleUploadedVideoThumb(file) {
     if (!file || !file.type.startsWith('image/')) {
       alert('Please select a valid image file (PNG, JPG, WEBP, GIF, SVG).');
       return;
     }
+
+    if (settingActThumbFilename) {
+      settingActThumbFilename.textContent = file.name + ' (Uploading...)';
+      settingActThumbFilename.style.display = 'inline-block';
+    }
+
+    if (window.DataStore && window.DataStore.apiBase) {
+      try {
+        const uploaded = await window.DataStore.uploadMedia(file, { category: 'Thumbnail', title: file.name });
+        if (uploaded && uploaded.path) {
+          if (settingActThumbUrl) settingActThumbUrl.value = uploaded.path;
+          if (settingActThumbPreview) settingActThumbPreview.src = uploaded.path.startsWith('http') || uploaded.path.startsWith('/') ? uploaded.path : `../${uploaded.path}`;
+          if (settingActThumbFilename) {
+            settingActThumbFilename.textContent = file.name + ' (Server Stored)';
+          }
+          showToast(`Loaded thumbnail "${file.name}" to server`);
+          return;
+        }
+      } catch (err) {
+        console.warn('Server thumb upload failed, falling back to FileReader:', err);
+      }
+    }
+
     const reader = new FileReader();
     reader.onload = (evt) => {
       const dataUrl = evt.target.result;

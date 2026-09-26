@@ -592,12 +592,163 @@ const SEED_DATA = {
 
 class CAEADataStore {
   constructor() {
+    this.apiBase = this.detectApiBase();
+    this.isServerConnected = false;
     this.init();
+    if (this.apiBase) {
+      this.syncWithServer();
+    }
+  }
+
+  detectApiBase() {
+    if (typeof window === 'undefined') return null;
+    if (window.CAEA_API_BASE) return window.CAEA_API_BASE.replace(/\/$/, '');
+    if (window.location.protocol === 'file:') return null;
+    
+    // Determine relative API path based on directory structure
+    const path = window.location.pathname;
+    if (path.includes('/admin/') || path.includes('/pages/')) {
+      return '../api';
+    }
+    return 'api';
+  }
+
+  getApiUrl(endpoint = 'api.php') {
+    if (!this.apiBase) return null;
+    return `${this.apiBase}/${endpoint}`;
+  }
+
+  async syncWithServer() {
+    const url = this.getApiUrl('api.php?action=export');
+    if (!url) return false;
+
+    try {
+      const resp = await fetch(url, {
+        method: 'GET',
+        headers: { 'Accept': 'application/json' },
+        credentials: 'same-origin'
+      });
+
+      if (!resp.ok) return false;
+      const json = await resp.json();
+      if (json.success && json.data) {
+        this.isServerConnected = true;
+        const d = json.data;
+        if (d.activities) localStorage.setItem(STORAGE_KEYS.ACTIVITIES, JSON.stringify(d.activities));
+        if (d.people) localStorage.setItem(STORAGE_KEYS.PEOPLE, JSON.stringify(d.people));
+        if (d.articles) localStorage.setItem(STORAGE_KEYS.ARTICLES, JSON.stringify(d.articles));
+        if (d.opportunities) localStorage.setItem(STORAGE_KEYS.OPPORTUNITIES, JSON.stringify(d.opportunities));
+        if (d.applications) localStorage.setItem(STORAGE_KEYS.APPLICATIONS, JSON.stringify(d.applications));
+        if (d.media) localStorage.setItem(STORAGE_KEYS.MEDIA, JSON.stringify(d.media));
+        if (d.map_pins) localStorage.setItem(STORAGE_KEYS.MAP_PINS, JSON.stringify(d.map_pins));
+        if (d.page_settings) localStorage.setItem(STORAGE_KEYS.PAGE_SETTINGS, JSON.stringify(d.page_settings));
+
+        this.dispatchUpdate('all');
+        return true;
+      }
+    } catch (e) {
+      console.warn('CAEA DataStore: PHP Backend offline or unreachable. Using local storage fallback.', e);
+      this.isServerConnected = false;
+    }
+    return false;
+  }
+
+  async sendApiMutation(endpoint, method, body) {
+    const url = this.getApiUrl(endpoint);
+    if (!url) return null;
+    try {
+      const resp = await fetch(url, {
+        method: method,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        credentials: 'same-origin',
+        body: body ? JSON.stringify(body) : undefined
+      });
+      return await resp.json();
+    } catch (e) {
+      console.warn('API mutation background dispatch failed:', e);
+      return null;
+    }
+  }
+
+  async uploadMedia(file, metadata = {}) {
+    const url = this.getApiUrl('upload.php');
+    if (!url) {
+      throw new Error('Upload API unavailable on static file protocol');
+    }
+
+    const formData = new FormData();
+    formData.append('file', file);
+    if (metadata.title) formData.append('title', metadata.title);
+    if (metadata.category) formData.append('category', metadata.category);
+    if (metadata.tags) formData.append('tags', metadata.tags);
+
+    const resp = await fetch(url, {
+      method: 'POST',
+      body: formData,
+      credentials: 'same-origin'
+    });
+
+    const json = await resp.json();
+    if (!resp.ok || !json.success) {
+      throw new Error(json.error || 'Media upload failed');
+    }
+
+    // Refresh media cache
+    if (json.file) {
+      const mediaList = this.get('media');
+      mediaList.unshift(json.file);
+      localStorage.setItem(STORAGE_KEYS.MEDIA, JSON.stringify(mediaList));
+      this.dispatchUpdate('media');
+    }
+
+    return json.file;
+  }
+
+  async login(passcode, passhash = null) {
+    const url = this.getApiUrl('auth.php?action=login');
+    if (!url) return { success: false, error: 'Auth API unavailable' };
+
+    try {
+      const resp = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'same-origin',
+        body: JSON.stringify({ passcode, passhash })
+      });
+      return await resp.json();
+    } catch (e) {
+      return { success: false, error: e.message };
+    }
+  }
+
+  async logout() {
+    const url = this.getApiUrl('auth.php?action=logout');
+    if (!url) return { success: true };
+    try {
+      const resp = await fetch(url, { method: 'POST', credentials: 'same-origin' });
+      return await resp.json();
+    } catch (e) {
+      return { success: false, error: e.message };
+    }
+  }
+
+  async checkAuth() {
+    const url = this.getApiUrl('auth.php?action=check');
+    if (!url) return { success: true, authenticated: false };
+    try {
+      const resp = await fetch(url, { method: 'GET', credentials: 'same-origin' });
+      return await resp.json();
+    } catch (e) {
+      return { success: false, authenticated: false };
+    }
   }
 
   init() {
     const DATA_VERSION_KEY = 'caea_data_version';
-    const CURRENT_VERSION = 'v6_map_pins_and_latest_videos';
+    const CURRENT_VERSION = 'v7_php_sqlite_backend';
     const storedVersion = localStorage.getItem(DATA_VERSION_KEY);
 
     if (storedVersion !== CURRENT_VERSION) {
@@ -671,6 +822,16 @@ class CAEADataStore {
     }
   }
 
+  getApiCollectionName(collection) {
+    const c = collection.toLowerCase();
+    if (c === 'mappins' || c === 'pins' || c === 'map') return 'map_pins';
+    if (c === 'get-involved' || c === 'positions') return 'opportunities';
+    if (c === 'applied' || c === 'applied_fields' || c === 'submissions') return 'applications';
+    if (c === 'assets' || c === 'images') return 'media';
+    if (c === 'settings' || c === 'pagesettings') return 'page_settings';
+    return c;
+  }
+
   get(collection) {
     const key = this.getKey(collection);
     try {
@@ -723,6 +884,22 @@ class CAEADataStore {
       }
       localStorage.setItem(STORAGE_KEYS.PAGE_SETTINGS, JSON.stringify(current));
       this.dispatchUpdate('page_settings');
+
+      // Sync to PHP database
+      if (page) {
+        this.sendApiMutation(`api.php?collection=page_settings&id=${page}`, 'POST', {
+          pageKey: page,
+          settings: current[page]
+        });
+      } else {
+        Object.keys(current).forEach(pKey => {
+          this.sendApiMutation(`api.php?collection=page_settings&id=${pKey}`, 'POST', {
+            pageKey: pKey,
+            settings: current[pKey]
+          });
+        });
+      }
+
       return page ? current[page] : current;
     } catch (e) {
       console.error('Error saving pageSettings to DataStore:', e);
@@ -762,6 +939,11 @@ class CAEADataStore {
     items.unshift(newItem);
     localStorage.setItem(this.getKey(collection), JSON.stringify(items));
     this.dispatchUpdate(collection);
+
+    // Sync with PHP REST API
+    const apiCol = this.getApiCollectionName(collection);
+    this.sendApiMutation(`api.php?collection=${apiCol}`, 'POST', newItem);
+
     return newItem;
   }
 
@@ -788,6 +970,15 @@ class CAEADataStore {
     items[index] = updatedItem;
     localStorage.setItem(this.getKey(collection), JSON.stringify(items));
     this.dispatchUpdate(collection);
+
+    // Sync with PHP REST API
+    const apiCol = this.getApiCollectionName(collection);
+    this.sendApiMutation(`api.php?collection=${apiCol}&id=${id}`, 'POST', {
+      action: 'update',
+      id: id,
+      ...updatedFields
+    });
+
     return updatedItem;
   }
 
@@ -798,6 +989,14 @@ class CAEADataStore {
     if (items.length !== initialLen) {
       localStorage.setItem(this.getKey(collection), JSON.stringify(items));
       this.dispatchUpdate(collection);
+
+      // Sync with PHP REST API
+      const apiCol = this.getApiCollectionName(collection);
+      this.sendApiMutation(`api.php?collection=${apiCol}&id=${id}`, 'POST', {
+        action: 'delete',
+        id: id
+      });
+
       return true;
     }
     return false;
@@ -813,6 +1012,9 @@ class CAEADataStore {
     localStorage.setItem(STORAGE_KEYS.MAP_PINS, JSON.stringify(SEED_DATA.mapPins));
     localStorage.setItem(STORAGE_KEYS.PAGE_SETTINGS, JSON.stringify(SEED_DATA.pageSettings));
     this.dispatchUpdate('all');
+
+    // Sync reset to PHP API
+    this.sendApiMutation('api.php?action=reset', 'POST', {});
   }
 
   exportJSON() {
@@ -857,6 +1059,21 @@ class CAEADataStore {
         localStorage.setItem(STORAGE_KEYS.PAGE_SETTINGS, JSON.stringify(data.pageSettings));
       }
       this.dispatchUpdate('all');
+
+      // Sync import payload to PHP backend
+      this.sendApiMutation('api.php?action=import', 'POST', {
+        data: {
+          activities: data.activities || [],
+          people: data.people || [],
+          articles: data.articles || [],
+          opportunities: data.opportunities || [],
+          applications: data.applications || [],
+          media: data.media || [],
+          map_pins: data.mapPins || data.map_pins || [],
+          page_settings: data.pageSettings || data.page_settings || {}
+        }
+      });
+
       return true;
     } catch (e) {
       console.error('Failed to import JSON data:', e);

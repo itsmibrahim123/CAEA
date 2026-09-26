@@ -11,13 +11,18 @@ CAEA is an advocacy, research, and community-led energy justice platform based i
 
 ## 2. Technology Stack & Architecture
 - **Frontend Architecture**: Modern semantic HTML5, Vanilla JavaScript (ES6+), and CSS3 with CSS Custom Properties (`var(--...)`).
+- **Backend & Database Engine (`api/` + SQLite/MySQL)**:
+  - High-performance server-side PHP database layer powered by PDO SQLite (`data/database.sqlite`) with zero-config instant startup and optional MySQL support.
+  - Universal RESTful API (`api/api.php`) handling CRUD, JSON import/export backups, and automated schema migrations.
+  - Server-side multipart file and video uploader (`api/upload.php`) storing directly in `/uploads/` up to 50MB.
+  - PHP session-based security and SHA-256 password hash verification (`api/auth.php`).
 - **Reactive Client-Side Data Store (`data-store.js`)**:
-  - Global `window.DataStore` API managing all dynamic collections (`activities`, `people`, `articles`, `opportunities`, `applications`).
-  - Persistent browser storage via `localStorage` with reactive cross-tab event synchronization via `BroadcastChannel` and custom window events (`caea-datastore-update`).
+  - Global `window.DataStore` API managing all dynamic collections (`activities`, `people`, `articles`, `opportunities`, `applications`, `media`, `map_pins`, `page_settings`).
+  - Seamless dual-mode synchronization: queries and background dispatches to PHP REST API with instant local in-memory/localStorage caching.
   - Automated seeding mechanism with factory reset and JSON export/import backup utilities.
 - **Admin Control Console (`/admin/`)**:
-  - Standalone management dashboard with cryptographic SHA-256 authentication (`crypto.subtle.digest`), brute-force lockout protection, and show/hide password toggle.
-  - Full CRUD operations with instant client-side file upload (base64 Data URL conversion) and live image previews.
+  - Standalone management dashboard with cryptographic SHA-256 authentication (`crypto.subtle.digest` & server session verification), brute-force lockout protection, and show/hide password toggle.
+  - Full CRUD operations with server-side media/video upload integration and live previews.
   - Universal hero event switcher to dynamically spotlight any activity in the homepage hero banner.
   - Candidate application workflow review with status transitions (`Pending`, `Under Review`, `Shortlisted`, `Accepted`, `Archived`), private administrative notes, and CSV data export.
 - **Universal Application Popup System**:
@@ -33,6 +38,16 @@ CAEA/
 ├── styles.css                   # Global responsive design tokens, typography, layout & animations
 ├── script.js                    # Core frontend controller, hero switcher, dynamic renderers & Apply Modal
 ├── data-store.js                # Universal reactive DataStore API & seed database
+├── api/                         # PHP Backend & REST APIs
+│   ├── config.php               # Environment settings, database constants, paths, hashes
+│   ├── db.php                   # PDO connection manager & automated database seeding
+│   ├── api.php                  # Universal REST API controller (CRUD + bulk operations)
+│   ├── upload.php               # Multi-part image & video uploader
+│   ├── auth.php                 # Session-based authentication & rate limiting
+│   └── seed.sql                 # Standalone SQL schema and initial dump
+├── data/                        # SQLite database directory (protected via .htaccess)
+│   └── database.sqlite          # Auto-generated SQLite database file
+├── uploads/                     # Server-side uploaded media & videos
 ├── Assets/                      # Centralized media and branding repository
 │   ├── CAEA-Navbar-Logo.png     # Official navbar brand logo
 │   ├── Hero-image.png           # Default hero event background
@@ -50,6 +65,7 @@ CAEA/
 │   └── our-analytics.html       # Interactive energy analytics, charts & indicators
 └── context/                     # Persistent architecture, design tokens & system documentation
     ├── README.md                # High-level architecture and system summary (This file)
+    ├── php-backend.md           # PHP database backend, REST API, upload & auth specs
     ├── home.md                  # Homepage layout rules, grid system & section specs
     ├── pages.md                 # Multi-page specifications (Activities, Get Involved, Story, Analytics)
     ├── admin.md                 # Admin console architecture, security, CRUD & workflows
@@ -60,6 +76,7 @@ CAEA/
 ---
 
 ## 4. Documentation Index
+- [`context/php-backend.md`](file:///Users/itsmibrahim/Documents/OAT/Projects/CAEA/context/php-backend.md) — PHP backend architecture, SQLite PDO, REST APIs, media uploads, and configuration.
 - [`context/home.md`](file:///Users/itsmibrahim/Documents/OAT/Projects/CAEA/context/home.md) — Grid specifications, layout rules, and component breakdowns for `index.html`.
 - [`context/pages.md`](file:///Users/itsmibrahim/Documents/OAT/Projects/CAEA/context/pages.md) — Specifications for all secondary views in `pages/`.
 - [`context/admin.md`](file:///Users/itsmibrahim/Documents/OAT/Projects/CAEA/context/admin.md) — Security policies, authentication hashing, CRUD modals, and application review workflows.

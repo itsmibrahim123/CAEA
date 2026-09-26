@@ -161,12 +161,17 @@ interface PageSettings {
 | :--- | :--- | :--- | :--- |
 | `DataStore.get(collection)` | `collection: string` | `Array<Object>` | Retrieves all items in the specified collection. |
 | `DataStore.getById(collection, id)` | `collection: string, id: string` | `Object \| null` | Finds a record by unique ID. |
-| `DataStore.add(collection, itemData)` | `collection: string, itemData: Object` | `Object` | Creates and persists a new item with an auto-generated unique ID and timestamps. |
-| `DataStore.update(collection, id, updates)`| `collection: string, id: string, updates: Object` | `Object \| null` | Merges updates into an existing item and persists changes. |
-| `DataStore.delete(collection, id)` | `collection: string, id: string` | `boolean` | Permanently deletes a record by ID. |
-| `DataStore.getPageSettings(page?)` | `page?: string` | `Object` | Retrieves page-level configuration (e.g. `'activities'`, `'ourStory'`). |
-| `DataStore.savePageSettings(page, settings)` | `page: string, settings: Object` | `Object` | Updates and persists page settings, broadcasting reactive update event. |
-| `DataStore.reset()` | *None* | `void` | Resets all collections in `localStorage` back to factory seed defaults. |
+| `DataStore.add(collection, itemData)` | `collection: string, itemData: Object` | `Object` | Creates and persists a new item, and background-syncs to PHP REST API. |
+| `DataStore.update(collection, id, updates)`| `collection: string, id: string, updates: Object` | `Object \| null` | Merges updates into an existing item and syncs with PHP SQLite database. |
+| `DataStore.delete(collection, id)` | `collection: string, id: string` | `boolean` | Permanently deletes a record locally and on the PHP server. |
+| `DataStore.getPageSettings(page?)` | `page?: string` | `Object` | Retrieves page-level configuration (e.g. `'activities'`, `'home'`). |
+| `DataStore.savePageSettings(page, settings)` | `page: string, settings: Object` | `Object` | Updates and persists page settings to local cache and PHP database. |
+| `DataStore.uploadMedia(file, metadata)` | `file: File, metadata?: Object` | `Promise<Object>` | Uploads image or video file directly to PHP server `/uploads/` directory. |
+| `DataStore.syncWithServer()` | *None* | `Promise<boolean>` | Pulls latest database snapshot from PHP `/api/api.php` into local cache. |
+| `DataStore.login(passcode, passhash)` | `passcode: string, passhash?: string` | `Promise<Object>` | Authenticates with PHP session backend via `/api/auth.php`. |
+| `DataStore.logout()` | *None* | `Promise<Object>` | Destroys PHP session via `/api/auth.php`. |
+| `DataStore.checkAuth()` | *None* | `Promise<Object>` | Verifies active PHP admin session status. |
+| `DataStore.reset()` | *None* | `void` | Resets all collections in `localStorage` and SQLite database to factory defaults. |
 | `DataStore.exportJSON()` | *None* | `string` | Serializes the complete database snapshot into a JSON string. |
-| `DataStore.importJSON(jsonString)` | `jsonString: string` | `boolean` | Validates and restores a JSON database backup. |
+| `DataStore.importJSON(jsonString)` | `jsonString: string` | `boolean` | Validates and restores a JSON database backup locally and on server. |
 | `DataStore.dispatchUpdate(collection)` | `collection?: string` | `void` | Triggers reactive events to sync open browser tabs. |
