@@ -59,7 +59,7 @@ CAEA/
 │   ├── admin.css                # Admin console layout, stats grid, tables & modal styling
 │   └── admin.js                 # Admin panel controller, CRUD workflows, SHA-256 auth & CSV export
 ├── pages/                       # Multi-page website views
-│   ├── activities.html          # Gatherings, workshops, retreats & field research
+│   ├── our-work.html            # Fossil fuel phaseout, textile, and activities
 │   ├── get-involved.html        # Open positions, volunteering & fellowship categories
 │   ├── our-story.html           # Narrative, organizational philosophy, core team & fellows
 │   └── our-analytics.html       # Interactive energy analytics, charts & indicators

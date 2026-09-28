@@ -1037,6 +1037,154 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  /* ============================================================
+     Our Work Page (Expandable Blue Bars, Articles Reader, Filter)
+     ============================================================ */
+  function initOurWorkPage() {
+    // 1. Expandable Blue/Green Bar Accordion Banners
+    const barBanners = document.querySelectorAll('.expandable-bar-banner');
+    barBanners.forEach(banner => {
+      banner.addEventListener('click', (e) => {
+        // Don't toggle if clicking directly on a button inside bar
+        if (e.target.closest('.btn-bar-action')) return;
+        const targetId = banner.getAttribute('data-target');
+        const drawer = document.getElementById(targetId);
+        if (!drawer) return;
+
+        const isExpanded = banner.classList.contains('is-expanded');
+        if (isExpanded) {
+          banner.classList.remove('is-expanded');
+          banner.setAttribute('aria-expanded', 'false');
+          drawer.classList.remove('is-open');
+        } else {
+          banner.classList.add('is-expanded');
+          banner.setAttribute('aria-expanded', 'true');
+          drawer.classList.add('is-open');
+        }
+      });
+
+      // Handle button inside banner specifically
+      const btnAction = banner.querySelector('.btn-bar-action');
+      if (btnAction) {
+        btnAction.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const targetId = banner.getAttribute('data-target');
+          const drawer = document.getElementById(targetId);
+          if (drawer) {
+            banner.classList.toggle('is-expanded');
+            drawer.classList.toggle('is-open');
+          }
+        });
+      }
+    });
+
+    // 2. Fossil Fuel Phaseout Articles Filter & Search
+    renderOurWorkArticles();
+  }
+
+  function renderOurWorkArticles() {
+    const listContainer = document.getElementById('fossil-articles-list');
+    if (!listContainer || !window.DataStore) return;
+
+    let articles = window.DataStore.get('articles') || [];
+    if (!articles.length) return;
+
+    const filterBtns = document.querySelectorAll('#fossil-filters .filter-pill');
+    const searchInput = document.getElementById('fossil-search-input');
+
+    let currentFilter = 'all';
+    let searchQuery = '';
+
+    function filterAndRender() {
+      let filtered = articles.filter(art => {
+        // Filter tag matching
+        const categoryMatch = currentFilter === 'all' || 
+          (art.category && art.category.toLowerCase().includes(currentFilter.replace('-', ''))) ||
+          (art.kicker && art.kicker.toLowerCase().includes(currentFilter.replace('-', '')));
+        
+        // Search query matching
+        const queryMatch = !searchQuery || 
+          art.title.toLowerCase().includes(searchQuery) || 
+          (art.subtitle && art.subtitle.toLowerCase().includes(searchQuery)) ||
+          (art.excerpt && art.excerpt.toLowerCase().includes(searchQuery));
+
+        return categoryMatch && queryMatch;
+      });
+
+      if (!filtered.length) {
+        filtered = articles; // Fallback
+      }
+
+      listContainer.innerHTML = filtered.map((item, idx) => `
+        <div class="article-item-card ${idx === 0 ? 'is-active' : ''}" data-id="${item.id}">
+          <div class="article-item-meta">
+            <span class="article-badge">${escapeHtml(item.kicker || item.category || 'KACHERI')}</span>
+            <span class="article-date-str">${escapeHtml(item.dateFormatted || item.date || '20.05.2026')}</span>
+          </div>
+          <h4 class="article-item-title">${escapeHtml(item.title)}</h4>
+          <p class="article-item-sub">${escapeHtml(item.subtitle || item.excerpt || '')}</p>
+        </div>
+      `).join('');
+
+      // Add click listener to load item in reader
+      const cards = listContainer.querySelectorAll('.article-item-card');
+      cards.forEach(card => {
+        card.addEventListener('click', () => {
+          cards.forEach(c => c.classList.remove('is-active'));
+          card.classList.add('is-active');
+          const id = card.getAttribute('data-id');
+          const selectedArticle = articles.find(a => a.id === id);
+          if (selectedArticle) {
+            loadArticleInReader(selectedArticle);
+          }
+        });
+      });
+
+      // Load initial item
+      if (filtered.length > 0) {
+        loadArticleInReader(filtered[0]);
+      }
+    }
+
+    function loadArticleInReader(item) {
+      const titleEl = document.getElementById('reader-title');
+      const subEl = document.getElementById('reader-subtitle');
+      const authorEl = document.getElementById('reader-author');
+      const dateEl = document.getElementById('reader-date');
+      const imgEl = document.getElementById('reader-img');
+      const contentEl = document.getElementById('reader-content');
+
+      if (titleEl) titleEl.textContent = item.title;
+      if (subEl) subEl.textContent = item.subtitle || item.excerpt || '';
+      if (authorEl) authorEl.textContent = item.author ? `BY ${item.author.toUpperCase()}` : 'BY CAEA POLICY TEAM';
+      if (dateEl) dateEl.textContent = item.dateFormatted || item.date || '';
+      if (imgEl) imgEl.src = resolveImagePath(item.image);
+
+      if (contentEl) {
+        const paras = (item.content || item.excerpt || '').split('\n').filter(Boolean);
+        contentEl.innerHTML = paras.map(p => `<p>${escapeHtml(p)}</p>`).join('');
+      }
+    }
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.getAttribute('data-filter');
+        filterAndRender();
+      });
+    });
+
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        searchQuery = e.target.value.toLowerCase().trim();
+        filterAndRender();
+      });
+    }
+
+    filterAndRender();
+  }
+
   // Initial dynamic renders & event switcher
   renderPakistanMapPins();
   applyHomePageSettings();
@@ -1045,6 +1193,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderDynamicOpportunities();
   applyActivitiesVideoSettings();
   applyOurStoryPageSettings();
+  initOurWorkPage();
 
   function syncAllViews() {
     renderPakistanMapPins();
@@ -1054,6 +1203,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderDynamicOpportunities();
     applyActivitiesVideoSettings();
     applyOurStoryPageSettings();
+    initOurWorkPage();
   }
 
   // Listen to DataStore updates to keep everything in sync
@@ -1068,5 +1218,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
 
 

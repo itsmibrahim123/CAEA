@@ -28,7 +28,7 @@ This document specifies the layout geometry, component architecture, dynamic dat
 - **Navigation Capsule Pill Group (Center)**:
   - Floating capsule container with backdrop blur (`backdrop-filter: blur(12px)`).
   - Navigation links:
-    - **ACTIVITIES**: Links to `pages/activities.html`
+    - **OUR WORK**: Links to `pages/our-work.html`
     - **GET INVOLVED**: Links to `pages/get-involved.html`
     - **OUR STORY**: Links to `pages/our-story.html`
     - **OUR ANALYTICS**: Links to `pages/our-analytics.html`

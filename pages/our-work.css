@@ -1,0 +1,631 @@
+/* ============================================================
+   CAEA Our Work Page Styles (pages/our-work.css)
+   Standardized to CAEA Design System & Tokens
+   ============================================================ */
+
+:root {
+  --color-work-blue-banner: #4c66c5;
+  --color-work-blue-accent: #4b68ff;
+  --color-work-green-textile: #95dc6f;
+  --color-work-green-arch: #62cb2c;
+  --color-work-card-border: #8a38f5;
+  --color-work-dark-bg: #0c0e12;
+  --color-work-card-dark: #14181f;
+  --color-work-text-muted: #9da5b4;
+}
+
+body.our-work-page {
+  background-color: #000000;
+  color: #ffffff;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-body, 'Plus Jakarta Sans', system-ui, sans-serif);
+  overflow-x: hidden;
+}
+
+/* ============================================================
+   SECTION 1: INTRO - FOSSIL FUEL PHASEOUT (Black BG)
+   ============================================================ */
+.work-intro-section {
+  position: relative;
+  width: 100%;
+  background-color: #000000;
+  padding: 64px var(--page-margin);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.work-intro-grid {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 48px;
+  align-items: center;
+  max-width: var(--max-width, 1440px);
+  margin: 0 auto;
+}
+
+.work-intro-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.work-section-title {
+  font-family: var(--font-heading, 'Playfair Display', serif);
+  font-size: clamp(32px, 4.2vw, 56px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.1;
+}
+
+.work-section-subtitle {
+  font-family: var(--font-body, 'Plus Jakarta Sans', sans-serif);
+  font-size: clamp(16px, 1.6vw, 22px);
+  font-style: italic;
+  color: var(--color-work-blue-accent);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.work-section-description {
+  font-family: var(--font-body, 'Plus Jakarta Sans', sans-serif);
+  font-size: clamp(13.5px, 1.05vw, 15px);
+  color: #cbd5e1;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.work-section-description p {
+  margin-bottom: 16px;
+}
+
+.work-section-description p:last-child {
+  margin-bottom: 0;
+}
+
+.btn-join-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 32px;
+  border-radius: 42px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  font-family: 'Roboto', var(--font-body, 'Plus Jakarta Sans', sans-serif);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  margin-top: 12px;
+}
+
+.btn-join-pill:hover {
+  background-color: #ffffff;
+  color: #000000;
+  border-color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
+}
+
+/* Repeating Half-Circle Arch Vector Column */
+.arch-pattern-col {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+}
+
+.arch-shape {
+  width: 160px;
+  height: 80px;
+  border-top-left-radius: 160px;
+  border-top-right-radius: 160px;
+  background-color: var(--color-work-green-arch);
+  display: block;
+}
+
+.arch-shape.pink-arch {
+  background-color: #f5e3d7;
+}
+
+/* ============================================================
+   EXPANDABLE BANNERS / ACCORDION BARS
+   ============================================================ */
+.expandable-bar-banner {
+  width: 100%;
+  background-color: var(--color-work-blue-banner);
+  color: #ffffff;
+  padding: 36px var(--page-margin);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 14px;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  transition: background-color 0.25s ease, transform 0.2s ease;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.expandable-bar-banner:hover {
+  background-color: #3b54b2;
+}
+
+.expandable-bar-banner.green-banner {
+  background-color: var(--color-work-green-textile);
+  color: #000000;
+}
+
+.expandable-bar-banner.green-banner:hover {
+  background-color: #84cb5e;
+}
+
+.bar-icon-wrap {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bar-title {
+  font-family: var(--font-heading, 'Playfair Display', serif);
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 400;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.bar-subtitle {
+  font-family: var(--font-body, 'Plus Jakarta Sans', sans-serif);
+  font-size: 13.5px;
+  opacity: 0.88;
+  margin: 0;
+}
+
+.btn-bar-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 36px;
+  border-radius: 42px;
+  background-color: #000000;
+  color: #ffffff;
+  font-family: 'Roboto', var(--font-body, 'Plus Jakarta Sans', sans-serif);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 6px;
+}
+
+.expandable-bar-banner.green-banner .btn-bar-action {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.btn-bar-action.white-btn {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.btn-bar-action:hover {
+  transform: scale(1.04);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.bar-toggle-indicator {
+  position: absolute;
+  right: var(--page-margin);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.expandable-bar-banner.is-expanded .bar-toggle-indicator {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+/* Drawer Content Container */
+.expandable-drawer-content {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transition: max-height 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.35s ease,
+    visibility 0.35s ease;
+}
+
+.expandable-drawer-content.is-open {
+  max-height: 3500px;
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ============================================================
+   ARTICLES SECTION (Searchable, Filterable, 2-Column Reader)
+   ============================================================ */
+.articles-section {
+  background-color: #000000;
+  padding: 48px var(--page-margin) 64px;
+  box-sizing: border-box;
+}
+
+.articles-section-header {
+  max-width: var(--max-width, 1440px);
+  margin: 0 auto 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.articles-main-heading {
+  font-family: var(--font-heading, 'Playfair Display', serif);
+  font-size: clamp(28px, 3.5vw, 44px);
+  font-weight: 400;
+  color: #ffffff;
+  margin: 0;
+}
+
+.articles-intro-sub {
+  font-family: var(--font-body, 'Plus Jakarta Sans', sans-serif);
+  font-size: 14px;
+  color: var(--color-work-text-muted);
+  line-height: 1.6;
+  max-width: 720px;
+  margin: 0;
+}
+
+/* Filter Controls Bar */
+.articles-filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-top: 12px;
+}
+
+.filter-pills-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.filter-pill {
+  padding: 6px 18px;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #cbd5e1;
+  font-family: 'Roboto', var(--font-body, 'Plus Jakarta Sans', sans-serif);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-pill:hover,
+.filter-pill.active {
+  background-color: var(--color-work-blue-banner);
+  color: #ffffff;
+  border-color: var(--color-work-blue-banner);
+}
+
+.article-search-wrap {
+  position: relative;
+  width: 260px;
+}
+
+.article-search-input {
+  width: 100%;
+  padding: 7px 16px 7px 36px;
+  border-radius: 20px;
+  background: rgba(217, 217, 217, 0.13);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  font-family: var(--font-body, 'Plus Jakarta Sans', sans-serif);
+  font-size: 12px;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+}
+
+.article-search-input:focus {
+  border-color: var(--color-work-blue-banner);
+  background: rgba(217, 217, 217, 0.2);
+}
+
+.article-search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-work-text-muted);
+  pointer-events: none;
+}
+
+/* 2-Column Articles Layout */
+.articles-layout-grid {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 32px;
+  max-width: var(--max-width, 1440px);
+  margin: 0 auto;
+  min-height: 520px;
+}
+
+/* Left Column: Article List */
+.articles-list-column {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 640px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+.article-item-card {
+  padding: 16px;
+  border-radius: 8px;
+  background-color: #0e1117;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  transition: all 0.22s ease;
+}
+
+.article-item-card:hover,
+.article-item-card.is-active {
+  border-color: var(--color-work-card-border);
+  background-color: #141923;
+  transform: translateX(4px);
+}
+
+.article-item-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.article-badge {
+  font-family: 'Roboto', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-work-green-arch);
+  background: rgba(98, 203, 44, 0.12);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.article-date-str {
+  font-size: 11px;
+  color: var(--color-work-text-muted);
+}
+
+.article-item-title {
+  font-family: var(--font-heading, 'Playfair Display', serif);
+  font-size: 17px;
+  color: #ffffff;
+  margin: 0 0 6px 0;
+  line-height: 1.3;
+}
+
+.article-item-sub {
+  font-family: var(--font-body, 'Plus Jakarta Sans', sans-serif);
+  font-size: 12px;
+  color: var(--color-work-text-muted);
+  margin: 0;
+}
+
+/* Right Column: Featured Article Reader */
+.article-reader-column {
+  background-color: #ffffff;
+  color: #1e1e1e;
+  border-radius: 12px;
+  padding: 36px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5);
+}
+
+.reader-header {
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 16px;
+}
+
+.reader-title {
+  font-family: var(--font-heading, 'Playfair Display', serif);
+  font-size: clamp(26px, 3vw, 36px);
+  color: #000000;
+  margin: 0 0 8px 0;
+  line-height: 1.2;
+}
+
+.reader-subtitle {
+  font-family: var(--font-body, 'Plus Jakarta Sans', sans-serif);
+  font-size: 16px;
+  color: var(--color-work-blue-accent);
+  margin: 0 0 14px 0;
+}
+
+.reader-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: 'Roboto', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+}
+
+.reader-hero-media {
+  width: 100%;
+  height: 280px;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #f1f5f9;
+}
+
+.reader-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.reader-body-text {
+  font-family: var(--font-body, 'Plus Jakarta Sans', sans-serif);
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: #334155;
+}
+
+/* ============================================================
+   SECTION: TEXTILE & FAST FASHION (Green BG)
+   ============================================================ */
+.work-intro-section.textile-section {
+  background-color: var(--color-work-green-textile);
+  color: #000000;
+}
+
+.work-intro-section.textile-section .work-section-title {
+  color: #000000;
+}
+
+.work-intro-section.textile-section .work-section-subtitle {
+  color: #1e3a8a;
+}
+
+.work-intro-section.textile-section .work-section-description {
+  color: #1f2937;
+}
+
+.work-intro-section.textile-section .btn-join-pill {
+  background-color: #000000;
+  color: #ffffff;
+  border-color: #000000;
+}
+
+.work-intro-section.textile-section .btn-join-pill:hover {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+/* Instagram Updates Section */
+.instagram-updates-section {
+  background-color: #ffffff;
+  color: #000000;
+  padding: 56px var(--page-margin);
+  box-sizing: border-box;
+}
+
+.instagram-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: var(--max-width, 1440px);
+  margin: 32px auto 0;
+}
+
+.insta-card {
+  background-color: #ffffff;
+  border: 2px solid var(--color-work-blue-accent);
+  border-radius: 20px;
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 340px;
+  box-shadow: 0 8px 24px rgba(75, 104, 255, 0.12);
+}
+
+.insta-card-title {
+  font-family: var(--font-heading, 'Playfair Display', serif);
+  font-size: 24px;
+  color: #1e293b;
+  margin: 0 0 12px 0;
+}
+
+.insta-card-desc {
+  font-family: var(--font-body, 'Plus Jakarta Sans', sans-serif);
+  font-size: 13px;
+  color: #64748b;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.btn-watch-now {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 20px;
+  border-radius: 24px;
+  background-color: var(--color-work-blue-banner);
+  color: #ffffff;
+  font-family: 'Roboto', sans-serif;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  box-sizing: border-box;
+  transition: background-color 0.2s ease;
+}
+
+.btn-watch-now:hover {
+  background-color: #3b54b2;
+}
+
+/* ============================================================
+   RESPONSIVE LAYOUT ADJUSTMENTS
+   ============================================================ */
+@media (max-width: 1024px) {
+  .work-intro-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .arch-pattern-col {
+    display: none;
+  }
+
+  .articles-layout-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .instagram-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}

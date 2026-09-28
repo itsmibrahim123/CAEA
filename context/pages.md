@@ -4,7 +4,7 @@ This document specifies the purpose, structure, data bindings, and interactive f
 
 ---
 
-## 1. Activities & Gatherings (`pages/activities.html`)
+## 1. Our Work & Activities (`pages/our-work.html`)
 
 ### 1.1 Overview
 The Activities page serves as the public repository and journal of CAEA's field retreats, community kacheris, workshops, research expeditions, and exposure visits.

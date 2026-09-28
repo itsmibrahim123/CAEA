@@ -42,16 +42,16 @@ The navigation bar (`.admin-tab-nav`) is designed with a sleek, compact gap (`6p
    - Manage Executive Leadership, Core Team, and Research Fellows (`/pages/our-story.html`).
    - Edit full names, roles, team categories, biographical summaries, and photos.
 4. **Our Work & Activities** (`#panel-activities`):
-   - Manage field projects, workshops, retreats, and research expeditions (`/pages/activities.html`).
+   - Manage field projects, workshops, retreats, and research expeditions (`/pages/our-work.html`).
    - **Main Hero Event Spotlight**: Includes a dedicated star action (`setActivityAsHero(id)`) to toggle which event appears in the hero banner of the live homepage.
    - Edit custom hero banner quotes and speaker attributions per activity.
 5. **Articles & Publications** (`#panel-articles`):
-   - Manage articles, case studies, policy briefs, and reports (`/pages/our-analytics.html`).
+   - Manage articles, case studies, policy briefs, and reports (`/pages/our-work.html` and `/pages/our-analytics.html`).
    - Edit titles, kickers, authors, dates, excerpts, full body content, and cover imagery.
 6. **Get Involved Positions** (`#panel-opportunities`):
    - Manage the public position structure on `/pages/get-involved.html` (Blue Card vs Black Card theme, status, categories, role types).
 7. **Page Settings & Media** (`#panel-settings`):
-   - **Video Section Management**: Toggle video section visibility on `pages/activities.html`, set video documentary title, description, and source (direct URL or MP4/WebM file upload), plus cover thumbnail.
+   - **Video Section Management**: Toggle video section visibility on `pages/our-work.html`, set video documentary title, description, and source (direct URL or MP4/WebM file upload), plus cover thumbnail.
    - **Slideshow Controls**: Enable/disable automated image & general info cycling for the activities hero gallery, and configure rotation speed (seconds).
    - **Our Story Customization**: Configure team section heading and philosophical quotes.
 
