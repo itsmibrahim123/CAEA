@@ -2569,6 +2569,81 @@ body {
   color: #444444;
 }
 
+.hero-switch-event-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+
+.btn-switch-hero {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  font-family: 'Roboto', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-switch-hero:hover {
+  background: #ffffff;
+  color: #000000;
+  border-color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.hero-event-counter {
+  font-family: 'Roboto', sans-serif;
+  font-size: 12px;
+  color: #a0a0a0;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.btn-feature-hero {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  border-radius: 16px;
+  background: transparent;
+  border: 1px solid #4f67ed;
+  color: #4f67ed;
+  font-family: 'Roboto', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-feature-hero:hover {
+  background: #4f67ed;
+  color: #ffffff;
+}
+
+.activity-card.is-hero-active {
+  background: rgba(79, 103, 237, 0.05);
+  border-radius: 8px;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.activity-card.is-hero-active .btn-feature-hero {
+  background: #4f67ed;
+  color: #ffffff;
+  border-color: #4f67ed;
+}
+
 /* Blue "More than a retreat" Section */
 .activities-blue-section {
   width: 100%;

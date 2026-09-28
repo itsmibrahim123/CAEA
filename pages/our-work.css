@@ -24,7 +24,56 @@ body.our-work-page {
 }
 
 /* ============================================================
-   SECTION 1: INTRO - FOSSIL FUEL PHASEOUT (Black BG)
+   HERO PAGE HEADER
+   ============================================================ */
+.our-work-hero-header {
+  width: 100%;
+  background-color: #000000;
+  padding: 56px var(--page-margin) 44px;
+  box-sizing: border-box;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+}
+
+.our-work-hero-container {
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.work-hero-kicker {
+  font-family: 'Roboto', sans-serif;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-work-green-arch);
+}
+
+.work-hero-main-title {
+  font-family: var(--font-heading, 'Playfair Display', serif);
+  font-size: clamp(38px, 5vw, 64px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1;
+}
+
+.work-hero-tagline {
+  font-family: var(--font-body, 'Plus Jakarta Sans', sans-serif);
+  font-size: clamp(14px, 1.2vw, 16.5px);
+  color: #9da5b4;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 780px;
+}
+
+/* ============================================================
+   SECTION: INTRO - WRITTEN NARRATIVE (Within Drawers)
    ============================================================ */
 .work-intro-section {
   position: relative;
@@ -172,6 +221,24 @@ body.our-work-page {
   background-color: #84cb5e;
 }
 
+.expandable-bar-banner.dark-banner {
+  background-color: #11141c;
+  color: #ffffff;
+}
+
+.expandable-bar-banner.dark-banner:hover {
+  background-color: #181d28;
+}
+
+.expandable-bar-banner.blue-activities-banner {
+  background-color: #3b54b2;
+  color: #ffffff;
+}
+
+.expandable-bar-banner.blue-activities-banner:hover {
+  background-color: #32479e;
+}
+
 .bar-icon-wrap {
   width: 36px;
   height: 36px;
@@ -254,13 +321,13 @@ body.our-work-page {
   overflow: hidden;
   opacity: 0;
   visibility: hidden;
-  transition: max-height 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+  transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1),
     opacity 0.35s ease,
     visibility 0.35s ease;
 }
 
 .expandable-drawer-content.is-open {
-  max-height: 3500px;
+  max-height: 6000px;
   opacity: 1;
   visibility: visible;
 }
@@ -610,6 +677,84 @@ body.our-work-page {
 }
 
 /* ============================================================
+   ACTIVITIES SECTION CONTROLS & ENHANCEMENTS
+   ============================================================ */
+.hero-switch-event-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+
+.btn-switch-hero {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  font-family: 'Roboto', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-switch-hero:hover {
+  background: #ffffff;
+  color: #000000;
+  border-color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.hero-event-counter {
+  font-family: 'Roboto', sans-serif;
+  font-size: 12px;
+  color: #a0a0a0;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.btn-feature-hero {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  border-radius: 16px;
+  background: transparent;
+  border: 1px solid #4f67ed;
+  color: #4f67ed;
+  font-family: 'Roboto', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-feature-hero:hover {
+  background: #4f67ed;
+  color: #ffffff;
+}
+
+.activity-card.is-hero-active {
+  background: rgba(79, 103, 237, 0.05);
+  border-radius: 8px;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.activity-card.is-hero-active .btn-feature-hero {
+  background: #4f67ed;
+  color: #ffffff;
+  border-color: #4f67ed;
+}
+
+/* ============================================================
    RESPONSIVE LAYOUT ADJUSTMENTS
    ============================================================ */
 @media (max-width: 1024px) {
@@ -629,3 +774,4 @@ body.our-work-page {
     grid-template-columns: 1fr;
   }
 }
+

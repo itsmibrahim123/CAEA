@@ -239,6 +239,29 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
   }
 
+  function renderHeroThumbnails() {
+    const thumbsContainers = document.querySelectorAll('.activities-gallery-thumbs');
+    if (!thumbsContainers.length) return;
+    const activities = getHeroActivities();
+    if (!activities.length) return;
+
+    thumbsContainers.forEach(container => {
+      container.innerHTML = activities.map((item, idx) => `
+        <div class="thumb-item ${idx === currentHeroEventIndex ? 'active' : ''}" data-index="${idx}" data-id="${item.id}" title="${escapeHtml(item.title)}">
+          <img src="${resolveImagePath(item.image)}" alt="${escapeHtml(item.title)}" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='/Assets/Hero-image.png'" />
+        </div>
+      `).join('');
+
+      const thumbs = container.querySelectorAll('.thumb-item');
+      thumbs.forEach((thumb, idx) => {
+        thumb.addEventListener('click', () => {
+          setHeroEvent(idx);
+          startHeroAutoCycling();
+        });
+      });
+    });
+  }
+
   function setHeroEvent(indexOrId) {
     const activities = getHeroActivities();
     if (!activities.length) return;
@@ -255,15 +278,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentEvent = activities[targetIndex];
     if (!currentEvent) return;
 
-    // Elements
-    const quoteEl = document.getElementById('hero-event-quote');
-    const authorEl = document.getElementById('hero-event-author');
-    const titleEl = document.getElementById('hero-event-title');
-    const descEl = document.getElementById('hero-event-description');
+    // Elements - supports both universal and work page IDs
+    const quoteEl = document.getElementById('hero-event-quote') || document.getElementById('work-act-quote');
+    const authorEl = document.getElementById('hero-event-author') || document.getElementById('work-act-author');
+    const titleEl = document.getElementById('hero-event-title') || document.getElementById('work-act-title');
+    const descEl = document.getElementById('hero-event-description') || document.getElementById('work-act-desc');
     const tagEl = document.getElementById('hero-event-tag');
     const dateEl = document.getElementById('hero-event-date');
-    const counterEl = document.getElementById('hero-event-counter');
-    const mainImgEl = document.getElementById('hero-gallery-img');
+    const counterEl = document.getElementById('hero-event-counter') || document.getElementById('work-act-counter');
+    const mainImgEl = document.getElementById('hero-gallery-img') || document.getElementById('work-gallery-img');
     const thumbs = document.querySelectorAll('.activities-gallery-thumbs .thumb-item');
 
     // Update text with soft transition
@@ -305,12 +328,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function initHeroEventSwitcher() {
     const activities = getHeroActivities();
-    const prevBtn = document.getElementById('prev-hero-slide');
-    const nextBtn = document.getElementById('next-hero-slide');
-    const switchHeroBtn = document.getElementById('btn-next-hero-event');
-    const thumbs = document.querySelectorAll('.activities-gallery-thumbs .thumb-item');
+    const prevBtn = document.getElementById('prev-hero-slide') || document.getElementById('btn-work-prev-slide');
+    const nextBtn = document.getElementById('next-hero-slide') || document.getElementById('btn-work-next-slide');
+    const switchHeroBtn = document.getElementById('btn-next-hero-event') || document.getElementById('btn-work-next-event');
 
-    if (switchHeroBtn) {
+    if (switchHeroBtn && !switchHeroBtn.dataset.bound) {
+      switchHeroBtn.dataset.bound = 'true';
       switchHeroBtn.addEventListener('click', (e) => {
         e.preventDefault();
         setHeroEvent(currentHeroEventIndex + 1);
@@ -318,7 +341,8 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    if (nextBtn) {
+    if (nextBtn && !nextBtn.dataset.bound) {
+      nextBtn.dataset.bound = 'true';
       nextBtn.addEventListener('click', (e) => {
         e.preventDefault();
         setHeroEvent(currentHeroEventIndex + 1);
@@ -326,7 +350,8 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    if (prevBtn) {
+    if (prevBtn && !prevBtn.dataset.bound) {
+      prevBtn.dataset.bound = 'true';
       prevBtn.addEventListener('click', (e) => {
         e.preventDefault();
         setHeroEvent(currentHeroEventIndex - 1);
@@ -334,19 +359,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    if (thumbs.length) {
-      thumbs.forEach((thumb, idx) => {
-        thumb.addEventListener('click', () => {
-          const customId = thumb.getAttribute('data-id');
-          if (customId) {
-            setHeroEvent(customId);
-          } else {
-            setHeroEvent(idx);
-          }
-          startHeroAutoCycling();
-        });
-      });
-    }
+    renderHeroThumbnails();
 
     // Determine initial featured event
     let initialIdx = activities.findIndex(a => a.featured === true);
@@ -663,14 +676,7 @@ document.addEventListener('DOMContentLoaded', () => {
     activitiesContainer.innerHTML = activities.map((item, idx) => `
       <article class="activity-card ${idx === currentHeroEventIndex ? 'is-hero-active' : ''}" data-id="${item.id}">
         <div class="activity-media-box">
-          <img src="${resolveImagePath(item.image)}" alt="" style="width:100%; height:100%; object-fit:cover;" onerror="this.style.display='none'" />
-          <div class="activities-placeholder-visual">
-            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="1.5">
-              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-              <circle cx="8.5" cy="8.5" r="1.5"/>
-              <polyline points="21 15 16 10 5 21"/>
-            </svg>
-          </div>
+          <img src="${resolveImagePath(item.image)}" alt="${escapeHtml(item.title)}" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='/Assets/how-water-became-power.jpg'" />
         </div>
         <div class="activity-content">
           <div>
@@ -696,7 +702,12 @@ document.addEventListener('DOMContentLoaded', () => {
         e.stopPropagation();
         const actId = btn.getAttribute('data-id');
         setHeroEvent(actId);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        const heroEl = document.getElementById('activities-hero-section') || document.getElementById('banner-activities') || document.querySelector('.activities-page-section');
+        if (heroEl) {
+          heroEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
       });
     });
   }
