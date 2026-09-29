@@ -1141,10 +1141,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 1. Fossil Fuel Phaseout
     const fossil = settings.fossilFuel || {};
+    const fossilSection = document.getElementById('fossil-fuel-phaseout');
+    const fossilBanner = document.getElementById('banner-fossil-fuel');
+    const fossilDrawer = document.getElementById('drawer-fossil-fuel');
     const fossilTitle = document.getElementById('fossil-title');
     const fossilSub = document.getElementById('fossil-subtitle');
     const fossilDesc = document.getElementById('fossil-description');
     const fossilBtn = document.getElementById('fossil-join-btn');
+
+    if (fossil.visible === false) {
+      if (fossilSection) fossilSection.style.display = 'none';
+      if (fossilBanner) fossilBanner.style.display = 'none';
+      if (fossilDrawer) fossilDrawer.style.display = 'none';
+    } else {
+      if (fossilSection) fossilSection.style.display = '';
+      if (fossilBanner) fossilBanner.style.display = '';
+      if (fossilDrawer) fossilDrawer.style.display = '';
+    }
 
     if (fossilTitle && fossil.title) fossilTitle.textContent = fossil.title;
     if (fossilSub && fossil.subtitle) fossilSub.textContent = fossil.subtitle;
@@ -1156,9 +1169,19 @@ document.addEventListener('DOMContentLoaded', () => {
       if (fossil.joinBtnText) fossilBtn.textContent = fossil.joinBtnText;
       if (fossil.opportunityTitle) fossilBtn.setAttribute('data-opportunity-title', fossil.opportunityTitle);
     }
+    if (fossilBanner) {
+      const bTitle = fossilBanner.querySelector('.bar-title');
+      const bSub = fossilBanner.querySelector('.bar-subtitle');
+      const bBtn = fossilBanner.querySelector('.btn-bar-action');
+      if (bTitle && fossil.bannerTitle) bTitle.textContent = fossil.bannerTitle;
+      if (bSub && fossil.bannerSubtitle) bSub.textContent = fossil.bannerSubtitle;
+      if (bBtn && fossil.bannerBtnText) bBtn.textContent = fossil.bannerBtnText;
+    }
 
     // 2. Textile & Fast Fashion
     const tex = settings.textile || {};
+    const texBanner = document.getElementById('banner-textile');
+    const texDrawer = document.getElementById('drawer-textile');
     const texBannerTitle = document.getElementById('textile-banner-title');
     const texBannerSub = document.getElementById('textile-banner-sub');
     const texTitle = document.getElementById('textile-title');
@@ -1169,8 +1192,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const texSecIntro = document.getElementById('textile-section-intro');
     const texCardsGrid = document.getElementById('textile-cards-grid');
 
+    if (tex.visible === false) {
+      if (texBanner) texBanner.style.display = 'none';
+      if (texDrawer) texDrawer.style.display = 'none';
+    } else {
+      if (texBanner) texBanner.style.display = '';
+      if (texDrawer) texDrawer.style.display = '';
+    }
+
     if (texBannerTitle && tex.bannerTitle) texBannerTitle.textContent = tex.bannerTitle;
     if (texBannerSub && tex.bannerSubtitle) texBannerSub.textContent = tex.bannerSubtitle;
+    if (texBanner) {
+      const bBtn = texBanner.querySelector('.btn-bar-action');
+      if (bBtn && tex.bannerBtnText) bBtn.textContent = tex.bannerBtnText;
+    }
     if (texTitle && tex.title) texTitle.textContent = tex.title;
     if (texSub && tex.subtitle) texSub.textContent = tex.subtitle;
     if (texDesc && tex.description) {
@@ -1184,8 +1219,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (texSecHeading && tex.sectionHeading) texSecHeading.textContent = tex.sectionHeading;
     if (texSecIntro && tex.sectionIntro) texSecIntro.textContent = tex.sectionIntro;
 
-    if (texCardsGrid && Array.isArray(tex.cards) && tex.cards.length > 0) {
-      texCardsGrid.innerHTML = tex.cards.map(c => `
+    const cards = window.DataStore.get('textileCards') || tex.cards || [];
+    if (texCardsGrid && Array.isArray(cards) && cards.length > 0) {
+      texCardsGrid.innerHTML = cards.map(c => `
         <div class="insta-card">
           <div>
             <h4 class="insta-card-title">${escapeHtml(c.title || 'Fashion and Fossil Fuels')}</h4>
@@ -1203,6 +1239,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 3. Climate Justice
     const cj = settings.climateJustice || {};
+    const cjBanner = document.getElementById('banner-climate-justice');
+    const cjDrawer = document.getElementById('drawer-climate-justice');
     const cjBannerTitle = document.getElementById('climate-banner-title');
     const cjBannerSub = document.getElementById('climate-banner-sub');
     const cjTitle = document.getElementById('climate-title');
@@ -1210,8 +1248,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const cjDesc = document.getElementById('climate-description');
     const cjBtn = document.getElementById('climate-join-btn');
 
+    if (cj.visible === false) {
+      if (cjBanner) cjBanner.style.display = 'none';
+      if (cjDrawer) cjDrawer.style.display = 'none';
+    } else {
+      if (cjBanner) cjBanner.style.display = '';
+      if (cjDrawer) cjDrawer.style.display = '';
+    }
+
     if (cjBannerTitle && cj.bannerTitle) cjBannerTitle.textContent = cj.bannerTitle;
     if (cjBannerSub && cj.bannerSubtitle) cjBannerSub.textContent = cj.bannerSubtitle;
+    if (cjBanner) {
+      const bBtn = cjBanner.querySelector('.btn-bar-action');
+      if (bBtn && cj.bannerBtnText) bBtn.textContent = cj.bannerBtnText;
+    }
     if (cjTitle && cj.title) cjTitle.textContent = cj.title;
     if (cjSub && cj.subtitle) cjSub.textContent = cj.subtitle;
     if (cjDesc && cj.description) {
@@ -1223,13 +1273,36 @@ document.addEventListener('DOMContentLoaded', () => {
       if (cj.opportunityTitle) cjBtn.setAttribute('data-opportunity-title', cj.opportunityTitle);
     }
 
-    // 4. Activities Banner
+    // 4. Activities & Gatherings
     const actBanner = settings.activitiesBanner || {};
     const actBannerTitle = document.getElementById('activities-banner-title');
     const actBannerSub = document.getElementById('activities-banner-sub');
+    const actBannerEl = document.getElementById('banner-activities');
+    const heroQuote = document.getElementById('hero-event-quote');
+    const heroAuthor = document.getElementById('hero-event-author');
+    const heroHeading = document.getElementById('hero-event-heading');
+    const heroDesc = document.getElementById('hero-event-description');
 
     if (actBannerTitle && actBanner.bannerTitle) actBannerTitle.textContent = actBanner.bannerTitle;
     if (actBannerSub && actBanner.bannerSubtitle) actBannerSub.textContent = actBanner.bannerSubtitle;
+    if (actBannerEl) {
+      const bBtn = actBannerEl.querySelector('.btn-bar-action');
+      if (bBtn && actBanner.bannerBtnText) bBtn.textContent = actBanner.bannerBtnText;
+    }
+
+    if (heroQuote && actBanner.heroQuote) heroQuote.textContent = actBanner.heroQuote;
+    if (heroAuthor && actBanner.heroAuthor) heroAuthor.textContent = actBanner.heroAuthor;
+    if (heroHeading && actBanner.heroHeading) heroHeading.textContent = actBanner.heroHeading;
+    if (heroDesc && actBanner.heroDescription) heroDesc.textContent = actBanner.heroDescription;
+
+    if (actBanner.upcomingGathering) {
+      const gTitle = document.querySelector('.activities-upcoming-title');
+      const gSub = document.querySelector('.activities-upcoming-subtitle');
+      const gLink = document.querySelector('.activities-upcoming-body .btn-see-more');
+      if (gTitle && actBanner.upcomingGathering.title) gTitle.textContent = actBanner.upcomingGathering.title;
+      if (gSub && actBanner.upcomingGathering.date) gSub.textContent = actBanner.upcomingGathering.date;
+      if (gLink && actBanner.upcomingGathering.link) gLink.setAttribute('href', actBanner.upcomingGathering.link);
+    }
   }
 
   function initOurWorkPage() {

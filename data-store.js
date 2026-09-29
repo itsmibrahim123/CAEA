@@ -11,7 +11,9 @@ const STORAGE_KEYS = {
   APPLICATIONS: 'caea_applications_data',
   MEDIA: 'caea_media_data',
   PAGE_SETTINGS: 'caea_page_settings',
-  MAP_PINS: 'caea_map_pins_data'
+  MAP_PINS: 'caea_map_pins_data',
+  TEXTILE_CARDS: 'caea_textile_cards_data',
+  CLIMATE_REPORTS: 'caea_climate_reports_data'
 };
 
 // Seed default data
@@ -608,6 +610,74 @@ const SEED_DATA = {
     }
   ],
 
+  textileCards: [
+    {
+      id: 'tex-1',
+      title: 'Fashion and Fossil Fuels',
+      description: 'Climate Action & Energy Access (CAEA) is a Pakistan-based research and advocacy institute committed to transparent supply chain accountability.',
+      tag: 'water',
+      btnText: 'WATCH NOW',
+      targetOpportunity: 'Textile Watch',
+      videoUrl: '',
+      image: 'Assets/Hero-image.png',
+      orderIndex: 1,
+      active: true
+    },
+    {
+      id: 'tex-2',
+      title: 'Fashion and Fossil Fuels',
+      description: 'Investigating synthetic fiber reliance, coal-fired industrial captive power plants, and fair wage transitions for garment workers across industrial zones.',
+      tag: 'land',
+      btnText: 'WATCH NOW',
+      targetOpportunity: 'Textile Watch',
+      videoUrl: '',
+      image: 'Assets/how-water-became-power.jpg',
+      orderIndex: 2,
+      active: true
+    },
+    {
+      id: 'tex-3',
+      title: 'Fashion and Fossil Fuels',
+      description: "Advocating for clean industrial energy microgrids, zero liquid discharge standards, and community-led environmental auditing in textile hubs.",
+      tag: 'hydropower',
+      btnText: 'WATCH NOW',
+      targetOpportunity: 'Textile Watch',
+      videoUrl: '',
+      image: 'Assets/how-water-became-power-ai.jpg',
+      orderIndex: 3,
+      active: true
+    }
+  ],
+
+  climateReports: [
+    {
+      id: 'rep-1',
+      title: 'Loss and Damage in the Indus Basin: Legal Rights & Climate Reparations',
+      subtitle: 'Policy brief on post-2022 flood reconstruction financing',
+      category: 'loss-and-damage',
+      author: 'Muhammad Saeed & Legal Collective',
+      date: '2026-06-12',
+      dateFormatted: '12.06.2026',
+      summary: 'Examines international climate finance mechanisms and domestic litigation frameworks to establish legal liability and community-centered restitution.',
+      pdfUrl: '',
+      image: 'Assets/how-water-became-power.jpg',
+      status: 'Published'
+    },
+    {
+      id: 'rep-2',
+      title: 'Sovereignty Over Water & Energy in Frontline Delta Communities',
+      subtitle: 'Field investigation of saline intrusion and displaced fisherfolk livelihoods',
+      category: 'community-rights',
+      author: 'CAEA Research Wing',
+      date: '2026-04-18',
+      dateFormatted: '18.04.2026',
+      summary: 'Documentation of community resistance against mega-dam diversions and unequal water allocation across lower Sindh.',
+      pdfUrl: '',
+      image: 'Assets/how-water-became-power-ai.jpg',
+      status: 'Published'
+    }
+  ],
+
   pageSettings: {
     home: {
       heroQuote: 'Not only must we be good, but we must also be good for something.',
@@ -637,61 +707,61 @@ const SEED_DATA = {
     },
     ourWork: {
       fossilFuel: {
+        visible: true,
         title: 'FOSSIL FUEL PHASEOUT',
         subtitle: 'Rethinking energy systems for a cleaner, fairer, and climate-resilient future.',
         description: "For CAEA, phasing out gas is not a distant policy idea — it is an urgent necessity. Pakistan's growing reliance on natural gas and imported LNG (liquefied natural gas) has trapped the country in a costly system, leading to wasted resources, financial losses, and long-term debts that burden the public for years.\n\nThis is not only an economic problem. Producing and transporting gas releases methane, a gas that heats the planet even faster than carbon dioxide, and the communities living closest to gas fields, pipelines, and power plants bear the greatest damage.\n\nOur research shows that the power sector is the most important place to begin this shift. Imported LNG was meant to bring energy security, but instead it has made electricity more expensive and left Pakistan dependent on unpredictable global markets. As solar energy becomes cheaper and more widely available, continued investment in gas makes less and less sense — it raises costs, weakens the power grid, and adds to emissions without benefiting ordinary people.\n\nWe also hold decision-makers accountable by challenging weak environmental assessments that fail to properly account for climate risks and harm to local communities. Moving away from gas will not happen overnight, but for us, this work is about confronting the interests that benefit from the status quo and building an energy system that is fair, sustainable, and built to last.",
         joinBtnText: 'JOIN US',
-        opportunityTitle: 'Fossil Fuel Phaseout Fellow'
+        opportunityTitle: 'Fossil Fuel Phaseout Fellow',
+        bannerTitle: 'The Life Story of Manchhar Lake',
+        bannerSubtitle: 'The story written is not the story that was lived',
+        bannerBtnText: 'READ MORE'
       },
       textile: {
+        visible: true,
         bannerTitle: 'TEXTILE & FAST FASHION',
         bannerSubtitle: 'Supply chain transparency, industrial captive power emissions & fair worker transitions',
+        bannerBtnText: 'EXPLORE WORK',
+        iconStyle: 'double-blue',
         title: 'TEXTILE & FAST FASHION',
         subtitle: 'Rethinking energy systems for a cleaner, fairer, and climate-resilient future.',
-        description: "For CAEA, phasing out gas is not a distant policy idea — it is an urgent necessity. Pakistan's growing reliance on natural gas and imported LNG has trapped the country in a costly system, leading to wasted resources, financial losses, and long-term debts that burden the public for years.\n\nThis is not only an economic problem. Producing and transporting gas releases methane, a gas that heats the planet even faster than carbon dioxide, and the communities living closest to gas fields, pipelines, and power plants bear the greatest damage.\n\nAs solar energy becomes cheaper and more widely available, continued investment in gas makes less and less sense — it raises costs, weakens the power grid, and adds to emissions without benefiting ordinary people.",
+        description: "Pakistan's textile sector accounts for significant national energy demand and industrial captive emissions. The race for cheap global fast fashion has incentivized high-polluting captive coal and gas power plants, while garment workers bear the brunt of toxic industrial discharge and unfair working conditions.\n\nCAEA is spearheading supply chain transparency, advocating for clean industrial microgrids, water conservation in processing mills, and enforceable worker protections for a just transition.\n\nAs renewable power becomes more cost-effective, continued dependence on fossil fuels in industrial captive generation creates severe financial and environmental liabilities that must be swiftly reformed.",
+        archPattern: 'white-semicircle',
         joinBtnText: 'JOIN US',
         opportunityTitle: 'Textile Sector Researcher',
         sectionHeading: 'Working towards a future for sustainable textile practices',
-        sectionIntro: 'Our efforts are targeted towards creating dialogue and impact thereby. A just energy future starts with you.',
-        cards: [
-          {
-            id: 'tex-1',
-            title: 'Fashion and Fossil Fuels',
-            description: 'Climate Action & Energy Access (CAEA) is a Pakistan-based research and advocacy institute committed to transparent supply chain accountability.',
-            btnText: 'WATCH NOW',
-            targetOpportunity: 'Textile Watch',
-            videoUrl: ''
-          },
-          {
-            id: 'tex-2',
-            title: 'Fashion and Fossil Fuels',
-            description: 'Investigating synthetic fiber reliance, coal-fired industrial captive power plants, and fair wage transitions for garment workers.',
-            btnText: 'WATCH NOW',
-            targetOpportunity: 'Textile Watch',
-            videoUrl: ''
-          },
-          {
-            id: 'tex-3',
-            title: 'Fashion and Fossil Fuels',
-            description: "Advocating for clean industrial energy microgrids and community-led environmental auditing across Pakistan's textile hubs.",
-            btnText: 'WATCH NOW',
-            targetOpportunity: 'Textile Watch',
-            videoUrl: ''
-          }
-        ]
+        sectionIntro: 'Our efforts are targeted towards creating dialogue and impact thereby. A just energy future starts with you.'
       },
       climateJustice: {
+        visible: true,
         bannerTitle: 'CLIMATE JUSTICE',
         bannerSubtitle: "Ecological democracy, gender equity & frontline communities' sovereignty over resources",
+        bannerBtnText: 'LEARN MORE',
         title: 'CLIMATE JUSTICE',
         subtitle: 'Rethinking energy systems for a cleaner, fairer, and climate-resilient future.',
-        description: "For CAEA, phasing out gas is not a distant policy idea — it is an urgent necessity. Pakistan's growing reliance on natural gas and imported LNG has trapped the country in a costly system, leading to wasted resources, financial losses, and long-term debts that burden the public for years.\n\nThis is not only an economic problem. Producing and transporting gas releases methane, a gas that heats the planet even faster than carbon dioxide, and the communities living closest to gas fields, pipelines, and power plants bear the greatest damage.\n\nWe organize, write, and teach with the firm conviction that climate justice is inseparable from economic democracy, gender justice, and people's sovereignty over energy and resources.",
+        description: "Climate justice recognizes that the climate crisis is not merely an environmental challenge, but a direct consequence of systemic economic inequality, colonial resource extraction, and unaccountable policymaking.\n\nThe frontline communities in Pakistan—smallholder farmers in the Indus delta, mountain pastoralists in Gilgit-Baltistan, and fisherfolk across coastal belts—bear the heaviest burden of climate shocks while contributing least to global emissions.\n\nWe organize, write, and teach with the firm conviction that genuine climate justice is inseparable from economic democracy, gender equity, and people's sovereignty over energy, water, and land resources.",
         joinBtnText: 'JOIN US',
         opportunityTitle: 'Climate Justice Organizer'
       },
       activitiesBanner: {
         bannerTitle: 'ACTIVITIES & GATHERINGS',
-        bannerSubtitle: 'Field retreats, community kacheris, exposure visits & workshops across Pakistan'
+        bannerSubtitle: 'Field retreats, community kacheris, exposure visits & workshops across Pakistan',
+        bannerBtnText: 'SEE MORE',
+        heroQuote: '“Those least responsible for climate change are worst affected by it”',
+        heroAuthor: 'Vandana Shiva',
+        heroHeading: 'WORKING TOWARDS CLEAN ENERGY',
+        heroDescription: 'The ecological destruction of Lake Manchhar in Sindh highlights how industrial discharge, upstream water diversions, and climate shocks devastate indigenous fishing communities. CAEA works alongside local organizers and environmental advocates to document environmental injustices, foster community dialogue, and advance clean energy accountability across Pakistan.',
+        showVideo: true,
+        videoTitle: 'More than a retreat (CAEA Community Documentary)',
+        videoDescription: 'No experience needed. Just a willingness to show up and act. Reconnecting with nature, exploring movement building, and building resilience against climate burnout.',
+        videoUrl: '',
+        videoThumbnail: 'Assets/how-water-became-power-ai.jpg',
+        upcomingGathering: {
+          title: 'Sindh Delta Climate Gathering 2026',
+          subtitle: 'Registration open for activists and grassroots organizers',
+          date: 'OCTOBER 2026',
+          link: '#apply'
+        }
       }
     }
   }
@@ -855,15 +925,17 @@ class CAEADataStore {
 
   init() {
     const DATA_VERSION_KEY = 'caea_data_version';
-    const CURRENT_VERSION = 'v9_figma_activities_redesign';
+    const CURRENT_VERSION = 'v12_our_work_modular_crud';
     const storedVersion = localStorage.getItem(DATA_VERSION_KEY);
 
     if (storedVersion !== CURRENT_VERSION) {
-      // Refresh seed activities, people, media, mapPins, and pageSettings
+      // Refresh seed activities, people, media, mapPins, textileCards, climateReports, and pageSettings
       localStorage.setItem(STORAGE_KEYS.ACTIVITIES, JSON.stringify(SEED_DATA.activities));
       localStorage.setItem(STORAGE_KEYS.PEOPLE, JSON.stringify(SEED_DATA.people));
       localStorage.setItem(STORAGE_KEYS.MEDIA, JSON.stringify(SEED_DATA.media));
       localStorage.setItem(STORAGE_KEYS.MAP_PINS, JSON.stringify(SEED_DATA.mapPins));
+      localStorage.setItem(STORAGE_KEYS.TEXTILE_CARDS, JSON.stringify(SEED_DATA.textileCards));
+      localStorage.setItem(STORAGE_KEYS.CLIMATE_REPORTS, JSON.stringify(SEED_DATA.climateReports));
       if (!localStorage.getItem(STORAGE_KEYS.OPPORTUNITIES)) {
         localStorage.setItem(STORAGE_KEYS.OPPORTUNITIES, JSON.stringify(SEED_DATA.opportunities));
       }
@@ -897,6 +969,12 @@ class CAEADataStore {
       if (!localStorage.getItem(STORAGE_KEYS.MAP_PINS)) {
         localStorage.setItem(STORAGE_KEYS.MAP_PINS, JSON.stringify(SEED_DATA.mapPins));
       }
+      if (!localStorage.getItem(STORAGE_KEYS.TEXTILE_CARDS)) {
+        localStorage.setItem(STORAGE_KEYS.TEXTILE_CARDS, JSON.stringify(SEED_DATA.textileCards));
+      }
+      if (!localStorage.getItem(STORAGE_KEYS.CLIMATE_REPORTS)) {
+        localStorage.setItem(STORAGE_KEYS.CLIMATE_REPORTS, JSON.stringify(SEED_DATA.climateReports));
+      }
       if (!localStorage.getItem(STORAGE_KEYS.PAGE_SETTINGS)) {
         localStorage.setItem(STORAGE_KEYS.PAGE_SETTINGS, JSON.stringify(SEED_DATA.pageSettings));
       }
@@ -907,7 +985,9 @@ class CAEADataStore {
     switch (collection.toLowerCase()) {
       case 'activities': return STORAGE_KEYS.ACTIVITIES;
       case 'people': return STORAGE_KEYS.PEOPLE;
-      case 'articles': return STORAGE_KEYS.ARTICLES;
+      case 'articles':
+      case 'fossilfuelarticles':
+      case 'fossil_articles': return STORAGE_KEYS.ARTICLES;
       case 'opportunities':
       case 'get-involved':
       case 'positions': return STORAGE_KEYS.OPPORTUNITIES;
@@ -922,6 +1002,12 @@ class CAEADataStore {
       case 'map_pins':
       case 'pins':
       case 'map': return STORAGE_KEYS.MAP_PINS;
+      case 'textilecards':
+      case 'textile_cards':
+      case 'textile': return STORAGE_KEYS.TEXTILE_CARDS;
+      case 'climatereports':
+      case 'climate_reports':
+      case 'climatereport': return STORAGE_KEYS.CLIMATE_REPORTS;
       case 'page_settings':
       case 'pagesettings':
       case 'settings': return STORAGE_KEYS.PAGE_SETTINGS;
@@ -1013,6 +1099,49 @@ class CAEADataStore {
       console.error('Error saving pageSettings to DataStore:', e);
       return null;
     }
+  }
+
+  getOurWorkData(pillar = null) {
+    const settings = this.getPageSettings('ourWork') || {};
+    const fossilArticles = this.get('articles');
+    const textileCards = this.get('textileCards');
+    const climateReports = this.get('climateReports');
+    const activities = this.get('activities');
+
+    const fullData = {
+      fossilFuel: {
+        ...(settings.fossilFuel || {}),
+        articles: fossilArticles
+      },
+      textile: {
+        ...(settings.textile || {}),
+        investigations: textileCards,
+        cards: textileCards
+      },
+      climateJustice: {
+        ...(settings.climateJustice || {}),
+        reports: climateReports
+      },
+      activities: {
+        ...(settings.activitiesBanner || settings.activities || {}),
+        items: activities
+      }
+    };
+
+    if (pillar) {
+      return fullData[pillar] || null;
+    }
+    return fullData;
+  }
+
+  saveOurWorkPillar(pillarKey, updates) {
+    const currentSettings = this.getPageSettings();
+    const currentOurWork = currentSettings.ourWork || {};
+    currentOurWork[pillarKey] = {
+      ...(currentOurWork[pillarKey] || {}),
+      ...updates
+    };
+    return this.savePageSettings('ourWork', currentOurWork);
   }
 
   add(collection, item) {

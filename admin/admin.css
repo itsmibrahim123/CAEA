@@ -371,6 +371,73 @@ body.admin-body {
   display: block;
 }
 
+/* Sub-Tab Navigation Bar */
+.admin-subtab-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--admin-card-border);
+  padding: 6px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  overflow-x: auto;
+}
+
+.subtab-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--admin-text-secondary);
+  font-family: var(--admin-font);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.subtab-btn:hover {
+  color: var(--admin-text-primary);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.subtab-btn.active {
+  background: rgba(163, 216, 141, 0.15);
+  border-color: rgba(163, 216, 141, 0.35);
+  color: var(--admin-accent-green);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.subtab-icon {
+  font-size: 15px;
+  display: inline-flex;
+}
+
+.subtab-content {
+  display: none;
+  animation: fadeInSubtab 0.25s ease;
+}
+
+.subtab-content.active {
+  display: block;
+}
+
+@keyframes fadeInSubtab {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Panel Header Controls */
 .panel-header {
   display: flex;
