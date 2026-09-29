@@ -26,9 +26,15 @@ const SEED_DATA = {
       location: 'Pakistan',
       description: 'Examines how colonial and modern systems of water control through dams, barrages, and canals have transformed river ecosystems, displaced communities, and disrupted cultural relationships with water.',
       image: 'Assets/media/events/contested-waters/RAY00190.JPG',
+      images: [
+        'Assets/media/events/contested-waters/RAY00190.JPG',
+        'Assets/media/events/contested-waters/RAY00059.JPG',
+        'Assets/media/events/contested-waters/RAY00118.JPG',
+        'Assets/media/events/contested-waters/RAY00212.JPG'
+      ],
       featured: true,
       quote: '“Those least responsible for climate change are worst affected by it”',
-      quoteAuthor: 'Waseem Ul Haq'
+      quoteAuthor: 'Vandana Shiva'
     },
     {
       id: 'act-2',
@@ -39,6 +45,12 @@ const SEED_DATA = {
       location: 'Pakistan',
       description: 'A 3-day retreat for climate activists and community organizers across Pakistan to reflect, reconnect with nature, and discuss energy, climate stories, burnout, and movement building.',
       image: 'Assets/media/events/retreat/DSCF4154.JPG',
+      images: [
+        'Assets/media/events/retreat/DSCF4154.JPG',
+        'Assets/media/events/retreat/DSCF3966.JPG',
+        'Assets/media/events/retreat/DSCF4356.JPG',
+        'Assets/media/events/retreat/DSCF4512.JPG'
+      ],
       featured: false,
       quote: '“Reconnecting with land and community to build resilience against climate burnout”',
       quoteAuthor: 'CAEA Movement Gathering'
@@ -52,6 +64,12 @@ const SEED_DATA = {
       location: 'Lake Manchhar, Sindh',
       description: 'Discussion on the ecological destruction of Lake Manchhar, changes in water flow, infrastructure development, agricultural wastewater, and community-led resistance.',
       image: 'Assets/media/events/manchar/WhatsApp Image 2026-08-27 at 12.08.18 PM.jpeg',
+      images: [
+        'Assets/media/events/manchar/WhatsApp Image 2026-08-27 at 12.08.18 PM.jpeg',
+        'Assets/media/events/manchar/WhatsApp Image 2026-08-27 at 12.08.18 PM (1).jpeg',
+        'Assets/media/events/manchar/WhatsApp Image 2026-08-27 at 12.08.18 PM (2).jpeg',
+        'Assets/media/events/manchar/WhatsApp Image 2026-08-27 at 12.08.28 PM.jpeg'
+      ],
       featured: false,
       quote: '“Manchhar is a mindful lake, yet it bears the heaviest burden of industrial discharge”',
       quoteAuthor: 'Lake Manchhar Fisherman Community'
@@ -65,6 +83,12 @@ const SEED_DATA = {
       location: 'Tarbela Dam',
       description: 'Brought together perspectives from WAPDA and displaced communities to examine Tarbela\'s promises of power vs. its costs on land, livelihoods, culture, and ecosystems.',
       image: 'Assets/media/events/exposure-visit/WhatsApp Image 2026-08-27 at 12.16.56 PM.jpeg',
+      images: [
+        'Assets/media/events/exposure-visit/WhatsApp Image 2026-08-27 at 12.16.56 PM.jpeg',
+        'Assets/media/events/exposure-visit/WhatsApp Image 2026-08-27 at 12.16.57 PM (1).jpeg',
+        'Assets/media/events/exposure-visit/WhatsApp Image 2026-08-27 at 12.16.58 PM (2).jpeg',
+        'Assets/media/events/exposure-visit/WhatsApp Image 2026-08-27 at 12.16.59 PM.jpeg'
+      ],
       featured: false,
       quote: '“Uncovering the true human and ecological costs behind megastructures of power”',
       quoteAuthor: 'Tarbela Exposure Delegation'
@@ -158,18 +182,30 @@ const SEED_DATA = {
   articles: [
     {
       id: 'art-1',
-      title: 'All Good Things Are Wild And Free',
-      subtitle: 'Understanding the Climate Transition Imperative in Pakistan',
-      kicker: 'ESTABLISHED 2020',
-      author: 'CAEA Policy Research Team',
-      date: '2024-04-10',
-      dateFormatted: '10.04.2024',
-      excerpt: 'Climate Action & Energy Access (CAEA) is a Pakistan-based research and advocacy institute committed to advancing a just, people-centered energy transition.',
-      content: 'We work at the intersection of climate justice, energy governance, and public accountability, focusing on how entrenched fossil-fuel interests, inequitable subsidies, and distorted gas and power policies undermine the rights, wellbeing, and economic futures of ordinary people.',
+      title: 'The Life Story of Manchar Lake',
+      subtitle: 'A field visit exploring Manchar Lake',
+      kicker: 'KACHERI',
+      author: 'Hamna Anwar',
+      date: '2026-07-28',
+      dateFormatted: '28.07.2026',
+      excerpt: 'The kacheri was based on the case of Lake Manchar. The discussion focused on the ecological destruction of the lake, and how large development projects have affected the people, culture, and livelihoods connected to it.',
+      content: 'The kacheri was based on the case of Lake Manchar. The discussion focused on the ecological destruction of the lake, and how large development projects have affected the people, culture, and livelihoods connected to it.\n\nLake Manchar is located in Sindh between the Khirthar mountain range and the River Sindhu. The lake is 360 miles long and 170 miles wide. It is the biggest natural sweet water lake in Asia. The word "Manchar" comes from the Sindhi words Meeh meaning rain and Chhar meaning a vast expanse. Together, "Meeh + Chhar" means a vast spread of Rain waters.\n\nIndustrial discharge and skewed water management have devastated the livelihood of thousands of fisherfolk families. CAEA continues to mobilize community kacheris to demand immediate ecological remediation and water rights.',
       image: 'Assets/how-water-became-power.jpg'
     },
     {
       id: 'art-2',
+      title: 'The Cost of Gas: How Subsidies Shape Pakistan’s Energy Crisis',
+      subtitle: 'Analysis of circular debt and industrial consumption patterns',
+      kicker: 'POLICY BRIEF',
+      author: 'Kamran Aziz & Sanaa’i Muhammad',
+      date: '2024-02-10',
+      dateFormatted: '10.02.2024',
+      excerpt: 'A comprehensive review of Pakistan’s domestic natural gas allocation and its economic burden on working-class households.',
+      content: 'Natural gas has long been treated as an abundant domestic resource in Pakistan. However, decades of preferential allocation and depleting reserves have precipitated a severe energy crisis.\n\nOur research shows that the power sector is the most important place to begin this shift. Imported LNG was meant to bring energy security, but instead it has made electricity more expensive and left Pakistan dependent on unpredictable global markets.',
+      image: 'Assets/Hero-image.png'
+    },
+    {
+      id: 'art-3',
       title: 'How Water Became Power',
       subtitle: 'The Political Economy of Freshwater Resources in Sindh',
       kicker: 'CASE STUDY',
@@ -179,6 +215,18 @@ const SEED_DATA = {
       excerpt: 'An investigation into how large development projects have impacted aquatic ecosystems and fishing livelihoods around Lake Manchhar.',
       content: 'Lake Manchhar is located in Sindh between the Dadu and Khanpur districts. Manchhar comes from the Sindhi words Man meaning mind and Chhar meaning lake or pond. Manchhar translates to "mindful lake". It is the largest natural freshwater lake in Asia.',
       image: 'Assets/how-water-became-power-ai.jpg'
+    },
+    {
+      id: 'art-4',
+      title: 'All Good Things Are Wild And Free',
+      subtitle: 'Understanding the Climate Transition Imperative in Pakistan',
+      kicker: 'FIELD REPORTS',
+      author: 'CAEA Policy Research Team',
+      date: '2024-04-10',
+      dateFormatted: '10.04.2024',
+      excerpt: 'Climate Action & Energy Access (CAEA) is a Pakistan-based research and advocacy institute committed to advancing a just, people-centered energy transition.',
+      content: 'We work at the intersection of climate justice, energy governance, and public accountability, focusing on how entrenched fossil-fuel interests, inequitable subsidies, and distorted gas and power policies undermine the rights, wellbeing, and economic futures of ordinary people.',
+      image: 'Assets/how-water-became-power.jpg'
     }
   ],
 
@@ -521,16 +569,16 @@ const SEED_DATA = {
     {
       id: 'pin-hunza',
       city: 'HUNZA',
-      left: '53%',
-      top: '19%',
+      left: '64%',
+      top: '6%',
       badge: 'HUNZA',
       description: 'Our team comes from diverse backgrounds across Gilgit-Baltistan. Climate Action & Energy Access (CAEA) is a Pakistan-based research and advocacy institute committed to empowering mountain communities through renewable energy.'
     },
     {
       id: 'pin-jalalpur',
       city: 'JALALPUR',
-      left: '62%',
-      top: '41%',
+      left: '69%',
+      top: '30%',
       badge: 'JALALPUR',
       description: 'Our team works closely with agrarian communities in Jalalpur advancing decentralized solar irrigation, groundwater conservation, and community energy governance.'
     },
@@ -545,8 +593,8 @@ const SEED_DATA = {
     {
       id: 'pin-thar',
       city: 'THAR',
-      left: '33%',
-      top: '78%',
+      left: '49%',
+      top: '86%',
       badge: 'THAR',
       description: 'In the Thar desert, CAEA is leading research into off-grid solar microgrids and clean drinking water access for rural and indigenous desert settlements.'
     },
@@ -586,6 +634,65 @@ const SEED_DATA = {
       teamHeaderTitle: 'The People Who Make It Happen',
       quoteText: 'What we cannot imagine cannot come into being.',
       quoteAuthor: 'Hellen Keller'
+    },
+    ourWork: {
+      fossilFuel: {
+        title: 'FOSSIL FUEL PHASEOUT',
+        subtitle: 'Rethinking energy systems for a cleaner, fairer, and climate-resilient future.',
+        description: "For CAEA, phasing out gas is not a distant policy idea — it is an urgent necessity. Pakistan's growing reliance on natural gas and imported LNG (liquefied natural gas) has trapped the country in a costly system, leading to wasted resources, financial losses, and long-term debts that burden the public for years.\n\nThis is not only an economic problem. Producing and transporting gas releases methane, a gas that heats the planet even faster than carbon dioxide, and the communities living closest to gas fields, pipelines, and power plants bear the greatest damage.\n\nOur research shows that the power sector is the most important place to begin this shift. Imported LNG was meant to bring energy security, but instead it has made electricity more expensive and left Pakistan dependent on unpredictable global markets. As solar energy becomes cheaper and more widely available, continued investment in gas makes less and less sense — it raises costs, weakens the power grid, and adds to emissions without benefiting ordinary people.\n\nWe also hold decision-makers accountable by challenging weak environmental assessments that fail to properly account for climate risks and harm to local communities. Moving away from gas will not happen overnight, but for us, this work is about confronting the interests that benefit from the status quo and building an energy system that is fair, sustainable, and built to last.",
+        joinBtnText: 'JOIN US',
+        opportunityTitle: 'Fossil Fuel Phaseout Fellow'
+      },
+      textile: {
+        bannerTitle: 'TEXTILE & FAST FASHION',
+        bannerSubtitle: 'Supply chain transparency, industrial captive power emissions & fair worker transitions',
+        title: 'TEXTILE & FAST FASHION',
+        subtitle: 'Rethinking energy systems for a cleaner, fairer, and climate-resilient future.',
+        description: "For CAEA, phasing out gas is not a distant policy idea — it is an urgent necessity. Pakistan's growing reliance on natural gas and imported LNG has trapped the country in a costly system, leading to wasted resources, financial losses, and long-term debts that burden the public for years.\n\nThis is not only an economic problem. Producing and transporting gas releases methane, a gas that heats the planet even faster than carbon dioxide, and the communities living closest to gas fields, pipelines, and power plants bear the greatest damage.\n\nAs solar energy becomes cheaper and more widely available, continued investment in gas makes less and less sense — it raises costs, weakens the power grid, and adds to emissions without benefiting ordinary people.",
+        joinBtnText: 'JOIN US',
+        opportunityTitle: 'Textile Sector Researcher',
+        sectionHeading: 'Working towards a future for sustainable textile practices',
+        sectionIntro: 'Our efforts are targeted towards creating dialogue and impact thereby. A just energy future starts with you.',
+        cards: [
+          {
+            id: 'tex-1',
+            title: 'Fashion and Fossil Fuels',
+            description: 'Climate Action & Energy Access (CAEA) is a Pakistan-based research and advocacy institute committed to transparent supply chain accountability.',
+            btnText: 'WATCH NOW',
+            targetOpportunity: 'Textile Watch',
+            videoUrl: ''
+          },
+          {
+            id: 'tex-2',
+            title: 'Fashion and Fossil Fuels',
+            description: 'Investigating synthetic fiber reliance, coal-fired industrial captive power plants, and fair wage transitions for garment workers.',
+            btnText: 'WATCH NOW',
+            targetOpportunity: 'Textile Watch',
+            videoUrl: ''
+          },
+          {
+            id: 'tex-3',
+            title: 'Fashion and Fossil Fuels',
+            description: "Advocating for clean industrial energy microgrids and community-led environmental auditing across Pakistan's textile hubs.",
+            btnText: 'WATCH NOW',
+            targetOpportunity: 'Textile Watch',
+            videoUrl: ''
+          }
+        ]
+      },
+      climateJustice: {
+        bannerTitle: 'CLIMATE JUSTICE',
+        bannerSubtitle: "Ecological democracy, gender equity & frontline communities' sovereignty over resources",
+        title: 'CLIMATE JUSTICE',
+        subtitle: 'Rethinking energy systems for a cleaner, fairer, and climate-resilient future.',
+        description: "For CAEA, phasing out gas is not a distant policy idea — it is an urgent necessity. Pakistan's growing reliance on natural gas and imported LNG has trapped the country in a costly system, leading to wasted resources, financial losses, and long-term debts that burden the public for years.\n\nThis is not only an economic problem. Producing and transporting gas releases methane, a gas that heats the planet even faster than carbon dioxide, and the communities living closest to gas fields, pipelines, and power plants bear the greatest damage.\n\nWe organize, write, and teach with the firm conviction that climate justice is inseparable from economic democracy, gender justice, and people's sovereignty over energy and resources.",
+        joinBtnText: 'JOIN US',
+        opportunityTitle: 'Climate Justice Organizer'
+      },
+      activitiesBanner: {
+        bannerTitle: 'ACTIVITIES & GATHERINGS',
+        bannerSubtitle: 'Field retreats, community kacheris, exposure visits & workshops across Pakistan'
+      }
     }
   }
 };
@@ -748,7 +855,7 @@ class CAEADataStore {
 
   init() {
     const DATA_VERSION_KEY = 'caea_data_version';
-    const CURRENT_VERSION = 'v7_php_sqlite_backend';
+    const CURRENT_VERSION = 'v9_figma_activities_redesign';
     const storedVersion = localStorage.getItem(DATA_VERSION_KEY);
 
     if (storedVersion !== CURRENT_VERSION) {
@@ -857,7 +964,8 @@ class CAEADataStore {
       const merged = {
         home: { ...defaults.home, ...(parsed.home || {}) },
         activities: { ...defaults.activities, ...(parsed.activities || {}) },
-        ourStory: { ...defaults.ourStory, ...(parsed.ourStory || {}) }
+        ourStory: { ...defaults.ourStory, ...(parsed.ourStory || {}) },
+        ourWork: { ...defaults.ourWork, ...(parsed.ourWork || {}) }
       };
 
       if (page) {

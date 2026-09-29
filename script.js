@@ -281,7 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Elements - supports both universal and work page IDs
     const quoteEl = document.getElementById('hero-event-quote') || document.getElementById('work-act-quote');
     const authorEl = document.getElementById('hero-event-author') || document.getElementById('work-act-author');
-    const titleEl = document.getElementById('hero-event-title') || document.getElementById('work-act-title');
+    const headingEl = document.getElementById('hero-event-heading') || document.getElementById('hero-event-title') || document.getElementById('work-act-title');
     const descEl = document.getElementById('hero-event-description') || document.getElementById('work-act-desc');
     const tagEl = document.getElementById('hero-event-tag');
     const dateEl = document.getElementById('hero-event-date');
@@ -292,15 +292,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // Update text with soft transition
     if (quoteEl) quoteEl.textContent = currentEvent.quote || `“${currentEvent.title}”`;
     if (authorEl) authorEl.textContent = currentEvent.quoteAuthor || currentEvent.location || 'Climate Action Energy Access';
-    if (titleEl) titleEl.textContent = currentEvent.title || 'Working Towards Clean Energy';
+    if (headingEl) headingEl.textContent = currentEvent.title ? currentEvent.title.toUpperCase() : 'WORKING TOWARDS CLEAN ENERGY';
     if (descEl) descEl.textContent = currentEvent.description || '';
     if (tagEl) tagEl.textContent = currentEvent.category || 'RETREAT';
     if (dateEl) dateEl.textContent = currentEvent.dateFormatted || currentEvent.date || '';
     if (counterEl) counterEl.textContent = `Event ${targetIndex + 1} of ${activities.length}`;
 
     if (mainImgEl && currentEvent.image) {
-      mainImgEl.src = resolveImagePath(currentEvent.image);
-      mainImgEl.alt = currentEvent.title;
+      mainImgEl.style.opacity = '0.5';
+      setTimeout(() => {
+        mainImgEl.src = resolveImagePath(currentEvent.image);
+        mainImgEl.alt = currentEvent.title;
+        mainImgEl.style.opacity = '1';
+      }, 100);
     }
 
     // Sync Thumbnails
@@ -666,6 +670,50 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ============================================================
      Dynamic Activities Feed Rendering (DataStore)
      ============================================================ */
+  function getActivityImages(item) {
+    if (Array.isArray(item.images) && item.images.length > 0) {
+      return item.images;
+    }
+    if (item.image) {
+      // If single image provided, provide known fallbacks from the same event folder if applicable
+      const img = item.image;
+      if (img.includes('contested-waters')) {
+        return [
+          'Assets/media/events/contested-waters/RAY00190.JPG',
+          'Assets/media/events/contested-waters/RAY00059.JPG',
+          'Assets/media/events/contested-waters/RAY00118.JPG',
+          'Assets/media/events/contested-waters/RAY00212.JPG'
+        ];
+      }
+      if (img.includes('retreat')) {
+        return [
+          'Assets/media/events/retreat/DSCF4154.JPG',
+          'Assets/media/events/retreat/DSCF3966.JPG',
+          'Assets/media/events/retreat/DSCF4356.JPG',
+          'Assets/media/events/retreat/DSCF4512.JPG'
+        ];
+      }
+      if (img.includes('manchar')) {
+        return [
+          'Assets/media/events/manchar/WhatsApp Image 2026-08-27 at 12.08.18 PM.jpeg',
+          'Assets/media/events/manchar/WhatsApp Image 2026-08-27 at 12.08.18 PM (1).jpeg',
+          'Assets/media/events/manchar/WhatsApp Image 2026-08-27 at 12.08.18 PM (2).jpeg',
+          'Assets/media/events/manchar/WhatsApp Image 2026-08-27 at 12.08.28 PM.jpeg'
+        ];
+      }
+      if (img.includes('exposure-visit')) {
+        return [
+          'Assets/media/events/exposure-visit/WhatsApp Image 2026-08-27 at 12.16.56 PM.jpeg',
+          'Assets/media/events/exposure-visit/WhatsApp Image 2026-08-27 at 12.16.57 PM (1).jpeg',
+          'Assets/media/events/exposure-visit/WhatsApp Image 2026-08-27 at 12.16.58 PM (2).jpeg',
+          'Assets/media/events/exposure-visit/WhatsApp Image 2026-08-27 at 12.16.59 PM.jpeg'
+        ];
+      }
+      return [item.image];
+    }
+    return ['/Assets/Hero-image.png'];
+  }
+
   function renderDynamicActivities() {
     const activitiesContainer = document.querySelector('.activities-list');
     if (!activitiesContainer || !window.DataStore) return;
@@ -673,42 +721,77 @@ document.addEventListener('DOMContentLoaded', () => {
     const activities = window.DataStore.get('activities');
     if (!activities || !activities.length) return;
 
-    activitiesContainer.innerHTML = activities.map((item, idx) => `
-      <article class="activity-card ${idx === currentHeroEventIndex ? 'is-hero-active' : ''}" data-id="${item.id}">
-        <div class="activity-media-box">
-          <img src="${resolveImagePath(item.image)}" alt="${escapeHtml(item.title)}" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='/Assets/how-water-became-power.jpg'" />
-        </div>
-        <div class="activity-content">
-          <div>
-            <h3 class="activity-item-title">${escapeHtml(item.title)}</h3>
-            <p class="activity-item-desc">${escapeHtml(item.description)}</p>
-          </div>
-          <div class="activity-card-footer">
-            <span class="activity-date">${item.dateFormatted || item.date || ''}</span>
-            <span class="activity-tag">${escapeHtml(item.category || 'RETREAT')}</span>
-            <button class="btn-feature-hero" data-id="${item.id}" type="button" title="Feature this event in the hero section">
-              <span>Show in Hero</span>
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17l9.2-9.2M17 17V8H8"/></svg>
+    activitiesContainer.innerHTML = activities.map((item) => {
+      const imgList = getActivityImages(item);
+      const initialImg = imgList[0] || item.image || '/Assets/Hero-image.png';
+
+      return `
+        <article class="activity-card" data-id="${item.id}">
+          <div class="activity-media-box" data-act-id="${item.id}" data-current-index="0">
+            <img class="activity-card-img" src="${resolveImagePath(initialImg)}" alt="${escapeHtml(item.title)}" onerror="this.src='/Assets/how-water-became-power.jpg'" />
+            <button type="button" class="act-card-arrow prev-act-img" aria-label="Previous photo">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <button type="button" class="act-card-arrow next-act-img" aria-label="Next photo">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
             </button>
           </div>
-        </div>
-      </article>
-    `).join('');
+          <div class="activity-content">
+            <div>
+              <h3 class="activity-item-title">${escapeHtml(item.title)}</h3>
+              <p class="activity-item-desc">${escapeHtml(item.description)}</p>
+            </div>
+            <div class="activity-card-footer">
+              <span class="activity-date">${item.dateFormatted || item.date || ''}</span>
+              <span class="activity-tag">${escapeHtml(item.category || 'RETREAT')}</span>
+            </div>
+          </div>
+        </article>
+      `;
+    }).join('');
 
-    // Attach click handlers to "Show in Hero" buttons
-    const featureBtns = activitiesContainer.querySelectorAll('.btn-feature-hero');
-    featureBtns.forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const actId = btn.getAttribute('data-id');
-        setHeroEvent(actId);
-        const heroEl = document.getElementById('activities-hero-section') || document.getElementById('banner-activities') || document.querySelector('.activities-page-section');
-        if (heroEl) {
-          heroEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        } else {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Attach card image arrow listeners
+    const cards = activitiesContainer.querySelectorAll('.activity-card');
+    cards.forEach(card => {
+      const cardId = card.getAttribute('data-id');
+      const actItem = activities.find(a => a.id === cardId);
+      if (!actItem) return;
+
+      const imgList = getActivityImages(actItem);
+      const mediaBox = card.querySelector('.activity-media-box');
+      const imgEl = card.querySelector('.activity-card-img');
+      const prevBtn = card.querySelector('.prev-act-img');
+      const nextBtn = card.querySelector('.next-act-img');
+
+      let currentIdx = 0;
+
+      function updateCardImage(newIdx) {
+        currentIdx = ((newIdx % imgList.length) + imgList.length) % imgList.length;
+        if (mediaBox) mediaBox.setAttribute('data-current-index', currentIdx);
+        if (imgEl) {
+          imgEl.style.opacity = '0.4';
+          setTimeout(() => {
+            imgEl.src = resolveImagePath(imgList[currentIdx]);
+            imgEl.style.opacity = '1';
+          }, 120);
         }
-      });
+      }
+
+      if (prevBtn) {
+        prevBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          e.preventDefault();
+          updateCardImage(currentIdx - 1);
+        });
+      }
+
+      if (nextBtn) {
+        nextBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          e.preventDefault();
+          updateCardImage(currentIdx + 1);
+        });
+      }
     });
   }
 
@@ -1049,11 +1132,116 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ============================================================
-     Our Work Page (Expandable Blue Bars, Articles Reader, Filter)
+     Our Work Page (Expandable Banners & Articles)
      ============================================================ */
+  function applyOurWorkPageSettings() {
+    if (!window.DataStore) return;
+    const settings = window.DataStore.getPageSettings('ourWork');
+    if (!settings) return;
+
+    // 1. Fossil Fuel Phaseout
+    const fossil = settings.fossilFuel || {};
+    const fossilTitle = document.getElementById('fossil-title');
+    const fossilSub = document.getElementById('fossil-subtitle');
+    const fossilDesc = document.getElementById('fossil-description');
+    const fossilBtn = document.getElementById('fossil-join-btn');
+
+    if (fossilTitle && fossil.title) fossilTitle.textContent = fossil.title;
+    if (fossilSub && fossil.subtitle) fossilSub.textContent = fossil.subtitle;
+    if (fossilDesc && fossil.description) {
+      const paras = fossil.description.split('\n').filter(Boolean);
+      fossilDesc.innerHTML = paras.map(p => `<p>${escapeHtml(p)}</p>`).join('');
+    }
+    if (fossilBtn) {
+      if (fossil.joinBtnText) fossilBtn.textContent = fossil.joinBtnText;
+      if (fossil.opportunityTitle) fossilBtn.setAttribute('data-opportunity-title', fossil.opportunityTitle);
+    }
+
+    // 2. Textile & Fast Fashion
+    const tex = settings.textile || {};
+    const texBannerTitle = document.getElementById('textile-banner-title');
+    const texBannerSub = document.getElementById('textile-banner-sub');
+    const texTitle = document.getElementById('textile-title');
+    const texSub = document.getElementById('textile-subtitle');
+    const texDesc = document.getElementById('textile-description');
+    const texBtn = document.getElementById('textile-join-btn');
+    const texSecHeading = document.getElementById('textile-section-heading');
+    const texSecIntro = document.getElementById('textile-section-intro');
+    const texCardsGrid = document.getElementById('textile-cards-grid');
+
+    if (texBannerTitle && tex.bannerTitle) texBannerTitle.textContent = tex.bannerTitle;
+    if (texBannerSub && tex.bannerSubtitle) texBannerSub.textContent = tex.bannerSubtitle;
+    if (texTitle && tex.title) texTitle.textContent = tex.title;
+    if (texSub && tex.subtitle) texSub.textContent = tex.subtitle;
+    if (texDesc && tex.description) {
+      const paras = tex.description.split('\n').filter(Boolean);
+      texDesc.innerHTML = paras.map(p => `<p>${escapeHtml(p)}</p>`).join('');
+    }
+    if (texBtn) {
+      if (tex.joinBtnText) texBtn.textContent = tex.joinBtnText;
+      if (tex.opportunityTitle) texBtn.setAttribute('data-opportunity-title', tex.opportunityTitle);
+    }
+    if (texSecHeading && tex.sectionHeading) texSecHeading.textContent = tex.sectionHeading;
+    if (texSecIntro && tex.sectionIntro) texSecIntro.textContent = tex.sectionIntro;
+
+    if (texCardsGrid && Array.isArray(tex.cards) && tex.cards.length > 0) {
+      texCardsGrid.innerHTML = tex.cards.map(c => `
+        <div class="insta-card">
+          <div>
+            <h4 class="insta-card-title">${escapeHtml(c.title || 'Fashion and Fossil Fuels')}</h4>
+            <p class="insta-card-desc">
+              ${escapeHtml(c.description || '')}
+            </p>
+          </div>
+          <a href="${c.videoUrl ? escapeHtml(c.videoUrl) : '#video-modal'}" class="btn-watch-now" data-apply-btn data-opportunity-title="${escapeHtml(c.targetOpportunity || 'Textile Watch')}">
+            <span>${escapeHtml(c.btnText || 'WATCH NOW')}</span>
+            <span>&gt;</span>
+          </a>
+        </div>
+      `).join('');
+    }
+
+    // 3. Climate Justice
+    const cj = settings.climateJustice || {};
+    const cjBannerTitle = document.getElementById('climate-banner-title');
+    const cjBannerSub = document.getElementById('climate-banner-sub');
+    const cjTitle = document.getElementById('climate-title');
+    const cjSub = document.getElementById('climate-subtitle');
+    const cjDesc = document.getElementById('climate-description');
+    const cjBtn = document.getElementById('climate-join-btn');
+
+    if (cjBannerTitle && cj.bannerTitle) cjBannerTitle.textContent = cj.bannerTitle;
+    if (cjBannerSub && cj.bannerSubtitle) cjBannerSub.textContent = cj.bannerSubtitle;
+    if (cjTitle && cj.title) cjTitle.textContent = cj.title;
+    if (cjSub && cj.subtitle) cjSub.textContent = cj.subtitle;
+    if (cjDesc && cj.description) {
+      const paras = cj.description.split('\n').filter(Boolean);
+      cjDesc.innerHTML = paras.map(p => `<p>${escapeHtml(p)}</p>`).join('');
+    }
+    if (cjBtn) {
+      if (cj.joinBtnText) cjBtn.textContent = cj.joinBtnText;
+      if (cj.opportunityTitle) cjBtn.setAttribute('data-opportunity-title', cj.opportunityTitle);
+    }
+
+    // 4. Activities Banner
+    const actBanner = settings.activitiesBanner || {};
+    const actBannerTitle = document.getElementById('activities-banner-title');
+    const actBannerSub = document.getElementById('activities-banner-sub');
+
+    if (actBannerTitle && actBanner.bannerTitle) actBannerTitle.textContent = actBanner.bannerTitle;
+    if (actBannerSub && actBanner.bannerSubtitle) actBannerSub.textContent = actBanner.bannerSubtitle;
+  }
+
   function initOurWorkPage() {
-    // 1. Expandable Blue/Green Bar Accordion Banners
+    applyOurWorkPageSettings();
     const barBanners = document.querySelectorAll('.expandable-bar-banner');
+
+    function getScrollOffset() {
+      const fixedHeaderHeight = 72;
+      return fixedHeaderHeight + 16;
+    }
+
+    // Expandable Bar Banners Accordion
     barBanners.forEach(banner => {
       banner.addEventListener('click', (e) => {
         // Don't toggle if clicking directly on a button inside bar
@@ -1071,6 +1259,14 @@ document.addEventListener('DOMContentLoaded', () => {
           banner.classList.add('is-expanded');
           banner.setAttribute('aria-expanded', 'true');
           drawer.classList.add('is-open');
+
+          // Scroll neatly into view
+          const bannerTop = banner.getBoundingClientRect().top + window.pageYOffset;
+          const offsetPosition = bannerTop - getScrollOffset();
+          window.scrollTo({
+            top: Math.max(0, offsetPosition),
+            behavior: 'smooth'
+          });
         }
       });
 
@@ -1082,14 +1278,24 @@ document.addEventListener('DOMContentLoaded', () => {
           const targetId = banner.getAttribute('data-target');
           const drawer = document.getElementById(targetId);
           if (drawer) {
+            const willExpand = !banner.classList.contains('is-expanded');
             banner.classList.toggle('is-expanded');
             drawer.classList.toggle('is-open');
+            banner.setAttribute('aria-expanded', willExpand ? 'true' : 'false');
+            if (willExpand) {
+              const bannerTop = banner.getBoundingClientRect().top + window.pageYOffset;
+              const offsetPosition = bannerTop - getScrollOffset();
+              window.scrollTo({
+                top: Math.max(0, offsetPosition),
+                behavior: 'smooth'
+              });
+            }
           }
         });
       }
     });
 
-    // 2. Fossil Fuel Phaseout Articles Filter & Search
+    // Fossil Fuel Phaseout Articles Filter & Search
     renderOurWorkArticles();
   }
 

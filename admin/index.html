@@ -438,43 +438,253 @@
 
       <!-- 3. OUR WORK & ACTIVITIES PANEL -->
       <section class="admin-panel" id="panel-activities">
-        <div class="panel-header">
-          <div class="panel-controls">
-            <div class="search-box">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-              <input type="text" id="search-activities" class="admin-input search-input" placeholder="Search activities & our work by title, location or description..." />
+        <!-- Sub-card 1: Our Work Strategic Pillars & Narratives -->
+        <div class="settings-card" style="margin-bottom: 24px;">
+          <div class="settings-card-header">
+            <div class="settings-card-icon" style="background: rgba(77, 100, 216, 0.15); color: #4d64d8;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
             </div>
-            <select id="filter-activities-tag" class="admin-select">
-              <option value="">All Categories</option>
-              <option value="RETREAT">RETREAT</option>
-              <option value="WORKSHOP">WORKSHOP</option>
-              <option value="RESEARCH">RESEARCH</option>
-              <option value="FIELD PROJECT">FIELD PROJECT</option>
-              <option value="POLICY">POLICY</option>
-            </select>
+            <div style="flex:1;">
+              <h3 class="settings-card-title">Our Work Strategic Pillars &amp; Written Narratives (<code>pages/our-work.html</code>)</h3>
+              <p class="settings-card-subtitle">Manage the written narratives, policy intros, banner titles, and opportunity triggers across all 4 strategic pillars.</p>
+            </div>
+            <button type="button" class="admin-btn admin-btn-primary" id="btn-save-work-pillars">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+              Save Work Pillars
+            </button>
           </div>
-          <button class="admin-btn admin-btn-primary" id="btn-add-activity">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            Add Activity / Work Item
-          </button>
+
+          <div class="settings-card-body">
+            <!-- 1. FOSSIL FUEL PHASEOUT -->
+            <div class="settings-subgroup" style="margin-bottom: 20px;">
+              <h4 style="font-size: 15px; font-weight: 700; color: #4d64d8; margin: 0 0 12px 0; text-transform: uppercase; letter-spacing: 0.05em;">
+                1. Fossil Fuel Phaseout (Primary Top Section)
+              </h4>
+              <div class="form-row">
+                <div class="form-group flex-1">
+                  <label class="form-label" for="setting-work-fossil-title">Section Heading Title</label>
+                  <input type="text" id="setting-work-fossil-title" class="admin-input" placeholder="e.g. FOSSIL FUEL PHASEOUT" />
+                </div>
+                <div class="form-group flex-1">
+                  <label class="form-label" for="setting-work-fossil-subtitle">Section Italic Subtitle</label>
+                  <input type="text" id="setting-work-fossil-subtitle" class="admin-input" placeholder="e.g. Rethinking energy systems for a cleaner, fairer, and climate-resilient future." />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="setting-work-fossil-desc">Written Narrative &amp; Policy Text (Paragraphs separated by line breaks)</label>
+                <textarea id="setting-work-fossil-desc" class="admin-textarea" rows="4" placeholder="Enter complete policy narrative for Fossil Fuel Phaseout..."></textarea>
+              </div>
+              <div class="form-row">
+                <div class="form-group flex-1">
+                  <label class="form-label" for="setting-work-fossil-btn-text">Action Button Text</label>
+                  <input type="text" id="setting-work-fossil-btn-text" class="admin-input" placeholder="e.g. JOIN US" />
+                </div>
+                <div class="form-group flex-1">
+                  <label class="form-label" for="setting-work-fossil-opp-title">Target Opportunity / Role Modal</label>
+                  <input type="text" id="setting-work-fossil-opp-title" class="admin-input" placeholder="e.g. Fossil Fuel Phaseout Fellow" />
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. TEXTILE & FAST FASHION -->
+            <div class="settings-subgroup" style="margin-bottom: 20px;">
+              <h4 style="font-size: 15px; font-weight: 700; color: #95dc6f; margin: 0 0 12px 0; text-transform: uppercase; letter-spacing: 0.05em;">
+                2. Textile &amp; Fast Fashion Pillar
+              </h4>
+              <div class="form-row">
+                <div class="form-group flex-1">
+                  <label class="form-label" for="setting-work-textile-banner-title">Expandable Banner Title</label>
+                  <input type="text" id="setting-work-textile-banner-title" class="admin-input" placeholder="e.g. TEXTILE &amp; FAST FASHION" />
+                </div>
+                <div class="form-group flex-1">
+                  <label class="form-label" for="setting-work-textile-banner-sub">Banner Subtitle</label>
+                  <input type="text" id="setting-work-textile-banner-sub" class="admin-input" placeholder="e.g. Supply chain transparency, industrial captive power emissions &amp; fair worker transitions" />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group flex-1">
+                  <label class="form-label" for="setting-work-textile-title">Drawer Narrative Title</label>
+                  <input type="text" id="setting-work-textile-title" class="admin-input" placeholder="e.g. TEXTILE &amp; FAST FASHION" />
+                </div>
+                <div class="form-group flex-1">
+                  <label class="form-label" for="setting-work-textile-subtitle">Drawer Subtitle</label>
+                  <input type="text" id="setting-work-textile-subtitle" class="admin-input" placeholder="e.g. Rethinking energy systems for a cleaner, fairer, and climate-resilient future." />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="setting-work-textile-desc">Textile Narrative Description</label>
+                <textarea id="setting-work-textile-desc" class="admin-textarea" rows="3" placeholder="Enter textile sector narrative..."></textarea>
+              </div>
+              <div class="form-row">
+                <div class="form-group flex-1">
+                  <label class="form-label" for="setting-work-textile-btn-text">Action Button Text</label>
+                  <input type="text" id="setting-work-textile-btn-text" class="admin-input" placeholder="e.g. JOIN US" />
+                </div>
+                <div class="form-group flex-1">
+                  <label class="form-label" for="setting-work-textile-opp-title">Target Opportunity / Role Modal</label>
+                  <input type="text" id="setting-work-textile-opp-title" class="admin-input" placeholder="e.g. Textile Sector Researcher" />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group flex-1">
+                  <label class="form-label" for="setting-work-textile-sec-heading">Investigations Section Heading</label>
+                  <input type="text" id="setting-work-textile-sec-heading" class="admin-input" placeholder="e.g. Working towards a future for sustainable textile practices" />
+                </div>
+                <div class="form-group flex-1">
+                  <label class="form-label" for="setting-work-textile-sec-intro">Investigations Section Intro Subtitle</label>
+                  <input type="text" id="setting-work-textile-sec-intro" class="admin-input" placeholder="e.g. Our efforts are targeted towards creating dialogue and impact thereby..." />
+                </div>
+              </div>
+            </div>
+
+            <!-- 3. CLIMATE JUSTICE -->
+            <div class="settings-subgroup" style="margin-bottom: 20px;">
+              <h4 style="font-size: 15px; font-weight: 700; color: #cbd5e1; margin: 0 0 12px 0; text-transform: uppercase; letter-spacing: 0.05em;">
+                3. Climate Justice Pillar
+              </h4>
+              <div class="form-row">
+                <div class="form-group flex-1">
+                  <label class="form-label" for="setting-work-climate-banner-title">Expandable Banner Title</label>
+                  <input type="text" id="setting-work-climate-banner-title" class="admin-input" placeholder="e.g. CLIMATE JUSTICE" />
+                </div>
+                <div class="form-group flex-1">
+                  <label class="form-label" for="setting-work-climate-banner-sub">Banner Subtitle</label>
+                  <input type="text" id="setting-work-climate-banner-sub" class="admin-input" placeholder="e.g. Ecological democracy, gender equity &amp; frontline communities' sovereignty over resources" />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group flex-1">
+                  <label class="form-label" for="setting-work-climate-title">Drawer Narrative Title</label>
+                  <input type="text" id="setting-work-climate-title" class="admin-input" placeholder="e.g. CLIMATE JUSTICE" />
+                </div>
+                <div class="form-group flex-1">
+                  <label class="form-label" for="setting-work-climate-subtitle">Drawer Subtitle</label>
+                  <input type="text" id="setting-work-climate-subtitle" class="admin-input" placeholder="e.g. Rethinking energy systems for a cleaner, fairer, and climate-resilient future." />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="setting-work-climate-desc">Climate Justice Narrative Description</label>
+                <textarea id="setting-work-climate-desc" class="admin-textarea" rows="3" placeholder="Enter climate justice narrative..."></textarea>
+              </div>
+              <div class="form-row">
+                <div class="form-group flex-1">
+                  <label class="form-label" for="setting-work-climate-btn-text">Action Button Text</label>
+                  <input type="text" id="setting-work-climate-btn-text" class="admin-input" placeholder="e.g. JOIN US" />
+                </div>
+                <div class="form-group flex-1">
+                  <label class="form-label" for="setting-work-climate-opp-title">Target Opportunity / Role Modal</label>
+                  <input type="text" id="setting-work-climate-opp-title" class="admin-input" placeholder="e.g. Climate Justice Organizer" />
+                </div>
+              </div>
+            </div>
+
+            <!-- 4. ACTIVITIES & GATHERINGS BANNER -->
+            <div class="settings-subgroup">
+              <h4 style="font-size: 15px; font-weight: 700; color: #4b68ff; margin: 0 0 12px 0; text-transform: uppercase; letter-spacing: 0.05em;">
+                4. Activities &amp; Gatherings Banner
+              </h4>
+              <div class="form-row">
+                <div class="form-group flex-1">
+                  <label class="form-label" for="setting-work-act-banner-title">Expandable Banner Title</label>
+                  <input type="text" id="setting-work-act-banner-title" class="admin-input" placeholder="e.g. ACTIVITIES &amp; GATHERINGS" />
+                </div>
+                <div class="form-group flex-1">
+                  <label class="form-label" for="setting-work-act-banner-sub">Banner Subtitle</label>
+                  <input type="text" id="setting-work-act-banner-sub" class="admin-input" placeholder="e.g. Field retreats, community kacheris, exposure visits &amp; workshops across Pakistan" />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div class="table-wrapper">
-          <table class="admin-table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Media</th>
-                <th>Title &amp; Location</th>
-                <th>Category</th>
-                <th>Date</th>
-                <th class="text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody id="table-activities-body">
-              <!-- Dynamically Populated -->
-            </tbody>
-          </table>
+        <!-- Sub-card 2: Textile Investigation & Spotlight Cards (CRUD) -->
+        <div class="settings-card" style="margin-bottom: 24px;">
+          <div class="settings-card-header">
+            <div class="settings-card-icon" style="background: rgba(149, 220, 111, 0.15); color: #95dc6f;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+            </div>
+            <div style="flex:1;">
+              <h3 class="settings-card-title">Textile Investigation Spotlight Cards (<code>pages/our-work.html</code>)</h3>
+              <p class="settings-card-subtitle">Manage the feature cards, investigation briefs, and video triggers in the Textile &amp; Fast Fashion drawer.</p>
+            </div>
+            <button type="button" class="admin-btn admin-btn-primary" id="btn-add-textile-card">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Add Investigation Card
+            </button>
+          </div>
+
+          <div class="table-wrapper">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Card Title</th>
+                  <th>Description / Brief</th>
+                  <th>Action Button</th>
+                  <th>Target Modal / Link</th>
+                  <th class="text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="table-textile-cards-body">
+                <!-- Dynamically Populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Sub-card 3: Field Activities & Gatherings (CRUD Table) -->
+        <div class="settings-card">
+          <div class="settings-card-header">
+            <div class="settings-card-icon" style="background: rgba(77, 100, 216, 0.15); color: #4d64d8;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </div>
+            <div style="flex:1;">
+              <h3 class="settings-card-title">Field Activities, Gatherings &amp; Retrreats (<code>pages/our-work.html</code>)</h3>
+              <p class="settings-card-subtitle">Manage individual field retreats, community kacheris, workshops, and photo galleries.</p>
+            </div>
+            <button class="admin-btn admin-btn-primary" id="btn-add-activity">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Add Activity Item
+            </button>
+          </div>
+
+          <div class="panel-header" style="padding: 16px 24px; border-bottom: 1px solid var(--admin-card-border);">
+            <div class="panel-controls">
+              <div class="search-box">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <input type="text" id="search-activities" class="admin-input search-input" placeholder="Search activities by title, location or description..." />
+              </div>
+              <select id="filter-activities-tag" class="admin-select">
+                <option value="">All Categories</option>
+                <option value="RETREAT">RETREAT</option>
+                <option value="WORKSHOP">WORKSHOP</option>
+                <option value="COMMUNITY KACHERI">COMMUNITY KACHERI</option>
+                <option value="EXPOSURE VISIT">EXPOSURE VISIT</option>
+                <option value="RESEARCH">RESEARCH</option>
+                <option value="FIELD PROJECT">FIELD PROJECT</option>
+                <option value="POLICY">POLICY</option>
+                <option value="CASE STUDY">CASE STUDY</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="table-wrapper">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Media</th>
+                  <th>Title &amp; Location</th>
+                  <th>Category</th>
+                  <th>Date</th>
+                  <th class="text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="table-activities-body">
+                <!-- Dynamically Populated -->
+              </tbody>
+            </table>
+          </div>
         </div>
       </section>
 
@@ -486,6 +696,14 @@
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
               <input type="text" id="search-articles" class="admin-input search-input" placeholder="Search articles by title, author or excerpt..." />
             </div>
+            <select id="filter-articles-tag" class="admin-select">
+              <option value="">All Categories / Tags</option>
+              <option value="KACHERI">KACHERI</option>
+              <option value="FIELD REPORTS">FIELD REPORTS</option>
+              <option value="POLICY BRIEF">POLICY BRIEF</option>
+              <option value="CASE STUDY">CASE STUDY</option>
+              <option value="LATEST">LATEST</option>
+            </select>
           </div>
           <button class="admin-btn admin-btn-primary" id="btn-add-article">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>

@@ -532,26 +532,29 @@
 }
 
 .ally-card {
-  width: 160px;
-  height: 160px;
-  background-color: #000000;
+  width: 170px;
+  height: 120px;
+  background-color: #ffffff;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 12px;
+  padding: 16px;
   box-sizing: border-box;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .ally-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.3);
 }
 
-.alc-logo-svg {
-  width: 100%;
-  height: auto;
+.ally-logo-img {
+  max-width: 100%;
   max-height: 100%;
+  object-fit: contain;
+  display: block;
 }
 
 /* ============================================================

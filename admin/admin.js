@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Tables
   const tableActivitiesBody = document.getElementById('table-activities-body');
+  const tableTextileCardsBody = document.getElementById('table-textile-cards-body');
   const tableMapPinsBody = document.getElementById('table-mappins-body');
   const tablePeopleBody = document.getElementById('table-people-body');
   const tableArticlesBody = document.getElementById('table-articles-body');
@@ -49,6 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const filterPeopleCategory = document.getElementById('filter-people-category');
 
   const searchArticles = document.getElementById('search-articles');
+  const filterArticlesTag = document.getElementById('filter-articles-tag');
 
   const searchApplications = document.getElementById('search-applications');
   const filterApplicationsStatus = document.getElementById('filter-applications-status');
@@ -77,12 +79,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Action Buttons
   const btnAddActivity = document.getElementById('btn-add-activity');
+  const btnAddTextileCard = document.getElementById('btn-add-textile-card');
   const btnAddPerson = document.getElementById('btn-add-person');
   const btnAddArticle = document.getElementById('btn-add-article');
   const btnAddOpportunity = document.getElementById('btn-add-opportunity');
   const btnExportData = document.getElementById('btn-export-data');
   const inputImportFile = document.getElementById('input-import-file');
   const btnResetData = document.getElementById('btn-reset-data');
+
+  // Our Work Page Pillar Elements
+  const btnSaveWorkPillars = document.getElementById('btn-save-work-pillars');
+  const settingWorkFossilTitle = document.getElementById('setting-work-fossil-title');
+  const settingWorkFossilSubtitle = document.getElementById('setting-work-fossil-subtitle');
+  const settingWorkFossilDesc = document.getElementById('setting-work-fossil-desc');
+  const settingWorkFossilBtnText = document.getElementById('setting-work-fossil-btn-text');
+  const settingWorkFossilOppTitle = document.getElementById('setting-work-fossil-opp-title');
+
+  const settingWorkTextileBannerTitle = document.getElementById('setting-work-textile-banner-title');
+  const settingWorkTextileBannerSub = document.getElementById('setting-work-textile-banner-sub');
+  const settingWorkTextileTitle = document.getElementById('setting-work-textile-title');
+  const settingWorkTextileSubtitle = document.getElementById('setting-work-textile-subtitle');
+  const settingWorkTextileDesc = document.getElementById('setting-work-textile-desc');
+  const settingWorkTextileBtnText = document.getElementById('setting-work-textile-btn-text');
+  const settingWorkTextileOppTitle = document.getElementById('setting-work-textile-opp-title');
+  const settingWorkTextileSecHeading = document.getElementById('setting-work-textile-sec-heading');
+  const settingWorkTextileSecIntro = document.getElementById('setting-work-textile-sec-intro');
+
+  const settingWorkClimateBannerTitle = document.getElementById('setting-work-climate-banner-title');
+  const settingWorkClimateBannerSub = document.getElementById('setting-work-climate-banner-sub');
+  const settingWorkClimateTitle = document.getElementById('setting-work-climate-title');
+  const settingWorkClimateSubtitle = document.getElementById('setting-work-climate-subtitle');
+  const settingWorkClimateDesc = document.getElementById('setting-work-climate-desc');
+  const settingWorkClimateBtnText = document.getElementById('setting-work-climate-btn-text');
+  const settingWorkClimateOppTitle = document.getElementById('setting-work-climate-opp-title');
+
+  const settingWorkActBannerTitle = document.getElementById('setting-work-act-banner-title');
+  const settingWorkActBannerSub = document.getElementById('setting-work-act-banner-sub');
 
   /* ============================================================
      1. Image Resolution Helper
@@ -317,6 +349,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderMapPinsTable();
     renderPeopleTable();
     renderActivitiesTable();
+    renderTextileCardsTable();
     renderArticlesTable();
     renderOpportunitiesTable();
   }
@@ -377,23 +410,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // 5.2 Activities & Our Work Table
-  window.setActivityAsHero = function(actId) {
-    if (!window.DataStore) return;
-    const items = window.DataStore.get('activities');
-    let title = '';
-    items.forEach(item => {
-      if (item.id === actId) {
-        item.featured = true;
-        title = item.title;
-      } else {
-        item.featured = false;
-      }
-    });
-    localStorage.setItem('caea_activities_data', JSON.stringify(items));
-    window.DataStore.dispatchUpdate('activities');
-    renderActivitiesTable();
-    showToast(`"${title}" is now the Main Hero Event!`);
-  };
 
   function renderActivitiesTable() {
     if (!tableActivitiesBody || !window.DataStore) return;
@@ -418,16 +434,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     tableActivitiesBody.innerHTML = items.map(item => `
-      <tr style="${item.featured ? 'background: rgba(163, 216, 141, 0.05);' : ''}">
+      <tr>
         <td style="font-family:monospace; font-size:11px; color:#888;">${item.id}</td>
         <td>
           <img src="${resolveAdminImg(item.image, 'Assets/Hero-image.png')}" alt="" class="table-media-thumb" onerror="this.src='../Assets/CAEA-Navbar-Logo.png'" />
         </td>
         <td>
-          <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
-            <strong>${escapeHtml(item.title)}</strong>
-            ${item.featured ? '<span style="display:inline-flex; align-items:center; gap:3px; padding:2px 7px; border-radius:4px; font-size:10.5px; font-weight:700; background:rgba(163,216,141,0.2); color:#a3d88d; border:1px solid #a3d88d;">⭐ Main Hero</span>' : ''}
-          </div>
+          <strong>${escapeHtml(item.title)}</strong>
           <div style="font-size:12px; color:#9da5b4;">${escapeHtml(item.location || 'N/A')}</div>
         </td>
         <td>
@@ -436,9 +449,6 @@ document.addEventListener('DOMContentLoaded', () => {
         <td>${item.dateFormatted || item.date || 'N/A'}</td>
         <td class="text-right">
           <div class="table-actions">
-            <button class="action-icon-btn ${item.featured ? 'active' : ''}" style="${item.featured ? 'color:#a3d88d; border-color:#a3d88d;' : ''}" onclick="setActivityAsHero('${item.id}')" title="${item.featured ? 'Currently Featured Main Hero Event' : 'Click to Set as Main Hero Event'}">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="${item.featured ? '#a3d88d' : 'none'}" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            </button>
             <button class="action-icon-btn edit-btn" onclick="openEditModal('activities', '${item.id}')" title="Edit Activity">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
             </button>
@@ -504,11 +514,44 @@ document.addEventListener('DOMContentLoaded', () => {
     `).join('');
   }
 
+  // 5.2b Textile Investigation Spotlight Cards Table
+  function renderTextileCardsTable() {
+    if (!tableTextileCardsBody || !window.DataStore) return;
+    const settings = window.DataStore.getPageSettings();
+    const cards = settings.ourWork?.textile?.cards || [];
+
+    if (!cards.length) {
+      tableTextileCardsBody.innerHTML = `<tr><td colspan="6" class="text-center" style="padding:24px; color:#888;">No textile investigation cards found. Click "Add Investigation Card" to create one.</td></tr>`;
+      return;
+    }
+
+    tableTextileCardsBody.innerHTML = cards.map(c => `
+      <tr>
+        <td style="font-family:monospace; font-size:11px; color:#888;">${c.id}</td>
+        <td><strong>${escapeHtml(c.title || 'Investigation')}</strong></td>
+        <td style="max-width:300px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${escapeHtml(c.description || '')}">${escapeHtml(c.description || '')}</td>
+        <td><span class="table-badge">${escapeHtml(c.btnText || 'WATCH NOW')}</span></td>
+        <td><span style="font-size:12px; color:#9da5b4;">${escapeHtml(c.targetOpportunity || 'Textile Watch')}</span></td>
+        <td class="text-right">
+          <div class="table-actions">
+            <button class="action-icon-btn edit-btn" onclick="openEditModal('textileCards', '${c.id}')" title="Edit Card">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            </button>
+            <button class="action-icon-btn delete-btn" onclick="confirmDelete('textileCards', '${c.id}')" title="Delete Card">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            </button>
+          </div>
+        </td>
+      </tr>
+    `).join('');
+  }
+
   // 5.3 Articles & Publications Table
   function renderArticlesTable() {
     if (!tableArticlesBody || !window.DataStore) return;
     let items = window.DataStore.get('articles');
     const query = searchArticles ? searchArticles.value.toLowerCase().trim() : '';
+    const tagFilter = filterArticlesTag ? filterArticlesTag.value.toUpperCase().trim() : '';
 
     if (query) {
       items = items.filter(i =>
@@ -516,6 +559,14 @@ document.addEventListener('DOMContentLoaded', () => {
         (i.author && i.author.toLowerCase().includes(query)) ||
         (i.excerpt && i.excerpt.toLowerCase().includes(query))
       );
+    }
+
+    if (tagFilter) {
+      items = items.filter(i => {
+        const k = (i.kicker || '').toUpperCase();
+        const c = (i.category || '').toUpperCase();
+        return k.includes(tagFilter) || c.includes(tagFilter);
+      });
     }
 
     if (items.length === 0) {
@@ -724,6 +775,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (filterPeopleCategory) filterPeopleCategory.addEventListener('change', renderPeopleTable);
 
   if (searchArticles) searchArticles.addEventListener('input', renderArticlesTable);
+  if (filterArticlesTag) filterArticlesTag.addEventListener('change', renderArticlesTable);
 
   if (searchApplications) searchApplications.addEventListener('input', renderApplicationsTable);
   if (filterApplicationsStatus) filterApplicationsStatus.addEventListener('change', renderApplicationsTable);
@@ -740,14 +792,23 @@ document.addEventListener('DOMContentLoaded', () => {
     formCollectionInput.value = collection;
     formRecordIdInput.value = id || '';
 
-    const isEdit = !!id;
-    const item = isEdit ? window.DataStore.getById(collection, id) : {};
-
     const collectionName = collection === 'opportunities' ? 'Get Involved Position' :
                            collection === 'activities' ? 'Activity / Work Item' :
+                           collection === 'textileCards' ? 'Textile Investigation Card' :
                            collection === 'people' ? 'Team Member' :
                            collection === 'articles' ? 'Article' :
                            collection === 'mapPins' || collection === 'mappins' ? 'Pakistan Map Location Pin' : collection;
+
+    let item = {};
+    if (isEdit) {
+      if (collection === 'textileCards') {
+        const settings = window.DataStore.getPageSettings();
+        const cards = settings.ourWork?.textile?.cards || [];
+        item = cards.find(c => c.id === id) || {};
+      } else {
+        item = window.DataStore.getById(collection, id) || {};
+      }
+    }
 
     modalTitle.textContent = `${isEdit ? 'Edit' : 'Add New'} ${collectionName}`;
 
@@ -814,23 +875,9 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
     } else if (collection === 'activities') {
       fieldsHtml = `
-        <div class="form-group" style="display:flex; align-items:center; gap:10px; background:rgba(163,216,141,0.08); padding:12px 14px; border-radius:6px; border:1px solid rgba(163,216,141,0.3);">
-          <input type="checkbox" name="featured" id="act-featured-cb" value="true" ${item.featured ? 'checked' : ''} style="width:18px; height:18px; cursor:pointer;" />
-          <label for="act-featured-cb" style="margin:0; cursor:pointer; color:#a3d88d; font-weight:600; font-size:13.5px;">
-            ⭐ Set as Main Hero Event on Website
-          </label>
-        </div>
         <div class="form-group">
           <label class="form-label">Activity / Work Title</label>
           <input type="text" name="title" class="admin-input" value="${escapeHtml(item.title || '')}" placeholder="e.g. Community Climate Dialogue &amp; Workshop" required />
-        </div>
-        <div class="form-group">
-          <label class="form-label">Hero Banner Quote (Optional)</label>
-          <input type="text" name="quote" class="admin-input" value="${escapeHtml(item.quote || '')}" placeholder="“Quote to display when featured in hero”" />
-        </div>
-        <div class="form-group">
-          <label class="form-label">Hero Quote Speaker / Author (Optional)</label>
-          <input type="text" name="quoteAuthor" class="admin-input" value="${escapeHtml(item.quoteAuthor || '')}" placeholder="e.g. Author / Speaker Name" />
         </div>
         <div class="form-group">
           <label class="form-label">Category / Tag</label>
@@ -958,6 +1005,31 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="form-group">
           <label class="form-label">Description</label>
           <textarea name="description" class="admin-textarea" rows="4" required>${escapeHtml(item.description || '')}</textarea>
+        </div>
+      `;
+    } else if (collection === 'textileCards') {
+      fieldsHtml = `
+        <div class="form-group">
+          <label class="form-label">Investigation Card Title</label>
+          <input type="text" name="title" class="admin-input" value="${escapeHtml(item.title || '')}" placeholder="e.g. Fashion and Fossil Fuels" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Description / Investigation Brief</label>
+          <textarea name="description" class="admin-textarea" rows="4" placeholder="Brief summary of the investigation or field report..." required>${escapeHtml(item.description || '')}</textarea>
+        </div>
+        <div class="form-row" style="display:flex; gap:16px;">
+          <div class="form-group flex-1" style="flex:1;">
+            <label class="form-label">Action Button Text</label>
+            <input type="text" name="btnText" class="admin-input" value="${escapeHtml(item.btnText || 'WATCH NOW')}" placeholder="e.g. WATCH NOW" required />
+          </div>
+          <div class="form-group flex-1" style="flex:1;">
+            <label class="form-label">Target Opportunity / Modal Tag</label>
+            <input type="text" name="targetOpportunity" class="admin-input" value="${escapeHtml(item.targetOpportunity || 'Textile Watch')}" placeholder="e.g. Textile Watch" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Video or Media URL (Optional)</label>
+          <input type="text" name="videoUrl" class="admin-input" value="${escapeHtml(item.videoUrl || '')}" placeholder="e.g. https://youtube.com/... or Assets/video.mp4" />
         </div>
       `;
     }
@@ -1088,17 +1160,43 @@ document.addEventListener('DOMContentLoaded', () => {
         dataObj[key] = val;
       });
 
-      if (collection === 'activities') {
-        dataObj.featured = formData.get('featured') === 'true';
-        if (dataObj.featured) {
-          // Unset all other activities' featured status
-          const allActs = window.DataStore.get('activities');
-          allActs.forEach(a => {
-            if (a.id !== recordId) a.featured = false;
+      if (collection === 'textileCards') {
+        const currentSettings = window.DataStore.getPageSettings();
+        const ourWork = currentSettings.ourWork || {};
+        if (!ourWork.textile) ourWork.textile = {};
+        if (!Array.isArray(ourWork.textile.cards)) ourWork.textile.cards = [];
+
+        if (recordId) {
+          const idx = ourWork.textile.cards.findIndex(c => c.id === recordId);
+          if (idx !== -1) {
+            ourWork.textile.cards[idx] = {
+              ...ourWork.textile.cards[idx],
+              title: dataObj.title,
+              description: dataObj.description,
+              btnText: dataObj.btnText || 'WATCH NOW',
+              targetOpportunity: dataObj.targetOpportunity || 'Textile Watch',
+              videoUrl: dataObj.videoUrl || ''
+            };
+          }
+          showToast('Updated textile investigation card successfully');
+        } else {
+          ourWork.textile.cards.push({
+            id: `tex-${Date.now()}`,
+            title: dataObj.title,
+            description: dataObj.description,
+            btnText: dataObj.btnText || 'WATCH NOW',
+            targetOpportunity: dataObj.targetOpportunity || 'Textile Watch',
+            videoUrl: dataObj.videoUrl || ''
           });
-          localStorage.setItem('caea_activities_data', JSON.stringify(allActs));
+          showToast('Added new textile investigation card successfully');
         }
+
+        window.DataStore.savePageSettings('ourWork', ourWork);
+        renderTextileCardsTable();
+        closeModal();
+        return;
       }
+
 
       const label = collection === 'mapPins' || collection === 'mappins' ? 'location pin' :
                     collection === 'opportunities' ? 'position' :
@@ -1232,12 +1330,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Add Button Event Handlers
   if (btnAddActivity) btnAddActivity.addEventListener('click', () => openEditModal('activities'));
+  if (btnAddTextileCard) btnAddTextileCard.addEventListener('click', () => openEditModal('textileCards'));
   if (btnAddPerson) btnAddPerson.addEventListener('click', () => openEditModal('people'));
   if (btnAddArticle) btnAddArticle.addEventListener('click', () => openEditModal('articles'));
   if (btnAddOpportunity) btnAddOpportunity.addEventListener('click', () => openEditModal('opportunities'));
 
   // Delete Action
   window.confirmDelete = function(collection, id) {
+    if (collection === 'textileCards') {
+      if (confirm(`Are you sure you want to delete this textile investigation card (${id})?`)) {
+        const currentSettings = window.DataStore.getPageSettings();
+        const ourWork = currentSettings.ourWork || {};
+        if (ourWork.textile && Array.isArray(ourWork.textile.cards)) {
+          ourWork.textile.cards = ourWork.textile.cards.filter(c => c.id !== id);
+          window.DataStore.savePageSettings('ourWork', ourWork);
+          renderTextileCardsTable();
+          showToast(`Deleted textile card ${id} successfully`);
+        }
+      }
+      return;
+    }
+
     const itemLabel = collection === 'applications' ? 'application' : collection.slice(0, -1);
     if (confirm(`Are you sure you want to delete this ${itemLabel} (${id})?`)) {
       const res = window.DataStore.delete(collection, id);
@@ -1409,6 +1522,40 @@ document.addEventListener('DOMContentLoaded', () => {
     if (settingStoryHeader) settingStoryHeader.value = story.teamHeaderTitle || '';
     if (settingStoryQuote) settingStoryQuote.value = story.quoteText || '';
     if (settingStoryAuthor) settingStoryAuthor.value = story.quoteAuthor || '';
+
+    // Our Work Page Pillars
+    const work = settings.ourWork || {};
+    const fossil = work.fossilFuel || {};
+    const tex = work.textile || {};
+    const cj = work.climateJustice || {};
+    const actBanner = work.activitiesBanner || {};
+
+    if (settingWorkFossilTitle) settingWorkFossilTitle.value = fossil.title || '';
+    if (settingWorkFossilSubtitle) settingWorkFossilSubtitle.value = fossil.subtitle || '';
+    if (settingWorkFossilDesc) settingWorkFossilDesc.value = fossil.description || '';
+    if (settingWorkFossilBtnText) settingWorkFossilBtnText.value = fossil.joinBtnText || '';
+    if (settingWorkFossilOppTitle) settingWorkFossilOppTitle.value = fossil.opportunityTitle || '';
+
+    if (settingWorkTextileBannerTitle) settingWorkTextileBannerTitle.value = tex.bannerTitle || '';
+    if (settingWorkTextileBannerSub) settingWorkTextileBannerSub.value = tex.bannerSubtitle || '';
+    if (settingWorkTextileTitle) settingWorkTextileTitle.value = tex.title || '';
+    if (settingWorkTextileSubtitle) settingWorkTextileSubtitle.value = tex.subtitle || '';
+    if (settingWorkTextileDesc) settingWorkTextileDesc.value = tex.description || '';
+    if (settingWorkTextileBtnText) settingWorkTextileBtnText.value = tex.joinBtnText || '';
+    if (settingWorkTextileOppTitle) settingWorkTextileOppTitle.value = tex.opportunityTitle || '';
+    if (settingWorkTextileSecHeading) settingWorkTextileSecHeading.value = tex.sectionHeading || '';
+    if (settingWorkTextileSecIntro) settingWorkTextileSecIntro.value = tex.sectionIntro || '';
+
+    if (settingWorkClimateBannerTitle) settingWorkClimateBannerTitle.value = cj.bannerTitle || '';
+    if (settingWorkClimateBannerSub) settingWorkClimateBannerSub.value = cj.bannerSubtitle || '';
+    if (settingWorkClimateTitle) settingWorkClimateTitle.value = cj.title || '';
+    if (settingWorkClimateSubtitle) settingWorkClimateSubtitle.value = cj.subtitle || '';
+    if (settingWorkClimateDesc) settingWorkClimateDesc.value = cj.description || '';
+    if (settingWorkClimateBtnText) settingWorkClimateBtnText.value = cj.joinBtnText || '';
+    if (settingWorkClimateOppTitle) settingWorkClimateOppTitle.value = cj.opportunityTitle || '';
+
+    if (settingWorkActBannerTitle) settingWorkActBannerTitle.value = actBanner.bannerTitle || '';
+    if (settingWorkActBannerSub) settingWorkActBannerSub.value = actBanner.bannerSubtitle || '';
   }
 
   // Home Page Video Toggle
@@ -1776,6 +1923,53 @@ document.addEventListener('DOMContentLoaded', () => {
       window.DataStore.savePageSettings('ourStory', ourStorySettings);
 
       showToast('Page content & media settings saved successfully!');
+    });
+  }
+
+  if (btnSaveWorkPillars) {
+    btnSaveWorkPillars.addEventListener('click', () => {
+      if (!window.DataStore) return;
+      const currentSettings = window.DataStore.getPageSettings();
+      const existingOurWork = currentSettings.ourWork || {};
+      const existingCards = existingOurWork.textile?.cards || [];
+
+      const updatedOurWork = {
+        fossilFuel: {
+          title: (settingWorkFossilTitle ? settingWorkFossilTitle.value : '').trim() || 'FOSSIL FUEL PHASEOUT',
+          subtitle: (settingWorkFossilSubtitle ? settingWorkFossilSubtitle.value : '').trim(),
+          description: (settingWorkFossilDesc ? settingWorkFossilDesc.value : '').trim(),
+          joinBtnText: (settingWorkFossilBtnText ? settingWorkFossilBtnText.value : '').trim() || 'JOIN US',
+          opportunityTitle: (settingWorkFossilOppTitle ? settingWorkFossilOppTitle.value : '').trim() || 'Fossil Fuel Phaseout Fellow'
+        },
+        textile: {
+          bannerTitle: (settingWorkTextileBannerTitle ? settingWorkTextileBannerTitle.value : '').trim() || 'TEXTILE & FAST FASHION',
+          bannerSubtitle: (settingWorkTextileBannerSub ? settingWorkTextileBannerSub.value : '').trim(),
+          title: (settingWorkTextileTitle ? settingWorkTextileTitle.value : '').trim() || 'TEXTILE & FAST FASHION',
+          subtitle: (settingWorkTextileSubtitle ? settingWorkTextileSubtitle.value : '').trim(),
+          description: (settingWorkTextileDesc ? settingWorkTextileDesc.value : '').trim(),
+          joinBtnText: (settingWorkTextileBtnText ? settingWorkTextileBtnText.value : '').trim() || 'JOIN US',
+          opportunityTitle: (settingWorkTextileOppTitle ? settingWorkTextileOppTitle.value : '').trim() || 'Textile Sector Researcher',
+          sectionHeading: (settingWorkTextileSecHeading ? settingWorkTextileSecHeading.value : '').trim() || 'Working towards a future for sustainable textile practices',
+          sectionIntro: (settingWorkTextileSecIntro ? settingWorkTextileSecIntro.value : '').trim(),
+          cards: existingCards
+        },
+        climateJustice: {
+          bannerTitle: (settingWorkClimateBannerTitle ? settingWorkClimateBannerTitle.value : '').trim() || 'CLIMATE JUSTICE',
+          bannerSubtitle: (settingWorkClimateBannerSub ? settingWorkClimateBannerSub.value : '').trim(),
+          title: (settingWorkClimateTitle ? settingWorkClimateTitle.value : '').trim() || 'CLIMATE JUSTICE',
+          subtitle: (settingWorkClimateSubtitle ? settingWorkClimateSubtitle.value : '').trim(),
+          description: (settingWorkClimateDesc ? settingWorkClimateDesc.value : '').trim(),
+          joinBtnText: (settingWorkClimateBtnText ? settingWorkClimateBtnText.value : '').trim() || 'JOIN US',
+          opportunityTitle: (settingWorkClimateOppTitle ? settingWorkClimateOppTitle.value : '').trim() || 'Climate Justice Organizer'
+        },
+        activitiesBanner: {
+          bannerTitle: (settingWorkActBannerTitle ? settingWorkActBannerTitle.value : '').trim() || 'ACTIVITIES & GATHERINGS',
+          bannerSubtitle: (settingWorkActBannerSub ? settingWorkActBannerSub.value : '').trim()
+        }
+      };
+
+      window.DataStore.savePageSettings('ourWork', updatedOurWork);
+      showToast('Our Work strategic pillars and written narratives saved successfully!');
     });
   }
 

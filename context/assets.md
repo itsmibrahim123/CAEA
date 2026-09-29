@@ -29,7 +29,11 @@ Assets/
 │   └── grid-1-1-hamna.png ...         # Legacy grid icon assets
 │
 ├── Allies/                            # Partner Organization Graphics
-│   └── Alternative Law Collective.png # ALC partner badge
+│   ├── Aleternative-Law-Collective.png # Alternative Law Collective (ALC)
+│   ├── Alliance-for-climate-justice-&-Clean-Energy.PNG # ACJCE
+│   ├── Climate-Action-Center.png      # Climate Action Center (CAC)
+│   ├── PRIED.JPG                      # Policy Research Institute for Equitable Development (PRIED)
+│   └── Verrha-Research.png            # Verrha Research
 │
 └── media/events/                      # Categorized Event Photography
     ├── contested-waters/              # Contested Waters: Rivers, Dams & Displacements

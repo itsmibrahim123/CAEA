@@ -48,142 +48,108 @@
       </div>
     </nav>
   </header>
-
   <main>
     <!-- ============================================================
-         0. PAGE HERO HEADER
+         1. FOSSIL FUEL PHASEOUT (Written Narrative & Articles Reader)
          ============================================================ -->
-    <section class="our-work-hero-header" aria-label="Our Work Header">
-      <div class="our-work-hero-container">
-        <span class="work-hero-kicker">CLIMATE ACTION &amp; ENERGY ACCESS</span>
-        <h1 class="work-hero-main-title">OUR WORK</h1>
-        <p class="work-hero-tagline">
-          Rethinking energy systems, corporate supply chains, legal accountability, and community sovereignty for a cleaner, fairer, and climate-resilient Pakistan.
-        </p>
+    <!-- Written Narrative & Policy Intro -->
+    <section class="work-intro-section" id="fossil-fuel-phaseout" aria-label="Fossil Fuel Phaseout Narrative">
+      <div class="work-intro-grid">
+        <div class="work-intro-content">
+          <h3 class="work-section-title" id="fossil-title">FOSSIL FUEL PHASEOUT</h3>
+          <p class="work-section-subtitle" id="fossil-subtitle">Rethinking energy systems for a cleaner, fairer, and climate-resilient future.</p>
+          <div class="work-section-description" id="fossil-description">
+            <p>
+              For CAEA, phasing out gas is not a distant policy idea — it is an urgent necessity. Pakistan's growing reliance on natural gas and imported LNG (liquefied natural gas) has trapped the country in a costly system, leading to wasted resources, financial losses, and long-term debts that burden the public for years.
+            </p>
+            <p>
+              This is not only an economic problem. Producing and transporting gas releases methane, a gas that heats the planet even faster than carbon dioxide, and the communities living closest to gas fields, pipelines, and power plants bear the greatest damage.
+            </p>
+            <p>
+              Our research shows that the power sector is the most important place to begin this shift. Imported LNG was meant to bring energy security, but instead it has made electricity more expensive and left Pakistan dependent on unpredictable global markets. As solar energy becomes cheaper and more widely available, continued investment in gas makes less and less sense — it raises costs, weakens the power grid, and adds to emissions without benefiting ordinary people.
+            </p>
+            <p>
+              We also hold decision-makers accountable by challenging weak environmental assessments that fail to properly account for climate risks and harm to local communities. Moving away from gas will not happen overnight, but for us, this work is about confronting the interests that benefit from the status quo and building an energy system that is fair, sustainable, and built to last.
+            </p>
+          </div>
+          <a href="#apply" class="btn-join-pill" id="fossil-join-btn" data-apply-btn data-opportunity-title="Fossil Fuel Phaseout Fellow">JOIN US</a>
+        </div>
+
+        <!-- Arch Pattern Visual Column -->
+        <div class="arch-pattern-col" aria-hidden="true">
+          <span class="arch-shape"></span>
+          <span class="arch-shape"></span>
+          <span class="arch-shape"></span>
+          <span class="arch-shape"></span>
+          <span class="arch-shape"></span>
+          <span class="arch-shape"></span>
+        </div>
       </div>
     </section>
 
-    <!-- ============================================================
-         1. BANNER 1: FOSSIL FUEL PHASEOUT (Deep Blue / Navy)
-         ============================================================ -->
-    <div class="expandable-bar-banner is-expanded" id="banner-fossil-fuel" data-target="drawer-fossil-fuel" role="button" aria-expanded="true">
-      <div class="bar-icon-wrap">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="10" />
-          <path d="M12 6v6l4 2" />
-        </svg>
+    <!-- Written Articles & Field Reports Reader -->
+    <section class="articles-section" aria-label="Fossil Fuel Articles and Field Reports">
+      <div class="articles-section-header">
+        <h3 class="articles-main-heading">Working towards clean energy transition</h3>
+        <p class="articles-intro-sub">
+          Our efforts are targeted towards creating dialogue and impact thereby. A just energy future starts with you.
+        </p>
+
+        <div class="articles-filter-bar">
+          <div class="filter-pills-group" id="fossil-filters">
+            <button class="filter-pill active" data-filter="all">ALL</button>
+            <button class="filter-pill" data-filter="latest">LATEST</button>
+            <button class="filter-pill" data-filter="field-reports">FIELD REPORTS</button>
+            <button class="filter-pill" data-filter="kacheri">KACHERI</button>
+          </div>
+
+          <div class="article-search-wrap">
+            <svg class="article-search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" class="article-search-input" id="fossil-search-input" placeholder="Search keyword..." />
+          </div>
+        </div>
       </div>
-      <h2 class="bar-title">FOSSIL FUEL PHASEOUT</h2>
-      <p class="bar-subtitle">Rethinking energy systems for a cleaner, fairer, and climate-resilient future</p>
-      <button type="button" class="btn-bar-action">EXPLORE WORK</button>
-      <div class="bar-toggle-indicator">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+
+      <div class="articles-layout-grid">
+        <!-- Article List -->
+        <div class="articles-list-column" id="fossil-articles-list">
+          <!-- Dynamically Populated -->
+        </div>
+
+        <!-- Featured Article Reader -->
+        <div class="article-reader-column" id="fossil-article-reader">
+          <div class="reader-header">
+            <h4 class="reader-title" id="reader-title">The Life Story of Manchar Lake</h4>
+            <p class="reader-subtitle" id="reader-subtitle">A field visit exploring Manchar Lake</p>
+            <div class="reader-meta-row">
+              <span id="reader-author">BY HAMNA ANWAR</span>
+              <span id="reader-date">28.07.2026</span>
+            </div>
+          </div>
+          <div class="reader-hero-media">
+            <img id="reader-img" src="/Assets/how-water-became-power.jpg" alt="Featured Article" class="reader-hero-img" />
+          </div>
+          <div class="reader-body-text" id="reader-content">
+            <p>
+              The kacheri was based on the case of Lake Manchar. The discussion focused on the ecological destruction of the lake, and how large development projects have affected the people, culture, and livelihoods connected to it.
+            </p>
+            <p>
+              Lake Manchar is located in Sindh between the Khirthar mountain range and the River Sindhu. The lake is 360 miles long and 170 miles wide. It is the biggest natural sweet water lake in Asia. The word "Manchar" comes from the Sindhi words Meeh meaning rain and Chhar meaning a vast expanse. Together, "Meeh + Chhar" means a vast spread of Rain waters.
+            </p>
+          </div>
+        </div>
       </div>
-    </div>
-
-    <!-- Dropdown Content 1: Fossil Fuel Phaseout Narrative & Articles -->
-    <div class="expandable-drawer-content is-open" id="drawer-fossil-fuel">
-      <!-- Written Narrative & Policy Intro -->
-      <section class="work-intro-section" id="fossil-fuel-phaseout" aria-label="Fossil Fuel Phaseout Narrative">
-        <div class="work-intro-grid">
-          <div class="work-intro-content">
-            <h3 class="work-section-title">FOSSIL FUEL PHASEOUT</h3>
-            <p class="work-section-subtitle">Rethinking energy systems for a cleaner, fairer, and climate-resilient future.</p>
-            <div class="work-section-description">
-              <p>
-                For CAEA, phasing out gas is not a distant policy idea — it is an urgent necessity. Pakistan's growing reliance on natural gas and imported LNG (liquefied natural gas) has trapped the country in a costly system, leading to wasted resources, financial losses, and long-term debts that burden the public for years.
-              </p>
-              <p>
-                This is not only an economic problem. Producing and transporting gas releases methane, a gas that heats the planet even faster than carbon dioxide, and the communities living closest to gas fields, pipelines, and power plants bear the greatest damage.
-              </p>
-              <p>
-                Our research shows that the power sector is the most important place to begin this shift. Imported LNG was meant to bring energy security, but instead it has made electricity more expensive and left Pakistan dependent on unpredictable global markets. As solar energy becomes cheaper and more widely available, continued investment in gas makes less and less sense — it raises costs, weakens the power grid, and adds to emissions without benefiting ordinary people.
-              </p>
-              <p>
-                We also hold decision-makers accountable by challenging weak environmental assessments that fail to properly account for climate risks and harm to local communities. Moving away from gas will not happen overnight, but for us, this work is about confronting the interests that benefit from the status quo and building an energy system that is fair, sustainable, and built to last.
-              </p>
-            </div>
-            <a href="#apply" class="btn-join-pill" data-apply-btn data-opportunity-title="Fossil Fuel Phaseout Fellow">JOIN US</a>
-          </div>
-
-          <!-- Arch Pattern Visual Column -->
-          <div class="arch-pattern-col" aria-hidden="true">
-            <span class="arch-shape"></span>
-            <span class="arch-shape"></span>
-            <span class="arch-shape"></span>
-            <span class="arch-shape"></span>
-            <span class="arch-shape"></span>
-            <span class="arch-shape"></span>
-          </div>
-        </div>
-      </section>
-
-      <!-- Written Articles & Field Reports Reader -->
-      <section class="articles-section" aria-label="Fossil Fuel Articles and Field Reports">
-        <div class="articles-section-header">
-          <h3 class="articles-main-heading">Working towards clean energy transition</h3>
-          <p class="articles-intro-sub">
-            Our efforts are targeted towards creating dialogue and impact thereby. A just energy future starts with you.
-          </p>
-
-          <div class="articles-filter-bar">
-            <div class="filter-pills-group" id="fossil-filters">
-              <button class="filter-pill active" data-filter="all">ALL</button>
-              <button class="filter-pill" data-filter="latest">LATEST</button>
-              <button class="filter-pill" data-filter="field-reports">FIELD REPORTS</button>
-              <button class="filter-pill" data-filter="kacheri">KACHERI</button>
-            </div>
-
-            <div class="article-search-wrap">
-              <svg class="article-search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-              <input type="text" class="article-search-input" id="fossil-search-input" placeholder="Search keyword..." />
-            </div>
-          </div>
-        </div>
-
-        <div class="articles-layout-grid">
-          <!-- Article List -->
-          <div class="articles-list-column" id="fossil-articles-list">
-            <!-- Dynamically Populated -->
-          </div>
-
-          <!-- Featured Article Reader -->
-          <div class="article-reader-column" id="fossil-article-reader">
-            <div class="reader-header">
-              <h4 class="reader-title" id="reader-title">The Life Story of Manchar Lake</h4>
-              <p class="reader-subtitle" id="reader-subtitle">A field visit exploring Manchar Lake</p>
-              <div class="reader-meta-row">
-                <span id="reader-author">BY HAMNA ANWAR</span>
-                <span id="reader-date">28.07.2026</span>
-              </div>
-            </div>
-            <div class="reader-hero-media">
-              <img id="reader-img" src="/Assets/how-water-became-power.jpg" alt="Featured Article" class="reader-hero-img" />
-            </div>
-            <div class="reader-body-text" id="reader-content">
-              <p>
-                The kacheri was based on the case of Lake Manchar. The discussion focused on the ecological destruction of the lake, and how large development projects have affected the people, culture, and livelihoods connected to it.
-              </p>
-              <p>
-                Lake Manchar is located in Sindh between the Khirthar mountain range and the River Sindhu. The lake is 360 miles long and 170 miles wide. It is the biggest natural sweet water lake in Asia. The word "Manchar" comes from the Sindhi words Meeh meaning rain and Chhar meaning a vast expanse. Together, "Meeh + Chhar" means a vast spread of Rain waters.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
+    </section>
 
     <!-- ============================================================
          2. BANNER 2: TEXTILE & FAST FASHION (Vibrant Green)
          ============================================================ -->
     <div class="expandable-bar-banner green-banner" id="banner-textile" data-target="drawer-textile" role="button" aria-expanded="false">
       <div class="bar-icon-wrap">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/>
-        </svg>
+        <img src="/Assets/Tab-scroll.png" alt="" class="tab-scroll-icon" />
       </div>
-      <h2 class="bar-title">TEXTILE &amp; FAST FASHION</h2>
-      <p class="bar-subtitle">Supply chain transparency, industrial captive power emissions &amp; fair worker transitions</p>
+      <h2 class="bar-title" id="textile-banner-title">TEXTILE &amp; FAST FASHION</h2>
+      <p class="bar-subtitle" id="textile-banner-sub">Supply chain transparency, industrial captive power emissions &amp; fair worker transitions</p>
       <button type="button" class="btn-bar-action">EXPLORE WORK</button>
       <div class="bar-toggle-indicator">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
@@ -195,9 +161,9 @@
       <section class="work-intro-section textile-section" id="textile" aria-label="Textile &amp; Fast Fashion Narrative">
         <div class="work-intro-grid">
           <div class="work-intro-content">
-            <h3 class="work-section-title">TEXTILE &amp; FAST FASHION</h3>
-            <p class="work-section-subtitle">Rethinking energy systems for a cleaner, fairer, and climate-resilient future.</p>
-            <div class="work-section-description">
+            <h3 class="work-section-title" id="textile-title">TEXTILE &amp; FAST FASHION</h3>
+            <p class="work-section-subtitle" id="textile-subtitle">Rethinking energy systems for a cleaner, fairer, and climate-resilient future.</p>
+            <div class="work-section-description" id="textile-description">
               <p>
                 For CAEA, phasing out gas is not a distant policy idea — it is an urgent necessity. Pakistan's growing reliance on natural gas and imported LNG has trapped the country in a costly system, leading to wasted resources, financial losses, and long-term debts that burden the public for years.
               </p>
@@ -208,7 +174,7 @@
                 As solar energy becomes cheaper and more widely available, continued investment in gas makes less and less sense — it raises costs, weakens the power grid, and adds to emissions without benefiting ordinary people.
               </p>
             </div>
-            <a href="#apply" class="btn-join-pill" data-apply-btn data-opportunity-title="Textile Sector Researcher">JOIN US</a>
+            <a href="#apply" class="btn-join-pill" id="textile-join-btn" data-apply-btn data-opportunity-title="Textile Sector Researcher">JOIN US</a>
           </div>
 
           <!-- Pink Arch Pattern Visual Column -->
@@ -225,12 +191,12 @@
       <!-- Textile Investigations Grid -->
       <section class="instagram-updates-section" aria-label="Textile Investigations">
         <div style="max-width:1320px; margin:0 auto;">
-          <h3 class="articles-main-heading" style="color:#000000;">Working towards a future for sustainable textile practices</h3>
-          <p class="articles-intro-sub" style="color:#64748b;">
+          <h3 class="articles-main-heading" id="textile-section-heading" style="color:#000000;">Working towards a future for sustainable textile practices</h3>
+          <p class="articles-intro-sub" id="textile-section-intro" style="color:#64748b;">
             Our efforts are targeted towards creating dialogue and impact thereby. A just energy future starts with you.
           </p>
 
-          <div class="instagram-cards-grid">
+          <div class="instagram-cards-grid" id="textile-cards-grid">
             <!-- Card 1 -->
             <div class="insta-card">
               <div>
@@ -282,12 +248,10 @@
          ============================================================ -->
     <div class="expandable-bar-banner dark-banner" id="banner-climate-justice" data-target="drawer-climate-justice" role="button" aria-expanded="false">
       <div class="bar-icon-wrap">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-        </svg>
+        <img src="/Assets/Tab-scroll.png" alt="" class="tab-scroll-icon" />
       </div>
-      <h2 class="bar-title">CLIMATE JUSTICE</h2>
-      <p class="bar-subtitle">Ecological democracy, gender equity &amp; frontline communities' sovereignty over resources</p>
+      <h2 class="bar-title" id="climate-banner-title">CLIMATE JUSTICE</h2>
+      <p class="bar-subtitle" id="climate-banner-sub">Ecological democracy, gender equity &amp; frontline communities' sovereignty over resources</p>
       <button type="button" class="btn-bar-action white-btn">EXPLORE WORK</button>
       <div class="bar-toggle-indicator">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
@@ -299,9 +263,9 @@
       <section class="work-intro-section" id="climate-justice" aria-label="Climate Justice Narrative">
         <div class="work-intro-grid">
           <div class="work-intro-content">
-            <h3 class="work-section-title">CLIMATE JUSTICE</h3>
-            <p class="work-section-subtitle">Rethinking energy systems for a cleaner, fairer, and climate-resilient future.</p>
-            <div class="work-section-description">
+            <h3 class="work-section-title" id="climate-title">CLIMATE JUSTICE</h3>
+            <p class="work-section-subtitle" id="climate-subtitle">Rethinking energy systems for a cleaner, fairer, and climate-resilient future.</p>
+            <div class="work-section-description" id="climate-description">
               <p>
                 For CAEA, phasing out gas is not a distant policy idea — it is an urgent necessity. Pakistan's growing reliance on natural gas and imported LNG has trapped the country in a costly system, leading to wasted resources, financial losses, and long-term debts that burden the public for years.
               </p>
@@ -312,7 +276,7 @@
                 We organize, write, and teach with the firm conviction that climate justice is inseparable from economic democracy, gender justice, and people's sovereignty over energy and resources.
               </p>
             </div>
-            <a href="#apply" class="btn-join-pill" data-apply-btn data-opportunity-title="Climate Justice Organizer">JOIN US</a>
+            <a href="#apply" class="btn-join-pill" id="climate-join-btn" data-apply-btn data-opportunity-title="Climate Justice Organizer">JOIN US</a>
           </div>
 
           <div class="arch-pattern-col" aria-hidden="true">
@@ -330,10 +294,10 @@
          ============================================================ -->
     <div class="expandable-bar-banner blue-activities-banner" id="banner-activities" data-target="drawer-activities" role="button" aria-expanded="false">
       <div class="bar-icon-wrap">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        <img src="/Assets/Tab-scroll.png" alt="" class="tab-scroll-icon" />
       </div>
-      <h2 class="bar-title">ACTIVITIES &amp; GATHERINGS</h2>
-      <p class="bar-subtitle">Field retreats, community kacheris, exposure visits &amp; workshops across Pakistan</p>
+      <h2 class="bar-title" id="activities-banner-title">ACTIVITIES &amp; GATHERINGS</h2>
+      <p class="bar-subtitle" id="activities-banner-sub">Field retreats, community kacheris, exposure visits &amp; workshops across Pakistan</p>
       <button type="button" class="btn-bar-action white-btn">SEE MORE</button>
       <div class="bar-toggle-indicator">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
@@ -342,54 +306,44 @@
 
     <!-- Dropdown Content 4: Activities Gallery, Video & Feed -->
     <div class="expandable-drawer-content" id="drawer-activities">
-      <section class="activities-page-section" id="activities-hero-section" aria-label="Activities Overview">
-        <div class="activities-grid-container">
-          <div class="activities-hero-text-col">
-            <h3 class="activities-hero-quote" id="hero-event-quote">
-              “Those least responsible for climate change are worst affected by it”
-            </h3>
-            <span class="activities-hero-author" id="hero-event-author">Vandana Shiva</span>
-
-            <h4 class="activities-hero-subtitle" id="hero-event-title">WORKING TOWARDS CLEAN ENERGY</h4>
-            <p class="activities-hero-description" id="hero-event-description">
-              The kacheri was based on the case of Lake Manchar. The discussion focused on the ecological destruction of the lake, and how large development projects have affected the people, culture, and livelihoods connected to it.
-            </p>
-
-            <div class="hero-switch-event-actions">
-              <button class="btn-switch-hero" id="btn-next-hero-event" type="button">
-                <span>Change Main Event</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-              </button>
-              <span class="hero-event-counter" id="hero-event-counter">Event 1 of 4</span>
+      <!-- 1. Hero Quote & Interactive Gallery Section -->
+      <section class="activities-hero-section" id="activities-hero-section" aria-label="Activities Hero Gallery">
+        <div class="activities-hero-grid">
+          <!-- Left Column: Quote & Story -->
+          <div class="activities-hero-left">
+            <blockquote class="hero-quote-box">
+              <p class="hero-quote-text" id="hero-event-quote">“Those least responsible for climate change are worst affected by it”</p>
+              <cite class="hero-quote-author" id="hero-event-author">Vandana Shiva</cite>
+            </blockquote>
+            <div class="hero-story-content">
+              <h4 class="hero-story-heading" id="hero-event-heading">WORKING TOWARDS CLEAN ENERGY</h4>
+              <p class="hero-story-desc" id="hero-event-description">
+                The ecological destruction of Lake Manchhar in Sindh highlights how industrial discharge, upstream water diversions, and climate shocks devastate indigenous fishing communities. CAEA works alongside local organizers and environmental advocates to document environmental injustices, foster community dialogue, and advance clean energy accountability across Pakistan.
+              </p>
             </div>
           </div>
 
-          <div class="activities-hero-gallery-col">
+          <!-- Right Column: Interactive Gallery & Thumbnails -->
+          <div class="activities-hero-right">
             <div class="activities-gallery-main">
-              <img id="hero-gallery-img" src="/Assets/media/events/contested-waters/RAY00190.JPG" alt="Activities Gallery" style="width:100%; height:100%; object-fit:cover;" />
-              <div class="activities-gallery-arrows">
-                <button class="gallery-arrow-btn" id="prev-hero-slide" aria-label="Previous event"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
-                <button class="gallery-arrow-btn" id="next-hero-slide" aria-label="Next event"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
-              </div>
+              <img id="hero-gallery-img" src="/Assets/media/events/contested-waters/RAY00190.JPG" alt="Featured activity gallery image" class="gallery-main-img" onerror="this.src='/Assets/Hero-image.png'" />
+              <button type="button" class="gallery-arrow-btn prev-arrow" id="prev-hero-slide" aria-label="Previous slide">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+              </button>
+              <button type="button" class="gallery-arrow-btn next-arrow" id="next-hero-slide" aria-label="Next slide">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
             </div>
-
             <div class="activities-gallery-thumbs" id="hero-gallery-thumbs">
-              <!-- Dynamically Populated from DataStore Activities -->
-              <div class="thumb-item active" data-index="0"><img src="/Assets/media/events/contested-waters/RAY00190.JPG" alt="Contested Waters" style="width:100%; height:100%; object-fit:cover;" /></div>
-              <div class="thumb-item" data-index="1"><img src="/Assets/media/events/retreat/DSCF4154.JPG" alt="Gathering &amp; Retreat" style="width:100%; height:100%; object-fit:cover;" /></div>
-              <div class="thumb-item" data-index="2"><img src="/Assets/media/events/manchar/WhatsApp Image 2026-08-27 at 12.08.18 PM.jpeg" alt="Manchar Sunvai" style="width:100%; height:100%; object-fit:cover;" /></div>
-              <div class="thumb-item" data-index="3"><img src="/Assets/media/events/exposure-visit/WhatsApp Image 2026-08-27 at 12.16.56 PM.jpeg" alt="Tarbela Dam Visit" style="width:100%; height:100%; object-fit:cover;" /></div>
+              <!-- 4 Thumbnails rendered dynamically -->
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Repeating Green Leaf Pattern Banner -->
+      <!-- 2. "Catch The Upcoming Gathering" Banner -->
       <section class="activities-upcoming-banner" aria-label="Upcoming Gathering Banner">
-        <div class="repeating-leaf-banner" aria-hidden="true">
-          <div class="repeating-leaf-pattern"></div>
-        </div>
-
+        <div class="leaf-pattern-top" aria-hidden="true"></div>
         <div class="activities-upcoming-body">
           <h3 class="activities-upcoming-title">CATCH THE UPCOMING GATHERING</h3>
           <p class="activities-upcoming-subtitle">No experience needed. Just a willingness to show up and act.</p>
@@ -397,7 +351,7 @@
         </div>
       </section>
 
-      <!-- Activities Feed -->
+      <!-- 3. "Browse Through Our Latest Activity" Feed -->
       <section class="activities-feed-section" aria-label="Browse Latest Activities">
         <div class="activities-feed-container">
           <div class="activities-feed-header">
@@ -408,12 +362,12 @@
           </div>
 
           <div class="activities-list" id="work-activities-list">
-            <!-- Dynamically Rendered -->
+            <!-- Dynamically Rendered with 2-column layout and image cycling arrows -->
           </div>
         </div>
       </section>
 
-      <!-- Activities Documentary Video Section -->
+      <!-- 4. Activities Documentary Video Section -->
       <section class="activities-blue-section" id="activities-video-section" aria-label="Activities Documentary">
         <div class="activities-blue-container">
           <h3 class="activities-blue-title" id="activities-video-title">More than a retreat (CAEA Community Documentary)</h3>

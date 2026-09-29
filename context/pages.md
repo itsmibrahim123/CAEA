@@ -4,25 +4,25 @@ This document specifies the purpose, structure, data bindings, and interactive f
 
 ---
 
-## 1. Our Work & Activities (`pages/our-work.html`)
+## 1. Our Work (`pages/our-work.html`)
 
 ### 1.1 Overview
-The Activities page serves as the public repository and journal of CAEA's field retreats, community kacheris, workshops, research expeditions, and exposure visits.
+The Our Work page presents CAEA's 4 core strategic pillars, starting directly with the **Fossil Fuel Phaseout** section followed by expandable banners for subsequent pillars:
+1. **Fossil Fuel Phaseout** (Primary Top Section) — Directly displayed written narrative, policy analysis, methane emissions, LNG dependence, and an interactive articles repository & reader.
+2. **Textile & Fast Fashion** (Green Expandable Banner) — Industrial emissions, captive power, supply chain accountability, and labor justice.
+3. **Climate Justice** (Dark Charcoal Expandable Banner) — Ecological democracy, gender equity, water rights, and frontline community sovereignty.
+4. **Activities & Gatherings** (Cobalt Blue Expandable Banner) — Field retreats, community kacheris, exposure visits, dynamic photo slideshows, and documentary video features.
 
 ### 1.2 Interactive Features
-- **Dynamic Activity Feed**:
-  - Populates directly from `window.DataStore.get('activities')`.
-  - Filterable by category tag (`RETREAT`, `WORKSHOP`, `COMMUNITY KACHERI`, `EXPOSURE VISIT`, `RESEARCH`, `FIELD PROJECT`, `POLICY`, `CASE STUDY`).
-- **Hero Feature Switcher & Auto-Cycling Slideshow**:
-  - Each activity card includes a **"Show in Hero"** interactive button.
-  - Clicking spotlights the event on the main hero banner across the site and saves the preference to `DataStore`.
-  - Configurable automated hero slideshow rotates featured events smoothly and pauses on hover.
-- **Dynamic Video Documentary System**:
-  - Fully manageable video documentary card (`#activities-video-section`) powered by `DataStore.getPageSettings('activities')`.
-  - Supports custom video URLs (YouTube, Vimeo, MP4) and uploaded video files with interactive playback modal (`#caea-video-modal-overlay`).
-- **Direct Application Triggers**:
-  - Community gatherings and open workshop sessions link to the **Universal Apply Modal** (`#caea-apply-modal-overlay`), pre-filling the activity category.
-- **Media Assets**:
+- **Direct Top Section & Expandable Pillars**:
+  - **Fossil Fuel Phaseout** is permanently visible and accessible at the top of the page.
+  - The subsequent pillars (**Textile & Fast Fashion**, **Climate Justice**, **Activities & Gatherings**) feature high-contrast expandable banners with `/Assets/Tab-scroll.png` and smooth accordions.
+- **Dynamic Articles Filter & In-Page Reader**:
+  - Filterable by topic tags with real-time text search and an inline reader modal for comprehensive research documents.
+- **Activities Slideshow & Video Documentary**:
+  - Integrated field activities feed from `DataStore` with auto-cycling photo galleries and documentary video playback.
+- **Direct Opportunity Applications**:
+  - Embedded "JOIN US" and "Apply" actions link seamlessly to the universal application modal.
   - Standardized media galleries under `Assets/media/events/` (`contested-waters/`, `exposure-visit/`, `manchar/`, `retreat/`).
 
 ---
@@ -66,7 +66,7 @@ The Our Story page details CAEA's history, theoretical foundation, community-fir
     - **Manahil Usman** — Associate Fossil Fuel Phaseout (`Assets/Team/hina-yousaf.jpg`)
     - **Abid Azim** — Finance Officer / CPA (`Assets/Team/nabeel-ahmad.jpg`)
 - **Allies & Partners Section**:
-  - Showcases civil society alliances and grassroots coalitions (e.g., *Alternative Law Collective*).
+  - Showcases civil society alliances and grassroots coalitions (*Alternative Law Collective*, *Alliance for Climate Justice & Clean Energy*, *Climate Action Center*, *PRIED*, and *Verrha Research*).
 
 ---
 

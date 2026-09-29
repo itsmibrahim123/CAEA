@@ -184,7 +184,7 @@ class Database {
                 'image' => 'Assets/media/events/contested-waters/RAY00190.JPG',
                 'featured' => 1,
                 'quote' => '“Those least responsible for climate change are worst affected by it”',
-                'quoteAuthor' => 'Waseem Ul Haq'
+                'quoteAuthor' => 'Vandana Shiva'
             ],
             [
                 'id' => 'act-2',
@@ -468,16 +468,16 @@ class Database {
             [
                 'id' => 'pin-hunza',
                 'city' => 'HUNZA',
-                'leftPos' => '53%',
-                'topPos' => '19%',
+                'leftPos' => '64%',
+                'topPos' => '6%',
                 'badge' => 'HUNZA',
                 'description' => 'Our team comes from diverse backgrounds across Gilgit-Baltistan. Climate Action & Energy Access (CAEA) is a Pakistan-based research and advocacy institute committed to empowering mountain communities through renewable energy.'
             ],
             [
                 'id' => 'pin-jalalpur',
                 'city' => 'JALALPUR',
-                'leftPos' => '62%',
-                'topPos' => '41%',
+                'leftPos' => '69%',
+                'topPos' => '30%',
                 'badge' => 'JALALPUR',
                 'description' => 'Our team works closely with agrarian communities in Jalalpur advancing decentralized solar irrigation, groundwater conservation, and community energy governance.'
             ],
@@ -492,8 +492,8 @@ class Database {
             [
                 'id' => 'pin-thar',
                 'city' => 'THAR',
-                'leftPos' => '33%',
-                'topPos' => '78%',
+                'leftPos' => '49%',
+                'topPos' => '86%',
                 'badge' => 'THAR',
                 'description' => 'In the Thar desert, CAEA is leading research into off-grid solar microgrids and clean drinking water access for rural and indigenous desert settlements.'
             ],
@@ -539,6 +539,65 @@ class Database {
                 'teamHeaderTitle' => 'The People Who Make It Happen',
                 'quoteText' => 'What we cannot imagine cannot come into being.',
                 'quoteAuthor' => 'Hellen Keller'
+            ],
+            'ourWork' => [
+                'fossilFuel' => [
+                    'title' => 'FOSSIL FUEL PHASEOUT',
+                    'subtitle' => 'Rethinking energy systems for a cleaner, fairer, and climate-resilient future.',
+                    'description' => "For CAEA, phasing out gas is not a distant policy idea — it is an urgent necessity. Pakistan's growing reliance on natural gas and imported LNG (liquefied natural gas) has trapped the country in a costly system, leading to wasted resources, financial losses, and long-term debts that burden the public for years.\n\nThis is not only an economic problem. Producing and transporting gas releases methane, a gas that heats the planet even faster than carbon dioxide, and the communities living closest to gas fields, pipelines, and power plants bear the greatest damage.\n\nOur research shows that the power sector is the most important place to begin this shift. Imported LNG was meant to bring energy security, but instead it has made electricity more expensive and left Pakistan dependent on unpredictable global markets. As solar energy becomes cheaper and more widely available, continued investment in gas makes less and less sense — it raises costs, weakens the power grid, and adds to emissions without benefiting ordinary people.\n\nWe also hold decision-makers accountable by challenging weak environmental assessments that fail to properly account for climate risks and harm to local communities. Moving away from gas will not happen overnight, but for us, this work is about confronting the interests that benefit from the status quo and building an energy system that is fair, sustainable, and built to last.",
+                    'joinBtnText' => 'JOIN US',
+                    'opportunityTitle' => 'Fossil Fuel Phaseout Fellow'
+                ],
+                'textile' => [
+                    'bannerTitle' => 'TEXTILE & FAST FASHION',
+                    'bannerSubtitle' => 'Supply chain transparency, industrial captive power emissions & fair worker transitions',
+                    'title' => 'TEXTILE & FAST FASHION',
+                    'subtitle' => 'Rethinking energy systems for a cleaner, fairer, and climate-resilient future.',
+                    'description' => "For CAEA, phasing out gas is not a distant policy idea — it is an urgent necessity. Pakistan's growing reliance on natural gas and imported LNG has trapped the country in a costly system, leading to wasted resources, financial losses, and long-term debts that burden the public for years.\n\nThis is not only an economic problem. Producing and transporting gas releases methane, a gas that heats the planet even faster than carbon dioxide, and the communities living closest to gas fields, pipelines, and power plants bear the greatest damage.\n\nAs solar energy becomes cheaper and more widely available, continued investment in gas makes less and less sense — it raises costs, weakens the power grid, and adds to emissions without benefiting ordinary people.",
+                    'joinBtnText' => 'JOIN US',
+                    'opportunityTitle' => 'Textile Sector Researcher',
+                    'sectionHeading' => 'Working towards a future for sustainable textile practices',
+                    'sectionIntro' => 'Our efforts are targeted towards creating dialogue and impact thereby. A just energy future starts with you.',
+                    'cards' => [
+                        [
+                            'id' => 'tex-1',
+                            'title' => 'Fashion and Fossil Fuels',
+                            'description' => 'Climate Action & Energy Access (CAEA) is a Pakistan-based research and advocacy institute committed to transparent supply chain accountability.',
+                            'btnText' => 'WATCH NOW',
+                            'targetOpportunity' => 'Textile Watch',
+                            'videoUrl' => ''
+                        ],
+                        [
+                            'id' => 'tex-2',
+                            'title' => 'Fashion and Fossil Fuels',
+                            'description' => 'Investigating synthetic fiber reliance, coal-fired industrial captive power plants, and fair wage transitions for garment workers.',
+                            'btnText' => 'WATCH NOW',
+                            'targetOpportunity' => 'Textile Watch',
+                            'videoUrl' => ''
+                        ],
+                        [
+                            'id' => 'tex-3',
+                            'title' => 'Fashion and Fossil Fuels',
+                            'description' => 'Advocating for clean industrial energy microgrids and community-led environmental auditing across Pakistan\'s textile hubs.',
+                            'btnText' => 'WATCH NOW',
+                            'targetOpportunity' => 'Textile Watch',
+                            'videoUrl' => ''
+                        ]
+                    ]
+                ],
+                'climateJustice' => [
+                    'bannerTitle' => 'CLIMATE JUSTICE',
+                    'bannerSubtitle' => "Ecological democracy, gender equity & frontline communities' sovereignty over resources",
+                    'title' => 'CLIMATE JUSTICE',
+                    'subtitle' => 'Rethinking energy systems for a cleaner, fairer, and climate-resilient future.',
+                    'description' => "For CAEA, phasing out gas is not a distant policy idea — it is an urgent necessity. Pakistan's growing reliance on natural gas and imported LNG has trapped the country in a costly system, leading to wasted resources, financial losses, and long-term debts that burden the public for years.\n\nThis is not only an economic problem. Producing and transporting gas releases methane, a gas that heats the planet even faster than carbon dioxide, and the communities living closest to gas fields, pipelines, and power plants bear the greatest damage.\n\nWe organize, write, and teach with the firm conviction that climate justice is inseparable from economic democracy, gender justice, and people's sovereignty over energy and resources.",
+                    'joinBtnText' => 'JOIN US',
+                    'opportunityTitle' => 'Climate Justice Organizer'
+                ],
+                'activitiesBanner' => [
+                    'bannerTitle' => 'ACTIVITIES & GATHERINGS',
+                    'bannerSubtitle' => 'Field retreats, community kacheris, exposure visits & workshops across Pakistan'
+                ]
             ]
         ];
 
