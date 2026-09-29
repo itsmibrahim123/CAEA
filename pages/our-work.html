@@ -48,15 +48,16 @@
       </div>
     </nav>
   </header>
+
   <main>
     <!-- ============================================================
          1. FOSSIL FUEL PHASEOUT (Written Narrative & Articles Reader)
          ============================================================ -->
-    <!-- Written Narrative & Policy Intro -->
+    <!-- A. Written Narrative & Policy Intro -->
     <section class="work-intro-section" id="fossil-fuel-phaseout" aria-label="Fossil Fuel Phaseout Narrative">
       <div class="work-intro-grid">
         <div class="work-intro-content">
-          <h3 class="work-section-title" id="fossil-title">FOSSIL FUEL PHASEOUT</h3>
+          <h1 class="work-section-title" id="fossil-title">FOSSIL FUEL PHASEOUT</h1>
           <p class="work-section-subtitle" id="fossil-subtitle">Rethinking energy systems for a cleaner, fairer, and climate-resilient future.</p>
           <div class="work-section-description" id="fossil-description">
             <p>
@@ -75,89 +76,105 @@
           <a href="#apply" class="btn-join-pill" id="fossil-join-btn" data-apply-btn data-opportunity-title="Fossil Fuel Phaseout Fellow">JOIN US</a>
         </div>
 
-        <!-- Arch Pattern Visual Column -->
-        <div class="arch-pattern-col" aria-hidden="true">
-          <span class="arch-shape"></span>
-          <span class="arch-shape"></span>
-          <span class="arch-shape"></span>
-          <span class="arch-shape"></span>
-          <span class="arch-shape"></span>
-          <span class="arch-shape"></span>
-        </div>
+        <!-- Right Repeating Green Arch Column -->
+        <div class="arch-pattern-col story-pattern-col" aria-hidden="true"></div>
       </div>
     </section>
 
-    <!-- Written Articles & Field Reports Reader -->
-    <section class="articles-section" aria-label="Fossil Fuel Articles and Field Reports">
-      <div class="articles-section-header">
-        <h3 class="articles-main-heading">Working towards clean energy transition</h3>
-        <p class="articles-intro-sub">
-          Our efforts are targeted towards creating dialogue and impact thereby. A just energy future starts with you.
-        </p>
-
-        <div class="articles-filter-bar">
-          <div class="filter-pills-group" id="fossil-filters">
-            <button class="filter-pill active" data-filter="all">ALL</button>
-            <button class="filter-pill" data-filter="latest">LATEST</button>
-            <button class="filter-pill" data-filter="field-reports">FIELD REPORTS</button>
-            <button class="filter-pill" data-filter="kacheri">KACHERI</button>
-          </div>
-
-          <div class="article-search-wrap">
-            <svg class="article-search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <input type="text" class="article-search-input" id="fossil-search-input" placeholder="Search keyword..." />
-          </div>
-        </div>
-      </div>
-
-      <div class="articles-layout-grid">
-        <!-- Article List -->
-        <div class="articles-list-column" id="fossil-articles-list">
-          <!-- Dynamically Populated -->
-        </div>
-
-        <!-- Featured Article Reader -->
-        <div class="article-reader-column" id="fossil-article-reader">
-          <div class="reader-header">
-            <h4 class="reader-title" id="reader-title">The Life Story of Manchar Lake</h4>
-            <p class="reader-subtitle" id="reader-subtitle">A field visit exploring Manchar Lake</p>
-            <div class="reader-meta-row">
-              <span id="reader-author">BY HAMNA ANWAR</span>
-              <span id="reader-date">28.07.2026</span>
-            </div>
-          </div>
-          <div class="reader-hero-media">
-            <img id="reader-img" src="/Assets/how-water-became-power.jpg" alt="Featured Article" class="reader-hero-img" />
-          </div>
-          <div class="reader-body-text" id="reader-content">
-            <p>
-              The kacheri was based on the case of Lake Manchar. The discussion focused on the ecological destruction of the lake, and how large development projects have affected the people, culture, and livelihoods connected to it.
-            </p>
-            <p>
-              Lake Manchar is located in Sindh between the Khirthar mountain range and the River Sindhu. The lake is 360 miles long and 170 miles wide. It is the biggest natural sweet water lake in Asia. The word "Manchar" comes from the Sindhi words Meeh meaning rain and Chhar meaning a vast expanse. Together, "Meeh + Chhar" means a vast spread of Rain waters.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============================================================
-         2. BANNER 2: TEXTILE & FAST FASHION (Vibrant Green)
-         ============================================================ -->
-    <div class="expandable-bar-banner green-banner" id="banner-textile" data-target="drawer-textile" role="button" aria-expanded="false">
+    <!-- B. Expandable Blue Banner 1: Fossil Fuel Articles -->
+    <div class="expandable-bar-banner royal-blue-banner" id="banner-fossil-fuel" data-target="drawer-fossil-fuel" role="button" aria-expanded="true">
       <div class="bar-icon-wrap">
-        <img src="/Assets/Tab-scroll.png" alt="" class="tab-scroll-icon" />
+        <img src="/Assets/icons/banner-logo-arch-top.png" alt="" class="tab-scroll-icon" onerror="this.src='/Assets/Tab-scroll.png'" />
       </div>
-      <h2 class="bar-title" id="textile-banner-title">TEXTILE &amp; FAST FASHION</h2>
-      <p class="bar-subtitle" id="textile-banner-sub">Supply chain transparency, industrial captive power emissions &amp; fair worker transitions</p>
-      <button type="button" class="btn-bar-action">EXPLORE WORK</button>
+      <h2 class="bar-title">The Life Story of Manchhar Lake</h2>
+      <p class="bar-subtitle">The story written is not the story that was lived</p>
+      <button type="button" class="btn-bar-action">READ MORE</button>
       <div class="bar-toggle-indicator">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
     </div>
 
-    <!-- Dropdown Content 2: Textile Narrative & Investigations -->
+    <!-- C. Dropdown Content 1: Written Articles & Field Reports Reader -->
+    <div class="expandable-drawer-content is-open" id="drawer-fossil-fuel">
+      <section class="articles-section" aria-label="Fossil Fuel Articles and Field Reports">
+        <div class="articles-section-header">
+          <h3 class="articles-main-heading">Working towards clean energy transition</h3>
+          <p class="articles-intro-sub">
+            Our efforts are targeted towards creating dialogue and impact thereby. A just energy future starts with you.
+          </p>
+
+          <div class="articles-filter-bar">
+            <div class="filter-pills-group" id="fossil-filters">
+              <button class="filter-pill active" data-filter="all">ALL</button>
+              <button class="filter-pill" data-filter="latest">LATEST</button>
+              <button class="filter-pill" data-filter="field-reports">FIELD REPORTS</button>
+              <button class="filter-pill" data-filter="kacheri">KACHERI</button>
+              <button class="filter-pill" data-filter="policy">POLICY</button>
+            </div>
+
+            <div class="article-search-wrap">
+              <img src="/Assets/icons/search-icon.svg" alt="" class="article-search-icon" onerror="this.style.display='none'" />
+              <input type="text" class="article-search-input" id="fossil-search-input" placeholder="Search keyword..." />
+            </div>
+          </div>
+        </div>
+
+        <div class="articles-layout-grid">
+          <!-- Left Column: Article List -->
+          <div class="articles-list-column" id="fossil-articles-list">
+            <!-- Dynamically Populated via JavaScript -->
+          </div>
+
+          <!-- Right Column: Featured Article Reader -->
+          <div class="article-reader-column" id="fossil-article-reader">
+            <div class="reader-header">
+              <h4 class="reader-title" id="reader-title">The Life Story of Manchar Lake</h4>
+              <p class="reader-subtitle" id="reader-subtitle">A field visit exploring Manchar Lake</p>
+              <div class="reader-meta-row">
+                <span id="reader-author">BY HAMNA ANWAR</span>
+                <span id="reader-date">28.07.2026</span>
+              </div>
+            </div>
+            <div class="reader-hero-media">
+              <img id="reader-img" src="/Assets/how-water-became-power.jpg" alt="Featured Article" class="reader-hero-img" onerror="this.src='/Assets/how-water-became-power-ai.jpg'" />
+            </div>
+            <div class="reader-body-text" id="reader-content">
+              <p>
+                The kacheri was based on the case of Lake Manchar. The discussion focused on the ecological destruction of the lake, and how large development projects have affected the people, culture, and livelihoods connected to it.
+              </p>
+              <p>
+                Lake Manchar is located in Sindh between the Khirthar mountain range and the River Sindhu. The lake is 360 miles long and 170 miles wide. It is the biggest natural sweet water lake in Asia. The word "Manchar" comes from the Sindhi words Meeh meaning rain and Chhar meaning a vast expanse. Together, "Meeh + Chhar" means a vast spread of Rain waters.
+              </p>
+              <p>
+                Over the decades, agricultural drainage, saline effluent, and industrial runoffs through the Right Bank Outfall Drain (RBOD) have severely contaminated the lake's fresh waters, displacing thousands of Mohana fisherfolk families and damaging indigenous wetlands.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ============================================================
+         2. TEXTILE & FAST FASHION (Vibrant Green)
+         ============================================================ -->
+    <div class="expandable-bar-banner green-banner" id="banner-textile" data-target="drawer-textile" role="button" aria-expanded="false">
+      <div class="bar-icon-wrap">
+        <img src="/Assets/Tab-scroll-blue.png" alt="" class="tab-scroll-icon" />
+      </div>
+      <h2 class="bar-title" id="textile-banner-title">TEXTILE &amp; FAST FASHION</h2>
+      <p class="bar-subtitle" id="textile-banner-sub">Supply chain transparency, industrial captive power emissions &amp; fair worker transitions</p>
+      <button type="button" class="btn-bar-action">EXPLORE WORK</button>
+      <div class="bar-icon-wrap">
+        <img src="/Assets/Tab-scroll-blue.png" alt="" class="tab-scroll-icon rotated-180" />
+      </div>
+      <div class="bar-toggle-indicator">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+
+    <!-- B. Dropdown Content 2: Textile Narrative & Investigations -->
     <div class="expandable-drawer-content" id="drawer-textile">
+      <!-- Narrative Intro on Light Green Background -->
       <section class="work-intro-section textile-section" id="textile" aria-label="Textile &amp; Fast Fashion Narrative">
         <div class="work-intro-grid">
           <div class="work-intro-content">
@@ -165,36 +182,40 @@
             <p class="work-section-subtitle" id="textile-subtitle">Rethinking energy systems for a cleaner, fairer, and climate-resilient future.</p>
             <div class="work-section-description" id="textile-description">
               <p>
-                For CAEA, phasing out gas is not a distant policy idea — it is an urgent necessity. Pakistan's growing reliance on natural gas and imported LNG has trapped the country in a costly system, leading to wasted resources, financial losses, and long-term debts that burden the public for years.
+                Pakistan's textile sector accounts for significant national energy demand and industrial captive emissions. The race for cheap global fast fashion has incentivized high-polluting captive coal and gas power plants, while garment workers bear the brunt of toxic industrial discharge and unfair working conditions.
               </p>
               <p>
-                This is not only an economic problem. Producing and transporting gas releases methane, a gas that heats the planet even faster than carbon dioxide, and the communities living closest to gas fields, pipelines, and power plants bear the greatest damage.
+                CAEA is spearheading supply chain transparency, advocating for clean industrial microgrids, water conservation in processing mills, and enforceable worker protections for a just transition.
               </p>
               <p>
-                As solar energy becomes cheaper and more widely available, continued investment in gas makes less and less sense — it raises costs, weakens the power grid, and adds to emissions without benefiting ordinary people.
+                As renewable power becomes more cost-effective, continued dependence on fossil fuels in industrial captive generation creates severe financial and environmental liabilities that must be swiftly reformed.
               </p>
             </div>
             <a href="#apply" class="btn-join-pill" id="textile-join-btn" data-apply-btn data-opportunity-title="Textile Sector Researcher">JOIN US</a>
           </div>
 
-          <!-- Pink Arch Pattern Visual Column -->
-          <div class="arch-pattern-col" aria-hidden="true">
-            <span class="arch-shape pink-arch"></span>
-            <span class="arch-shape pink-arch"></span>
-            <span class="arch-shape pink-arch"></span>
-            <span class="arch-shape pink-arch"></span>
-            <span class="arch-shape pink-arch"></span>
-          </div>
+          <!-- Stacked White Semi-Circle Arch Pattern Column -->
+          <div class="arch-pattern-col white-semicircle-pattern" aria-hidden="true"></div>
         </div>
       </section>
 
       <!-- Textile Investigations Grid -->
       <section class="instagram-updates-section" aria-label="Textile Investigations">
-        <div style="max-width:1320px; margin:0 auto;">
-          <h3 class="articles-main-heading" id="textile-section-heading" style="color:#000000;">Working towards a future for sustainable textile practices</h3>
-          <p class="articles-intro-sub" id="textile-section-intro" style="color:#64748b;">
-            Our efforts are targeted towards creating dialogue and impact thereby. A just energy future starts with you.
-          </p>
+        <div class="textile-investigations-container">
+          <div class="textile-header-block">
+            <h3 class="articles-main-heading" id="textile-section-heading" style="color:#000000;">Working towards a future for sustainable textile practices</h3>
+            <p class="articles-intro-sub" id="textile-section-intro" style="color:#64748b;">
+              Our efforts are targeted towards creating dialogue and impact thereby. A just energy future starts with you.
+            </p>
+
+            <!-- Filter Pills for Textile -->
+            <div class="filter-pills-group" id="textile-filters" style="margin-top: 20px;">
+              <button class="filter-pill active" data-filter="all">ALL</button>
+              <button class="filter-pill" data-filter="water">WATER</button>
+              <button class="filter-pill" data-filter="land">LAND</button>
+              <button class="filter-pill" data-filter="hydropower">HYDROPOWER</button>
+            </div>
+          </div>
 
           <div class="instagram-cards-grid" id="textile-cards-grid">
             <!-- Card 1 -->
@@ -216,7 +237,7 @@
               <div>
                 <h4 class="insta-card-title">Fashion and Fossil Fuels</h4>
                 <p class="insta-card-desc">
-                  Investigating synthetic fiber reliance, coal-fired industrial captive power plants, and fair wage transitions for garment workers.
+                  Investigating synthetic fiber reliance, coal-fired industrial captive power plants, and fair wage transitions for garment workers across industrial zones.
                 </p>
               </div>
               <a href="#video-modal" class="btn-watch-now" data-apply-btn data-opportunity-title="Textile Watch">
@@ -230,7 +251,7 @@
               <div>
                 <h4 class="insta-card-title">Fashion and Fossil Fuels</h4>
                 <p class="insta-card-desc">
-                  Advocating for clean industrial energy microgrids and community-led environmental auditing across Pakistan's textile hubs.
+                  Advocating for clean industrial energy microgrids, zero liquid discharge standards, and community-led environmental auditing in textile hubs.
                 </p>
               </div>
               <a href="#video-modal" class="btn-watch-now" data-apply-btn data-opportunity-title="Textile Watch">
@@ -267,24 +288,20 @@
             <p class="work-section-subtitle" id="climate-subtitle">Rethinking energy systems for a cleaner, fairer, and climate-resilient future.</p>
             <div class="work-section-description" id="climate-description">
               <p>
-                For CAEA, phasing out gas is not a distant policy idea — it is an urgent necessity. Pakistan's growing reliance on natural gas and imported LNG has trapped the country in a costly system, leading to wasted resources, financial losses, and long-term debts that burden the public for years.
+                Climate justice recognizes that the climate crisis is not merely an environmental challenge, but a direct consequence of systemic economic inequality, colonial resource extraction, and unaccountable policymaking.
               </p>
               <p>
-                This is not only an economic problem. Producing and transporting gas releases methane, a gas that heats the planet even faster than carbon dioxide, and the communities living closest to gas fields, pipelines, and power plants bear the greatest damage.
+                The frontline communities in Pakistan—smallholder farmers in the Indus delta, mountain pastoralists in Gilgit-Baltistan, and fisherfolk across coastal belts—bear the heaviest burden of climate shocks while contributing least to global emissions.
               </p>
               <p>
-                We organize, write, and teach with the firm conviction that climate justice is inseparable from economic democracy, gender justice, and people's sovereignty over energy and resources.
+                We organize, write, and teach with the firm conviction that genuine climate justice is inseparable from economic democracy, gender equity, and people's sovereignty over energy, water, and land resources.
               </p>
             </div>
             <a href="#apply" class="btn-join-pill" id="climate-join-btn" data-apply-btn data-opportunity-title="Climate Justice Organizer">JOIN US</a>
           </div>
 
-          <div class="arch-pattern-col" aria-hidden="true">
-            <span class="arch-shape"></span>
-            <span class="arch-shape"></span>
-            <span class="arch-shape"></span>
-            <span class="arch-shape"></span>
-          </div>
+          <!-- Repeating Green Arch Pattern Column -->
+          <div class="arch-pattern-col story-pattern-col" aria-hidden="true"></div>
         </div>
       </section>
     </div>
@@ -328,10 +345,10 @@
             <div class="activities-gallery-main">
               <img id="hero-gallery-img" src="/Assets/media/events/contested-waters/RAY00190.JPG" alt="Featured activity gallery image" class="gallery-main-img" onerror="this.src='/Assets/Hero-image.png'" />
               <button type="button" class="gallery-arrow-btn prev-arrow" id="prev-hero-slide" aria-label="Previous slide">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+                <img src="/Assets/icons/arrow-left.svg" alt="Previous" width="18" height="18" onerror="this.parentNode.innerHTML='&#10094;'" />
               </button>
               <button type="button" class="gallery-arrow-btn next-arrow" id="next-hero-slide" aria-label="Next slide">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                <img src="/Assets/icons/arrow-right.svg" alt="Next" width="18" height="18" onerror="this.parentNode.innerHTML='&#10095;'" />
               </button>
             </div>
             <div class="activities-gallery-thumbs" id="hero-gallery-thumbs">

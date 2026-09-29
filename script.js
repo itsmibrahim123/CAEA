@@ -1333,21 +1333,31 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       listContainer.innerHTML = filtered.map((item, idx) => `
-        <div class="article-item-card ${idx === 0 ? 'is-active' : ''}" data-id="${item.id}">
-          <div class="article-item-meta">
+        <div class="article-list-card article-item-card ${idx === 0 ? 'active is-active' : ''}" data-id="${item.id}">
+          <div class="article-card-header article-item-meta">
             <span class="article-badge">${escapeHtml(item.kicker || item.category || 'KACHERI')}</span>
             <span class="article-date-str">${escapeHtml(item.dateFormatted || item.date || '20.05.2026')}</span>
           </div>
-          <h4 class="article-item-title">${escapeHtml(item.title)}</h4>
-          <p class="article-item-sub">${escapeHtml(item.subtitle || item.excerpt || '')}</p>
+          <h4 class="article-card-title article-item-title">${escapeHtml(item.title)}</h4>
+          <p class="article-card-sublabel article-item-sub">${escapeHtml(item.subtitle || '')}</p>
+          <p class="article-card-excerpt">${escapeHtml(item.excerpt || item.description || '')}</p>
         </div>
-      `).join('');
+      `).join('') + `
+        <a href="/pages/our-analytics.html" class="btn-more-work">
+          <span>MORE WORK</span>
+          <span>&gt;</span>
+        </a>
+      `;
 
       // Add click listener to load item in reader
-      const cards = listContainer.querySelectorAll('.article-item-card');
+      const cards = listContainer.querySelectorAll('.article-list-card');
       cards.forEach(card => {
         card.addEventListener('click', () => {
-          cards.forEach(c => c.classList.remove('is-active'));
+          cards.forEach(c => {
+            c.classList.remove('active');
+            c.classList.remove('is-active');
+          });
+          card.classList.add('active');
           card.classList.add('is-active');
           const id = card.getAttribute('data-id');
           const selectedArticle = articles.find(a => a.id === id);
@@ -1373,13 +1383,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (titleEl) titleEl.textContent = item.title;
       if (subEl) subEl.textContent = item.subtitle || item.excerpt || '';
-      if (authorEl) authorEl.textContent = item.author ? `BY ${item.author.toUpperCase()}` : 'BY CAEA POLICY TEAM';
+      if (authorEl) authorEl.textContent = item.author ? `BY ${item.author.toUpperCase()}` : 'BY HAMNA ANWAR';
       if (dateEl) dateEl.textContent = item.dateFormatted || item.date || '';
-      if (imgEl) imgEl.src = resolveImagePath(item.image);
+      if (imgEl) imgEl.src = resolveImagePath(item.image || 'Assets/how-water-became-power.jpg');
 
       if (contentEl) {
         const paras = (item.content || item.excerpt || '').split('\n').filter(Boolean);
-        contentEl.innerHTML = paras.map(p => `<p>${escapeHtml(p)}</p>`).join('');
+        if (paras.length > 0) {
+          contentEl.innerHTML = paras.map(p => `<p>${escapeHtml(p)}</p>`).join('');
+        } else {
+          contentEl.innerHTML = `
+            <p>The kacheri was based on the case of Lake Manchar. The discussion focused on the ecological destruction of the lake, and how large development projects have affected the people, culture, and livelihoods connected to it.</p>
+            <p>Lake Manchar is located in Sindh between the Khirthar mountain range and the River Sindhu. The lake is 360 miles long and 170 miles wide. It is the biggest natural sweet water lake in Asia.</p>
+          `;
+        }
       }
     }
 
@@ -1389,6 +1406,15 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.classList.add('active');
         currentFilter = btn.getAttribute('data-filter');
         filterAndRender();
+      });
+    });
+
+    // Textile filter buttons
+    const textileFilterBtns = document.querySelectorAll('#textile-filters .filter-pill');
+    textileFilterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        textileFilterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
       });
     });
 

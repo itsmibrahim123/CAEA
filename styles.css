@@ -1116,6 +1116,11 @@ body {
   user-select: none;
 }
 
+body.our-work-page .story-pattern-col {
+  grid-column: 2;
+  min-height: 520px;
+}
+
 /* Responsive adjustments */
 @media (max-width: 900px) {
   .story-grid-container {
