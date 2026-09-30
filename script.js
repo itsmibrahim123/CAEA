@@ -105,6 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
       markerEl.setAttribute('tabindex', '0');
       markerEl.setAttribute('aria-expanded', 'false');
       markerEl.setAttribute('aria-label', `${escapeHtml(pin.city)} project location`);
+      markerEl.setAttribute('data-pin-id', pin.id || pin.city.toLowerCase().replace(/[^a-z0-9]/g, ''));
 
       markerEl.innerHTML = `
         <div class="city-ripples" aria-hidden="true">

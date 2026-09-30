@@ -1183,4 +1183,41 @@ body.admin-body {
   gap: 10px;
 }
 
+/* Mobile & Tablet Responsive Styles */
+@media (max-width: 900px) {
+  :root {
+    --page-margin: 16px;
+  }
+
+  .admin-header-container {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .admin-actions-top {
+    flex-wrap: wrap;
+  }
+
+  .admin-stats-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .admin-table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .admin-modal-card {
+    width: 95%;
+    max-height: 90vh;
+    padding: 20px 16px;
+  }
+
+  input, textarea, select {
+    font-size: 16px !important;
+  }
+}
+
+
 

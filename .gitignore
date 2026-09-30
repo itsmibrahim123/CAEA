@@ -13,6 +13,7 @@ dist/
 .vscode/
 .idea/
 .vercel
+*.code-workspace
 
 # Database runtime files
 data/*.sqlite
