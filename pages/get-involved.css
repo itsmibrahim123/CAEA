@@ -211,3 +211,65 @@
     height: 200px;
   }
 }
+
+@media (max-width: 768px) {
+  .get-involved-outer-wrapper {
+    padding: 16px var(--page-margin, 16px) 40px;
+  }
+
+  .get-involved-container {
+    padding: 24px 18px 32px;
+    border-radius: 20px;
+  }
+
+  .get-involved-heading {
+    font-size: clamp(30px, 8vw, 44px);
+    margin-bottom: 28px;
+  }
+
+  .cause-card {
+    padding: 24px 20px;
+    border-radius: 20px;
+  }
+
+  .cause-card-3,
+  .cause-card-4 {
+    padding: 24px 20px;
+  }
+
+  .cause-card-title {
+    font-size: clamp(24px, 5.5vw, 30px);
+  }
+
+  .cause-card-btn {
+    width: 100%;
+    min-height: 44px;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+
+  .cause-card-graphic-box {
+    height: 180px;
+    border-radius: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .get-involved-outer-wrapper {
+    padding: 12px 12px 32px;
+  }
+
+  .get-involved-container {
+    padding: 20px 14px 28px;
+    border-radius: 16px;
+  }
+
+  .cause-card {
+    padding: 20px 16px;
+  }
+
+  .cause-card-title {
+    font-size: 22px;
+  }
+}
+

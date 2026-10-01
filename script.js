@@ -364,6 +364,23 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
+    // Swipe Gestures for Hero Gallery & Slideshow on Mobile Touch
+    const heroElements = document.querySelectorAll('.activities-page-section, .activities-gallery-wrapper, #hero-gallery-img, #work-gallery-img, .activities-upcoming-card');
+    heroElements.forEach(el => {
+      if (el && window.CAEAGestures && !el.dataset.gestureBound) {
+        el.dataset.gestureBound = 'true';
+        window.CAEAGestures.onSwipe(el, (g) => {
+          if (g.direction === 'swipeleft') {
+            setHeroEvent(currentHeroEventIndex + 1);
+            startHeroAutoCycling();
+          } else if (g.direction === 'swiperight') {
+            setHeroEvent(currentHeroEventIndex - 1);
+            startHeroAutoCycling();
+          }
+        }, { threshold: 35 });
+      }
+    });
+
     renderHeroThumbnails();
 
     // Determine initial featured event
@@ -792,6 +809,18 @@ document.addEventListener('DOMContentLoaded', () => {
           e.preventDefault();
           updateCardImage(currentIdx + 1);
         });
+      }
+
+      // Mobile Touch Swipe Gesture for Card Media Photo Carousel
+      if (mediaBox && window.CAEAGestures && !mediaBox.dataset.gestureBound) {
+        mediaBox.dataset.gestureBound = 'true';
+        window.CAEAGestures.onSwipe(mediaBox, (g) => {
+          if (g.direction === 'swipeleft') {
+            updateCardImage(currentIdx + 1);
+          } else if (g.direction === 'swiperight') {
+            updateCardImage(currentIdx - 1);
+          }
+        }, { threshold: 30 });
       }
     });
   }
@@ -1440,6 +1469,27 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         });
       });
+
+      // Mobile Touch Swipe Gesture for Article Reader
+      const readerContainer = document.querySelector('.article-view-column, .article-reader-container');
+      if (readerContainer && window.CAEAGestures && !readerContainer.dataset.gestureBound) {
+        readerContainer.dataset.gestureBound = 'true';
+        window.CAEAGestures.onSwipe(readerContainer, (g) => {
+          const currentActive = listContainer.querySelector('.article-list-card.active, .article-list-card.is-active');
+          if (!currentActive) return;
+          if (g.direction === 'swipeleft') {
+            const nextCard = currentActive.nextElementSibling;
+            if (nextCard && nextCard.classList.contains('article-list-card')) {
+              nextCard.click();
+            }
+          } else if (g.direction === 'swiperight') {
+            const prevCard = currentActive.previousElementSibling;
+            if (prevCard && prevCard.classList.contains('article-list-card')) {
+              prevCard.click();
+            }
+          }
+        }, { threshold: 45 });
+      }
 
       // Load initial item
       if (filtered.length > 0) {

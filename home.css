@@ -654,21 +654,96 @@
 
 @media (max-width: 900px) {
   .city-popup {
-    width: min(260px, 76vw) !important;
-    max-width: 80vw !important;
-    padding: 16px 14px 18px !important;
-    border-radius: 8px !important;
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.8) !important;
+    width: min(280px, 82vw) !important;
+    max-width: 86vw !important;
+    padding: 18px 16px 20px !important;
+    border-radius: 12px !important;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.85) !important;
   }
 
   .popup-badge {
     font-size: 11px !important;
-    padding: 5px 14px !important;
+    padding: 6px 16px !important;
     margin-bottom: 10px !important;
   }
 
   .popup-text {
-    font-size: 12.5px !important;
-    line-height: 1.42 !important;
+    font-size: 13px !important;
+    line-height: 1.45 !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-text-container {
+    padding: 24px var(--page-margin);
+  }
+
+  .hero-quote {
+    font-size: clamp(24px, 7vw, 36px);
+    line-height: 1.2;
+    min-width: auto;
+  }
+
+  .bottom-header-section {
+    padding-top: 16px;
+  }
+
+  .bottom-header-body {
+    padding: 16px 14px 20px;
+  }
+
+  .bottom-header-inner-card {
+    padding: 20px 16px;
+    border-radius: 4px;
+  }
+
+  .bottom-header-title {
+    font-size: clamp(26px, 6vw, 34px);
+    line-height: 1.15;
+  }
+
+  .latest-section-desc {
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .latest-video-thumb-wrap .video-play-btn {
+    width: 48px;
+    height: 48px;
+  }
+
+  .map-frame {
+    padding: 20px var(--page-margin) 28px;
+  }
+
+  .city-marker {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-quote {
+    font-size: clamp(20px, 6.5vw, 28px);
+    line-height: 1.22;
+  }
+
+  .sawtooth-pattern-wrapper,
+  .sawtooth-svg {
+    height: 32px;
+  }
+
+  .repeating-leaf-banner,
+  .repeating-leaf-pattern {
+    height: 40px;
+    background-size: auto 40px;
+  }
+
+  .bottom-header-title {
+    font-size: 24px;
+  }
+
+  .latest-video-thumb-wrap {
+    height: 160px;
   }
 }

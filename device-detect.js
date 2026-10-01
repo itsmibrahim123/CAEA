@@ -326,7 +326,198 @@
         closeMenu();
       });
     });
+
+    // Touch Swipe Gesture Support for Navigation Drawer
+    const drawerPanel = drawer.querySelector('.mobile-drawer-panel');
+    if (drawerPanel && window.CAEAGestures) {
+      // Swipe right on drawer panel to close
+      window.CAEAGestures.onSwipe(drawerPanel, (g) => {
+        if (g.direction === 'swiperight') {
+          closeMenu();
+        }
+      }, { threshold: 35 });
+    }
+
+    // Edge-swipe from right edge to open drawer on mobile
+    let edgeStartX = 0;
+    let edgeStartY = 0;
+    let edgeStartTime = 0;
+
+    document.addEventListener('touchstart', (e) => {
+      if (e.touches.length !== 1) return;
+      const t = e.touches[0];
+      edgeStartX = t.clientX;
+      edgeStartY = t.clientY;
+      edgeStartTime = Date.now();
+    }, { passive: true });
+
+    document.addEventListener('touchend', (e) => {
+      if (!currentInfo.isMobile || drawer.classList.contains('is-open')) return;
+      const t = e.changedTouches[0];
+      if (!t) return;
+      const deltaX = t.clientX - edgeStartX;
+      const deltaY = t.clientY - edgeStartY;
+      const elapsed = Date.now() - edgeStartTime;
+
+      const isRightEdge = edgeStartX >= (window.innerWidth - 45);
+      if (isRightEdge && deltaX < -45 && Math.abs(deltaX) > Math.abs(deltaY) * 1.3 && elapsed < 500) {
+        openMenu();
+      }
+    }, { passive: true });
   }
 
+  /* ============================================================
+     4. Universal Touch Gesture Engine (window.CAEAGestures)
+     ============================================================ */
+  const CAEAGestures = {
+    /**
+     * Attach a multi-directional swipe gesture listener to any element
+     * @param {HTMLElement|Window|Document} target
+     * @param {Function} handler ({ direction, deltaX, deltaY, distance, velocity, target, originalEvent })
+     * @param {Object} options { threshold: 40, maxDuration: 650, lockAxis: true }
+     */
+    onSwipe(target, handler, options = {}) {
+      if (!target) return () => {};
+      const threshold = options.threshold || 38;
+      const maxDuration = options.maxDuration || 650;
+      const lockAxis = options.lockAxis !== false;
+
+      let startX = 0;
+      let startY = 0;
+      let startTime = 0;
+      let isTracking = false;
+
+      function onTouchStart(e) {
+        if (e.touches.length !== 1) return;
+        const touch = e.touches[0];
+        startX = touch.clientX;
+        startY = touch.clientY;
+        startTime = Date.now();
+        isTracking = true;
+      }
+
+      function onTouchEnd(e) {
+        if (!isTracking) return;
+        isTracking = false;
+
+        const touch = e.changedTouches[0];
+        if (!touch) return;
+
+        const deltaX = touch.clientX - startX;
+        const deltaY = touch.clientY - startY;
+        const absX = Math.abs(deltaX);
+        const absY = Math.abs(deltaY);
+        const elapsed = Date.now() - startTime;
+
+        if (elapsed > maxDuration) return;
+
+        let direction = null;
+
+        if (lockAxis) {
+          if (absX >= threshold && absX > absY * 1.25) {
+            direction = deltaX > 0 ? 'swiperight' : 'swipeleft';
+          } else if (absY >= threshold && absY > absX * 1.25) {
+            direction = deltaY > 0 ? 'swipedown' : 'swipeup';
+          }
+        } else {
+          if (absX >= threshold || absY >= threshold) {
+            if (absX > absY) {
+              direction = deltaX > 0 ? 'swiperight' : 'swipeleft';
+            } else {
+              direction = deltaY > 0 ? 'swipedown' : 'swipeup';
+            }
+          }
+        }
+
+        if (direction) {
+          const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+          const velocity = distance / Math.max(1, elapsed);
+          handler({
+            direction,
+            deltaX,
+            deltaY,
+            distance,
+            velocity,
+            target: e.target,
+            originalEvent: e
+          });
+        }
+      }
+
+      target.addEventListener('touchstart', onTouchStart, { passive: true });
+      target.addEventListener('touchend', onTouchEnd, { passive: true });
+
+      return () => {
+        target.removeEventListener('touchstart', onTouchStart);
+        target.removeEventListener('touchend', onTouchEnd);
+      };
+    },
+
+    /**
+     * Enable smooth momentum swipe & drag for horizontal tabs and carousels
+     */
+    enableTouchDragScroll(container) {
+      if (!container) return;
+      container.style.webkitOverflowScrolling = 'touch';
+    }
+  };
+
+  window.CAEAGestures = CAEAGestures;
+
+  // 5. Global Modal & Popup Touch Gesture Dismissal System
+  document.addEventListener('DOMContentLoaded', () => {
+    // Delegated swipe-down handler for all open modals across all pages
+    let modalTouchStartY = 0;
+    let modalTouchStartX = 0;
+    let modalTouchStartTime = 0;
+    let activeModalTarget = null;
+
+    document.addEventListener('touchstart', (e) => {
+      const modal = e.target.closest('.caea-modal-overlay.is-active, .caea-modal-card, .caea-video-modal-card, dialog.admin-modal[open], .city-marker.is-open .city-popup');
+      if (!modal) {
+        activeModalTarget = null;
+        return;
+      }
+      activeModalTarget = modal;
+      modalTouchStartX = e.touches[0].clientX;
+      modalTouchStartY = e.touches[0].clientY;
+      modalTouchStartTime = Date.now();
+    }, { passive: true });
+
+    document.addEventListener('touchend', (e) => {
+      if (!activeModalTarget) return;
+      const touch = e.changedTouches[0];
+      if (!touch) return;
+
+      const deltaX = touch.clientX - modalTouchStartX;
+      const deltaY = touch.clientY - modalTouchStartY;
+      const elapsed = Date.now() - modalTouchStartTime;
+
+      // Swiped down with high vertical component
+      if (deltaY > 55 && Math.abs(deltaY) > Math.abs(deltaX) * 1.3 && elapsed < 600) {
+        // If the inner card is scrolled down, only dismiss if scrolled near top
+        const scrollable = activeModalTarget.closest('.caea-modal-card, .caea-modal-body, .admin-modal, .city-popup') || activeModalTarget;
+        if (scrollable && scrollable.scrollTop > 20) {
+          activeModalTarget = null;
+          return;
+        }
+
+        // Trigger close
+        const closeBtn = activeModalTarget.querySelector('.caea-modal-close-btn, #caea-modal-close-btn, #video-modal-close-btn, .modal-close-btn, .popup-badge');
+        if (closeBtn) {
+          closeBtn.click();
+        } else if (activeModalTarget.classList.contains('city-popup')) {
+          const parentMarker = activeModalTarget.closest('.city-marker');
+          if (parentMarker) {
+            parentMarker.classList.remove('is-open');
+            parentMarker.setAttribute('aria-expanded', 'false');
+          }
+        }
+      }
+      activeModalTarget = null;
+    }, { passive: true });
+  });
+
 })();
+
 

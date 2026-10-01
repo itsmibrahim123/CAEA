@@ -1210,7 +1210,7 @@ body.our-work-page {
 
   .arch-pattern-col,
   .story-pattern-col {
-    display: none;
+    display: none !important;
   }
 
   .articles-layout-grid {
@@ -1230,5 +1230,122 @@ body.our-work-page {
     grid-template-columns: 1fr;
     gap: 20px;
     padding: 28px 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .work-intro-section {
+    padding: 36px var(--page-margin);
+  }
+
+  .work-intro-grid {
+    min-height: auto;
+    gap: 24px;
+  }
+
+  .work-section-title {
+    font-size: clamp(28px, 6.5vw, 42px);
+  }
+
+  .work-section-subtitle {
+    font-size: clamp(15px, 3.8vw, 18px);
+  }
+
+  .expandable-bar-banner {
+    padding: 16px 14px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .bar-title {
+    font-size: clamp(18px, 5vw, 24px);
+  }
+
+  .bar-subtitle {
+    font-size: 13px;
+    width: 100%;
+  }
+
+  .btn-bar-action {
+    min-height: 44px;
+    padding: 8px 18px;
+    font-size: 12px;
+  }
+
+  .bar-icon-wrap.double-icon {
+    width: 26px;
+    gap: 4px;
+  }
+
+  .bar-icon-wrap.double-icon .tab-scroll-icon {
+    width: 26px;
+  }
+
+  .filter-pills-group {
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 6px;
+    max-width: 100%;
+  }
+
+  .filter-pill {
+    min-height: 44px;
+    padding: 8px 16px;
+  }
+
+  .articles-section {
+    padding: 28px var(--page-margin) 36px;
+  }
+
+  .reader-hero-img {
+    max-height: 240px;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .insta-card {
+    padding: 22px 18px;
+  }
+
+  .btn-watch-now {
+    width: 100%;
+    min-height: 44px;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+
+  .activities-gallery-thumbs {
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 6px;
+  }
+
+  .activities-upcoming-banner {
+    padding: 32px var(--page-margin);
+  }
+
+  .btn-see-more {
+    width: 100%;
+    min-height: 46px;
+    box-sizing: border-box;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .btn-join-pill {
+    width: 100%;
+    min-height: 46px;
+    box-sizing: border-box;
+  }
+
+  .expandable-drawer-content {
+    padding: 0;
+  }
+
+  .activity-media-wrap {
+    height: 180px;
   }
 }
