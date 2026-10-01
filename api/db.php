@@ -59,6 +59,7 @@ class Database {
             featured INTEGER DEFAULT 0,
             quote TEXT,
             quoteAuthor VARCHAR(255),
+            sortOrder INTEGER DEFAULT 0,
             createdAt DATETIME,
             updatedAt DATETIME
         );");
@@ -72,6 +73,7 @@ class Database {
             bio TEXT,
             image VARCHAR(512),
             email VARCHAR(255),
+            sortOrder INTEGER DEFAULT 0,
             createdAt DATETIME,
             updatedAt DATETIME
         );");
@@ -88,6 +90,7 @@ class Database {
             excerpt TEXT,
             content TEXT,
             image VARCHAR(512),
+            sortOrder INTEGER DEFAULT 0,
             createdAt DATETIME,
             updatedAt DATETIME
         );");
@@ -104,6 +107,7 @@ class Database {
             status VARCHAR(32) DEFAULT 'Open',
             image VARCHAR(512),
             gridArea VARCHAR(32),
+            sortOrder INTEGER DEFAULT 0,
             createdAt DATETIME,
             updatedAt DATETIME
         );");
@@ -137,6 +141,7 @@ class Database {
             path VARCHAR(512) NOT NULL,
             tags TEXT,
             date DATE,
+            sortOrder INTEGER DEFAULT 0,
             createdAt DATETIME
         );");
 
@@ -148,6 +153,7 @@ class Database {
             topPos VARCHAR(32) NOT NULL,
             badge VARCHAR(255) NOT NULL,
             description TEXT,
+            sortOrder INTEGER DEFAULT 0,
             createdAt DATETIME,
             updatedAt DATETIME
         );");
@@ -158,6 +164,16 @@ class Database {
             settingsJson TEXT NOT NULL,
             updatedAt DATETIME
         );");
+
+        // Ensure sortOrder column exists on existing database tables
+        $tablesWithSortOrder = ['activities', 'people', 'articles', 'opportunities', 'media', 'map_pins'];
+        foreach ($tablesWithSortOrder as $tbl) {
+            try {
+                $pdo->exec("ALTER TABLE {$tbl} ADD COLUMN sortOrder INTEGER DEFAULT 0");
+            } catch (Exception $e) {
+                // Column already exists
+            }
+        }
 
         // Seed data if database is empty
         self::seedDatabaseIfEmpty($pdo);

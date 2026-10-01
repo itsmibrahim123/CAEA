@@ -36,7 +36,8 @@ const SEED_DATA = {
       ],
       featured: true,
       quote: '“Those least responsible for climate change are worst affected by it”',
-      quoteAuthor: 'Vandana Shiva'
+      quoteAuthor: 'Vandana Shiva',
+      sortOrder: 1
     },
     {
       id: 'act-2',
@@ -55,7 +56,8 @@ const SEED_DATA = {
       ],
       featured: false,
       quote: '“Reconnecting with land and community to build resilience against climate burnout”',
-      quoteAuthor: 'CAEA Movement Gathering'
+      quoteAuthor: 'CAEA Movement Gathering',
+      sortOrder: 2
     },
     {
       id: 'act-3',
@@ -74,7 +76,8 @@ const SEED_DATA = {
       ],
       featured: false,
       quote: '“Manchhar is a mindful lake, yet it bears the heaviest burden of industrial discharge”',
-      quoteAuthor: 'Lake Manchhar Fisherman Community'
+      quoteAuthor: 'Lake Manchhar Fisherman Community',
+      sortOrder: 3
     },
     {
       id: 'act-4',
@@ -93,7 +96,8 @@ const SEED_DATA = {
       ],
       featured: false,
       quote: '“Uncovering the true human and ecological costs behind megastructures of power”',
-      quoteAuthor: 'Tarbela Exposure Delegation'
+      quoteAuthor: 'Tarbela Exposure Delegation',
+      sortOrder: 4
     }
   ],
 
@@ -105,7 +109,8 @@ const SEED_DATA = {
       category: 'Executive',
       bio: 'Sanaa’i Muhammad is the Founder and Chief Executive Officer of the Climate Action & Energy Access Institute (CAEA), where she leads advocacy, and movement-building at the intersection of energy transition and climate justice in Pakistan. Her work focuses on phasing out fossil gas in power, industry, and households; advancing renewable energy pathways; and building public understanding of how colonial infrastructures, financial institutions, and policy choices shape today’s climate and energy crises.\n\nHer work is rooted in a commitment to just transitions, energy equity, and amplifying the experiences of communities most affected by environmental harm. She writes, organizes, and teaches with the belief that climate justice is inseparable from economic democracy, gender justice, and people’s sovereignty over energy and resources.',
       image: 'Assets/Team/sanaa-muhammad.jpg',
-      email: 'sanaaimuhammad@climateactionenergyaccess.org'
+      email: 'sanaaimuhammad@climateactionenergyaccess.org',
+      sortOrder: 1
     },
     {
       id: 'ppl-2',
@@ -114,7 +119,8 @@ const SEED_DATA = {
       category: 'Core Team',
       bio: 'Kamran Aziz is the Director Research and a founding partner, working at the intersection of Pakistan’s electricity and gas systems, with a focus on advancing a just energy transition. His work combines historical analysis, political economy, and the lived experiences of communities directly affected by fossil fuel extraction and its social and environmental harms. His research is grounded in a commitment to center frontline communities, democratize energy governance, and support policy transformations aligned with climate justice.',
       image: 'Assets/Team/kamran-aziz.jpg',
-      email: 'kamranaziz@climateactionenergyaccess.org'
+      email: 'kamranaziz@climateactionenergyaccess.org',
+      sortOrder: 2
     },
     {
       id: 'ppl-3',
@@ -123,7 +129,8 @@ const SEED_DATA = {
       category: 'Core Team',
       bio: 'Asad is a law graduate from IIUI and a committed worker organizing with the oppressed communities. During his last experience as a Research Associate at Alternative Law Collective, his role involved conducting field research and supporting studies related to the land stewardship, and the concerns of communities victims of climate change and the developmental projects. He has been involved in organizing the students and the marches for their cultural and political rights. By engaging directly with communities, he has developed critical understanding of mainstream discourses around development and knowledge systems with a focus on the laws perpetuating inequalities and the local systems of justice. His role involved research and advocacy at Climate Action and Energy Access',
       image: 'Assets/Team/asad-juttah.jpg',
-      email: 'asadjuttah@climateactionenergyaccess.org'
+      email: 'asadjuttah@climateactionenergyaccess.org',
+      sortOrder: 3
     },
     {
       id: 'ppl-4',
@@ -132,7 +139,8 @@ const SEED_DATA = {
       category: 'Core Team',
       bio: 'Hamna has a bachelors in environmental engineering from NUST and is a passionate environmentalist. Her commitment to addressing critical issues such as climate change, and sustainability has only deepened with her academic journey. She aspires to focus her professional efforts to bring positive change in both our society and environment. As a Textile Associate at CAEA, Hamna focuses on textile-sector emissions and the global fast-fashion supply chain. She works on research, campaigns, and public engagement strategies that highlight the social, environmental, and climate impacts of the industry, and she is committed to advocating for a more equitable and sustainable future for both people and the planet.',
       image: 'Assets/Team/hamna-anwaar.jpg',
-      email: 'hamnaanwar@climateactionenergyaccess.org'
+      email: 'hamnaanwar@climateactionenergyaccess.org',
+      sortOrder: 4
     },
     {
       id: 'ppl-5',
@@ -141,7 +149,8 @@ const SEED_DATA = {
       category: 'Core Team',
       bio: 'Muhammad Saeed is an PHD Scholar whose research focuses on the intricate relationship between water, identity, and politics, specifically exploring "Sindhu and the making of Sindhi nationalism: River Politics during the colonial era. His academic work explores key thematic areas including water governance, floods, river infrastructures, and hydro-power development. His research also contributes to a critical understanding of riverine identity and the historical emergence of riverine movements, with a specific focus on the intersection of water and nationalism. Beyond his scholarship, Saeed is a political activist committed to organizing with oppressed communities, nations and people. He is currently serving as a Climate justice Lead at Climate Action and Energy Access, where his work involves both research and advocacy for equitable climate and energy solutions. His direct engagement with communities and academic study inform a critical perspective on mainstream development narratives and knowledge systems, particularly concerning the policies that impact vulnerable populations and perpetuate inequalities.',
       image: 'Assets/Team/muhammad-saeed.jpg',
-      email: 'guramanisaeed98@gmail.com'
+      email: 'guramanisaeed98@gmail.com',
+      sortOrder: 5
     },
     {
       id: 'ppl-6',
@@ -150,7 +159,8 @@ const SEED_DATA = {
       category: 'Core Team',
       bio: 'Muaaz Ahmad Khan is currently pursuing his MPhil in Government and Public Policy. He works as the Communication Lead and Social Media & Networks Coordinator at CAEA. His work focuses on communicating CAEA’s research and campaigns, managing its digital platforms and network groups, and working with partners on joint communication initiatives. He works closely with the research and campaign teams to turn complex ideas and research into clear and engaging content. Through his work, he contributes to CAEA’s efforts to strengthen a people-centered climate justice movement.',
       image: 'Assets/Team/muaaz-khan.jpg',
-      email: 'khanmuaaz762@gmail.com'
+      email: 'khanmuaaz762@gmail.com',
+      sortOrder: 6
     },
     {
       id: 'ppl-7',
@@ -159,7 +169,8 @@ const SEED_DATA = {
       category: 'Core Team',
       bio: 'Fizza Aman Bhutto is an Administration and HR Officer at the Climate Action and Energy Access (CAEA). She holds a Bachelor’s degree in Development Studies from Bahria University, Islamabad. Her development sector experience spans program coordination, engagement with Indigenous communities, and research on climate-induced disasters, with her undergraduate research focusing on the devastating 2022 floods in Pakistan. At CAEA, she works across administration, human resources, project coordination, and organizational development. She is particularly interested in the intersections of climate justice, development, and organizational development, and in how stronger, people-centered organizations can contribute to a more equitable and sustainable change.',
       image: 'Assets/Team/grid-1-3-fiza.png',
-      email: 'fizzabhutto9@gmail.com'
+      email: 'fizzabhutto9@gmail.com',
+      sortOrder: 7
     },
     {
       id: 'ppl-8',
@@ -168,7 +179,8 @@ const SEED_DATA = {
       category: 'Core Team',
       bio: 'Manahil Usman is an Associate in Fossil Fuel Phaseout at Climate Action for Energy Access (CAEA), where she focuses on research and data analysis at the intersection of energy policy and climate justice. With a background in Computer Science and an MBA, she brings an analytical foundation shaped by prior work in data management and sector-level analysis to her current focus on Pakistan\'s gas sector, LNG dynamics, and just transition frameworks. At CAEA, Manahil is committed to building the evidence base needed to advance credible, equitable fossil fuel phaseout policy in Pakistan and beyond.',
       image: 'Assets/Team/hina-yousaf.jpg',
-      email: 'manahilusman2@gmail.com'
+      email: 'manahilusman2@gmail.com',
+      sortOrder: 8
     },
     {
       id: 'ppl-9',
@@ -177,7 +189,8 @@ const SEED_DATA = {
       category: 'Core Team',
       bio: 'Abid Azim is an experienced finance professional with expertise in financial management, budgeting, financial reporting, taxation, audit, and strategic financial planning. He has been serving as Finance Manager at Climate Action and Energy Access LLP since May 2024, where he oversees financial analysis, budgeting, cash-flow management, financial reporting, and tax compliance. With professional experience spanning finance, audit, accounting, and business management, Abid brings a strong analytical and results-oriented approach to supporting organizational growth and sustainability. He is a Certified Public Accountant (CPA) from England & Wales and a finalist of ICAEW.',
       image: 'Assets/Team/nabeel-ahmad.jpg',
-      email: 'abidazeem101@gmail.com'
+      email: 'abidazeem101@gmail.com',
+      sortOrder: 9
     }
   ],
 
@@ -192,7 +205,8 @@ const SEED_DATA = {
       dateFormatted: '28.07.2026',
       excerpt: 'The kacheri was based on the case of Lake Manchar. The discussion focused on the ecological destruction of the lake, and how large development projects have affected the people, culture, and livelihoods connected to it.',
       content: 'The kacheri was based on the case of Lake Manchar. The discussion focused on the ecological destruction of the lake, and how large development projects have affected the people, culture, and livelihoods connected to it.\n\nLake Manchar is located in Sindh between the Khirthar mountain range and the River Sindhu. The lake is 360 miles long and 170 miles wide. It is the biggest natural sweet water lake in Asia. The word "Manchar" comes from the Sindhi words Meeh meaning rain and Chhar meaning a vast expanse. Together, "Meeh + Chhar" means a vast spread of Rain waters.\n\nIndustrial discharge and skewed water management have devastated the livelihood of thousands of fisherfolk families. CAEA continues to mobilize community kacheris to demand immediate ecological remediation and water rights.',
-      image: 'Assets/how-water-became-power.jpg'
+      image: 'Assets/how-water-became-power.jpg',
+      sortOrder: 1
     },
     {
       id: 'art-2',
@@ -204,7 +218,8 @@ const SEED_DATA = {
       dateFormatted: '10.02.2024',
       excerpt: 'A comprehensive review of Pakistan’s domestic natural gas allocation and its economic burden on working-class households.',
       content: 'Natural gas has long been treated as an abundant domestic resource in Pakistan. However, decades of preferential allocation and depleting reserves have precipitated a severe energy crisis.\n\nOur research shows that the power sector is the most important place to begin this shift. Imported LNG was meant to bring energy security, but instead it has made electricity more expensive and left Pakistan dependent on unpredictable global markets.',
-      image: 'Assets/Hero-image.png'
+      image: 'Assets/Hero-image.png',
+      sortOrder: 2
     },
     {
       id: 'art-3',
@@ -216,7 +231,8 @@ const SEED_DATA = {
       dateFormatted: '15.03.2024',
       excerpt: 'An investigation into how large development projects have impacted aquatic ecosystems and fishing livelihoods around Lake Manchhar.',
       content: 'Lake Manchhar is located in Sindh between the Dadu and Khanpur districts. Manchhar comes from the Sindhi words Man meaning mind and Chhar meaning lake or pond. Manchhar translates to "mindful lake". It is the largest natural freshwater lake in Asia.',
-      image: 'Assets/how-water-became-power-ai.jpg'
+      image: 'Assets/how-water-became-power-ai.jpg',
+      sortOrder: 3
     },
     {
       id: 'art-4',
@@ -228,7 +244,8 @@ const SEED_DATA = {
       dateFormatted: '10.04.2024',
       excerpt: 'Climate Action & Energy Access (CAEA) is a Pakistan-based research and advocacy institute committed to advancing a just, people-centered energy transition.',
       content: 'We work at the intersection of climate justice, energy governance, and public accountability, focusing on how entrenched fossil-fuel interests, inequitable subsidies, and distorted gas and power policies undermine the rights, wellbeing, and economic futures of ordinary people.',
-      image: 'Assets/how-water-became-power.jpg'
+      image: 'Assets/how-water-became-power.jpg',
+      sortOrder: 4
     }
   ],
 
@@ -243,7 +260,8 @@ const SEED_DATA = {
       description: 'We are looking for someone to work directly with communities on climate and energy issues through field visits, research, and helping people\'s voices reach the right places.',
       status: 'Open',
       image: '',
-      gridArea: 'card1'
+      gridArea: 'card1',
+      sortOrder: 1
     },
     {
       id: 'opp-2',
@@ -255,7 +273,8 @@ const SEED_DATA = {
       description: 'A space for communities to talk openly about the climate justice and energy issues affecting them. Come listen, share, or just be part of the conversation.',
       status: 'Open',
       image: '',
-      gridArea: 'card2'
+      gridArea: 'card2',
+      sortOrder: 2
     },
     {
       id: 'opp-3',
@@ -267,7 +286,8 @@ const SEED_DATA = {
       description: 'Are you interested in working with CAEA as a volunteer? Help us with events, outreach, and field work on the ground. No experience needed, just time and interest.',
       status: 'Open',
       image: '',
-      gridArea: 'card3'
+      gridArea: 'card3',
+      sortOrder: 3
     },
     {
       id: 'opp-4',
@@ -279,7 +299,8 @@ const SEED_DATA = {
       description: 'We\'re looking for passionate, curious interns looking to be a part of the climate justice movement in Pakistan. Whether your strengths lie in research, storytelling, design, communications, advocacy, or community engagement, there\'s space for you here.',
       status: 'Open',
       image: 'Assets/how-water-became-power.jpg',
-      gridArea: 'card4'
+      gridArea: 'card4',
+      sortOrder: 4
     }
   ],
 
@@ -574,7 +595,8 @@ const SEED_DATA = {
       left: '64%',
       top: '6%',
       badge: 'HUNZA',
-      description: 'Our team comes from diverse backgrounds across Gilgit-Baltistan. Climate Action & Energy Access (CAEA) is a Pakistan-based research and advocacy institute committed to empowering mountain communities through renewable energy.'
+      description: 'Our team comes from diverse backgrounds across Gilgit-Baltistan. Climate Action & Energy Access (CAEA) is a Pakistan-based research and advocacy institute committed to empowering mountain communities through renewable energy.',
+      sortOrder: 1
     },
     {
       id: 'pin-jalalpur',
@@ -582,7 +604,8 @@ const SEED_DATA = {
       left: '69%',
       top: '30%',
       badge: 'JALALPUR',
-      description: 'Our team works closely with agrarian communities in Jalalpur advancing decentralized solar irrigation, groundwater conservation, and community energy governance.'
+      description: 'Our team works closely with agrarian communities in Jalalpur advancing decentralized solar irrigation, groundwater conservation, and community energy governance.',
+      sortOrder: 2
     },
     {
       id: 'pin-manchhar',
@@ -590,7 +613,8 @@ const SEED_DATA = {
       left: '45%',
       top: '60%',
       badge: 'MANCHHAR',
-      description: 'Our team works directly with freshwater fishing communities around Lake Manchhar. CAEA focuses on resilient water-energy solutions and ecological preservation.'
+      description: 'Our team works directly with freshwater fishing communities around Lake Manchhar. CAEA focuses on resilient water-energy solutions and ecological preservation.',
+      sortOrder: 3
     },
     {
       id: 'pin-thar',
@@ -598,7 +622,8 @@ const SEED_DATA = {
       left: '49%',
       top: '86%',
       badge: 'THAR',
-      description: 'In the Thar desert, CAEA is leading research into off-grid solar microgrids and clean drinking water access for rural and indigenous desert settlements.'
+      description: 'In the Thar desert, CAEA is leading research into off-grid solar microgrids and clean drinking water access for rural and indigenous desert settlements.',
+      sortOrder: 4
     },
     {
       id: 'pin-balochistan',
@@ -606,7 +631,8 @@ const SEED_DATA = {
       left: '22%',
       top: '50%',
       badge: 'BALOCHISTAN',
-      description: 'Our upcoming project initiative exploring distributed solar and wind energy potential across western and pastoral regions.'
+      description: 'Our upcoming project initiative exploring distributed solar and wind energy potential across western and pastoral regions.',
+      sortOrder: 5
     }
   ],
 
@@ -621,6 +647,7 @@ const SEED_DATA = {
       videoUrl: '',
       image: 'Assets/Hero-image.png',
       orderIndex: 1,
+      sortOrder: 1,
       active: true
     },
     {
@@ -633,6 +660,7 @@ const SEED_DATA = {
       videoUrl: '',
       image: 'Assets/how-water-became-power.jpg',
       orderIndex: 2,
+      sortOrder: 2,
       active: true
     },
     {
@@ -645,6 +673,7 @@ const SEED_DATA = {
       videoUrl: '',
       image: 'Assets/how-water-became-power-ai.jpg',
       orderIndex: 3,
+      sortOrder: 3,
       active: true
     }
   ],
@@ -661,7 +690,8 @@ const SEED_DATA = {
       summary: 'Examines international climate finance mechanisms and domestic litigation frameworks to establish legal liability and community-centered restitution.',
       pdfUrl: '',
       image: 'Assets/how-water-became-power.jpg',
-      status: 'Published'
+      status: 'Published',
+      sortOrder: 1
     },
     {
       id: 'rep-2',
@@ -674,7 +704,8 @@ const SEED_DATA = {
       summary: 'Documentation of community resistance against mega-dam diversions and unequal water allocation across lower Sindh.',
       pdfUrl: '',
       image: 'Assets/how-water-became-power-ai.jpg',
-      status: 'Published'
+      status: 'Published',
+      sortOrder: 2
     }
   ],
 
@@ -1029,11 +1060,36 @@ class CAEADataStore {
     const key = this.getKey(collection);
     try {
       const data = localStorage.getItem(key);
-      return data ? JSON.parse(data) : [];
+      let items = data ? JSON.parse(data) : [];
+
+      if ((!items || items.length === 0) && collection === 'textileCards') {
+        const settings = this.getPageSettings('ourWork');
+        items = settings?.textile?.cards || SEED_DATA.textileCards || [];
+      } else if ((!items || items.length === 0) && collection === 'climateReports') {
+        const settings = this.getPageSettings('ourWork');
+        items = settings?.climateJustice?.reports || SEED_DATA.climateReports || [];
+      }
+
+      if (Array.isArray(items)) {
+        return items.sort((a, b) => {
+          const orderA = (a && a.sortOrder !== undefined && a.sortOrder !== null && a.sortOrder !== '') ? Number(a.sortOrder) : 
+                         (a && a.orderIndex !== undefined ? Number(a.orderIndex) : 999);
+          const orderB = (b && b.sortOrder !== undefined && b.sortOrder !== null && b.sortOrder !== '') ? Number(b.sortOrder) : 
+                         (b && b.orderIndex !== undefined ? Number(b.orderIndex) : 999);
+          return orderA - orderB;
+        });
+      }
+      return items;
     } catch (e) {
       console.error(`Error reading ${collection} from DataStore:`, e);
       return [];
     }
+  }
+
+  set(collection, items) {
+    if (!Array.isArray(items)) return;
+    localStorage.setItem(this.getKey(collection), JSON.stringify(items));
+    this.dispatchUpdate(collection);
   }
 
   getById(collection, id) {
@@ -1151,10 +1207,12 @@ class CAEADataStore {
                    collection.toLowerCase().startsWith('med') ? 'med' :
                    collection.toLowerCase().startsWith('map') || collection.toLowerCase().startsWith('pin') ? 'pin' :
                    collection.substring(0, 3);
+    const defaultSortOrder = (item.sortOrder !== undefined && item.sortOrder !== null && item.sortOrder !== '') ? parseInt(item.sortOrder, 10) : (items.length + 1);
     const newItem = {
       id: `${prefix}-${Date.now()}`,
       createdAt: new Date().toISOString(),
-      ...item
+      ...item,
+      sortOrder: defaultSortOrder
     };
 
     // Format date if provided
@@ -1173,7 +1231,7 @@ class CAEADataStore {
       newItem.dateFormatted = `${day}.${month}.${year}`;
     }
 
-    items.unshift(newItem);
+    items.push(newItem);
     localStorage.setItem(this.getKey(collection), JSON.stringify(items));
     this.dispatchUpdate(collection);
 
@@ -1190,9 +1248,11 @@ class CAEADataStore {
     if (index === -1) return null;
 
     const item = items[index];
+    const updatedSortOrder = (updatedFields.sortOrder !== undefined && updatedFields.sortOrder !== null && updatedFields.sortOrder !== '') ? parseInt(updatedFields.sortOrder, 10) : (item.sortOrder !== undefined ? item.sortOrder : index + 1);
     const updatedItem = {
       ...item,
       ...updatedFields,
+      sortOrder: updatedSortOrder,
       updatedAt: new Date().toISOString()
     };
 
@@ -1213,7 +1273,8 @@ class CAEADataStore {
     this.sendApiMutation(`api.php?collection=${apiCol}&id=${id}`, 'POST', {
       action: 'update',
       id: id,
-      ...updatedFields
+      ...updatedFields,
+      sortOrder: updatedSortOrder
     });
 
     return updatedItem;

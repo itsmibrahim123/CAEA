@@ -226,11 +226,18 @@ if ($method === 'GET') {
             $sql .= " WHERE " . implode(" AND ", $whereClauses);
         }
 
-        $sort = $_GET['sort'] ?? 'createdAt';
-        $order = strtoupper($_GET['order'] ?? 'DESC') === 'ASC' ? 'ASC' : 'DESC';
+        $sort = $_GET['sort'] ?? null;
+        $order = strtoupper($_GET['order'] ?? 'ASC') === 'DESC' ? 'DESC' : 'ASC';
         
-        // Check if sort column exists, else default to id or date
-        $sql .= " ORDER BY " . ($tableName === 'map_pins' ? 'id ASC' : "$sort $order");
+        if ($sort) {
+            $sql .= " ORDER BY `$sort` $order";
+        } else {
+            if (in_array($tableName, ['people', 'activities', 'articles', 'opportunities', 'media', 'map_pins'])) {
+                $sql .= " ORDER BY sortOrder ASC, createdAt DESC";
+            } else {
+                $sql .= " ORDER BY createdAt DESC";
+            }
+        }
 
         if (isset($_GET['limit'])) {
             $limit = (int)$_GET['limit'];

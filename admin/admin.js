@@ -424,9 +424,14 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    tableMapPinsBody.innerHTML = items.map(item => `
+    tableMapPinsBody.innerHTML = items.map((item, index) => `
       <tr>
-        <td style="font-family:monospace; font-size:11px; color:#888;">${item.id}</td>
+        <td>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <span class="order-badge">#${item.sortOrder || index + 1}</span>
+            <span style="font-family:monospace; font-size:11px; color:#888;">${item.id}</span>
+          </div>
+        </td>
         <td>
           <div style="display:flex; align-items:center; gap:8px;">
             <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#a3d88d; box-shadow:0 0 6px rgba(163,216,141,0.6);"></span>
@@ -448,6 +453,12 @@ document.addEventListener('DOMContentLoaded', () => {
         </td>
         <td class="text-right">
           <div class="table-actions">
+            <button class="action-icon-btn move-btn" onclick="moveItemOrder('mapPins', '${item.id}', 'up')" title="Move Up" ${index === 0 ? 'disabled style="opacity:0.3; cursor:not-allowed;"' : ''}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
+            </button>
+            <button class="action-icon-btn move-btn" onclick="moveItemOrder('mapPins', '${item.id}', 'down')" title="Move Down" ${index === items.length - 1 ? 'disabled style="opacity:0.3; cursor:not-allowed;"' : ''}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
             <button class="action-icon-btn edit-btn" onclick="openEditModal('mapPins', '${item.id}')" title="Edit Map Pin">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
             </button>
@@ -484,9 +495,14 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    tableActivitiesBody.innerHTML = items.map(item => `
+    tableActivitiesBody.innerHTML = items.map((item, index) => `
       <tr>
-        <td style="font-family:monospace; font-size:11px; color:#888;">${item.id}</td>
+        <td>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <span class="order-badge">#${item.sortOrder || index + 1}</span>
+            <span style="font-family:monospace; font-size:11px; color:#888;">${item.id}</span>
+          </div>
+        </td>
         <td>
           <img src="${resolveAdminImg(item.image, 'Assets/Hero-image.png')}" alt="" class="table-media-thumb" onerror="this.src='../Assets/CAEA-Navbar-Logo.png'" />
         </td>
@@ -500,6 +516,12 @@ document.addEventListener('DOMContentLoaded', () => {
         <td>${item.dateFormatted || item.date || 'N/A'}</td>
         <td class="text-right">
           <div class="table-actions">
+            <button class="action-icon-btn move-btn" onclick="moveItemOrder('activities', '${item.id}', 'up')" title="Move Up" ${index === 0 ? 'disabled style="opacity:0.3; cursor:not-allowed;"' : ''}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
+            </button>
+            <button class="action-icon-btn move-btn" onclick="moveItemOrder('activities', '${item.id}', 'down')" title="Move Down" ${index === items.length - 1 ? 'disabled style="opacity:0.3; cursor:not-allowed;"' : ''}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
             <button class="action-icon-btn edit-btn" onclick="openEditModal('activities', '${item.id}')" title="Edit Activity">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
             </button>
@@ -535,9 +557,14 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    tablePeopleBody.innerHTML = items.map(item => `
+    tablePeopleBody.innerHTML = items.map((item, index) => `
       <tr>
-        <td style="font-family:monospace; font-size:11px; color:#888;">${item.id}</td>
+        <td>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <span class="order-badge">#${item.sortOrder || index + 1}</span>
+            <span style="font-family:monospace; font-size:11px; color:#888;">${item.id}</span>
+          </div>
+        </td>
         <td>
           <img src="${resolveAdminImg(item.image, 'Assets/Team/grid-1-2-Sanaa.png')}" alt="" class="table-media-thumb" style="border-radius:50%; width:36px; height:36px; object-fit:cover;" onerror="this.src='../Assets/CAEA-Navbar-Logo.png'" />
         </td>
@@ -554,6 +581,12 @@ document.addEventListener('DOMContentLoaded', () => {
         </td>
         <td class="text-right">
           <div class="table-actions">
+            <button class="action-icon-btn move-btn" onclick="moveItemOrder('people', '${item.id}', 'up')" title="Move Up" ${index === 0 ? 'disabled style="opacity:0.3; cursor:not-allowed;"' : ''}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
+            </button>
+            <button class="action-icon-btn move-btn" onclick="moveItemOrder('people', '${item.id}', 'down')" title="Move Down" ${index === items.length - 1 ? 'disabled style="opacity:0.3; cursor:not-allowed;"' : ''}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
             <button class="action-icon-btn edit-btn" onclick="openEditModal('people', '${item.id}')" title="Edit Person">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
             </button>
@@ -594,9 +627,14 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    tableFossilArticlesBody.innerHTML = items.map(item => `
+    tableFossilArticlesBody.innerHTML = items.map((item, index) => `
       <tr>
-        <td style="font-family:monospace; font-size:11px; color:#888;">${item.id}</td>
+        <td>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <span class="order-badge">#${item.sortOrder || index + 1}</span>
+            <span style="font-family:monospace; font-size:11px; color:#888;">${item.id}</span>
+          </div>
+        </td>
         <td>
           <img src="${resolveAdminImg(item.image, 'Assets/how-water-became-power.jpg')}" alt="" class="table-media-thumb" onerror="this.src='../Assets/CAEA-Navbar-Logo.png'" />
         </td>
@@ -610,6 +648,12 @@ document.addEventListener('DOMContentLoaded', () => {
         <td>${item.dateFormatted || item.date || 'N/A'}</td>
         <td class="text-right">
           <div class="table-actions">
+            <button class="action-icon-btn move-btn" onclick="moveItemOrder('articles', '${item.id}', 'up')" title="Move Up" ${index === 0 ? 'disabled style="opacity:0.3; cursor:not-allowed;"' : ''}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
+            </button>
+            <button class="action-icon-btn move-btn" onclick="moveItemOrder('articles', '${item.id}', 'down')" title="Move Down" ${index === items.length - 1 ? 'disabled style="opacity:0.3; cursor:not-allowed;"' : ''}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
             <button class="action-icon-btn edit-btn" onclick="openEditModal('articles', '${item.id}')" title="Edit Article">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
             </button>
@@ -652,9 +696,14 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    tableTextileCardsBody.innerHTML = cards.map(c => `
+    tableTextileCardsBody.innerHTML = cards.map((c, index) => `
       <tr>
-        <td style="font-family:monospace; font-size:11px; color:#888;">${c.id}</td>
+        <td>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <span class="order-badge">#${c.sortOrder || index + 1}</span>
+            <span style="font-family:monospace; font-size:11px; color:#888;">${c.id}</span>
+          </div>
+        </td>
         <td><strong>${escapeHtml(c.title || 'Investigation')}</strong></td>
         <td style="max-width:260px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${escapeHtml(c.description || '')}">${escapeHtml(c.description || '')}</td>
         <td><span class="table-badge" style="background:rgba(149,220,111,0.15); color:#95dc6f; border:1px solid rgba(149,220,111,0.3);">${escapeHtml(c.category || 'WATER')}</span></td>
@@ -662,6 +711,12 @@ document.addEventListener('DOMContentLoaded', () => {
         <td style="font-family:monospace; font-size:11px; color:#9da5b4; max-width:140px; overflow:hidden; text-overflow:ellipsis;">${escapeHtml(c.videoUrl || '—')}</td>
         <td class="text-right">
           <div class="table-actions">
+            <button class="action-icon-btn move-btn" onclick="moveItemOrder('textileCards', '${c.id}', 'up')" title="Move Up" ${index === 0 ? 'disabled style="opacity:0.3; cursor:not-allowed;"' : ''}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
+            </button>
+            <button class="action-icon-btn move-btn" onclick="moveItemOrder('textileCards', '${c.id}', 'down')" title="Move Down" ${index === cards.length - 1 ? 'disabled style="opacity:0.3; cursor:not-allowed;"' : ''}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
             <button class="action-icon-btn edit-btn" onclick="openEditModal('textileCards', '${c.id}')" title="Edit Card">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
             </button>
@@ -701,9 +756,14 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    tableClimateReportsBody.innerHTML = reports.map(r => `
+    tableClimateReportsBody.innerHTML = reports.map((r, index) => `
       <tr>
-        <td style="font-family:monospace; font-size:11px; color:#888;">${r.id}</td>
+        <td>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <span class="order-badge">#${r.sortOrder || index + 1}</span>
+            <span style="font-family:monospace; font-size:11px; color:#888;">${r.id}</span>
+          </div>
+        </td>
         <td>
           <strong>${escapeHtml(r.title)}</strong>
           <div style="font-size:12px; color:#9da5b4; max-width:260px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${escapeHtml(r.summary || '')}</div>
@@ -723,6 +783,12 @@ document.addEventListener('DOMContentLoaded', () => {
         </td>
         <td class="text-right">
           <div class="table-actions">
+            <button class="action-icon-btn move-btn" onclick="moveItemOrder('climateReports', '${r.id}', 'up')" title="Move Up" ${index === 0 ? 'disabled style="opacity:0.3; cursor:not-allowed;"' : ''}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
+            </button>
+            <button class="action-icon-btn move-btn" onclick="moveItemOrder('climateReports', '${r.id}', 'down')" title="Move Down" ${index === reports.length - 1 ? 'disabled style="opacity:0.3; cursor:not-allowed;"' : ''}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
             <button class="action-icon-btn edit-btn" onclick="openEditModal('climateReports', '${r.id}')" title="Edit Legal Report">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
             </button>
@@ -763,9 +829,14 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    tableArticlesBody.innerHTML = items.map(item => `
+    tableArticlesBody.innerHTML = items.map((item, index) => `
       <tr>
-        <td style="font-family:monospace; font-size:11px; color:#888;">${item.id}</td>
+        <td>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <span class="order-badge">#${item.sortOrder || index + 1}</span>
+            <span style="font-family:monospace; font-size:11px; color:#888;">${item.id}</span>
+          </div>
+        </td>
         <td>
           <img src="${resolveAdminImg(item.image, 'Assets/how-water-became-power.jpg')}" alt="" class="table-media-thumb" onerror="this.src='../Assets/CAEA-Navbar-Logo.png'" />
         </td>
@@ -779,6 +850,12 @@ document.addEventListener('DOMContentLoaded', () => {
         <td>${item.dateFormatted || item.date || 'N/A'}</td>
         <td class="text-right">
           <div class="table-actions">
+            <button class="action-icon-btn move-btn" onclick="moveItemOrder('articles', '${item.id}', 'up')" title="Move Up" ${index === 0 ? 'disabled style="opacity:0.3; cursor:not-allowed;"' : ''}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
+            </button>
+            <button class="action-icon-btn move-btn" onclick="moveItemOrder('articles', '${item.id}', 'down')" title="Move Down" ${index === items.length - 1 ? 'disabled style="opacity:0.3; cursor:not-allowed;"' : ''}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
             <button class="action-icon-btn edit-btn" onclick="openEditModal('articles', '${item.id}')" title="Edit Article">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
             </button>
@@ -917,7 +994,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    tableOpportunitiesBody.innerHTML = items.map(item => {
+    tableOpportunitiesBody.innerHTML = items.map((item, index) => {
       const statusClass = `status-${(item.status || 'open').toLowerCase()}`;
       const themeBadge = item.theme === 'black' ?
         `<span style="display:inline-block; padding:2px 8px; border-radius:4px; font-size:11px; background:#000; border:1px solid #333; color:#fff;">Black Card</span>` :
@@ -925,7 +1002,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
       return `
         <tr>
-          <td style="font-family:monospace; font-size:11px; color:#888;">${item.id}</td>
+          <td>
+            <div style="display:flex; align-items:center; gap:6px;">
+              <span class="order-badge">#${item.sortOrder || index + 1}</span>
+              <span style="font-family:monospace; font-size:11px; color:#888;">${item.id}</span>
+            </div>
+          </td>
           <td>${themeBadge}</td>
           <td>
             <strong>${escapeHtml(item.title)}</strong>
@@ -940,6 +1022,12 @@ document.addEventListener('DOMContentLoaded', () => {
           </td>
           <td class="text-right">
             <div class="table-actions">
+              <button class="action-icon-btn move-btn" onclick="moveItemOrder('opportunities', '${item.id}', 'up')" title="Move Up" ${index === 0 ? 'disabled style="opacity:0.3; cursor:not-allowed;"' : ''}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
+              </button>
+              <button class="action-icon-btn move-btn" onclick="moveItemOrder('opportunities', '${item.id}', 'down')" title="Move Down" ${index === items.length - 1 ? 'disabled style="opacity:0.3; cursor:not-allowed;"' : ''}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
               <button class="action-icon-btn edit-btn" onclick="openEditModal('opportunities', '${item.id}')" title="Edit Position Structure">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
               </button>
@@ -953,7 +1041,86 @@ document.addEventListener('DOMContentLoaded', () => {
     }).join('');
   }
 
-  // Filter Listeners
+  /* ============================================================
+     5.6 Move Item Order (▲ Up / ▼ Down)
+     ============================================================ */
+  window.moveItemOrder = async function(collection, id, direction) {
+    if (!window.DataStore) return;
+    let allItems = [];
+    let isNestedTextile = false;
+    let isNestedClimate = false;
+
+    if (collection === 'textileCards') {
+      allItems = window.DataStore.get('textileCards');
+      if (!allItems || !allItems.length) {
+        const s = window.DataStore.getPageSettings();
+        allItems = s.ourWork?.textile?.cards || [];
+      }
+      isNestedTextile = true;
+    } else if (collection === 'climateReports') {
+      allItems = window.DataStore.get('climateReports');
+      if (!allItems || !allItems.length) {
+        const s = window.DataStore.getPageSettings();
+        allItems = s.ourWork?.climateJustice?.reports || [];
+      }
+      isNestedClimate = true;
+    } else {
+      allItems = window.DataStore.get(collection);
+    }
+
+    if (!Array.isArray(allItems) || allItems.length === 0) return;
+
+    const idx = allItems.findIndex(i => String(i.id) === String(id));
+    if (idx === -1) return;
+
+    const targetIdx = direction === 'up' ? idx - 1 : idx + 1;
+    if (targetIdx < 0 || targetIdx >= allItems.length) return;
+
+    // Swap items
+    const temp = allItems[idx];
+    allItems[idx] = allItems[targetIdx];
+    allItems[targetIdx] = temp;
+
+    // Normalize 1-based sequential sortOrder
+    allItems.forEach((item, i) => {
+      item.sortOrder = i + 1;
+      item.orderIndex = i + 1;
+    });
+
+    if (isNestedTextile) {
+      window.DataStore.set('textileCards', allItems);
+      const currentSettings = window.DataStore.getPageSettings();
+      const ourWork = currentSettings.ourWork || {};
+      if (!ourWork.textile) ourWork.textile = {};
+      ourWork.textile.cards = allItems;
+      window.DataStore.savePageSettings('ourWork', ourWork);
+      renderTextileCardsTable();
+    } else if (isNestedClimate) {
+      window.DataStore.set('climateReports', allItems);
+      const currentSettings = window.DataStore.getPageSettings();
+      const ourWork = currentSettings.ourWork || {};
+      if (!ourWork.climateJustice) ourWork.climateJustice = {};
+      ourWork.climateJustice.reports = allItems;
+      window.DataStore.savePageSettings('ourWork', ourWork);
+      renderClimateReportsTable();
+    } else {
+      window.DataStore.set(collection, allItems);
+      if (window.DataStore.apiBase) {
+        try {
+          await Promise.all([
+            window.DataStore.update(collection, allItems[idx].id, { sortOrder: allItems[idx].sortOrder }),
+            window.DataStore.update(collection, allItems[targetIdx].id, { sortOrder: allItems[targetIdx].sortOrder })
+          ]);
+        } catch (e) {
+          console.warn('API sortOrder sync warning:', e);
+        }
+      }
+      renderAllTables();
+    }
+    showToast(`Order updated (${direction === 'up' ? '▲ Moved Up' : '▼ Moved Down'})`);
+  };
+
+  // Filter & Add Listeners
   if (searchActivities) searchActivities.addEventListener('input', renderActivitiesTable);
   if (filterActivitiesTag) filterActivitiesTag.addEventListener('change', renderActivitiesTable);
 
@@ -1019,6 +1186,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     modalTitle.textContent = `${isEdit ? 'Edit' : 'Add New'} ${collectionName}`;
 
+    const orderFieldHtml = `
+      <div class="form-group">
+        <label class="form-label">Display Order Index (sortOrder)</label>
+        <input type="number" name="sortOrder" class="admin-input" value="${item.sortOrder !== undefined && item.sortOrder !== null ? item.sortOrder : (item.orderIndex !== undefined ? item.orderIndex : '')}" placeholder="e.g. 1, 2, 3 (Leave blank for auto-order)" min="1" />
+        <div style="font-size:11.5px; color:#888; margin-top:4px;">Determines sequential order on public pages and admin lists.</div>
+      </div>
+    `;
+
     // Image preview resolution
     const currentImg = item.image || (collection === 'activities' ? 'Assets/Hero-image.png' : collection === 'people' ? 'Assets/Team/sanaa-muhammad.jpg' : 'Assets/how-water-became-power.jpg');
     const previewSrc = resolveAdminImg(currentImg);
@@ -1072,6 +1247,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <input type="text" name="top" class="admin-input" value="${escapeHtml(item.top || '50%')}" placeholder="e.g. 19%" required />
           </div>
         </div>
+        ${orderFieldHtml}
         <div class="form-group">
           <label class="form-label">Location Story / Popup Description</label>
           <textarea name="description" class="admin-textarea" rows="4" placeholder="Story, background, or community initiative details shown on pin click..." required>${escapeHtml(item.description || '')}</textarea>
@@ -1099,14 +1275,17 @@ document.addEventListener('DOMContentLoaded', () => {
             <option value="CASE STUDY" ${item.category === 'CASE STUDY' ? 'selected' : ''}>CASE STUDY</option>
           </select>
         </div>
-        <div class="form-group">
-          <label class="form-label">Date</label>
-          <input type="date" name="date" class="admin-input" value="${item.date || ''}" required />
+        <div class="form-row" style="display:flex; gap:16px;">
+          <div class="form-group flex-1" style="flex:1;">
+            <label class="form-label">Date</label>
+            <input type="date" name="date" class="admin-input" value="${item.date || ''}" required />
+          </div>
+          <div class="form-group flex-1" style="flex:1;">
+            <label class="form-label">Location</label>
+            <input type="text" name="location" class="admin-input" value="${escapeHtml(item.location || '')}" placeholder="e.g. Venue / City, Region" />
+          </div>
         </div>
-        <div class="form-group">
-          <label class="form-label">Location</label>
-          <input type="text" name="location" class="admin-input" value="${escapeHtml(item.location || '')}" placeholder="e.g. Venue / City, Region" />
-        </div>
+        ${orderFieldHtml}
         ${imageFieldHtml}
         <div class="form-group">
           <label class="form-label">Description</label>
@@ -1135,6 +1314,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <option value="Fellows" ${item.category === 'Fellows' ? 'selected' : ''}>Fellows</option>
           </select>
         </div>
+        ${orderFieldHtml}
         ${imageFieldHtml}
         <div class="form-group">
           <label class="form-label">Biography</label>
@@ -1163,6 +1343,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <label class="form-label">Date</label>
           <input type="date" name="date" class="admin-input" value="${item.date || ''}" required />
         </div>
+        ${orderFieldHtml}
         ${imageFieldHtml}
         <div class="form-group">
           <label class="form-label">Excerpt</label>
@@ -1212,6 +1393,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <option value="Closed" ${item.status === 'Closed' ? 'selected' : ''}>Closed</option>
           </select>
         </div>
+        ${orderFieldHtml}
         ${imageFieldHtml}
         <div class="form-group">
           <label class="form-label">Description</label>
@@ -1247,6 +1429,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <input type="text" name="targetOpportunity" class="admin-input" value="${escapeHtml(item.targetOpportunity || 'Textile Watch')}" placeholder="e.g. Textile Watch" required />
           </div>
         </div>
+        ${orderFieldHtml}
         <div class="form-group">
           <label class="form-label">Video or Media URL (Optional)</label>
           <input type="text" name="videoUrl" class="admin-input" value="${escapeHtml(item.videoUrl || '')}" placeholder="e.g. https://youtube.com/... or Assets/video.mp4" />
@@ -1291,6 +1474,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <label class="form-label">PDF / Download URL</label>
           <input type="text" name="pdfUrl" class="admin-input" value="${escapeHtml(item.pdfUrl || item.downloadUrl || '')}" placeholder="e.g. /docs/loss-and-damage-2026.pdf or https://..." />
         </div>
+        ${orderFieldHtml}
         ${imageFieldHtml}
         <div class="form-group">
           <label class="form-label">Executive Summary</label>
@@ -1429,6 +1613,11 @@ document.addEventListener('DOMContentLoaded', () => {
         dataObj[key] = val;
       });
 
+      if (dataObj.sortOrder !== undefined && dataObj.sortOrder !== '') {
+        dataObj.sortOrder = parseInt(dataObj.sortOrder, 10);
+        dataObj.orderIndex = dataObj.sortOrder;
+      }
+
       if (collection === 'textileCards') {
         const currentSettings = window.DataStore.getPageSettings();
         const ourWork = currentSettings.ourWork || {};
@@ -1444,28 +1633,33 @@ document.addEventListener('DOMContentLoaded', () => {
               description: dataObj.description,
               btnText: dataObj.btnText || 'WATCH NOW',
               targetOpportunity: dataObj.targetOpportunity || 'Textile Watch',
-              videoUrl: dataObj.videoUrl || ''
+              videoUrl: dataObj.videoUrl || '',
+              sortOrder: dataObj.sortOrder !== undefined ? dataObj.sortOrder : ourWork.textile.cards[idx].sortOrder,
+              orderIndex: dataObj.sortOrder !== undefined ? dataObj.sortOrder : ourWork.textile.cards[idx].sortOrder
             };
           }
           showToast('Updated textile investigation card successfully');
         } else {
+          const newCardOrder = dataObj.sortOrder !== undefined ? dataObj.sortOrder : ourWork.textile.cards.length + 1;
           ourWork.textile.cards.push({
             id: `tex-${Date.now()}`,
             title: dataObj.title,
             description: dataObj.description,
             btnText: dataObj.btnText || 'WATCH NOW',
             targetOpportunity: dataObj.targetOpportunity || 'Textile Watch',
-            videoUrl: dataObj.videoUrl || ''
+            videoUrl: dataObj.videoUrl || '',
+            sortOrder: newCardOrder,
+            orderIndex: newCardOrder
           });
           showToast('Added new textile investigation card successfully');
         }
 
+        window.DataStore.set('textileCards', ourWork.textile.cards);
         window.DataStore.savePageSettings('ourWork', ourWork);
         renderTextileCardsTable();
         closeModal();
         return;
       }
-
 
       const label = collection === 'mapPins' || collection === 'mappins' ? 'location pin' :
                     collection === 'opportunities' ? 'position' :
