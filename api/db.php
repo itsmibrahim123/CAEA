@@ -264,47 +264,56 @@ class Database {
             [
                 'id' => 'ppl-4',
                 'name' => 'Hamna Anwaar',
-                'role' => 'Creative & Communications Lead',
+                'role' => 'Textile Associate',
                 'category' => 'Core Team',
-                'bio' => 'Hamna is a visual storyteller and communications strategist who works on translating complex energy policy into accessible narratives for local organizing.',
+                'bio' => 'Hamna has a bachelors in environmental engineering from NUST and is a passionate environmentalist. Her commitment to addressing critical issues such as climate change, and sustainability has only deepened with her academic journey. She aspires to focus her professional efforts to bring positive change in both our society and environment. As a Textile Associate at CAEA, Hamna focuses on textile-sector emissions and the global fast-fashion supply chain. She works on research, campaigns, and public engagement strategies that highlight the social, environmental, and climate impacts of the industry, and she is committed to advocating for a more equitable and sustainable future for both people and the planet.',
                 'image' => 'Assets/Team/hamna-anwaar.jpg',
-                'email' => 'hamna.anwaar@climateactionenergyaccess.org'
+                'email' => 'hamnaanwar@climateactionenergyaccess.org'
             ],
             [
                 'id' => 'ppl-5',
-                'name' => 'Hina Yousaf',
-                'role' => 'Community Engagement Lead',
+                'name' => 'Muhammad Saeed',
+                'role' => 'Climate Justice Lead',
                 'category' => 'Core Team',
-                'bio' => 'Hina coordinates regional community dialogues and youth workshops, connecting grassroots organizers with national transition campaigns.',
-                'image' => 'Assets/Team/hina-yousaf.jpg',
-                'email' => 'hina.yousaf@climateactionenergyaccess.org'
+                'bio' => 'Muhammad Saeed is an PHD Scholar whose research focuses on the intricate relationship between water, identity, and politics, specifically exploring "Sindhu and the making of Sindhi nationalism: River Politics during the colonial era. His academic work explores key thematic areas including water governance, floods, river infrastructures, and hydro-power development. His research also contributes to a critical understanding of riverine identity and the historical emergence of riverine movements, with a specific focus on the intersection of water and nationalism. Beyond his scholarship, Saeed is a political activist committed to organizing with oppressed communities, nations and people. He is currently serving as a Climate justice Lead at Climate Action and Energy Access, where his work involves both research and advocacy for equitable climate and energy solutions. His direct engagement with communities and academic study inform a critical perspective on mainstream development narratives and knowledge systems, particularly concerning the policies that impact vulnerable populations and perpetuate inequalities.',
+                'image' => 'Assets/Team/muhammad-saeed.jpg',
+                'email' => 'guramanisaeed98@gmail.com'
             ],
             [
                 'id' => 'ppl-6',
                 'name' => 'Muaaz Ahmad Khan',
-                'role' => 'Policy & Energy Analyst',
+                'role' => 'Communication Lead',
                 'category' => 'Core Team',
-                'bio' => 'Muaaz focuses on power sector modeling, circular debt dynamics, and analyzing clean energy subsidy schemes.',
+                'bio' => 'Muaaz Ahmad Khan is currently pursuing his MPhil in Government and Public Policy. He works as the Communication Lead and Social Media & Networks Coordinator at CAEA. His work focuses on communicating CAEA’s research and campaigns, managing its digital platforms and network groups, and working with partners on joint communication initiatives. He works closely with the research and campaign teams to turn complex ideas and research into clear and engaging content. Through his work, he contributes to CAEA’s efforts to strengthen a people-centered climate justice movement.',
                 'image' => 'Assets/Team/muaaz-khan.jpg',
-                'email' => 'muaaz.khan@climateactionenergyaccess.org'
+                'email' => 'khanmuaaz762@gmail.com'
             ],
             [
                 'id' => 'ppl-7',
-                'name' => 'Nabeel Ahmad',
-                'role' => 'Operations & Field Coordinator',
+                'name' => 'Fizza Aman Bhutto',
+                'role' => 'Admin & HR Officer',
                 'category' => 'Core Team',
-                'bio' => 'Nabeel manages field logistics, research delegations, and on-ground partner relationships across Sindh and Punjab.',
-                'image' => 'Assets/Team/nabeel-ahmad.jpg',
-                'email' => 'nabeel.ahmad@climateactionenergyaccess.org'
+                'bio' => 'Fizza Aman Bhutto is an Administration and HR Officer at the Climate Action and Energy Access (CAEA). She holds a Bachelor’s degree in Development Studies from Bahria University, Islamabad. Her development sector experience spans program coordination, engagement with Indigenous communities, and research on climate-induced disasters, with her undergraduate research focusing on the devastating 2022 floods in Pakistan. At CAEA, she works across administration, human resources, project coordination, and organizational development. She is particularly interested in the intersections of climate justice, development, and organizational development, and in how stronger, people-centered organizations can contribute to a more equitable and sustainable change.',
+                'image' => 'Assets/Team/grid-1-3-fiza.png',
+                'email' => 'fizzabhutto9@gmail.com'
             ],
             [
                 'id' => 'ppl-8',
-                'name' => 'Muhammad Saeed',
-                'role' => 'Research Fellow',
-                'category' => 'Fellows',
-                'bio' => 'Saeed conducts field studies on groundwater contamination and socio-environmental impacts of large-scale infrastructure projects.',
-                'image' => 'Assets/Team/muhammad-saeed.jpg',
-                'email' => 'muhammad.saeed@climateactionenergyaccess.org'
+                'name' => 'Manahil Usman',
+                'role' => 'Associate Fossil Fuel Phaseout',
+                'category' => 'Core Team',
+                'bio' => "Manahil Usman is an Associate in Fossil Fuel Phaseout at Climate Action for Energy Access (CAEA), where she focuses on research and data analysis at the intersection of energy policy and climate justice. With a background in Computer Science and an MBA, she brings an analytical foundation shaped by prior work in data management and sector-level analysis to her current focus on Pakistan's gas sector, LNG dynamics, and just transition frameworks. At CAEA, Manahil is committed to building the evidence base needed to advance credible, equitable fossil fuel phaseout policy in Pakistan and beyond.",
+                'image' => 'Assets/Team/hina-yousaf.jpg',
+                'email' => 'manahilusman2@gmail.com'
+            ],
+            [
+                'id' => 'ppl-9',
+                'name' => 'Abid Azim',
+                'role' => 'Finance Officer',
+                'category' => 'Core Team',
+                'bio' => 'Abid Azim is an experienced finance professional with expertise in financial management, budgeting, financial reporting, taxation, audit, and strategic financial planning. He has been serving as Finance Manager at Climate Action and Energy Access LLP since May 2024, where he oversees financial analysis, budgeting, cash-flow management, financial reporting, and tax compliance. With professional experience spanning finance, audit, accounting, and business management, Abid brings a strong analytical and results-oriented approach to supporting organizational growth and sustainability. He is a Certified Public Accountant (CPA) from England & Wales and a finalist of ICAEW.',
+                'image' => 'Assets/Team/nabeel-ahmad.jpg',
+                'email' => 'abidazeem101@gmail.com'
             ]
         ];
 

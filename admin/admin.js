@@ -539,11 +539,12 @@ document.addEventListener('DOMContentLoaded', () => {
       <tr>
         <td style="font-family:monospace; font-size:11px; color:#888;">${item.id}</td>
         <td>
-          <img src="${resolveAdminImg(item.image, 'Assets/Team/grid-1-2-Sanaa.png')}" alt="" class="table-media-thumb" style="border-radius:50%; width:36px; height:36px;" onerror="this.src='../Assets/CAEA-Navbar-Logo.png'" />
+          <img src="${resolveAdminImg(item.image, 'Assets/Team/grid-1-2-Sanaa.png')}" alt="" class="table-media-thumb" style="border-radius:50%; width:36px; height:36px; object-fit:cover;" onerror="this.src='../Assets/CAEA-Navbar-Logo.png'" />
         </td>
         <td>
           <strong>${escapeHtml(item.name)}</strong>
           <div style="font-size:12px; color:#9da5b4;">${escapeHtml(item.role || 'N/A')}</div>
+          ${item.email ? `<div style="font-size:11px; color:#718096; margin-top:2px;">${escapeHtml(item.email)}</div>` : ''}
         </td>
         <td>
           <span class="table-badge">${escapeHtml(item.category || 'Core Team')}</span>
@@ -1123,17 +1124,21 @@ document.addEventListener('DOMContentLoaded', () => {
           <input type="text" name="role" class="admin-input" value="${escapeHtml(item.role || '')}" placeholder="e.g. Climate Research Associate" required />
         </div>
         <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" name="email" class="admin-input" value="${escapeHtml(item.email || '')}" placeholder="e.g. member@climateactionenergyaccess.org" />
+        </div>
+        <div class="form-group">
           <label class="form-label">Team Category</label>
           <select name="category" class="admin-input">
             <option value="Executive" ${item.category === 'Executive' ? 'selected' : ''}>Executive</option>
-            <option value="Core Team" ${item.category === 'Core Team' ? 'selected' : ''}>Core Team</option>
+            <option value="Core Team" ${item.category === 'Core Team' || !item.category ? 'selected' : ''}>Core Team</option>
             <option value="Fellows" ${item.category === 'Fellows' ? 'selected' : ''}>Fellows</option>
           </select>
         </div>
         ${imageFieldHtml}
         <div class="form-group">
           <label class="form-label">Biography</label>
-          <textarea name="bio" class="admin-textarea" rows="4" placeholder="Brief biographical overview and focus areas..." required>${escapeHtml(item.bio || '')}</textarea>
+          <textarea name="bio" class="admin-textarea" rows="5" placeholder="Brief biographical overview and focus areas..." required>${escapeHtml(item.bio || '')}</textarea>
         </div>
       `;
     } else if (collection === 'articles') {

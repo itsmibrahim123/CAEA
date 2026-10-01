@@ -128,42 +128,91 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ============================================================
-     Core Team Accordion Interaction
+     Core Team Accordion Interaction & Dynamic Rendering
      ============================================================ */
-  const accordionItems = document.querySelectorAll('[data-accordion-item]');
+  function bindAccordionListeners() {
+    const accordionItems = document.querySelectorAll('[data-accordion-item]');
 
-  accordionItems.forEach(item => {
-    const header = item.querySelector('.accordion-header');
-    const content = item.querySelector('.accordion-content');
+    accordionItems.forEach(item => {
+      const header = item.querySelector('.accordion-header');
+      const content = item.querySelector('.accordion-content');
 
-    if (!header || !content) return;
+      if (!header || !content) return;
+      if (header._hasAccordionListener) return;
+      header._hasAccordionListener = true;
 
-    header.addEventListener('click', () => {
-      const isOpen = item.classList.contains('is-open');
+      header.addEventListener('click', () => {
+        const isOpen = item.classList.contains('is-open');
 
-      // Optional: Close other accordion items for clean accordion behavior
-      accordionItems.forEach(otherItem => {
-        if (otherItem !== item && otherItem.classList.contains('is-open')) {
-          otherItem.classList.remove('is-open');
-          const otherHeader = otherItem.querySelector('.accordion-header');
-          const otherContent = otherItem.querySelector('.accordion-content');
-          if (otherHeader) otherHeader.setAttribute('aria-expanded', 'false');
-          if (otherContent) otherContent.setAttribute('aria-hidden', 'true');
+        // Close other accordion items for clean accordion behavior
+        accordionItems.forEach(otherItem => {
+          if (otherItem !== item && otherItem.classList.contains('is-open')) {
+            otherItem.classList.remove('is-open');
+            const otherHeader = otherItem.querySelector('.accordion-header');
+            const otherContent = otherItem.querySelector('.accordion-content');
+            if (otherHeader) otherHeader.setAttribute('aria-expanded', 'false');
+            if (otherContent) otherContent.setAttribute('aria-hidden', 'true');
+          }
+        });
+
+        // Toggle current item
+        if (isOpen) {
+          item.classList.remove('is-open');
+          header.setAttribute('aria-expanded', 'false');
+          content.setAttribute('aria-hidden', 'true');
+        } else {
+          item.classList.add('is-open');
+          header.setAttribute('aria-expanded', 'true');
+          content.setAttribute('aria-hidden', 'false');
         }
       });
-
-      // Toggle current item
-      if (isOpen) {
-        item.classList.remove('is-open');
-        header.setAttribute('aria-expanded', 'false');
-        content.setAttribute('aria-hidden', 'true');
-      } else {
-        item.classList.add('is-open');
-        header.setAttribute('aria-expanded', 'true');
-        content.setAttribute('aria-hidden', 'false');
-      }
     });
-  });
+  }
+
+  function renderDynamicTeamAccordions() {
+    const container = document.getElementById('team-accordion');
+    if (!container || !window.DataStore) return;
+
+    const people = window.DataStore.get('people');
+    if (!people || !people.length) return;
+
+    container.innerHTML = people.map(person => {
+      const bioParagraphs = (person.bio || '')
+        .split(/\n\s*\n|\n/)
+        .map(p => p.trim())
+        .filter(p => p.length > 0)
+        .map(p => `<p>${escapeHtml(p)}</p>`)
+        .join('');
+
+      const imgSrc = resolveImagePath(person.image || 'Assets/Team/sanaa-muhammad.jpg');
+
+      return `
+        <div class="accordion-item" data-accordion-item data-person-id="${escapeHtml(person.id || '')}">
+          <button class="accordion-header" type="button" aria-expanded="false">
+            <span class="accordion-name">${escapeHtml(person.name || '')}</span>
+            <span class="accordion-role-group">
+              <span class="accordion-role">${escapeHtml((person.role || '').toUpperCase())}</span>
+              <svg class="accordion-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </span>
+          </button>
+          <div class="accordion-content" aria-hidden="true">
+            <div class="accordion-inner">
+              <div class="accordion-photo-box">
+                <img src="${imgSrc}" alt="${escapeHtml(person.name || '')}" class="accordion-photo" loading="lazy" onerror="this.src='/Assets/Team/sanaa-muhammad.jpg'" />
+              </div>
+              <div class="accordion-bio">
+                ${bioParagraphs || `<p>${escapeHtml(person.bio || '')}</p>`}
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    bindAccordionListeners();
+  }
 
   /* ============================================================
      Activities Page Hero Event Switcher & Gallery Interactivity
@@ -1558,6 +1607,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeroEventSwitcher();
   renderDynamicActivities();
   renderDynamicOpportunities();
+  renderDynamicTeamAccordions();
   applyActivitiesVideoSettings();
   applyOurStoryPageSettings();
   initOurWorkPage();
@@ -1568,6 +1618,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initHeroEventSwitcher();
     renderDynamicActivities();
     renderDynamicOpportunities();
+    renderDynamicTeamAccordions();
     applyActivitiesVideoSettings();
     applyOurStoryPageSettings();
     initOurWorkPage();
