@@ -108,7 +108,7 @@ const SEED_DATA = {
       role: 'Founder & CEO',
       category: 'Executive',
       bio: 'Sanaa’i Muhammad is the Founder and Chief Executive Officer of the Climate Action & Energy Access Institute (CAEA), where she leads advocacy, and movement-building at the intersection of energy transition and climate justice in Pakistan. Her work focuses on phasing out fossil gas in power, industry, and households; advancing renewable energy pathways; and building public understanding of how colonial infrastructures, financial institutions, and policy choices shape today’s climate and energy crises.\n\nHer work is rooted in a commitment to just transitions, energy equity, and amplifying the experiences of communities most affected by environmental harm. She writes, organizes, and teaches with the belief that climate justice is inseparable from economic democracy, gender justice, and people’s sovereignty over energy and resources.',
-      image: 'Assets/Team/sanaa-muhammad.jpg',
+      image: 'Assets/Team/grid-1-2-Sanaa.png',
       email: 'sanaaimuhammad@climateactionenergyaccess.org',
       sortOrder: 1
     },
@@ -118,7 +118,7 @@ const SEED_DATA = {
       role: 'Founding Partner & Director Research',
       category: 'Core Team',
       bio: 'Kamran Aziz is the Director Research and a founding partner, working at the intersection of Pakistan’s electricity and gas systems, with a focus on advancing a just energy transition. His work combines historical analysis, political economy, and the lived experiences of communities directly affected by fossil fuel extraction and its social and environmental harms. His research is grounded in a commitment to center frontline communities, democratize energy governance, and support policy transformations aligned with climate justice.',
-      image: 'Assets/Team/kamran-aziz.jpg',
+      image: 'Assets/Team/grid-2-1-kamran.png',
       email: 'kamranaziz@climateactionenergyaccess.org',
       sortOrder: 2
     },
@@ -128,7 +128,7 @@ const SEED_DATA = {
       role: 'Research Associate',
       category: 'Core Team',
       bio: 'Asad is a law graduate from IIUI and a committed worker organizing with the oppressed communities. During his last experience as a Research Associate at Alternative Law Collective, his role involved conducting field research and supporting studies related to the land stewardship, and the concerns of communities victims of climate change and the developmental projects. He has been involved in organizing the students and the marches for their cultural and political rights. By engaging directly with communities, he has developed critical understanding of mainstream discourses around development and knowledge systems with a focus on the laws perpetuating inequalities and the local systems of justice. His role involved research and advocacy at Climate Action and Energy Access',
-      image: 'Assets/Team/asad-juttah.jpg',
+      image: 'Assets/Team/grid-3-2-muhammad.png',
       email: 'asadjuttah@climateactionenergyaccess.org',
       sortOrder: 3
     },
@@ -138,7 +138,7 @@ const SEED_DATA = {
       role: 'Textile Associate',
       category: 'Core Team',
       bio: 'Hamna has a bachelors in environmental engineering from NUST and is a passionate environmentalist. Her commitment to addressing critical issues such as climate change, and sustainability has only deepened with her academic journey. She aspires to focus her professional efforts to bring positive change in both our society and environment. As a Textile Associate at CAEA, Hamna focuses on textile-sector emissions and the global fast-fashion supply chain. She works on research, campaigns, and public engagement strategies that highlight the social, environmental, and climate impacts of the industry, and she is committed to advocating for a more equitable and sustainable future for both people and the planet.',
-      image: 'Assets/Team/hamna-anwaar.jpg',
+      image: 'Assets/Team/grid-1-1-hamna.png',
       email: 'hamnaanwar@climateactionenergyaccess.org',
       sortOrder: 4
     },
@@ -148,7 +148,7 @@ const SEED_DATA = {
       role: 'Climate Justice Lead',
       category: 'Core Team',
       bio: 'Muhammad Saeed is an PHD Scholar whose research focuses on the intricate relationship between water, identity, and politics, specifically exploring "Sindhu and the making of Sindhi nationalism: River Politics during the colonial era. His academic work explores key thematic areas including water governance, floods, river infrastructures, and hydro-power development. His research also contributes to a critical understanding of riverine identity and the historical emergence of riverine movements, with a specific focus on the intersection of water and nationalism. Beyond his scholarship, Saeed is a political activist committed to organizing with oppressed communities, nations and people. He is currently serving as a Climate justice Lead at Climate Action and Energy Access, where his work involves both research and advocacy for equitable climate and energy solutions. His direct engagement with communities and academic study inform a critical perspective on mainstream development narratives and knowledge systems, particularly concerning the policies that impact vulnerable populations and perpetuate inequalities.',
-      image: 'Assets/Team/muhammad-saeed.jpg',
+      image: 'Assets/Team/grid-3-2-muhammad.png',
       email: 'guramanisaeed98@gmail.com',
       sortOrder: 5
     },
@@ -158,7 +158,7 @@ const SEED_DATA = {
       role: 'Communication Lead',
       category: 'Core Team',
       bio: 'Muaaz Ahmad Khan is currently pursuing his MPhil in Government and Public Policy. He works as the Communication Lead and Social Media & Networks Coordinator at CAEA. His work focuses on communicating CAEA’s research and campaigns, managing its digital platforms and network groups, and working with partners on joint communication initiatives. He works closely with the research and campaign teams to turn complex ideas and research into clear and engaging content. Through his work, he contributes to CAEA’s efforts to strengthen a people-centered climate justice movement.',
-      image: 'Assets/Team/muaaz-khan.jpg',
+      image: 'Assets/Team/grid-3-3-muaz.png',
       email: 'khanmuaaz762@gmail.com',
       sortOrder: 6
     },
@@ -178,7 +178,7 @@ const SEED_DATA = {
       role: 'Associate Fossil Fuel Phaseout',
       category: 'Core Team',
       bio: 'Manahil Usman is an Associate in Fossil Fuel Phaseout at Climate Action for Energy Access (CAEA), where she focuses on research and data analysis at the intersection of energy policy and climate justice. With a background in Computer Science and an MBA, she brings an analytical foundation shaped by prior work in data management and sector-level analysis to her current focus on Pakistan\'s gas sector, LNG dynamics, and just transition frameworks. At CAEA, Manahil is committed to building the evidence base needed to advance credible, equitable fossil fuel phaseout policy in Pakistan and beyond.',
-      image: 'Assets/Team/hina-yousaf.jpg',
+      image: 'Assets/Team/grid-2-3-spogmai.png',
       email: 'manahilusman2@gmail.com',
       sortOrder: 8
     },
@@ -188,7 +188,7 @@ const SEED_DATA = {
       role: 'Finance Officer',
       category: 'Core Team',
       bio: 'Abid Azim is an experienced finance professional with expertise in financial management, budgeting, financial reporting, taxation, audit, and strategic financial planning. He has been serving as Finance Manager at Climate Action and Energy Access LLP since May 2024, where he oversees financial analysis, budgeting, cash-flow management, financial reporting, and tax compliance. With professional experience spanning finance, audit, accounting, and business management, Abid brings a strong analytical and results-oriented approach to supporting organizational growth and sustainability. He is a Certified Public Accountant (CPA) from England & Wales and a finalist of ICAEW.',
-      image: 'Assets/Team/nabeel-ahmad.jpg',
+      image: 'Assets/Team/grid-2-2-abid.png',
       email: 'abidazeem101@gmail.com',
       sortOrder: 9
     }
@@ -494,7 +494,7 @@ const SEED_DATA = {
       id: 'med-17',
       title: 'Sanaa’i Muhammad (CEO)',
       category: 'Team',
-      path: 'Assets/Team/sanaa-muhammad.jpg',
+      path: 'Assets/Team/grid-1-2-Sanaa.png',
       tags: ['team', 'leadership', 'executive'],
       date: '2024-01-01'
     },
@@ -502,15 +502,15 @@ const SEED_DATA = {
       id: 'med-18',
       title: 'Kamran Aziz',
       category: 'Team',
-      path: 'Assets/Team/kamran-aziz.jpg',
+      path: 'Assets/Team/grid-2-1-kamran.png',
       tags: ['team', 'operations', 'lead'],
       date: '2024-01-01'
     },
     {
       id: 'med-19',
-      title: 'Asad Juttah',
+      title: 'Muhammad Asad',
       category: 'Team',
-      path: 'Assets/Team/asad-juttah.jpg',
+      path: 'Assets/Team/grid-3-2-muhammad.png',
       tags: ['team', 'research'],
       date: '2024-01-01'
     },
@@ -518,40 +518,40 @@ const SEED_DATA = {
       id: 'med-20',
       title: 'Hamna Anwaar',
       category: 'Team',
-      path: 'Assets/Team/hamna-anwaar.jpg',
-      tags: ['team', 'communications'],
+      path: 'Assets/Team/grid-1-1-hamna.png',
+      tags: ['team', 'textile', 'associate'],
       date: '2024-01-01'
     },
     {
       id: 'med-21',
-      title: 'Hina Yousaf',
+      title: 'Fizza Aman Bhutto',
       category: 'Team',
-      path: 'Assets/Team/hina-yousaf.jpg',
-      tags: ['team', 'community'],
+      path: 'Assets/Team/grid-1-3-fiza.png',
+      tags: ['team', 'admin', 'hr'],
       date: '2024-01-01'
     },
     {
       id: 'med-22',
       title: 'Muaaz Ahmad Khan',
       category: 'Team',
-      path: 'Assets/Team/muaaz-khan.jpg',
-      tags: ['team', 'policy'],
+      path: 'Assets/Team/grid-3-3-muaz.png',
+      tags: ['team', 'communications', 'lead'],
       date: '2024-01-01'
     },
     {
       id: 'med-23',
-      title: 'Nabeel Ahmad',
+      title: 'Manahil Usman',
       category: 'Team',
-      path: 'Assets/Team/nabeel-ahmad.jpg',
-      tags: ['team', 'operations'],
+      path: 'Assets/Team/grid-2-3-spogmai.png',
+      tags: ['team', 'fossil-fuel'],
       date: '2024-01-01'
     },
     {
       id: 'med-24',
-      title: 'Muhammad Saeed',
+      title: 'Abid Azim',
       category: 'Team',
-      path: 'Assets/Team/muhammad-saeed.jpg',
-      tags: ['team', 'field'],
+      path: 'Assets/Team/grid-2-2-abid.png',
+      tags: ['team', 'finance'],
       date: '2024-01-01'
     },
     {
@@ -712,15 +712,35 @@ const SEED_DATA = {
   pageSettings: {
     home: {
       heroQuote: 'Not only must we be good, but we must also be good for something.',
-      heroQuoteAuthor: '',
+      heroQuoteAuthor: 'CAEA Motto',
+      heroVideoUrl: 'Assets/Video/Hero.mov',
       showLatestSection: true,
       latestTitle: 'BE A PART OF OUR LATEST',
       latestSubtitle: 'Watch our latest field updates, community kacheri highlights, and climate documentaries across Pakistan.',
       showLatestVideo: true,
       latestVideoTitle: 'Community Kacheri & Field Briefing',
       latestVideoDescription: 'Experience our frontline grassroots gatherings across Pakistan, exploring public energy ownership and water justice.',
-      latestVideoUrl: '',
-      latestVideoThumbnail: 'Assets/how-water-became-power.jpg'
+      latestVideoUrl: 'Assets/Video/Hero.mov',
+      latestVideoThumbnail: 'Assets/how-water-became-power.jpg',
+      quotes: [
+        { text: "Climate change is a battle between capitalism and the planet.", author: "Naomi Klein" },
+        { text: "The climate crisis is a call to transform the systems that brought us here.", author: "Naomi Klein" },
+        { text: "We need to remember that climate change is a civilizational wake-up call.", author: "Naomi Klein" },
+        { text: "The right to extract and profit cannot outweigh the right of communities to survive.", author: "Naomi Klein" },
+        { text: "Climate change isn't just an environmental issue; it's a justice issue.", author: "Naomi Klein" },
+        { text: "The future is not a gift; it is an achievement.", author: "Zygmunt Bauman" },
+        { text: "We are all responsible for each other.", author: "Zygmunt Bauman" },
+        { text: "Humanity is in crisis when responsibility is replaced by indifference.", author: "Zygmunt Bauman" },
+        { text: "Interdependence is our shared condition.", author: "Zygmunt Bauman" },
+        { text: "In wildness is the preservation of the world.", author: "Henry David Thoreau" },
+        { text: "Heaven is under our feet as well as over our heads.", author: "Henry David Thoreau" },
+        { text: "Nature is as well adapted to our weakness as to our strength.", author: "Henry David Thoreau" },
+        { text: "What is the use of a house if you haven't got a tolerable planet to put it on?", author: "Henry David Thoreau" },
+        { text: "All good things are wild and free.", author: "Henry David Thoreau" },
+        { text: "In nature's economy, the currency is not money, it is life.", author: "Vandana Shiva" },
+        { text: "The Earth gives enough for everyone's need, not everyone's greed.", author: "Vandana Shiva" },
+        { text: "When we plant trees, we plant the seeds of peace and hope.", author: "Wangari Maathai" }
+      ]
     },
     activities: {
       showVideo: true,
@@ -741,7 +761,7 @@ const SEED_DATA = {
         visible: true,
         title: 'FOSSIL FUEL PHASEOUT',
         subtitle: 'Rethinking energy systems for a cleaner, fairer, and climate-resilient future.',
-        description: "For CAEA, phasing out gas is not a distant policy idea — it is an urgent necessity. Pakistan's growing reliance on natural gas and imported LNG (liquefied natural gas) has trapped the country in a costly system, leading to wasted resources, financial losses, and long-term debts that burden the public for years.\n\nThis is not only an economic problem. Producing and transporting gas releases methane, a gas that heats the planet even faster than carbon dioxide, and the communities living closest to gas fields, pipelines, and power plants bear the greatest damage.\n\nOur research shows that the power sector is the most important place to begin this shift. Imported LNG was meant to bring energy security, but instead it has made electricity more expensive and left Pakistan dependent on unpredictable global markets. As solar energy becomes cheaper and more widely available, continued investment in gas makes less and less sense — it raises costs, weakens the power grid, and adds to emissions without benefiting ordinary people.\n\nWe also hold decision-makers accountable by challenging weak environmental assessments that fail to properly account for climate risks and harm to local communities. Moving away from gas will not happen overnight, but for us, this work is about confronting the interests that benefit from the status quo and building an energy system that is fair, sustainable, and built to last.",
+        description: "CAEA situates the phase-out of gas as an urgent political and ecological imperative, not just policy preference. Pakistan’s deepening dependence on natural gas and imported LNG has locked the country into extractive and financially ruinous value chains, producing large-scale losses through chronic inefficiencies such as unaccounted-for gas (UFG), fiscal leakages, and long-term contractual liabilities. These economic harms are inseparable from gas’s climate violence: methane emissions across the entire gas chain - from upstream extraction and processing to pipelines, turning the local ecology into sacrifice zones, LNG terminals, and downstream power generation - act as deadly accelerants to an already catastrophic climate crisis that Pakistan, among the least responsible yet most exposed, continues to endure. Our analysis proceeds through a political-ecological and value-chain lens, combining infrastructure mapping, regulatory scrutiny, and climate justice frameworks to interrogate gas as a system of power rather than a neutral fuel.\n\nWe identify the power sector as the primary and most strategic site for gas phase-out. Imported LNG, far from delivering energy security, has rendered electricity structurally unaffordable while deepening dependence on volatile international markets. As distributed solar rapidly expands across Pakistan and demand is increasingly squeezed, LNG and domestic gas alike become economically irrational - stranded assets that inflate tariffs, undermine grid stability, and intensify Pakistan’s emissions profile without delivering social benefit. In this context, gas no longer functions as a “transition fuel” but as an obstacle to an equitable and viable energy future.\n\nCAEA recognizes that gas extraction, transmission, and distribution - from upstream fields to downstream urban networks - constitute deeply entrenched political and institutional terrains.\n\nCAEA remains actively engaged in advancing demand reduction, alternatives, and public contestation. For us, gas phase-out is not merely a technical adjustment but a struggle to confront fossil dependency, reclaim policy space from extractive interests, and align Pakistan’s energy system with ecological limits, social justice, and climate survival.",
         joinBtnText: 'JOIN US',
         opportunityTitle: 'Fossil Fuel Phaseout Fellow',
         bannerTitle: 'The Life Story of Manchhar Lake',
@@ -756,7 +776,7 @@ const SEED_DATA = {
         iconStyle: 'double-blue',
         title: 'TEXTILE & FAST FASHION',
         subtitle: 'Rethinking energy systems for a cleaner, fairer, and climate-resilient future.',
-        description: "Pakistan's textile sector accounts for significant national energy demand and industrial captive emissions. The race for cheap global fast fashion has incentivized high-polluting captive coal and gas power plants, while garment workers bear the brunt of toxic industrial discharge and unfair working conditions.\n\nCAEA is spearheading supply chain transparency, advocating for clean industrial microgrids, water conservation in processing mills, and enforceable worker protections for a just transition.\n\nAs renewable power becomes more cost-effective, continued dependence on fossil fuels in industrial captive generation creates severe financial and environmental liabilities that must be swiftly reformed.",
+        description: "The fashion industry today is built on deep-rooted injustice. What was once rooted in craft and creativity has become a system driven by fast, cheap consumption — and someone always pays the price.\n\nFast fashion runs on a global chain of exploitation. To meet demand from wealthier countries, factories in places like Pakistan push workers to their limits under poor and unsafe conditions. This exploitation also plays out locally: resources and labor move from less-developed regions to more industrialized ones, often with little fair compensation. Raw materials drawn from these regions rarely benefit the communities they come from.\n\nOur work traces this entire supply chain — from where raw materials are extracted, to where garments are made, to where they are sold — to expose these hidden patterns of extraction and inequality. By sharing the stories of the people and places usually left out of the conversation, we aim to build momentum for a fairer, more equitable alternative to the current system.",
         archPattern: 'white-semicircle',
         joinBtnText: 'JOIN US',
         opportunityTitle: 'Textile Sector Researcher',
@@ -770,7 +790,7 @@ const SEED_DATA = {
         bannerBtnText: 'LEARN MORE',
         title: 'CLIMATE JUSTICE',
         subtitle: 'Rethinking energy systems for a cleaner, fairer, and climate-resilient future.',
-        description: "Climate justice recognizes that the climate crisis is not merely an environmental challenge, but a direct consequence of systemic economic inequality, colonial resource extraction, and unaccountable policymaking.\n\nThe frontline communities in Pakistan—smallholder farmers in the Indus delta, mountain pastoralists in Gilgit-Baltistan, and fisherfolk across coastal belts—bear the heaviest burden of climate shocks while contributing least to global emissions.\n\nWe organize, write, and teach with the firm conviction that genuine climate justice is inseparable from economic democracy, gender equity, and people's sovereignty over energy, water, and land resources.",
+        description: "At CAEA, we imagine climate justice beyond merely reducing emissions, compensating losses or making infrastructure resilient. We understand it as the task of refusing the conversion of living landscapes into empty, measurable and extractable space. Every ecology is also a world of knowledge, livelihood, memory, movement and social relations. Justice, therefore, asks who has the power to define a landscape’s problems, whose knowledge is recognised, who receives the benefits of an intervention and who is made to carry its violence. Climate justice means defending diverse ecologies from dispossession and restoring communities’ authority to adapt and steward the worlds that sustain them.\n\nPakistan inhabits different ecological worlds who are victims of the climate crises. Through intentional research, storytelling, and making a dialogic space, CAEA intends to centre the voices of communities victim of the climate crises. Part of this work involves closely examining the social and environmental costs of large infrastructure projects, costs that are often overlooked in official reports and government decisions.\n\nOur goal is to build narrative, shape climate conversations, and support creative reflective spaces to imagine just future that place communities, sustainability, and justice at the center of climate action.",
         joinBtnText: 'JOIN US',
         opportunityTitle: 'Climate Justice Organizer'
       },
@@ -956,7 +976,7 @@ class CAEADataStore {
 
   init() {
     const DATA_VERSION_KEY = 'caea_data_version';
-    const CURRENT_VERSION = 'v12_our_work_modular_crud';
+    const CURRENT_VERSION = 'v14_grid_team_images';
     const storedVersion = localStorage.getItem(DATA_VERSION_KEY);
 
     if (storedVersion !== CURRENT_VERSION) {

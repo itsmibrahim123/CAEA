@@ -60,7 +60,7 @@
   <header class="admin-header">
     <div class="admin-header-container">
       <div class="admin-brand">
-        <a href="../index.html" class="brand-link" aria-label="CAEA Home">
+        <a href="/" class="brand-link" aria-label="CAEA Home">
           <img src="../Assets/CAEA-Navbar-Logo.png" alt="CAEA Logo" class="brand-logo" />
         </a>
         <div class="admin-badge-wrap">
@@ -69,7 +69,7 @@
       </div>
 
       <div class="admin-actions-top">
-        <a href="../index.html" target="_blank" class="admin-btn admin-btn-outline">
+        <a href="/" target="_blank" class="admin-btn admin-btn-outline">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
           View Live Site
         </a>
@@ -373,24 +373,32 @@
               </div>
             </div>
 
-            <!-- Hero Quote Settings -->
+            <!-- Hero & Rotator Quotes Settings -->
             <div class="settings-divider"></div>
 
-            <div class="form-row">
-              <div class="form-group flex-2">
-                <label class="form-label" for="setting-home-hero-quote">Homepage Hero Quote</label>
-                <input type="text" id="setting-home-hero-quote" class="admin-input" placeholder="e.g. Not only must we be good, but we must also be good for something." />
+            <div style="margin-top: 16px;">
+              <h4 style="color: #fff; font-size: 16px; margin: 0 0 8px 0; font-weight: 600;">Rotating Landing Quotes List (Naomi Klein, Thoreau, Shiva, Maathai, Bauman)</h4>
+              <p style="color: var(--admin-text-muted); font-size: 13px; margin: 0 0 16px 0;">Manage climate justice and energy access quotes that cycle dynamically on the landing hero section.</p>
+
+              <div id="admin-quotes-container" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px;">
+                <!-- Dynamically populated quote rows -->
               </div>
-              <div class="form-group flex-1">
-                <label class="form-label" for="setting-home-hero-author">Hero Quote Author / Source</label>
-                <input type="text" id="setting-home-hero-author" class="admin-input" placeholder="e.g. CAEA Motto" />
+
+              <div class="form-row" style="background: rgba(255, 255, 255, 0.03); padding: 12px; border-radius: 8px; border: 1px dashed rgba(255, 255, 255, 0.15);">
+                <div class="form-group flex-2">
+                  <input type="text" id="new-quote-text" class="admin-input" placeholder="New quote text (e.g. In wildness is the preservation of the world.)" />
+                </div>
+                <div class="form-group flex-1">
+                  <input type="text" id="new-quote-author" class="admin-input" placeholder="Author (e.g. Henry David Thoreau)" />
+                </div>
+                <button type="button" class="admin-btn admin-btn-secondary" id="btn-add-quote" style="align-self: center;">+ Add Quote</button>
               </div>
             </div>
 
-            <div style="margin-top: 10px; display: flex; justify-content: flex-end;">
+            <div style="margin-top: 20px; display: flex; justify-content: flex-end;">
               <button type="button" class="admin-btn admin-btn-primary" id="btn-save-home-settings">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-                Save Home Page Settings
+                Save Home Page &amp; Video Settings
               </button>
             </div>
           </div>

@@ -50,32 +50,102 @@
   inset: 0;
   z-index: 3;
   width: 100%;
-  max-width: calc((820 / 1440) * 100vw);
+  max-width: 900px;
   margin: 0 auto;
   padding: 40px var(--page-margin);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   pointer-events: none;
+}
+
+.hero-bg-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero-image-container.has-video img.hero-image {
+  opacity: 0.2;
+}
+
+.quotes-rotator-wrapper {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.quotes-rotator-wrapper.fade-out {
+  opacity: 0;
+  transform: translateY(-8px);
 }
 
 .hero-quote {
   font-family: var(--font-heading);
   font-style: normal;
   font-weight: 400;
-  font-size: 48px;
-  line-height: 91.1%;
+  font-size: 44px;
+  line-height: 115%;
   letter-spacing: 0%;
   text-align: center;
   color: #FFFFFF;
   margin: 0;
-  min-width: calc((700 / 1440) * 100vw);
-  max-width: 100%;
+  max-width: 820px;
   text-wrap: balance;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
 }
 
 .hero-quote em {
   font-style: italic;
+}
+
+.quote-author-credit {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 600;
+  color: #a3d88d;
+  margin-top: 14px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+}
+
+.quote-dots-indicator {
+  display: flex;
+  gap: 8px;
+  margin-top: 24px;
+  pointer-events: auto;
+}
+
+.quote-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.quote-dot:hover {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.quote-dot.active {
+  background: #a3d88d;
+  width: 24px;
+  border-radius: 4px;
 }
 
 /* Responsive adjustments */

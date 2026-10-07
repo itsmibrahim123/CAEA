@@ -9,6 +9,14 @@
 (function () {
   'use strict';
 
+  // Automatically remove index.html from browser URL address bar
+  if (typeof window !== 'undefined' && window.location && window.location.pathname) {
+    if (window.location.pathname.endsWith('/index.html')) {
+      const cleanUrl = window.location.pathname.replace(/\/index\.html$/, '/') + window.location.search + window.location.hash;
+      window.history.replaceState(null, '', cleanUrl);
+    }
+  }
+
   // 1. Detection Core
   function detectDevice() {
     const ua = navigator.userAgent || navigator.vendor || window.opera || '';
@@ -203,7 +211,7 @@
         <div class="mobile-drawer-backdrop" id="caea-drawer-backdrop"></div>
         <div class="mobile-drawer-panel" role="dialog" aria-modal="true" aria-label="Navigation Menu">
           <div class="mobile-drawer-header">
-            <a href="${basePath}index.html" class="mobile-drawer-brand">
+            <a href="${basePath}" class="mobile-drawer-brand">
               <img src="${basePath}Assets/CAEA-Navbar-Logo.png" alt="CAEA Logo" class="mobile-drawer-logo" onerror="this.src='/Assets/CAEA-Navbar-Logo.png'" />
             </a>
             <button type="button" class="mobile-drawer-close-btn" id="caea-drawer-close" aria-label="Close navigation menu">
@@ -217,7 +225,7 @@
           <nav class="mobile-drawer-nav">
             <ul class="mobile-nav-list">
               <li class="mobile-nav-item">
-                <a href="${basePath}index.html" class="mobile-nav-link ${isHome ? 'active' : ''}">
+                <a href="${basePath}" class="mobile-nav-link ${isHome ? 'active' : ''}">
                   <span class="mobile-nav-text">Home</span>
                   <span class="mobile-nav-arrow" aria-hidden="true">&rarr;</span>
                 </a>

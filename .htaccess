@@ -1,0 +1,16 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Strip index.html from URL address bar
+    RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /index\.html\ HTTP/
+    RewriteRule ^index\.html$ / [R=301,L]
+    
+    # If request is not a file or directory, default to clean routes
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^our-story/?$ pages/our-story.html [L]
+    RewriteRule ^our-work/?$ pages/our-work.html [L]
+    RewriteRule ^our-analytics/?$ pages/our-analytics.html [L]
+    RewriteRule ^get-involved/?$ pages/get-involved.html [L]
+    RewriteRule ^admin/?$ admin/index.html [L]
+</IfModule>

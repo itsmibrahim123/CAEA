@@ -214,6 +214,24 @@ document.addEventListener('DOMContentLoaded', () => {
     bindAccordionListeners();
   }
 
+  function renderDynamicTeamGrid() {
+    const gridContainer = document.querySelector('.team-photo-grid');
+    if (!gridContainer || !window.DataStore) return;
+
+    const people = window.DataStore.get('people');
+    if (!people || !people.length) return;
+
+    const displayPeople = people.slice(0, 9);
+    gridContainer.innerHTML = displayPeople.map(person => {
+      const imgSrc = resolveImagePath(person.image || 'Assets/Team/sanaa-muhammad.jpg');
+      return `
+        <div class="team-photo-item">
+          <img src="${imgSrc}" alt="${escapeHtml(person.name || '')}" class="team-photo" loading="lazy" onerror="this.src='/Assets/Team/sanaa-muhammad.jpg'" />
+        </div>
+      `;
+    }).join('');
+  }
+
   /* ============================================================
      Activities Page Hero Event Switcher & Gallery Interactivity
      ============================================================ */
@@ -651,6 +669,87 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  let quoteRotatorTimer = null;
+  let currentQuoteIndex = 0;
+
+  function initQuotesRotator(quotes) {
+    if (quoteRotatorTimer) clearInterval(quoteRotatorTimer);
+
+    const rotatorWrap = document.getElementById('quotes-rotator');
+    const quoteTextEl = document.getElementById('hero-quote-text');
+    const quoteAuthorEl = document.getElementById('hero-quote-author');
+    const dotsContainer = document.getElementById('quote-dots-indicator');
+
+    if (!quoteTextEl || !quotes || quotes.length === 0) return;
+
+    function renderQuote(index) {
+      if (!quotes[index]) return;
+      currentQuoteIndex = index;
+      const q = quotes[index];
+
+      if (rotatorWrap) {
+        rotatorWrap.classList.add('fade-out');
+        setTimeout(() => {
+          let textHtml = escapeHtml(q.text || '');
+          if (textHtml.includes('good for something')) {
+            textHtml = textHtml.replace('good for something', '<em>good for something.</em>');
+          }
+          quoteTextEl.innerHTML = textHtml;
+          if (quoteAuthorEl) {
+            quoteAuthorEl.textContent = q.author ? `— ${q.author}` : '';
+          }
+          rotatorWrap.classList.remove('fade-out');
+        }, 400);
+      } else {
+        let textHtml = escapeHtml(q.text || '');
+        quoteTextEl.innerHTML = textHtml;
+        if (quoteAuthorEl) quoteAuthorEl.textContent = q.author ? `— ${q.author}` : '';
+      }
+
+      // Update active dot
+      if (dotsContainer) {
+        const dots = dotsContainer.querySelectorAll('.quote-dot');
+        dots.forEach((dot, idx) => {
+          dot.classList.toggle('active', idx === index);
+        });
+      }
+    }
+
+    // Render dot indicators
+    if (dotsContainer) {
+      dotsContainer.innerHTML = '';
+      if (quotes.length > 1) {
+        quotes.forEach((_, idx) => {
+          const dot = document.createElement('button');
+          dot.className = `quote-dot ${idx === 0 ? 'active' : ''}`;
+          dot.setAttribute('aria-label', `Go to quote ${idx + 1}`);
+          dot.addEventListener('click', () => {
+            renderQuote(idx);
+            resetAutoRotation();
+          });
+          dotsContainer.appendChild(dot);
+        });
+      }
+    }
+
+    renderQuote(0);
+
+    function startAutoRotation() {
+      if (quotes.length <= 1) return;
+      quoteRotatorTimer = setInterval(() => {
+        const nextIdx = (currentQuoteIndex + 1) % quotes.length;
+        renderQuote(nextIdx);
+      }, 7000);
+    }
+
+    function resetAutoRotation() {
+      if (quoteRotatorTimer) clearInterval(quoteRotatorTimer);
+      startAutoRotation();
+    }
+
+    startAutoRotation();
+  }
+
   function applyHomePageSettings() {
     if (!window.DataStore) return;
     const homeSettings = window.DataStore.getPageSettings('home');
@@ -664,7 +763,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const videoCover = document.getElementById('home-latest-video-cover');
     const videoTitle = document.getElementById('home-latest-video-title');
     const videoSummary = document.getElementById('home-latest-video-desc');
-    const heroQuoteEl = document.querySelector('.hero-quote');
+
+    // Hero Background Video Setup
+    const bgVideoEl = document.getElementById('hero-bg-video');
+    const heroMediaContainer = document.getElementById('hero-media-container');
+    const videoUrl = homeSettings.heroVideoUrl || homeSettings.latestVideoUrl || 'Assets/Video/Hero.mov';
+    
+    if (bgVideoEl && videoUrl) {
+      bgVideoEl.src = resolveImagePath(videoUrl);
+      if (heroMediaContainer) heroMediaContainer.classList.add('has-video');
+    }
+
+    // Quotes Rotator Setup
+    const quotes = (homeSettings.quotes && homeSettings.quotes.length > 0)
+      ? homeSettings.quotes
+      : (homeSettings.heroQuote ? [{ text: homeSettings.heroQuote, author: homeSettings.heroQuoteAuthor || 'CAEA Motto' }] : []);
+
+    initQuotesRotator(quotes);
 
     if (latestSection && homeSettings.showLatestSection === false) {
       latestSection.style.display = 'none';
@@ -701,7 +816,7 @@ document.addEventListener('DOMContentLoaded', () => {
       videoBtn.addEventListener('click', (e) => {
         e.preventDefault();
         const curSettings = window.DataStore ? window.DataStore.getPageSettings('home') : homeSettings;
-        openVideoModal(curSettings.latestVideoTitle || 'Featured Video', curSettings.latestVideoUrl || '');
+        openVideoModal(curSettings.latestVideoTitle || 'Featured Video', curSettings.heroVideoUrl || curSettings.latestVideoUrl || 'Assets/Video/Hero.mov');
       });
       videoBtn.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
@@ -709,14 +824,6 @@ document.addEventListener('DOMContentLoaded', () => {
           videoBtn.click();
         }
       });
-    }
-
-    if (heroQuoteEl && homeSettings.heroQuote) {
-      let quoteHtml = escapeHtml(homeSettings.heroQuote);
-      if (quoteHtml.includes('good for something')) {
-        quoteHtml = quoteHtml.replace('good for something', '<em>good for something.</em>');
-      }
-      heroQuoteEl.innerHTML = quoteHtml;
     }
   }
 
@@ -1608,6 +1715,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderDynamicActivities();
   renderDynamicOpportunities();
   renderDynamicTeamAccordions();
+  renderDynamicTeamGrid();
   applyActivitiesVideoSettings();
   applyOurStoryPageSettings();
   initOurWorkPage();
@@ -1619,6 +1727,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderDynamicActivities();
     renderDynamicOpportunities();
     renderDynamicTeamAccordions();
+    renderDynamicTeamGrid();
     applyActivitiesVideoSettings();
     applyOurStoryPageSettings();
     initOurWorkPage();

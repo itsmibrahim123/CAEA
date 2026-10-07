@@ -1195,7 +1195,7 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
 
     // Image preview resolution
-    const currentImg = item.image || (collection === 'activities' ? 'Assets/Hero-image.png' : collection === 'people' ? 'Assets/Team/sanaa-muhammad.jpg' : 'Assets/how-water-became-power.jpg');
+    const currentImg = item.image || (collection === 'activities' ? 'Assets/Hero-image.png' : collection === 'people' ? 'Assets/Team/grid-1-2-Sanaa.png' : 'Assets/how-water-became-power.jpg');
     const previewSrc = resolveAdminImg(currentImg);
 
     const imageFieldHtml = `
@@ -1953,13 +1953,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (settingHomeVideoTitle) settingHomeVideoTitle.value = home.latestVideoTitle || '';
     if (settingHomeVideoDesc) settingHomeVideoDesc.value = home.latestVideoDescription || '';
-    if (settingHomeVideoUrl) settingHomeVideoUrl.value = home.latestVideoUrl || '';
+    if (settingHomeVideoUrl) settingHomeVideoUrl.value = home.latestVideoUrl || home.heroVideoUrl || 'Assets/Video/Hero.mov';
     if (settingHomeThumbUrl) settingHomeThumbUrl.value = home.latestVideoThumbnail || '';
     if (settingHomeThumbPreview) {
       settingHomeThumbPreview.src = resolveAdminImg(home.latestVideoThumbnail || 'Assets/how-water-became-power.jpg');
     }
     if (settingHomeHeroQuote) settingHomeHeroQuote.value = home.heroQuote || '';
     if (settingHomeHeroAuthor) settingHomeHeroAuthor.value = home.heroQuoteAuthor || '';
+
+    adminQuotesList = Array.isArray(home.quotes) ? JSON.parse(JSON.stringify(home.quotes)) : [];
+    renderAdminQuotesList();
 
     // Activities Page
     if (settingActShowVideo) {
@@ -2201,10 +2204,95 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  let adminQuotesList = [];
+
+  function renderAdminQuotesList() {
+    const container = document.getElementById('admin-quotes-container');
+    if (!container) return;
+    container.innerHTML = '';
+
+    if (!adminQuotesList || adminQuotesList.length === 0) {
+      container.innerHTML = '<p style="color: var(--admin-text-muted); font-size: 13px; margin: 4px 0;">No quotes added yet. Add your first quote below.</p>';
+      return;
+    }
+
+    adminQuotesList.forEach((quote, index) => {
+      const row = document.createElement('div');
+      row.className = 'form-row quote-row-item';
+      row.style.cssText = 'background: rgba(0,0,0,0.2); padding: 10px 14px; border-radius: 6px; border: 1px solid var(--admin-card-border); align-items: center;';
+
+      row.innerHTML = `
+        <div class="form-group flex-2" style="margin:0;">
+          <input type="text" class="admin-input quote-input-text" data-index="${index}" value="${escapeHtml(quote.text || '')}" placeholder="Quote text" />
+        </div>
+        <div class="form-group flex-1" style="margin:0;">
+          <input type="text" class="admin-input quote-input-author" data-index="${index}" value="${escapeHtml(quote.author || '')}" placeholder="Author" />
+        </div>
+        <button type="button" class="btn-clear-img btn-delete-quote" data-index="${index}" style="color: #ff6b6b; padding: 6px 12px; border-color: rgba(255,107,107,0.3);" title="Remove quote">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          Delete
+        </button>
+      `;
+
+      container.appendChild(row);
+    });
+
+    container.querySelectorAll('.btn-delete-quote').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const idx = parseInt(e.currentTarget.dataset.index, 10);
+        if (!isNaN(idx)) {
+          adminQuotesList.splice(idx, 1);
+          renderAdminQuotesList();
+        }
+      });
+    });
+
+    container.querySelectorAll('.quote-input-text').forEach(input => {
+      input.addEventListener('input', (e) => {
+        const idx = parseInt(e.target.dataset.index, 10);
+        if (!isNaN(idx) && adminQuotesList[idx]) {
+          adminQuotesList[idx].text = e.target.value;
+        }
+      });
+    });
+
+    container.querySelectorAll('.quote-input-author').forEach(input => {
+      input.addEventListener('input', (e) => {
+        const idx = parseInt(e.target.dataset.index, 10);
+        if (!isNaN(idx) && adminQuotesList[idx]) {
+          adminQuotesList[idx].author = e.target.value;
+        }
+      });
+    });
+  }
+
+  const btnAddQuote = document.getElementById('btn-add-quote');
+  if (btnAddQuote) {
+    btnAddQuote.addEventListener('click', () => {
+      const textEl = document.getElementById('new-quote-text');
+      const authorEl = document.getElementById('new-quote-author');
+      const text = textEl ? textEl.value.trim() : '';
+      const author = authorEl ? authorEl.value.trim() : '';
+
+      if (!text) {
+        showToast('Please enter quote text first');
+        return;
+      }
+
+      adminQuotesList.push({ text, author });
+      if (textEl) textEl.value = '';
+      if (authorEl) authorEl.value = '';
+      renderAdminQuotesList();
+      showToast('Added quote to list');
+    });
+  }
+
   // Save Home Page Settings
   if (btnSaveHomeSettings) {
     btnSaveHomeSettings.addEventListener('click', () => {
       if (!window.DataStore) return;
+
+      const videoUrlVal = (settingHomeVideoUrl ? settingHomeVideoUrl.value : '').trim();
 
       const homeSettings = {
         latestTitle: (settingHomeLatestTitle ? settingHomeLatestTitle.value : '').trim(),
@@ -2212,14 +2300,16 @@ document.addEventListener('DOMContentLoaded', () => {
         showLatestVideo: settingHomeShowVideo ? settingHomeShowVideo.checked : true,
         latestVideoTitle: (settingHomeVideoTitle ? settingHomeVideoTitle.value : '').trim(),
         latestVideoDescription: (settingHomeVideoDesc ? settingHomeVideoDesc.value : '').trim(),
-        latestVideoUrl: (settingHomeVideoUrl ? settingHomeVideoUrl.value : '').trim(),
+        latestVideoUrl: videoUrlVal || 'Assets/Video/Hero.mov',
+        heroVideoUrl: videoUrlVal || 'Assets/Video/Hero.mov',
         latestVideoThumbnail: (settingHomeThumbUrl ? settingHomeThumbUrl.value : '').trim(),
-        heroQuote: (settingHomeHeroQuote ? settingHomeHeroQuote.value : '').trim(),
-        heroQuoteAuthor: (settingHomeHeroAuthor ? settingHomeHeroAuthor.value : '').trim()
+        heroQuote: adminQuotesList.length > 0 ? adminQuotesList[0].text : (settingHomeHeroQuote ? settingHomeHeroQuote.value : '').trim(),
+        heroQuoteAuthor: adminQuotesList.length > 0 ? adminQuotesList[0].author : (settingHomeHeroAuthor ? settingHomeHeroAuthor.value : '').trim(),
+        quotes: adminQuotesList
       };
 
       window.DataStore.savePageSettings('home', homeSettings);
-      showToast('Home page settings saved successfully!');
+      showToast('Home page settings & quotes saved successfully!');
     });
   }
 
