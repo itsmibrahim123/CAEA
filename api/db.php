@@ -492,43 +492,43 @@ class Database {
         $mapPins = [
             [
                 'id' => 'pin-hunza',
-                'city' => 'HUNZA',
+                'city' => 'HUNZA, GB',
                 'leftPos' => '64%',
                 'topPos' => '6%',
-                'badge' => 'HUNZA',
-                'description' => 'Our team comes from diverse backgrounds across Gilgit-Baltistan. Climate Action & Energy Access (CAEA) is a Pakistan-based research and advocacy institute committed to empowering mountain communities through renewable energy.'
+                'badge' => 'HUNZA, GB',
+                'description' => 'Our team comes from diverse backgrounds across Gilgit-Baltistan. Climate Action & Energy Access (CAEA) is committed to empowering mountain communities through renewable energy and local climate resilience.'
+            ],
+            [
+                'id' => 'pin-dhirkot',
+                'city' => 'DHIRKOT, AJK',
+                'leftPos' => '70%',
+                'topPos' => '18%',
+                'badge' => 'DHIRKOT, AJK',
+                'description' => 'In Dhirkot, Azad Kashmir, CAEA works alongside local community organizers on watershed protection, community forestry, and decentralized clean energy solutions for mountain terrains.'
+            ],
+            [
+                'id' => 'pin-tarbela',
+                'city' => 'TARBELA, KP',
+                'leftPos' => '56%',
+                'topPos' => '20%',
+                'badge' => 'TARBELA, KP',
+                'description' => 'At Tarbela Dam in Khyber Pakhtunkhwa, CAEA brings together community perspectives to examine megastructure energy promises vs. its human and ecological costs on land and riverine ecosystems.'
             ],
             [
                 'id' => 'pin-jalalpur',
-                'city' => 'JALALPUR',
-                'leftPos' => '69%',
-                'topPos' => '30%',
-                'badge' => 'JALALPUR',
+                'city' => 'JALALPUR, PB',
+                'leftPos' => '66%',
+                'topPos' => '34%',
+                'badge' => 'JALALPUR, PB',
                 'description' => 'Our team works closely with agrarian communities in Jalalpur advancing decentralized solar irrigation, groundwater conservation, and community energy governance.'
             ],
             [
-                'id' => 'pin-manchhar',
-                'city' => 'MANCHHAR',
-                'leftPos' => '45%',
-                'topPos' => '60%',
-                'badge' => 'MANCHHAR',
-                'description' => 'Our team works directly with freshwater fishing communities around Lake Manchhar. CAEA focuses on resilient water-energy solutions and ecological preservation.'
-            ],
-            [
-                'id' => 'pin-thar',
-                'city' => 'THAR',
-                'leftPos' => '49%',
-                'topPos' => '86%',
-                'badge' => 'THAR',
-                'description' => 'In the Thar desert, CAEA is leading research into off-grid solar microgrids and clean drinking water access for rural and indigenous desert settlements.'
-            ],
-            [
-                'id' => 'pin-balochistan',
-                'city' => 'BALOCHISTAN',
-                'leftPos' => '22%',
-                'topPos' => '50%',
-                'badge' => 'BALOCHISTAN',
-                'description' => 'Our upcoming project initiative exploring distributed solar and wind energy potential across western and pastoral regions.'
+                'id' => 'pin-khirthar',
+                'city' => 'KHIRTHAR, SD',
+                'leftPos' => '42%',
+                'topPos' => '68%',
+                'badge' => 'KHIRTHAR, SD',
+                'description' => 'Across the Khirthar Range in Sindh, CAEA investigates the impacts of fossil fuel exploration, industrial wastewater, and climate shocks on indigenous communities and fragile desert ecologies.'
             ]
         ];
 
@@ -540,8 +540,14 @@ class Database {
         // 7. Seed Page Settings
         $pageSettings = [
             'home' => [
-                'heroQuote' => 'Not only must we be good, but we must also be good for something.',
-                'heroQuoteAuthor' => '',
+                'heroQuote' => 'The climate crisis is a call to transform the systems that brought us here.',
+                'heroQuoteAuthor' => 'Naomi Klein',
+                'quotes' => [
+                    ['text' => 'The climate crisis is a call to transform the systems that brought us here.', 'author' => 'Naomi Klein'],
+                    ['text' => 'What is the use of a house if you haven\'t got a tolerable planet to put it on?', 'author' => 'Vandana Shiva'],
+                    ['text' => 'In nature\'s economy, the currency is not money, it is life.', 'author' => 'Wangari Maathai'],
+                    ['text' => 'When we plant trees, we plant the seeds of peace and hope.', 'author' => 'Wangari Maathai']
+                ],
                 'showLatestSection' => true,
                 'latestTitle' => 'BE A PART OF OUR LATEST',
                 'latestSubtitle' => 'Watch our latest field updates, community kacheri highlights, and climate documentaries across Pakistan.',
@@ -567,11 +573,14 @@ class Database {
             ],
             'ourWork' => [
                 'fossilFuel' => [
-                    'title' => 'FOSSIL FUEL PHASEOUT',
+                    'title' => 'OUR MISSION',
                     'subtitle' => 'Rethinking energy systems for a cleaner, fairer, and climate-resilient future.',
-                    'description' => "CAEA situates the phase-out of gas as an urgent political and ecological imperative, not just policy preference. Pakistan’s deepening dependence on natural gas and imported LNG has locked the country into extractive and financially ruinous value chains, producing large-scale losses through chronic inefficiencies such as unaccounted-for gas (UFG), fiscal leakages, and long-term contractual liabilities. These economic harms are inseparable from gas’s climate violence: methane emissions across the entire gas chain - from upstream extraction and processing to pipelines, turning the local ecology into sacrifice zones, LNG terminals, and downstream power generation - act as deadly accelerants to an already catastrophic climate crisis that Pakistan, among the least responsible yet most exposed, continues to endure. Our analysis proceeds through a political-ecological and value-chain lens, combining infrastructure mapping, regulatory scrutiny, and climate justice frameworks to interrogate gas as a system of power rather than a neutral fuel.\n\nWe identify the power sector as the primary and most strategic site for gas phase-out. Imported LNG, far from delivering energy security, has rendered electricity structurally unaffordable while deepening dependence on volatile international markets. As distributed solar rapidly expands across Pakistan and demand is increasingly squeezed, LNG and domestic gas alike become economically irrational - stranded assets that inflate tariffs, undermine grid stability, and intensify Pakistan’s emissions profile without delivering social benefit. In this context, gas no longer functions as a “transition fuel” but as an obstacle to an equitable and viable energy future.\n\nCAEA recognizes that gas extraction, transmission, and distribution - from upstream fields to downstream urban networks - constitute deeply entrenched political and institutional terrains.\n\nCAEA remains actively engaged in advancing demand reduction, alternatives, and public contestation. For us, gas phase-out is not merely a technical adjustment but a struggle to confront fossil dependency, reclaim policy space from extractive interests, and align Pakistan’s energy system with ecological limits, social justice, and climate survival.",
+                    'description' => "For CAEA, phasing out gas is not a distant policy idea — it is an urgent necessity. Pakistan's growing reliance on natural gas and imported LNG (liquefied natural gas) has trapped the country in a costly system, leading to wasted resources, financial losses, and long-term debts that burden the public for years.\n\nThis is not only an economic problem. Producing and transporting gas releases methane, a gas that heats the planet even faster than carbon dioxide, and the communities living closest to gas fields, pipelines, and power plants bear the greatest damage.\n\nOur research shows that the power sector is the most important place to begin this shift. Imported LNG was meant to bring energy security, but instead it has made.",
                     'joinBtnText' => 'JOIN US',
-                    'opportunityTitle' => 'Fossil Fuel Phaseout Fellow'
+                    'opportunityTitle' => 'General Volunteer / Open Application',
+                    'bannerTitle' => 'FOSSIL FUEL',
+                    'bannerSubtitle' => 'Rethinking energy systems for a cleaner, fairer, and climate-resilient future.',
+                    'bannerBtnText' => 'EXPLORE WORK'
                 ],
                 'textile' => [
                     'bannerTitle' => 'TEXTILE & FAST FASHION',

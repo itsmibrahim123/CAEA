@@ -155,6 +155,47 @@ body.our-work-page {
   filter: none;
 }
 
+.arch-pattern-col.black-semicircle-pattern {
+  background-image: url('/Assets/Black-Semi-circle.png');
+  background-repeat: repeat-y;
+  background-position: right top;
+  background-size: clamp(150px, 15vw, 220px) auto;
+  filter: none;
+}
+
+/* Expanded Fossil Fuel Section Variant (White BG & Black Semi-Circles) */
+.work-intro-section.fossil-white-section {
+  background-color: #FFFFFF;
+  color: var(--color-black);
+  padding: 64px var(--page-margin);
+}
+
+.work-intro-section.fossil-white-section .work-section-title {
+  color: var(--color-black);
+  font-family: var(--font-heading);
+}
+
+.work-intro-section.fossil-white-section .work-section-subtitle {
+  color: #4f46e5;
+  font-style: italic;
+}
+
+.work-intro-section.fossil-white-section .work-section-description {
+  color: #334155;
+}
+
+.work-intro-section.fossil-white-section .btn-join-pill {
+  background-color: #e0e7ff;
+  color: #3730a3;
+  border: 1px solid #c7d2fe;
+}
+
+.work-intro-section.fossil-white-section .btn-join-pill:hover {
+  background-color: #4f46e5;
+  color: #ffffff;
+  border-color: #4f46e5;
+}
+
 /* Textile Narrative Section Variant (Light Green BG) */
 .work-intro-section.textile-section {
   background-color: var(--color-green-textile);

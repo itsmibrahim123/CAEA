@@ -591,47 +591,47 @@ const SEED_DATA = {
   mapPins: [
     {
       id: 'pin-hunza',
-      city: 'HUNZA',
+      city: 'HUNZA, GB',
       left: '64%',
       top: '6%',
-      badge: 'HUNZA',
-      description: 'Our team comes from diverse backgrounds across Gilgit-Baltistan. Climate Action & Energy Access (CAEA) is a Pakistan-based research and advocacy institute committed to empowering mountain communities through renewable energy.',
+      badge: 'HUNZA, GB',
+      description: 'Our team comes from diverse backgrounds across Gilgit-Baltistan. Climate Action & Energy Access (CAEA) is committed to empowering mountain communities through renewable energy and local climate resilience.',
       sortOrder: 1
     },
     {
-      id: 'pin-jalalpur',
-      city: 'JALALPUR',
-      left: '69%',
-      top: '30%',
-      badge: 'JALALPUR',
-      description: 'Our team works closely with agrarian communities in Jalalpur advancing decentralized solar irrigation, groundwater conservation, and community energy governance.',
+      id: 'pin-dhirkot',
+      city: 'DHIRKOT, AJK',
+      left: '70%',
+      top: '18%',
+      badge: 'DHIRKOT, AJK',
+      description: 'In Dhirkot, Azad Kashmir, CAEA works alongside local community organizers on watershed protection, community forestry, and decentralized clean energy solutions for mountain terrains.',
       sortOrder: 2
     },
     {
-      id: 'pin-manchhar',
-      city: 'MANCHHAR',
-      left: '45%',
-      top: '60%',
-      badge: 'MANCHHAR',
-      description: 'Our team works directly with freshwater fishing communities around Lake Manchhar. CAEA focuses on resilient water-energy solutions and ecological preservation.',
+      id: 'pin-tarbela',
+      city: 'TARBELA, KP',
+      left: '56%',
+      top: '20%',
+      badge: 'TARBELA, KP',
+      description: 'At Tarbela Dam in Khyber Pakhtunkhwa, CAEA brings together community perspectives to examine megastructure energy promises vs. its human and ecological costs on land and riverine ecosystems.',
       sortOrder: 3
     },
     {
-      id: 'pin-thar',
-      city: 'THAR',
-      left: '49%',
-      top: '86%',
-      badge: 'THAR',
-      description: 'In the Thar desert, CAEA is leading research into off-grid solar microgrids and clean drinking water access for rural and indigenous desert settlements.',
+      id: 'pin-jalalpur',
+      city: 'JALALPUR, PB',
+      left: '66%',
+      top: '34%',
+      badge: 'JALALPUR, PB',
+      description: 'Our team works closely with agrarian communities in Jalalpur advancing decentralized solar irrigation, groundwater conservation, and community energy governance.',
       sortOrder: 4
     },
     {
-      id: 'pin-balochistan',
-      city: 'BALOCHISTAN',
-      left: '22%',
-      top: '50%',
-      badge: 'BALOCHISTAN',
-      description: 'Our upcoming project initiative exploring distributed solar and wind energy potential across western and pastoral regions.',
+      id: 'pin-khirthar',
+      city: 'KHIRTHAR, SD',
+      left: '42%',
+      top: '68%',
+      badge: 'KHIRTHAR, SD',
+      description: 'Across the Khirthar Range in Sindh, CAEA investigates the impacts of fossil fuel exploration, industrial wastewater, and climate shocks on indigenous communities and fragile desert ecologies.',
       sortOrder: 5
     }
   ],
@@ -711,8 +711,8 @@ const SEED_DATA = {
 
   pageSettings: {
     home: {
-      heroQuote: 'Not only must we be good, but we must also be good for something.',
-      heroQuoteAuthor: 'CAEA Motto',
+      heroQuote: 'The climate crisis is a call to transform the systems that brought us here.',
+      heroQuoteAuthor: 'Naomi Klein',
       heroVideoUrl: 'Assets/Video/Hero.mov',
       showLatestSection: true,
       latestTitle: 'BE A PART OF OUR LATEST',
@@ -723,22 +723,9 @@ const SEED_DATA = {
       latestVideoUrl: 'Assets/Video/Hero.mov',
       latestVideoThumbnail: 'Assets/how-water-became-power.jpg',
       quotes: [
-        { text: "Climate change is a battle between capitalism and the planet.", author: "Naomi Klein" },
         { text: "The climate crisis is a call to transform the systems that brought us here.", author: "Naomi Klein" },
-        { text: "We need to remember that climate change is a civilizational wake-up call.", author: "Naomi Klein" },
-        { text: "The right to extract and profit cannot outweigh the right of communities to survive.", author: "Naomi Klein" },
-        { text: "Climate change isn't just an environmental issue; it's a justice issue.", author: "Naomi Klein" },
-        { text: "The future is not a gift; it is an achievement.", author: "Zygmunt Bauman" },
-        { text: "We are all responsible for each other.", author: "Zygmunt Bauman" },
-        { text: "Humanity is in crisis when responsibility is replaced by indifference.", author: "Zygmunt Bauman" },
-        { text: "Interdependence is our shared condition.", author: "Zygmunt Bauman" },
-        { text: "In wildness is the preservation of the world.", author: "Henry David Thoreau" },
-        { text: "Heaven is under our feet as well as over our heads.", author: "Henry David Thoreau" },
-        { text: "Nature is as well adapted to our weakness as to our strength.", author: "Henry David Thoreau" },
-        { text: "What is the use of a house if you haven't got a tolerable planet to put it on?", author: "Henry David Thoreau" },
-        { text: "All good things are wild and free.", author: "Henry David Thoreau" },
-        { text: "In nature's economy, the currency is not money, it is life.", author: "Vandana Shiva" },
-        { text: "The Earth gives enough for everyone's need, not everyone's greed.", author: "Vandana Shiva" },
+        { text: "What is the use of a house if you haven't got a tolerable planet to put it on?", author: "Vandana Shiva" },
+        { text: "In nature's economy, the currency is not money, it is life.", author: "Wangari Maathai" },
         { text: "When we plant trees, we plant the seeds of peace and hope.", author: "Wangari Maathai" }
       ]
     },
@@ -759,14 +746,14 @@ const SEED_DATA = {
     ourWork: {
       fossilFuel: {
         visible: true,
-        title: 'FOSSIL FUEL PHASEOUT',
+        title: 'OUR MISSION',
         subtitle: 'Rethinking energy systems for a cleaner, fairer, and climate-resilient future.',
-        description: "CAEA situates the phase-out of gas as an urgent political and ecological imperative, not just policy preference. Pakistan’s deepening dependence on natural gas and imported LNG has locked the country into extractive and financially ruinous value chains, producing large-scale losses through chronic inefficiencies such as unaccounted-for gas (UFG), fiscal leakages, and long-term contractual liabilities. These economic harms are inseparable from gas’s climate violence: methane emissions across the entire gas chain - from upstream extraction and processing to pipelines, turning the local ecology into sacrifice zones, LNG terminals, and downstream power generation - act as deadly accelerants to an already catastrophic climate crisis that Pakistan, among the least responsible yet most exposed, continues to endure. Our analysis proceeds through a political-ecological and value-chain lens, combining infrastructure mapping, regulatory scrutiny, and climate justice frameworks to interrogate gas as a system of power rather than a neutral fuel.\n\nWe identify the power sector as the primary and most strategic site for gas phase-out. Imported LNG, far from delivering energy security, has rendered electricity structurally unaffordable while deepening dependence on volatile international markets. As distributed solar rapidly expands across Pakistan and demand is increasingly squeezed, LNG and domestic gas alike become economically irrational - stranded assets that inflate tariffs, undermine grid stability, and intensify Pakistan’s emissions profile without delivering social benefit. In this context, gas no longer functions as a “transition fuel” but as an obstacle to an equitable and viable energy future.\n\nCAEA recognizes that gas extraction, transmission, and distribution - from upstream fields to downstream urban networks - constitute deeply entrenched political and institutional terrains.\n\nCAEA remains actively engaged in advancing demand reduction, alternatives, and public contestation. For us, gas phase-out is not merely a technical adjustment but a struggle to confront fossil dependency, reclaim policy space from extractive interests, and align Pakistan’s energy system with ecological limits, social justice, and climate survival.",
+        description: "For CAEA, phasing out gas is not a distant policy idea — it is an urgent necessity. Pakistan's growing reliance on natural gas and imported LNG (liquefied natural gas) has trapped the country in a costly system, leading to wasted resources, financial losses, and long-term debts that burden the public for years.\n\nThis is not only an economic problem. Producing and transporting gas releases methane, a gas that heats the planet even faster than carbon dioxide, and the communities living closest to gas fields, pipelines, and power plants bear the greatest damage.\n\nOur research shows that the power sector is the most important place to begin this shift. Imported LNG was meant to bring energy security, but instead it has made.",
         joinBtnText: 'JOIN US',
-        opportunityTitle: 'Fossil Fuel Phaseout Fellow',
-        bannerTitle: 'The Life Story of Manchhar Lake',
-        bannerSubtitle: 'The story written is not the story that was lived',
-        bannerBtnText: 'READ MORE'
+        opportunityTitle: 'General Volunteer / Open Application',
+        bannerTitle: 'FOSSIL FUEL',
+        bannerSubtitle: 'Rethinking energy systems for a cleaner, fairer, and climate-resilient future.',
+        bannerBtnText: 'EXPLORE WORK'
       },
       textile: {
         visible: true,
@@ -976,7 +963,7 @@ class CAEADataStore {
 
   init() {
     const DATA_VERSION_KEY = 'caea_data_version';
-    const CURRENT_VERSION = 'v14_grid_team_images';
+    const CURRENT_VERSION = 'v18_map_pins_province_initials';
     const storedVersion = localStorage.getItem(DATA_VERSION_KEY);
 
     if (storedVersion !== CURRENT_VERSION) {
