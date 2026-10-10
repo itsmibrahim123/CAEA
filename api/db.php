@@ -274,7 +274,7 @@ class Database {
                 'role' => 'Research Associate',
                 'category' => 'Core Team',
                 'bio' => 'Asad is a law graduate from IIUI and a committed worker organizing with the oppressed communities. During his last experience as a Research Associate at Alternative Law Collective, his role involved conducting field research and supporting studies related to the land stewardship, and the concerns of communities victims of climate change and the developmental projects. He has been involved in organizing the students and the marches for their cultural and political rights. By engaging directly with communities, he has developed critical understanding of mainstream discourses around development and knowledge systems with a focus on the laws perpetuating inequalities and the local systems of justice. His role involved research and advocacy at Climate Action and Energy Access',
-                'image' => 'Assets/Team/grid-3-2-muhammad.png',
+                'image' => 'Assets/CAEA-Navbar-Logo.png',
                 'email' => 'asadjuttah@climateactionenergyaccess.org'
             ],
             [
@@ -319,7 +319,7 @@ class Database {
                 'role' => 'Associate Fossil Fuel Phaseout',
                 'category' => 'Core Team',
                 'bio' => "Manahil Usman is an Associate in Fossil Fuel Phaseout at Climate Action for Energy Access (CAEA), where she focuses on research and data analysis at the intersection of energy policy and climate justice. With a background in Computer Science and an MBA, she brings an analytical foundation shaped by prior work in data management and sector-level analysis to her current focus on Pakistan's gas sector, LNG dynamics, and just transition frameworks. At CAEA, Manahil is committed to building the evidence base needed to advance credible, equitable fossil fuel phaseout policy in Pakistan and beyond.",
-                'image' => 'Assets/Team/grid-2-3-spogmai.png',
+                'image' => 'Assets/CAEA-Navbar-Logo.png',
                 'email' => 'manahilusman2@gmail.com'
             ],
             [

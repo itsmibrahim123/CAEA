@@ -185,6 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .join('');
 
       const imgSrc = resolveImagePath(person.image || 'Assets/Team/sanaa-muhammad.jpg');
+      const isLogo = imgSrc && imgSrc.includes('CAEA-Navbar-Logo');
 
       return `
         <div class="accordion-item" data-accordion-item data-person-id="${escapeHtml(person.id || '')}">
@@ -200,7 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="accordion-content" aria-hidden="true">
             <div class="accordion-inner">
               <div class="accordion-photo-box">
-                <img src="${imgSrc}" alt="${escapeHtml(person.name || '')}" class="accordion-photo" loading="lazy" onerror="this.src='/Assets/Team/sanaa-muhammad.jpg'" />
+                <img src="${imgSrc}" alt="${escapeHtml(person.name || '')}" class="accordion-photo${isLogo ? ' is-logo' : ''}" loading="lazy" onerror="this.src='/Assets/Team/sanaa-muhammad.jpg'" />
               </div>
               <div class="accordion-bio">
                 ${bioParagraphs || `<p>${escapeHtml(person.bio || '')}</p>`}
@@ -217,6 +218,9 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderDynamicTeamGrid() {
     const gridContainer = document.querySelector('.team-photo-grid');
     if (!gridContainer || !window.DataStore) return;
+
+    // Preserve the 3x3 photo collage if already rendered statically
+    if (gridContainer.children.length > 0 && !gridContainer.dataset.dynamic) return;
 
     const people = window.DataStore.get('people');
     if (!people || !people.length) return;
