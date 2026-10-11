@@ -1486,12 +1486,41 @@ document.addEventListener('DOMContentLoaded', () => {
     if (heroDesc && actBanner.heroDescription) heroDesc.textContent = actBanner.heroDescription;
 
     if (actBanner.upcomingGathering) {
+      const gSection = document.querySelector('.activities-upcoming-banner');
       const gTitle = document.querySelector('.activities-upcoming-title');
       const gSub = document.querySelector('.activities-upcoming-subtitle');
       const gLink = document.querySelector('.activities-upcoming-body .btn-see-more');
-      if (gTitle && actBanner.upcomingGathering.title) gTitle.textContent = actBanner.upcomingGathering.title;
-      if (gSub && actBanner.upcomingGathering.date) gSub.textContent = actBanner.upcomingGathering.date;
-      if (gLink && actBanner.upcomingGathering.link) gLink.setAttribute('href', actBanner.upcomingGathering.link);
+
+      if (gSection) {
+        if (actBanner.upcomingGathering.visible === false) {
+          gSection.style.display = 'none';
+        } else {
+          gSection.style.display = '';
+        }
+      }
+
+      if (gTitle && actBanner.upcomingGathering.title) {
+        gTitle.textContent = actBanner.upcomingGathering.title;
+      }
+      if (gSub) {
+        const subText = actBanner.upcomingGathering.subtitle || actBanner.upcomingGathering.date;
+        if (subText) gSub.textContent = subText;
+      }
+      if (gLink) {
+        if (actBanner.upcomingGathering.btnText) {
+          gLink.textContent = actBanner.upcomingGathering.btnText;
+        }
+        if (actBanner.upcomingGathering.link) {
+          gLink.setAttribute('href', actBanner.upcomingGathering.link);
+        }
+        if (actBanner.upcomingGathering.openModal || actBanner.upcomingGathering.link === '#apply') {
+          gLink.setAttribute('data-apply-btn', 'true');
+          gLink.setAttribute('data-opportunity-title', actBanner.upcomingGathering.title || 'CAEA Gathering');
+        } else {
+          gLink.removeAttribute('data-apply-btn');
+          gLink.removeAttribute('data-opportunity-title');
+        }
+      }
     }
   }
 

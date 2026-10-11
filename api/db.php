@@ -56,6 +56,7 @@ class Database {
             location VARCHAR(255) DEFAULT 'Pakistan',
             description TEXT,
             image VARCHAR(512),
+            images TEXT,
             featured INTEGER DEFAULT 0,
             quote TEXT,
             quoteAuthor VARCHAR(255),
@@ -173,6 +174,13 @@ class Database {
             } catch (Exception $e) {
                 // Column already exists
             }
+        }
+
+        // Ensure images column exists for activities gallery slideshow
+        try {
+            $pdo->exec("ALTER TABLE activities ADD COLUMN images TEXT");
+        } catch (Exception $e) {
+            // Column already exists
         }
 
         // Seed data if database is empty

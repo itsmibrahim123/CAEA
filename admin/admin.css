@@ -621,6 +621,16 @@ body.admin-body {
 .table-badge.retreat { background: rgba(79, 103, 237, 0.2); color: #8ba0ff; }
 .table-badge.workshop { background: rgba(163, 216, 141, 0.2); color: #a3d88d; }
 .table-badge.research { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+.table-badge.gathering,
+.table-badge.community-gathering,
+.table-badge.movement-gathering { background: rgba(236, 72, 153, 0.2); color: #f472b6; border: 1px solid rgba(236, 72, 153, 0.35); }
+.table-badge.community-kacheri { background: rgba(249, 115, 22, 0.2); color: #fb923c; border: 1px solid rgba(249, 115, 22, 0.35); }
+.table-badge.exposure-visit { background: rgba(14, 165, 233, 0.2); color: #38bdf8; border: 1px solid rgba(14, 165, 233, 0.35); }
+.table-badge.featured-star { background: rgba(234, 179, 8, 0.2); color: #facc15; border: 1px solid rgba(234, 179, 8, 0.4); }
+
+.action-icon-btn.star-btn { color: #64748b; }
+.action-icon-btn.star-btn:hover { color: #facc15; }
+.action-icon-btn.star-btn.is-featured { color: #facc15; background: rgba(250, 204, 21, 0.15); border-color: rgba(250, 204, 21, 0.3); }
 
 /* Application Status Badges */
 .table-badge.status-pending { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.35); }

@@ -144,6 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Sub-Tab 4: Activities & Gatherings Elements
   const btnSaveActivitiesSettings = document.getElementById('btn-save-activities-settings');
+  const btnSaveGatheringCallout = document.getElementById('btn-save-gathering-callout');
   const settingWorkActBannerTitle = document.getElementById('setting-work-act-banner-title');
   const settingWorkActBannerSub = document.getElementById('setting-work-act-banner-sub');
   const settingWorkActBannerBtnText = document.getElementById('setting-work-act-banner-btn-text');
@@ -151,9 +152,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const settingWorkActHeroAuthor = document.getElementById('setting-work-act-hero-author');
   const settingWorkActHeroHeading = document.getElementById('setting-work-act-hero-heading');
   const settingWorkActHeroDesc = document.getElementById('setting-work-act-hero-desc');
+  const settingWorkActGatheringVisible = document.getElementById('setting-work-act-gathering-visible');
   const settingWorkActGatheringTitle = document.getElementById('setting-work-act-gathering-title');
+  const settingWorkActGatheringDesc = document.getElementById('setting-work-act-gathering-desc');
   const settingWorkActGatheringDate = document.getElementById('setting-work-act-gathering-date');
+  const settingWorkActGatheringBtnText = document.getElementById('setting-work-act-gathering-btn-text');
   const settingWorkActGatheringLink = document.getElementById('setting-work-act-gathering-link');
+  const settingWorkActGatheringModal = document.getElementById('setting-work-act-gathering-modal');
+  const tabBadgeActivities = document.getElementById('tab-badge-activities');
 
   /* ============================================================
      1. Image Resolution Helper
@@ -357,6 +363,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (statOpportunities) statOpportunities.textContent = opportunitiesCount;
     if (tabBadgeApplications) tabBadgeApplications.textContent = applicationsCount;
     if (tabBadgeMapPins) tabBadgeMapPins.textContent = mapPinsCount;
+    if (tabBadgeActivities) tabBadgeActivities.textContent = activitiesCount;
   }
 
   /* ============================================================
@@ -370,6 +377,16 @@ document.addEventListener('DOMContentLoaded', () => {
       tabBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
+      if (targetTab === 'activities') {
+        // Direct jump to Activities & Gatherings in Our Work panel
+        panels.forEach(panel => {
+          panel.classList.toggle('active', panel.id === 'panel-our-work');
+        });
+        subtabBtns.forEach(b => b.classList.toggle('active', b.getAttribute('data-subtab') === 'activities'));
+        subtabContents.forEach(c => c.classList.toggle('active', c.id === 'subtab-activities'));
+        return;
+      }
+
       panels.forEach(panel => {
         if (panel.id === `panel-${targetTab}`) {
           panel.classList.add('active');
@@ -379,6 +396,16 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   });
+
+  const statCardActivities = statActivities ? statActivities.closest('.stat-card') : null;
+  if (statCardActivities) {
+    statCardActivities.style.cursor = 'pointer';
+    statCardActivities.title = 'Click to open Activities & Gatherings';
+    statCardActivities.addEventListener('click', () => {
+      const actBtn = document.querySelector('.tab-btn[data-tab="activities"]');
+      if (actBtn) actBtn.click();
+    });
+  }
 
   // Sub-Tab Switching (for Our Work panel)
   subtabBtns.forEach(btn => {
@@ -483,19 +510,26 @@ document.addEventListener('DOMContentLoaded', () => {
       items = items.filter(i =>
         (i.title && i.title.toLowerCase().includes(query)) ||
         (i.location && i.location.toLowerCase().includes(query)) ||
-        (i.description && i.description.toLowerCase().includes(query))
+        (i.description && i.description.toLowerCase().includes(query)) ||
+        (i.quote && i.quote.toLowerCase().includes(query)) ||
+        (i.quoteAuthor && i.quoteAuthor.toLowerCase().includes(query))
       );
     }
     if (tag) {
-      items = items.filter(i => i.category === tag);
+      items = items.filter(i => (i.category || '').toUpperCase() === tag.toUpperCase());
     }
 
     if (items.length === 0) {
-      tableActivitiesBody.innerHTML = `<tr><td colspan="6" class="text-center" style="padding:24px; color:#888;">No activities found matching criteria.</td></tr>`;
+      tableActivitiesBody.innerHTML = `<tr><td colspan="6" class="text-center" style="padding:24px; color:#888;">No activities or gatherings found matching criteria.</td></tr>`;
       return;
     }
 
-    tableActivitiesBody.innerHTML = items.map((item, index) => `
+    tableActivitiesBody.innerHTML = items.map((item, index) => {
+      const isFeatured = item.featured === true || item.featured === 1 || item.featured === '1' || item.featured === 'true';
+      const galleryCount = Array.isArray(item.images) ? item.images.length : (item.images ? 1 : 0);
+      const catClass = (item.category || '').toLowerCase().replace(/[^a-z0-9]+/g, '-');
+
+      return `
       <tr>
         <td>
           <div style="display:flex; align-items:center; gap:6px;">
@@ -504,35 +538,68 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </td>
         <td>
-          <img src="${resolveAdminImg(item.image, 'Assets/Hero-image.png')}" alt="" class="table-media-thumb" onerror="this.src='../Assets/CAEA-Navbar-Logo.png'" />
+          <div style="position:relative; width:48px; height:36px;">
+            <img src="${resolveAdminImg(item.image, 'Assets/Hero-image.png')}" alt="" class="table-media-thumb" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='../Assets/CAEA-Navbar-Logo.png'" />
+            ${galleryCount > 1 ? `<span style="position:absolute; bottom:-3px; right:-3px; background:#4b68ff; color:#fff; font-size:9.5px; font-weight:700; border-radius:10px; padding:1px 4px; line-height:1;" title="${galleryCount} slideshow photos">📷${galleryCount}</span>` : ''}
+          </div>
         </td>
         <td>
-          <strong>${escapeHtml(item.title)}</strong>
-          <div style="font-size:12px; color:#9da5b4;">${escapeHtml(item.location || 'N/A')}</div>
+          <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+            <strong>${escapeHtml(item.title)}</strong>
+            ${isFeatured ? `<span class="table-badge featured-star" style="font-size:10px; padding:2px 7px;">★ HERO FEATURED</span>` : ''}
+          </div>
+          <div style="font-size:12px; color:#9da5b4; margin-top:2px;">
+            📍 ${escapeHtml(item.location || 'Pakistan')}
+            ${item.quote ? `<span style="margin-left:8px; color:#8ba0ff; font-style:italic;">“${escapeHtml(item.quote.slice(0, 45))}${item.quote.length > 45 ? '...' : ''}”</span>` : ''}
+          </div>
         </td>
         <td>
-          <span class="table-badge ${ (item.category || '').toLowerCase().replace(/\s+/g, '-') }">${escapeHtml(item.category || 'RETREAT')}</span>
+          <span class="table-badge ${catClass}">${escapeHtml(item.category || 'RETREAT')}</span>
         </td>
         <td>${item.dateFormatted || item.date || 'N/A'}</td>
         <td class="text-right">
           <div class="table-actions">
+            <button class="action-icon-btn star-btn ${isFeatured ? 'is-featured' : ''}" onclick="toggleFeaturedActivity('${item.id}')" title="${isFeatured ? 'Currently Featured in Hero' : 'Set as Featured in Hero'}">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="${isFeatured ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </button>
             <button class="action-icon-btn move-btn" onclick="moveItemOrder('activities', '${item.id}', 'up')" title="Move Up" ${index === 0 ? 'disabled style="opacity:0.3; cursor:not-allowed;"' : ''}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
             </button>
             <button class="action-icon-btn move-btn" onclick="moveItemOrder('activities', '${item.id}', 'down')" title="Move Down" ${index === items.length - 1 ? 'disabled style="opacity:0.3; cursor:not-allowed;"' : ''}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
             </button>
-            <button class="action-icon-btn edit-btn" onclick="openEditModal('activities', '${item.id}')" title="Edit Activity">
+            <button class="action-icon-btn edit-btn" onclick="openEditModal('activities', '${item.id}')" title="Edit Activity / Gathering">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
             </button>
-            <button class="action-icon-btn delete-btn" onclick="confirmDelete('activities', '${item.id}')" title="Delete Activity">
+            <button class="action-icon-btn delete-btn" onclick="confirmDelete('activities', '${item.id}')" title="Delete Activity / Gathering">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
             </button>
           </div>
         </td>
       </tr>
-    `).join('');
+      `;
+    }).join('');
   }
+
+  window.toggleFeaturedActivity = function(id) {
+    if (!window.DataStore) return;
+    const items = window.DataStore.get('activities');
+    const target = items.find(i => i.id === id);
+    if (!target) return;
+
+    const currentFeatured = target.featured === true || target.featured === 1 || target.featured === '1' || target.featured === 'true';
+    const newFeatured = !currentFeatured;
+
+    items.forEach(i => {
+      const isThis = i.id === id;
+      const featVal = isThis ? newFeatured : false;
+      i.featured = featVal;
+      window.DataStore.update('activities', i.id, { featured: featVal });
+    });
+
+    renderActivitiesTable();
+    showToast(newFeatured ? `Set "${target.title}" as Hero Featured!` : `Removed Hero Featured from "${target.title}"`);
+  };
 
   // 5.2 People & Team Table
   function renderPeopleTable() {
@@ -1257,39 +1324,72 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       `;
     } else if (collection === 'activities') {
+      const isFeatured = item.featured === true || item.featured === 1 || item.featured === '1' || item.featured === 'true';
+      const imagesVal = Array.isArray(item.images) ? item.images.join('\n') : (item.images || '');
+
       fieldsHtml = `
         <div class="form-group">
-          <label class="form-label">Activity / Work Title</label>
-          <input type="text" name="title" class="admin-input" value="${escapeHtml(item.title || '')}" placeholder="e.g. Community Climate Dialogue &amp; Workshop" required />
-        </div>
-        <div class="form-group">
-          <label class="form-label">Category / Tag</label>
-          <select name="category" class="admin-input">
-            <option value="RETREAT" ${item.category === 'RETREAT' ? 'selected' : ''}>RETREAT</option>
-            <option value="WORKSHOP" ${item.category === 'WORKSHOP' ? 'selected' : ''}>WORKSHOP</option>
-            <option value="COMMUNITY KACHERI" ${item.category === 'COMMUNITY KACHERI' ? 'selected' : ''}>COMMUNITY KACHERI</option>
-            <option value="EXPOSURE VISIT" ${item.category === 'EXPOSURE VISIT' ? 'selected' : ''}>EXPOSURE VISIT</option>
-            <option value="RESEARCH" ${item.category === 'RESEARCH' ? 'selected' : ''}>RESEARCH</option>
-            <option value="FIELD PROJECT" ${item.category === 'FIELD PROJECT' ? 'selected' : ''}>FIELD PROJECT</option>
-            <option value="POLICY" ${item.category === 'POLICY' ? 'selected' : ''}>POLICY</option>
-            <option value="CASE STUDY" ${item.category === 'CASE STUDY' ? 'selected' : ''}>CASE STUDY</option>
-          </select>
+          <label class="form-label">Activity / Gathering Title</label>
+          <input type="text" name="title" class="admin-input" value="${escapeHtml(item.title || '')}" placeholder="e.g. Climate Justice Gathering &amp; Retreat" required />
         </div>
         <div class="form-row" style="display:flex; gap:16px;">
           <div class="form-group flex-1" style="flex:1;">
-            <label class="form-label">Date</label>
+            <label class="form-label">Category / Event Type</label>
+            <select name="category" class="admin-input">
+              <option value="RETREAT" ${item.category === 'RETREAT' ? 'selected' : ''}>RETREAT</option>
+              <option value="GATHERING" ${item.category === 'GATHERING' ? 'selected' : ''}>GATHERING</option>
+              <option value="COMMUNITY GATHERING" ${item.category === 'COMMUNITY GATHERING' ? 'selected' : ''}>COMMUNITY GATHERING</option>
+              <option value="COMMUNITY KACHERI" ${item.category === 'COMMUNITY KACHERI' ? 'selected' : ''}>COMMUNITY KACHERI</option>
+              <option value="WORKSHOP" ${item.category === 'WORKSHOP' ? 'selected' : ''}>WORKSHOP</option>
+              <option value="EXPOSURE VISIT" ${item.category === 'EXPOSURE VISIT' ? 'selected' : ''}>EXPOSURE VISIT</option>
+              <option value="RESEARCH" ${item.category === 'RESEARCH' ? 'selected' : ''}>RESEARCH</option>
+              <option value="FIELD PROJECT" ${item.category === 'FIELD PROJECT' ? 'selected' : ''}>FIELD PROJECT</option>
+              <option value="POLICY" ${item.category === 'POLICY' ? 'selected' : ''}>POLICY</option>
+              <option value="CASE STUDY" ${item.category === 'CASE STUDY' ? 'selected' : ''}>CASE STUDY</option>
+            </select>
+          </div>
+          <div class="form-group flex-1" style="flex:1;">
+            <label class="form-label">Location / City</label>
+            <input type="text" name="location" class="admin-input" value="${escapeHtml(item.location || '')}" placeholder="e.g. Lake Manchhar, Sindh or Pakistan" />
+          </div>
+        </div>
+        <div class="form-row" style="display:flex; gap:16px;">
+          <div class="form-group flex-1" style="flex:1;">
+            <label class="form-label">Event Date</label>
             <input type="date" name="date" class="admin-input" value="${item.date || ''}" required />
           </div>
           <div class="form-group flex-1" style="flex:1;">
-            <label class="form-label">Location</label>
-            <input type="text" name="location" class="admin-input" value="${escapeHtml(item.location || '')}" placeholder="e.g. Venue / City, Region" />
+            <label class="form-label">Formatted Date Display</label>
+            <input type="text" name="dateFormatted" class="admin-input" value="${escapeHtml(item.dateFormatted || '')}" placeholder="e.g. 23.04.2026 (Leave blank to auto-format)" />
           </div>
+        </div>
+        <div class="form-row" style="display:flex; gap:16px;">
+          <div class="form-group flex-2" style="flex:2;">
+            <label class="form-label">Hero Callout Quote</label>
+            <input type="text" name="quote" class="admin-input" value="${escapeHtml(item.quote || '')}" placeholder="e.g. “Reconnecting with land and community to build resilience”" />
+          </div>
+          <div class="form-group flex-1" style="flex:1;">
+            <label class="form-label">Quote Speaker / Attribution</label>
+            <input type="text" name="quoteAuthor" class="admin-input" value="${escapeHtml(item.quoteAuthor || '')}" placeholder="e.g. CAEA Movement Gathering" />
+          </div>
+        </div>
+        <div class="form-group" style="background:rgba(75, 104, 255, 0.06); padding:10px 14px; border-radius:6px; border:1px solid rgba(75, 104, 255, 0.15);">
+          <label style="display:flex; align-items:center; gap:10px; cursor:pointer; font-weight:600; color:#fff; user-select:none;">
+            <input type="checkbox" name="featured" ${isFeatured ? 'checked' : ''} style="width:16px; height:16px; accent-color:#4b68ff;" />
+            <span>★ Feature in Top Hero Slideshow &amp; Gallery (Live on Our Work page)</span>
+          </label>
+          <div style="font-size:11.5px; color:#9da5b4; margin-top:4px; margin-left:26px;">When enabled, this activity is displayed prominently in the top quote box and interactive gallery.</div>
         </div>
         ${orderFieldHtml}
         ${imageFieldHtml}
         <div class="form-group">
-          <label class="form-label">Description</label>
-          <textarea name="description" class="admin-textarea" rows="4" placeholder="Enter activity summary and key highlights..." required>${escapeHtml(item.description || '')}</textarea>
+          <label class="form-label">Photo Gallery / Multi-Image Slideshow (One image path or URL per line)</label>
+          <textarea name="imagesList" class="admin-textarea" rows="3" placeholder="Assets/media/events/retreat/DSCF4154.JPG&#10;Assets/media/events/retreat/DSCF3966.JPG&#10;Assets/media/events/retreat/DSCF4356.JPG&#10;Assets/media/events/retreat/DSCF4512.JPG">${escapeHtml(imagesVal)}</textarea>
+          <div style="font-size:11.5px; color:#9da5b4; margin-top:4px;">These images power the cycling photo arrows (&lt; &gt;) on the live activity card. If left blank, the primary image will be used.</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Narrative Summary / Key Highlights</label>
+          <textarea name="description" class="admin-textarea" rows="4" placeholder="Enter activity and gathering summary, background, and movement impact..." required>${escapeHtml(item.description || '')}</textarea>
         </div>
       `;
     } else if (collection === 'people') {
@@ -1661,9 +1761,44 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
+      if (collection === 'activities' || collection === 'gatherings') {
+        const imagesText = dataObj.imagesList || '';
+        const parsedImages = imagesText
+          .split(/[\n,]+/)
+          .map(s => s.trim())
+          .filter(Boolean);
+
+        if (dataObj.image && (!parsedImages.length || !parsedImages.includes(dataObj.image))) {
+          if (!parsedImages.length) {
+            parsedImages.push(dataObj.image);
+          }
+        }
+        dataObj.images = parsedImages.length > 0 ? parsedImages : (dataObj.image ? [dataObj.image] : []);
+        delete dataObj.imagesList;
+
+        dataObj.featured = (dataObj.featured === 'on' || dataObj.featured === true || dataObj.featured === '1' || dataObj.featured === 'true');
+
+        if (dataObj.date && !dataObj.dateFormatted) {
+          const parts = dataObj.date.split('-');
+          if (parts.length === 3) {
+            dataObj.dateFormatted = `${parts[2]}.${parts[1]}.${parts[0]}`;
+          }
+        }
+
+        if (dataObj.featured) {
+          const allActivities = window.DataStore.get('activities');
+          allActivities.forEach(act => {
+            if (act.id !== recordId && (act.featured === true || act.featured === 1 || act.featured === '1')) {
+              act.featured = false;
+              window.DataStore.update('activities', act.id, { featured: false });
+            }
+          });
+        }
+      }
+
       const label = collection === 'mapPins' || collection === 'mappins' ? 'location pin' :
                     collection === 'opportunities' ? 'position' :
-                    collection === 'activities' ? 'activity' :
+                    collection === 'activities' || collection === 'gatherings' ? 'activity / gathering' :
                     collection === 'people' ? 'team member' :
                     collection.slice(0, -1);
 
@@ -2041,9 +2176,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (settingWorkActHeroAuthor) settingWorkActHeroAuthor.value = actBanner.heroAuthor || '';
     if (settingWorkActHeroHeading) settingWorkActHeroHeading.value = actBanner.heroHeading || '';
     if (settingWorkActHeroDesc) settingWorkActHeroDesc.value = actBanner.heroDescription || '';
-    if (settingWorkActGatheringTitle) settingWorkActGatheringTitle.value = actBanner.upcomingGathering?.title || '';
-    if (settingWorkActGatheringDate) settingWorkActGatheringDate.value = actBanner.upcomingGathering?.date || '';
-    if (settingWorkActGatheringLink) settingWorkActGatheringLink.value = actBanner.upcomingGathering?.link || '';
+
+    const gathering = actBanner.upcomingGathering || {};
+    if (settingWorkActGatheringVisible) settingWorkActGatheringVisible.checked = gathering.visible !== false;
+    if (settingWorkActGatheringTitle) settingWorkActGatheringTitle.value = gathering.title || '';
+    if (settingWorkActGatheringDate) settingWorkActGatheringDate.value = gathering.date || '';
+    if (settingWorkActGatheringDesc) settingWorkActGatheringDesc.value = gathering.subtitle || '';
+    if (settingWorkActGatheringBtnText) settingWorkActGatheringBtnText.value = gathering.btnText || 'SEE MORE';
+    if (settingWorkActGatheringLink) settingWorkActGatheringLink.value = gathering.link || '/pages/get-involved.html';
+    if (settingWorkActGatheringModal) settingWorkActGatheringModal.checked = Boolean(gathering.openModal);
+
+    updateGatheringCalloutPreview();
   }
 
   // Home Page Video Toggle
@@ -2585,7 +2728,75 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 10.7 Sub-Tab 4: Save Activities & Gatherings Settings
+  // Sub-Tab 4: Live Gathering Banner Preview Updater
+  function updateGatheringCalloutPreview() {
+    const prevDate = document.getElementById('preview-gathering-date');
+    const prevTitle = document.getElementById('preview-gathering-title');
+    const prevDesc = document.getElementById('preview-gathering-desc');
+    const prevBtn = document.getElementById('preview-gathering-btn');
+    const prevCard = document.querySelector('.gathering-preview-card');
+
+    const dateVal = settingWorkActGatheringDate ? settingWorkActGatheringDate.value.trim() : '';
+    const titleVal = settingWorkActGatheringTitle ? settingWorkActGatheringTitle.value.trim() : '';
+    const descVal = settingWorkActGatheringDesc ? settingWorkActGatheringDesc.value.trim() : '';
+    const btnVal = settingWorkActGatheringBtnText ? settingWorkActGatheringBtnText.value.trim() : '';
+    const isVisible = settingWorkActGatheringVisible ? settingWorkActGatheringVisible.checked : true;
+
+    if (prevDate) prevDate.textContent = dateVal || 'OCTOBER 2026 · REGISTRATION OPEN';
+    if (prevTitle) prevTitle.textContent = titleVal || 'CATCH THE UPCOMING GATHERING';
+    if (prevDesc) prevDesc.textContent = descVal || 'No experience needed. Just a willingness to show up and act.';
+    if (prevBtn) prevBtn.textContent = btnVal || 'SEE MORE';
+    if (prevCard) {
+      prevCard.style.opacity = isVisible ? '1' : '0.45';
+      prevCard.style.filter = isVisible ? 'none' : 'grayscale(60%)';
+    }
+  }
+
+  [
+    settingWorkActGatheringVisible,
+    settingWorkActGatheringTitle,
+    settingWorkActGatheringDate,
+    settingWorkActGatheringDesc,
+    settingWorkActGatheringBtnText,
+    settingWorkActGatheringLink,
+    settingWorkActGatheringModal
+  ].forEach(inputEl => {
+    if (inputEl) {
+      inputEl.addEventListener('input', updateGatheringCalloutPreview);
+      inputEl.addEventListener('change', updateGatheringCalloutPreview);
+    }
+  });
+
+  // Save only the Upcoming Gathering Callout
+  if (btnSaveGatheringCallout) {
+    btnSaveGatheringCallout.addEventListener('click', () => {
+      if (!window.DataStore) return;
+      const currentSettings = window.DataStore.getPageSettings();
+      const ourWork = currentSettings.ourWork || {};
+      const act = ourWork.activitiesBanner || {};
+
+      const upcomingGathering = {
+        visible: settingWorkActGatheringVisible ? settingWorkActGatheringVisible.checked : true,
+        title: (settingWorkActGatheringTitle ? settingWorkActGatheringTitle.value : '').trim() || 'CATCH THE UPCOMING GATHERING',
+        subtitle: (settingWorkActGatheringDesc ? settingWorkActGatheringDesc.value : '').trim() || 'No experience needed. Just a willingness to show up and act.',
+        date: (settingWorkActGatheringDate ? settingWorkActGatheringDate.value : '').trim() || 'OCTOBER 2026 · REGISTRATION OPEN',
+        btnText: (settingWorkActGatheringBtnText ? settingWorkActGatheringBtnText.value : '').trim() || 'SEE MORE',
+        link: (settingWorkActGatheringLink ? settingWorkActGatheringLink.value : '').trim() || '/pages/get-involved.html',
+        openModal: settingWorkActGatheringModal ? settingWorkActGatheringModal.checked : false
+      };
+
+      ourWork.activitiesBanner = {
+        ...act,
+        upcomingGathering
+      };
+
+      window.DataStore.savePageSettings('ourWork', ourWork);
+      updateGatheringCalloutPreview();
+      showToast('Upcoming Gathering Callout Banner saved!');
+    });
+  }
+
+  // 10.7 Sub-Tab 4: Save All Activities & Gatherings Page Settings
   if (btnSaveActivitiesSettings) {
     btnSaveActivitiesSettings.addEventListener('click', () => {
       if (!window.DataStore) return;
@@ -2603,14 +2814,19 @@ document.addEventListener('DOMContentLoaded', () => {
         heroHeading: (settingWorkActHeroHeading ? settingWorkActHeroHeading.value : '').trim(),
         heroDescription: (settingWorkActHeroDesc ? settingWorkActHeroDesc.value : '').trim(),
         upcomingGathering: {
-          title: (settingWorkActGatheringTitle ? settingWorkActGatheringTitle.value : '').trim(),
-          date: (settingWorkActGatheringDate ? settingWorkActGatheringDate.value : '').trim(),
-          link: (settingWorkActGatheringLink ? settingWorkActGatheringLink.value : '').trim()
+          visible: settingWorkActGatheringVisible ? settingWorkActGatheringVisible.checked : true,
+          title: (settingWorkActGatheringTitle ? settingWorkActGatheringTitle.value : '').trim() || 'CATCH THE UPCOMING GATHERING',
+          subtitle: (settingWorkActGatheringDesc ? settingWorkActGatheringDesc.value : '').trim() || 'No experience needed. Just a willingness to show up and act.',
+          date: (settingWorkActGatheringDate ? settingWorkActGatheringDate.value : '').trim() || 'OCTOBER 2026 · REGISTRATION OPEN',
+          btnText: (settingWorkActGatheringBtnText ? settingWorkActGatheringBtnText.value : '').trim() || 'SEE MORE',
+          link: (settingWorkActGatheringLink ? settingWorkActGatheringLink.value : '').trim() || '/pages/get-involved.html',
+          openModal: settingWorkActGatheringModal ? settingWorkActGatheringModal.checked : false
         }
       };
 
       window.DataStore.savePageSettings('ourWork', ourWork);
-      showToast('Activities & Gatherings banner & hero story saved!');
+      updateGatheringCalloutPreview();
+      showToast('Activities & Gatherings banner, hero story & upcoming callout saved!');
     });
   }
 

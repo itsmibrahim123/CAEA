@@ -257,6 +257,18 @@ if ($method === 'GET') {
             }
         }
 
+        // Unpack activities images array
+        if ($tableName === 'activities') {
+            foreach ($records as &$r) {
+                if (!empty($r['images']) && is_string($r['images'])) {
+                    $decoded = json_decode($r['images'], true);
+                    if (is_array($decoded)) {
+                        $r['images'] = $decoded;
+                    }
+                }
+            }
+        }
+
         sendJsonResponse(['success' => true, 'data' => $records, 'count' => count($records)]);
     }
 }
@@ -279,6 +291,14 @@ if ($method === 'POST' && $action !== 'delete' && $action !== 'update') {
     if (isset($record['featured'])) {
         $record['featured'] = $record['featured'] ? 1 : 0;
     }
+
+    // Serialize activities images array to JSON string
+    if ($tableName === 'activities' && isset($record['images'])) {
+        if (is_array($record['images'])) {
+            $record['images'] = json_encode($record['images'], JSON_UNESCAPED_UNICODE);
+        }
+    }
+    unset($record['orderIndex']);
 
     // Normalize map_pins fields
     if ($tableName === 'map_pins') {
@@ -324,6 +344,14 @@ if ($method === 'PUT' || ($method === 'POST' && ($action === 'update' || !empty(
     if (isset($record['featured'])) {
         $record['featured'] = $record['featured'] ? 1 : 0;
     }
+
+    // Serialize activities images array to JSON string
+    if ($tableName === 'activities' && isset($record['images'])) {
+        if (is_array($record['images'])) {
+            $record['images'] = json_encode($record['images'], JSON_UNESCAPED_UNICODE);
+        }
+    }
+    unset($record['orderIndex']);
 
     // Normalize map_pins fields
     if ($tableName === 'map_pins') {

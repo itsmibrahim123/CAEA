@@ -795,10 +795,13 @@ const SEED_DATA = {
         videoUrl: '',
         videoThumbnail: 'Assets/how-water-became-power-ai.jpg',
         upcomingGathering: {
-          title: 'Sindh Delta Climate Gathering 2026',
-          subtitle: 'Registration open for activists and grassroots organizers',
-          date: 'OCTOBER 2026',
-          link: '#apply'
+          visible: true,
+          title: 'CATCH THE UPCOMING GATHERING',
+          subtitle: 'No experience needed. Just a willingness to show up and act.',
+          date: 'OCTOBER 2026 · REGISTRATION OPEN',
+          btnText: 'SEE MORE',
+          link: '/pages/get-involved.html',
+          openModal: false
         }
       }
     }
@@ -963,7 +966,7 @@ class CAEADataStore {
 
   init() {
     const DATA_VERSION_KEY = 'caea_data_version';
-    const CURRENT_VERSION = 'v19_caea_logo_accordion_mismatch';
+    const CURRENT_VERSION = 'v20_activities_gatherings_crud';
     const storedVersion = localStorage.getItem(DATA_VERSION_KEY);
 
     if (storedVersion !== CURRENT_VERSION) {
@@ -1021,7 +1024,10 @@ class CAEADataStore {
 
   getKey(collection) {
     switch (collection.toLowerCase()) {
-      case 'activities': return STORAGE_KEYS.ACTIVITIES;
+      case 'activities':
+      case 'activity':
+      case 'gatherings':
+      case 'gathering': return STORAGE_KEYS.ACTIVITIES;
       case 'people': return STORAGE_KEYS.PEOPLE;
       case 'articles':
       case 'fossilfuelarticles':
@@ -1238,6 +1244,20 @@ class CAEADataStore {
       newItem.dateFormatted = `${day}.${month}.${year}`;
     }
 
+    // Activities & Gatherings specific enhancements
+    if (collection.toLowerCase() === 'activities' || collection.toLowerCase() === 'gatherings') {
+      newItem.featured = (newItem.featured === true || newItem.featured === 1 || newItem.featured === '1' || newItem.featured === 'true');
+      if (newItem.featured) {
+        items.forEach(it => { it.featured = false; });
+      }
+      if (typeof newItem.images === 'string') {
+        newItem.images = newItem.images.split(/[\n,]+/).map(s => s.trim()).filter(Boolean);
+      }
+      if (!Array.isArray(newItem.images) || !newItem.images.length) {
+        newItem.images = newItem.image ? [newItem.image] : ['Assets/Hero-image.png'];
+      }
+    }
+
     items.push(newItem);
     localStorage.setItem(this.getKey(collection), JSON.stringify(items));
     this.dispatchUpdate(collection);
@@ -1271,6 +1291,19 @@ class CAEADataStore {
       updatedItem.dateFormatted = `${day}.${month}.${year}`;
     }
 
+    // Activities & Gatherings specific enhancements
+    if (collection.toLowerCase() === 'activities' || collection.toLowerCase() === 'gatherings') {
+      if (updatedFields.featured !== undefined) {
+        updatedItem.featured = (updatedFields.featured === true || updatedFields.featured === 1 || updatedFields.featured === '1' || updatedFields.featured === 'true');
+        if (updatedItem.featured) {
+          items.forEach(it => { if (it.id !== id) it.featured = false; });
+        }
+      }
+      if (typeof updatedFields.images === 'string') {
+        updatedItem.images = updatedFields.images.split(/[\n,]+/).map(s => s.trim()).filter(Boolean);
+      }
+    }
+
     items[index] = updatedItem;
     localStorage.setItem(this.getKey(collection), JSON.stringify(items));
     this.dispatchUpdate(collection);
@@ -1280,7 +1313,7 @@ class CAEADataStore {
     this.sendApiMutation(`api.php?collection=${apiCol}&id=${id}`, 'POST', {
       action: 'update',
       id: id,
-      ...updatedFields,
+      ...updatedItem,
       sortOrder: updatedSortOrder
     });
 
