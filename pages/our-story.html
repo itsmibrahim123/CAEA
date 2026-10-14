@@ -105,36 +105,8 @@
 
           <!-- Card Body: 3x3 Photo Grid + Quote & Narrative -->
           <div class="team-card-body">
-            <!-- 3x3 Photo Grid -->
-            <div class="team-photo-grid" aria-label="Team Photos">
-              <div class="team-photo-item">
-                <img src="/Assets/Team/grid-1-1-hamna.png" alt="" class="team-photo" loading="lazy" />
-              </div>
-              <div class="team-photo-item">
-                <img src="/Assets/Team/grid-1-2-Sanaa.png" alt="" class="team-photo" loading="lazy" />
-              </div>
-              <div class="team-photo-item">
-                <img src="/Assets/Team/grid-1-3-fiza.png" alt="" class="team-photo" loading="lazy" />
-              </div>
-              <div class="team-photo-item">
-                <img src="/Assets/Team/grid-2-1-kamran.png" alt="" class="team-photo" loading="lazy" />
-              </div>
-              <div class="team-photo-item">
-                <img src="/Assets/Team/grid-2-2-abid.png" alt="" class="team-photo" loading="lazy" />
-              </div>
-              <div class="team-photo-item">
-                <img src="/Assets/Team/grid-2-3-spogmai.png" alt="" class="team-photo" loading="lazy" />
-              </div>
-              <div class="team-photo-item">
-                <img src="/Assets/Team/grid-3-1-fiza.png" alt="" class="team-photo" loading="lazy" />
-              </div>
-              <div class="team-photo-item">
-                <img src="/Assets/Team/grid-3-2-muhammad.png" alt="" class="team-photo" loading="lazy" />
-              </div>
-              <div class="team-photo-item">
-                <img src="/Assets/Team/grid-3-3-muaz.png" alt="" class="team-photo" loading="lazy" />
-              </div>
-            </div>
+            <!-- Dynamic Photo Grid (Configured via Admin Console) -->
+            <div class="team-photo-grid" id="team-photo-grid" aria-label="Team Photos"></div>
 
             <!-- Right Content: Quote & Body Narrative -->
             <div class="team-narrative-col">
@@ -419,21 +391,78 @@
     <section class="allies-section" id="allies" aria-label="Our Allies">
       <div class="allies-container">
         <h2 class="allies-heading">OUR ALLIES</h2>
-        <div class="allies-grid">
-          <div class="ally-card" aria-label="Alternative Law Collective">
-            <img src="/Assets/Allies/Aleternative-Law-Collective.png" alt="Alternative Law Collective" class="ally-logo-img" />
-          </div>
-          <div class="ally-card" aria-label="Alliance for Climate Justice &amp; Clean Energy">
-            <img src="/Assets/Allies/Alliance-for-climate-justice-&-Clean-Energy.PNG" alt="Alliance for Climate Justice &amp; Clean Energy" class="ally-logo-img" />
-          </div>
-          <div class="ally-card" aria-label="Climate Action Center">
-            <img src="/Assets/Allies/Climate-Action-Center.png" alt="Climate Action Center" class="ally-logo-img" />
-          </div>
-          <div class="ally-card" aria-label="Policy Research Institute for Equitable Development">
-            <img src="/Assets/Allies/PRIED.JPG" alt="Policy Research Institute for Equitable Development (PRIED)" class="ally-logo-img" />
-          </div>
-          <div class="ally-card" aria-label="Verrha Research">
-            <img src="/Assets/Allies/Verrha-Research.png" alt="Verrha Research" class="ally-logo-img" />
+        <!-- Logo Ticker Tape -->
+        <div class="allies-ticker-wrapper" aria-label="Our Allies Infinite Logo Ticker">
+          <div class="allies-ticker-track">
+            <!-- First half: 2 sets of logos -->
+            <div class="allies-ticker-half">
+              <div class="ally-card" title="Alternative Law Collective">
+                <img src="/Assets/Allies/Aleternative-Law-Collective.png" alt="Alternative Law Collective" class="ally-logo-img" loading="lazy" />
+              </div>
+              <div class="ally-card" title="Alliance for Climate Justice &amp; Clean Energy">
+                <img src="/Assets/Allies/Alliance-for-climate-justice-&-Clean-Energy.PNG" alt="Alliance for Climate Justice &amp; Clean Energy" class="ally-logo-img" loading="lazy" />
+              </div>
+              <div class="ally-card" title="Climate Action Center">
+                <img src="/Assets/Allies/Climate-Action-Center.png" alt="Climate Action Center" class="ally-logo-img" loading="lazy" />
+              </div>
+              <div class="ally-card" title="Policy Research Institute for Equitable Development">
+                <img src="/Assets/Allies/PRIED.JPG" alt="Policy Research Institute for Equitable Development (PRIED)" class="ally-logo-img" loading="lazy" />
+              </div>
+              <div class="ally-card" title="Verrha Research">
+                <img src="/Assets/Allies/Verrha-Research.png" alt="Verrha Research" class="ally-logo-img" loading="lazy" />
+              </div>
+
+              <div class="ally-card" title="Alternative Law Collective">
+                <img src="/Assets/Allies/Aleternative-Law-Collective.png" alt="Alternative Law Collective" class="ally-logo-img" loading="lazy" />
+              </div>
+              <div class="ally-card" title="Alliance for Climate Justice &amp; Clean Energy">
+                <img src="/Assets/Allies/Alliance-for-climate-justice-&-Clean-Energy.PNG" alt="Alliance for Climate Justice &amp; Clean Energy" class="ally-logo-img" loading="lazy" />
+              </div>
+              <div class="ally-card" title="Climate Action Center">
+                <img src="/Assets/Allies/Climate-Action-Center.png" alt="Climate Action Center" class="ally-logo-img" loading="lazy" />
+              </div>
+              <div class="ally-card" title="Policy Research Institute for Equitable Development">
+                <img src="/Assets/Allies/PRIED.JPG" alt="Policy Research Institute for Equitable Development (PRIED)" class="ally-logo-img" loading="lazy" />
+              </div>
+              <div class="ally-card" title="Verrha Research">
+                <img src="/Assets/Allies/Verrha-Research.png" alt="Verrha Research" class="ally-logo-img" loading="lazy" />
+              </div>
+            </div>
+
+            <!-- Second half: 2 identical sets of logos (seamless infinite loop clone) -->
+            <div class="allies-ticker-half" aria-hidden="true">
+              <div class="ally-card" title="Alternative Law Collective">
+                <img src="/Assets/Allies/Aleternative-Law-Collective.png" alt="" class="ally-logo-img" loading="lazy" />
+              </div>
+              <div class="ally-card" title="Alliance for Climate Justice &amp; Clean Energy">
+                <img src="/Assets/Allies/Alliance-for-climate-justice-&-Clean-Energy.PNG" alt="" class="ally-logo-img" loading="lazy" />
+              </div>
+              <div class="ally-card" title="Climate Action Center">
+                <img src="/Assets/Allies/Climate-Action-Center.png" alt="" class="ally-logo-img" loading="lazy" />
+              </div>
+              <div class="ally-card" title="Policy Research Institute for Equitable Development">
+                <img src="/Assets/Allies/PRIED.JPG" alt="" class="ally-logo-img" loading="lazy" />
+              </div>
+              <div class="ally-card" title="Verrha Research">
+                <img src="/Assets/Allies/Verrha-Research.png" alt="" class="ally-logo-img" loading="lazy" />
+              </div>
+
+              <div class="ally-card" title="Alternative Law Collective">
+                <img src="/Assets/Allies/Aleternative-Law-Collective.png" alt="" class="ally-logo-img" loading="lazy" />
+              </div>
+              <div class="ally-card" title="Alliance for Climate Justice &amp; Clean Energy">
+                <img src="/Assets/Allies/Alliance-for-climate-justice-&-Clean-Energy.PNG" alt="" class="ally-logo-img" loading="lazy" />
+              </div>
+              <div class="ally-card" title="Climate Action Center">
+                <img src="/Assets/Allies/Climate-Action-Center.png" alt="" class="ally-logo-img" loading="lazy" />
+              </div>
+              <div class="ally-card" title="Policy Research Institute for Equitable Development">
+                <img src="/Assets/Allies/PRIED.JPG" alt="" class="ally-logo-img" loading="lazy" />
+              </div>
+              <div class="ally-card" title="Verrha Research">
+                <img src="/Assets/Allies/Verrha-Research.png" alt="" class="ally-logo-img" loading="lazy" />
+              </div>
+            </div>
           </div>
         </div>
       </div>

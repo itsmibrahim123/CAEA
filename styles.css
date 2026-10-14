@@ -1157,19 +1157,20 @@ body.our-work-page .story-pattern-col {
   padding-top: 20px;
 }
 
-/* 3x3 Photo Grid */
+/* Square Photo Grid */
 .team-photo-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(var(--grid-cols, 3), 1fr);
   gap: 10px;
   width: 100%;
   max-width: 460px;
+  aspect-ratio: 1 / 1;
 }
 
 .team-photo-item {
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 1 / 1;
   overflow: hidden;
   background-color: #f1f5f9;
 }
@@ -1481,38 +1482,92 @@ body.our-work-page .story-pattern-col {
   font-size: clamp(34px, 3.6vw, 48px);
   line-height: 1.1;
   color: #4b68ff;
-  margin: 0 0 28px 0;
+  margin: 0 0 32px 0;
   text-transform: uppercase;
   letter-spacing: -0.01em;
 }
 
-.allies-grid {
+/* Continuous Logo Ticker Tape Ribbon */
+.allies-ticker-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  user-select: none;
+  padding: 12px 0;
+  mask-image: linear-gradient(to right, transparent 0%, #000000 6%, #000000 94%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000000 6%, #000000 94%, transparent 100%);
+}
+
+.allies-ticker-track {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  animation: alliesTickerScroll 28s linear infinite;
+  will-change: transform;
+}
+
+.allies-ticker-wrapper:hover .allies-ticker-track {
+  animation-play-state: paused;
+}
+
+.allies-ticker-half {
   display: flex;
   align-items: center;
-  gap: 24px;
-  flex-wrap: wrap;
+  flex-shrink: 0;
+  gap: clamp(48px, 5.5vw, 84px);
+  padding-right: clamp(48px, 5.5vw, 84px);
 }
 
 .ally-card {
-  width: 170px;
-  height: 100px;
-  background-color: transparent;
-  border-radius: 0;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8px 12px;
+  height: clamp(64px, 6vw, 88px);
+  min-width: 130px;
+  max-width: 230px;
+  background-color: transparent;
+  padding: 6px 12px;
   box-sizing: border-box;
-  border: none;
-  box-shadow: none;
-  transition: transform 0.25s ease, opacity 0.25s ease;
+  cursor: pointer;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.28s ease;
 }
 
 .ally-card:hover {
-  transform: translateY(-2px);
-  opacity: 0.85;
-  box-shadow: none;
-  border: none;
+  transform: translateY(-3px) scale(1.06);
+  opacity: 1;
+}
+
+.ally-logo-img {
+  max-width: 100%;
+  height: clamp(44px, 4.8vw, 62px);
+  object-fit: contain;
+  display: block;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes alliesTickerScroll {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .allies-ticker-track {
+    animation: none;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .allies-ticker-half:last-child {
+    display: none;
+  }
+  .allies-ticker-wrapper {
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
 }
 
 .ally-logo-img {
@@ -1619,31 +1674,29 @@ body.our-work-page .story-pattern-col {
     padding: 36px var(--page-margin) 44px;
   }
 
-  .allies-grid {
-    display: flex !important;
-    flex-wrap: nowrap !important;
-    overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior-x: contain;
-    gap: 14px;
-    padding-bottom: 8px;
-    margin-right: calc(-1 * var(--page-margin));
-    padding-right: var(--page-margin);
-    scrollbar-width: none;
+  .allies-ticker-wrapper {
+    mask-image: linear-gradient(to right, transparent 0%, #000000 4%, #000000 96%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000000 4%, #000000 96%, transparent 100%);
   }
 
-  .allies-grid::-webkit-scrollbar {
-    display: none;
+  .allies-ticker-track {
+    animation-duration: 22s;
+  }
+
+  .allies-ticker-half {
+    gap: 36px;
+    padding-right: 36px;
   }
 
   .ally-card {
-    flex: 0 0 140px;
-    width: 140px;
-    height: 80px;
-    padding: 6px 8px;
-    background: transparent;
-    border: none;
-    box-shadow: none;
+    height: 58px;
+    min-width: 105px;
+    max-width: 175px;
+    padding: 4px 8px;
+  }
+
+  .ally-logo-img {
+    height: 40px;
   }
 
   .join-team-section {

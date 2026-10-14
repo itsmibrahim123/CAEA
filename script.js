@@ -219,18 +219,75 @@ document.addEventListener('DOMContentLoaded', () => {
     const gridContainer = document.querySelector('.team-photo-grid');
     if (!gridContainer || !window.DataStore) return;
 
-    // Preserve the 3x3 photo collage if already rendered statically
-    if (gridContainer.children.length > 0 && !gridContainer.dataset.dynamic) return;
+    gridContainer.dataset.dynamic = 'true';
 
     const people = window.DataStore.get('people');
-    if (!people || !people.length) return;
+    if (!people || !people.length) {
+      gridContainer.innerHTML = '';
+      gridContainer.style.display = 'none';
+      return;
+    }
 
-    const displayPeople = people.slice(0, 9);
-    gridContainer.innerHTML = displayPeople.map(person => {
-      const imgSrc = resolveImagePath(person.image || 'Assets/Team/sanaa-muhammad.jpg');
+    // Filter people whose photo is explicitly enabled in the admin panel
+    const gridPeople = people.filter(p => p.showInGrid === true || p.showInGrid === 1 || p.showInGrid === '1' || p.showInGrid === 'true');
+
+    // If all are hidden in admin, display zero images (completely empty)
+    if (gridPeople.length === 0) {
+      gridContainer.innerHTML = '';
+      gridContainer.style.display = 'none';
+      gridContainer.removeAttribute('data-photo-count');
+      return;
+    }
+
+    gridContainer.style.display = 'grid';
+    const count = gridPeople.length;
+    let cols = 3;
+    let displayItems = [];
+
+    if (count === 1) {
+      cols = 1;
+      displayItems = [{ ...gridPeople[0], isLogoTile: false }];
+    } else if (count >= 2 && count <= 4) {
+      cols = 2; // Symmetrical 2x2 Square
+      displayItems = gridPeople.slice(0, 4).map(p => ({ ...p, isLogoTile: false }));
+      while (displayItems.length < 4) {
+        displayItems.push({
+          name: 'CAEA',
+          isLogoTile: true,
+          image: '/Assets/CAEA-Navbar-Logo.png'
+        });
+      }
+    } else {
+      cols = 3; // Symmetrical 3x3 Square (Option 1)
+      if (count >= 9) {
+        displayItems = gridPeople.slice(0, 9).map(p => ({ ...p, isLogoTile: false }));
+      } else {
+        displayItems = gridPeople.map(p => ({ ...p, isLogoTile: false }));
+        while (displayItems.length < 9) {
+          displayItems.push({
+            name: 'CAEA',
+            isLogoTile: true,
+            image: '/Assets/CAEA-Navbar-Logo.png'
+          });
+        }
+      }
+    }
+
+    gridContainer.style.setProperty('--grid-cols', cols);
+    gridContainer.setAttribute('data-photo-count', displayItems.length);
+
+    gridContainer.innerHTML = displayItems.map(item => {
+      if (item.isLogoTile) {
+        return `
+          <div class="team-photo-item is-logo-tile" title="Centre for Aquatic Ecology &amp; Art">
+            <img src="/Assets/CAEA-Navbar-Logo.png" alt="CAEA Emblem" class="team-photo brand-tile-logo" loading="lazy" />
+          </div>
+        `;
+      }
+      const imgSrc = resolveImagePath(item.image || 'Assets/Team/grid-1-2-Sanaa.png');
       return `
-        <div class="team-photo-item">
-          <img src="${imgSrc}" alt="${escapeHtml(person.name || '')}" class="team-photo" loading="lazy" onerror="this.src='/Assets/Team/sanaa-muhammad.jpg'" />
+        <div class="team-photo-item" title="${escapeHtml(item.name || '')}">
+          <img src="${imgSrc}" alt="${escapeHtml(item.name || '')}" class="team-photo" loading="lazy" onerror="this.src='/Assets/Team/grid-1-2-Sanaa.png'" />
         </div>
       `;
     }).join('');
@@ -1542,33 +1599,219 @@ document.addEventListener('DOMContentLoaded', () => {
       return fixedHeaderHeight + 16;
     }
 
+    // Auto-scroll reading mode state
+    let autoScrollAnimId = null;
+    let isAutoScrolling = false;
+    let isAutoScrollPaused = false;
+    let currentDrawer = null;
+    let lastTimestamp = 0;
+    let hideBadgeTimer = null;
+    let startScrollTimer = null;
+    const SCROLL_SPEED_PX_PER_SEC = 46; // Slow, comfortable reading speed
+
+    // Floating Reader Badge DOM
+    let badge = document.getElementById('reading-autoscroll-badge');
+    if (!badge) {
+      badge = document.createElement('div');
+      badge.id = 'reading-autoscroll-badge';
+      badge.className = 'reading-autoscroll-badge';
+      badge.innerHTML = `
+        <span class="autoscroll-pulse-dot" aria-hidden="true"></span>
+        <span class="autoscroll-text">Reading mode · Auto-scrolling</span>
+        <button type="button" class="autoscroll-ctrl-btn" id="autoscroll-toggle-btn">⏸ Pause</button>
+        <button type="button" class="autoscroll-close-btn" id="autoscroll-close-btn" title="Stop Auto-scroll" aria-label="Close">✕</button>
+      `;
+      document.body.appendChild(badge);
+
+      const toggleBtn = badge.querySelector('#autoscroll-toggle-btn');
+      const closeBtn = badge.querySelector('#autoscroll-close-btn');
+
+      if (toggleBtn) {
+        toggleBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (isAutoScrolling) {
+            pauseAutoScroll();
+          } else if (isAutoScrollPaused && currentDrawer) {
+            resumeAutoScroll();
+          }
+        });
+      }
+
+      if (closeBtn) {
+        closeBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          stopAutoScroll();
+        });
+      }
+    }
+
+    function showBadge(paused = false) {
+      if (!badge) return;
+      if (hideBadgeTimer) clearTimeout(hideBadgeTimer);
+      const textEl = badge.querySelector('.autoscroll-text');
+      const toggleBtn = badge.querySelector('#autoscroll-toggle-btn');
+      if (paused) {
+        badge.classList.add('is-paused');
+        if (textEl) textEl.textContent = 'Reading paused';
+        if (toggleBtn) toggleBtn.textContent = '▶ Resume';
+      } else {
+        badge.classList.remove('is-paused');
+        if (textEl) textEl.textContent = 'Reading mode · Auto-scrolling';
+        if (toggleBtn) toggleBtn.textContent = '⏸ Pause';
+      }
+      badge.classList.add('is-visible');
+    }
+
+    function hideBadge() {
+      if (!badge) return;
+      badge.classList.remove('is-visible');
+    }
+
+    function stopAutoScroll() {
+      if (startScrollTimer) {
+        clearTimeout(startScrollTimer);
+        startScrollTimer = null;
+      }
+      if (autoScrollAnimId) {
+        cancelAnimationFrame(autoScrollAnimId);
+        autoScrollAnimId = null;
+      }
+      isAutoScrolling = false;
+      isAutoScrollPaused = false;
+      currentDrawer = null;
+      hideBadge();
+    }
+
+    function pauseAutoScroll() {
+      if (startScrollTimer) {
+        clearTimeout(startScrollTimer);
+        startScrollTimer = null;
+      }
+      if (!isAutoScrolling) return;
+      if (autoScrollAnimId) {
+        cancelAnimationFrame(autoScrollAnimId);
+        autoScrollAnimId = null;
+      }
+      isAutoScrolling = false;
+      isAutoScrollPaused = true;
+      showBadge(true);
+      if (hideBadgeTimer) clearTimeout(hideBadgeTimer);
+      hideBadgeTimer = setTimeout(() => {
+        if (isAutoScrollPaused) hideBadge();
+      }, 7000);
+    }
+
+    function resumeAutoScroll() {
+      if (!currentDrawer) return;
+      startAutoScroll(currentDrawer);
+    }
+
+    function startAutoScroll(drawer) {
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReducedMotion) return;
+
+      if (autoScrollAnimId) {
+        cancelAnimationFrame(autoScrollAnimId);
+      }
+      isAutoScrolling = true;
+      isAutoScrollPaused = false;
+      currentDrawer = drawer;
+      lastTimestamp = performance.now();
+      showBadge(false);
+
+      function step(now) {
+        if (!isAutoScrolling || !currentDrawer) return;
+        const deltaMs = Math.min(now - lastTimestamp, 100);
+        lastTimestamp = now;
+
+        const scrollDelta = (SCROLL_SPEED_PX_PER_SEC * deltaMs) / 1000;
+
+        // Check if we reached the bottom of the drawer content
+        const drawerRect = currentDrawer.getBoundingClientRect();
+        const drawerBottomDoc = drawerRect.bottom + window.pageYOffset;
+        const maxScroll = drawerBottomDoc - window.innerHeight + 30;
+
+        if (window.pageYOffset >= maxScroll || (window.innerHeight + window.pageYOffset >= document.body.offsetHeight - 10)) {
+          stopAutoScroll();
+          return;
+        }
+
+        window.scrollBy(0, scrollDelta);
+        autoScrollAnimId = requestAnimationFrame(step);
+      }
+
+      autoScrollAnimId = requestAnimationFrame(step);
+    }
+
+    // Expose helpers on window so other components can interact
+    window.pauseWorkAutoScroll = pauseAutoScroll;
+    window.stopWorkAutoScroll = stopAutoScroll;
+
+    // Interrupt listeners: user taking manual control
+    window.addEventListener('wheel', () => {
+      if (isAutoScrolling) {
+        pauseAutoScroll();
+      }
+    }, { passive: true });
+
+    window.addEventListener('touchstart', (e) => {
+      if (e.target.closest('#reading-autoscroll-badge')) return;
+      if (isAutoScrolling) {
+        pauseAutoScroll();
+      }
+    }, { passive: true });
+
+    window.addEventListener('keydown', (e) => {
+      if (['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Space'].includes(e.code)) {
+        if (isAutoScrolling) {
+          pauseAutoScroll();
+        }
+      }
+    });
+
+    function toggleBanner(banner) {
+      const targetId = banner.getAttribute('data-target');
+      const drawer = document.getElementById(targetId);
+      if (!drawer) return;
+
+      const isExpanded = banner.classList.contains('is-expanded');
+      if (isExpanded) {
+        // Collapse
+        banner.classList.remove('is-expanded');
+        banner.setAttribute('aria-expanded', 'false');
+        drawer.classList.remove('is-open');
+        stopAutoScroll();
+      } else {
+        // Expand
+        banner.classList.add('is-expanded');
+        banner.setAttribute('aria-expanded', 'true');
+        drawer.classList.add('is-open');
+
+        // Initial smooth scroll to bring banner into view
+        const bannerTop = banner.getBoundingClientRect().top + window.pageYOffset;
+        const offsetPosition = bannerTop - getScrollOffset();
+        window.scrollTo({
+          top: Math.max(0, offsetPosition),
+          behavior: 'smooth'
+        });
+
+        // After drawer is visible and positioned, initiate slow auto-scroll for reading
+        stopAutoScroll();
+        currentDrawer = drawer;
+        startScrollTimer = setTimeout(() => {
+          if (banner.classList.contains('is-expanded') && drawer.classList.contains('is-open')) {
+            startAutoScroll(drawer);
+          }
+        }, 850);
+      }
+    }
+
     // Expandable Bar Banners Accordion
     barBanners.forEach(banner => {
       banner.addEventListener('click', (e) => {
         // Don't toggle if clicking directly on a button inside bar
         if (e.target.closest('.btn-bar-action')) return;
-        const targetId = banner.getAttribute('data-target');
-        const drawer = document.getElementById(targetId);
-        if (!drawer) return;
-
-        const isExpanded = banner.classList.contains('is-expanded');
-        if (isExpanded) {
-          banner.classList.remove('is-expanded');
-          banner.setAttribute('aria-expanded', 'false');
-          drawer.classList.remove('is-open');
-        } else {
-          banner.classList.add('is-expanded');
-          banner.setAttribute('aria-expanded', 'true');
-          drawer.classList.add('is-open');
-
-          // Scroll neatly into view
-          const bannerTop = banner.getBoundingClientRect().top + window.pageYOffset;
-          const offsetPosition = bannerTop - getScrollOffset();
-          window.scrollTo({
-            top: Math.max(0, offsetPosition),
-            behavior: 'smooth'
-          });
-        }
+        toggleBanner(banner);
       });
 
       // Handle button inside banner specifically
@@ -1576,22 +1819,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (btnAction) {
         btnAction.addEventListener('click', (e) => {
           e.stopPropagation();
-          const targetId = banner.getAttribute('data-target');
-          const drawer = document.getElementById(targetId);
-          if (drawer) {
-            const willExpand = !banner.classList.contains('is-expanded');
-            banner.classList.toggle('is-expanded');
-            drawer.classList.toggle('is-open');
-            banner.setAttribute('aria-expanded', willExpand ? 'true' : 'false');
-            if (willExpand) {
-              const bannerTop = banner.getBoundingClientRect().top + window.pageYOffset;
-              const offsetPosition = bannerTop - getScrollOffset();
-              window.scrollTo({
-                top: Math.max(0, offsetPosition),
-                behavior: 'smooth'
-              });
-            }
-          }
+          toggleBanner(banner);
         });
       }
     });
@@ -1654,6 +1882,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const cards = listContainer.querySelectorAll('.article-list-card');
       cards.forEach(card => {
         card.addEventListener('click', () => {
+          if (window.pauseWorkAutoScroll) {
+            window.pauseWorkAutoScroll();
+          }
           cards.forEach(c => {
             c.classList.remove('active');
             c.classList.remove('is-active');

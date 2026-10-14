@@ -110,6 +110,7 @@ const SEED_DATA = {
       bio: 'Sanaa’i Muhammad is the Founder and Chief Executive Officer of the Climate Action & Energy Access Institute (CAEA), where she leads advocacy, and movement-building at the intersection of energy transition and climate justice in Pakistan. Her work focuses on phasing out fossil gas in power, industry, and households; advancing renewable energy pathways; and building public understanding of how colonial infrastructures, financial institutions, and policy choices shape today’s climate and energy crises.\n\nHer work is rooted in a commitment to just transitions, energy equity, and amplifying the experiences of communities most affected by environmental harm. She writes, organizes, and teaches with the belief that climate justice is inseparable from economic democracy, gender justice, and people’s sovereignty over energy and resources.',
       image: 'Assets/Team/grid-1-2-Sanaa.png',
       email: 'sanaaimuhammad@climateactionenergyaccess.org',
+      showInGrid: true,
       sortOrder: 1
     },
     {
@@ -120,6 +121,7 @@ const SEED_DATA = {
       bio: 'Kamran Aziz is the Director Research and a founding partner, working at the intersection of Pakistan’s electricity and gas systems, with a focus on advancing a just energy transition. His work combines historical analysis, political economy, and the lived experiences of communities directly affected by fossil fuel extraction and its social and environmental harms. His research is grounded in a commitment to center frontline communities, democratize energy governance, and support policy transformations aligned with climate justice.',
       image: 'Assets/Team/grid-2-1-kamran.png',
       email: 'kamranaziz@climateactionenergyaccess.org',
+      showInGrid: true,
       sortOrder: 2
     },
     {
@@ -130,6 +132,7 @@ const SEED_DATA = {
       bio: 'Asad is a law graduate from IIUI and a committed worker organizing with the oppressed communities. During his last experience as a Research Associate at Alternative Law Collective, his role involved conducting field research and supporting studies related to the land stewardship, and the concerns of communities victims of climate change and the developmental projects. He has been involved in organizing the students and the marches for their cultural and political rights. By engaging directly with communities, he has developed critical understanding of mainstream discourses around development and knowledge systems with a focus on the laws perpetuating inequalities and the local systems of justice. His role involved research and advocacy at Climate Action and Energy Access',
       image: 'Assets/CAEA-Navbar-Logo.png',
       email: 'asadjuttah@climateactionenergyaccess.org',
+      showInGrid: false,
       sortOrder: 3
     },
     {
@@ -140,6 +143,7 @@ const SEED_DATA = {
       bio: 'Hamna has a bachelors in environmental engineering from NUST and is a passionate environmentalist. Her commitment to addressing critical issues such as climate change, and sustainability has only deepened with her academic journey. She aspires to focus her professional efforts to bring positive change in both our society and environment. As a Textile Associate at CAEA, Hamna focuses on textile-sector emissions and the global fast-fashion supply chain. She works on research, campaigns, and public engagement strategies that highlight the social, environmental, and climate impacts of the industry, and she is committed to advocating for a more equitable and sustainable future for both people and the planet.',
       image: 'Assets/Team/grid-1-1-hamna.png',
       email: 'hamnaanwar@climateactionenergyaccess.org',
+      showInGrid: true,
       sortOrder: 4
     },
     {
@@ -150,6 +154,7 @@ const SEED_DATA = {
       bio: 'Muhammad Saeed is an PHD Scholar whose research focuses on the intricate relationship between water, identity, and politics, specifically exploring "Sindhu and the making of Sindhi nationalism: River Politics during the colonial era. His academic work explores key thematic areas including water governance, floods, river infrastructures, and hydro-power development. His research also contributes to a critical understanding of riverine identity and the historical emergence of riverine movements, with a specific focus on the intersection of water and nationalism. Beyond his scholarship, Saeed is a political activist committed to organizing with oppressed communities, nations and people. He is currently serving as a Climate justice Lead at Climate Action and Energy Access, where his work involves both research and advocacy for equitable climate and energy solutions. His direct engagement with communities and academic study inform a critical perspective on mainstream development narratives and knowledge systems, particularly concerning the policies that impact vulnerable populations and perpetuate inequalities.',
       image: 'Assets/Team/grid-3-2-muhammad.png',
       email: 'guramanisaeed98@gmail.com',
+      showInGrid: true,
       sortOrder: 5
     },
     {
@@ -160,6 +165,7 @@ const SEED_DATA = {
       bio: 'Muaaz Ahmad Khan is currently pursuing his MPhil in Government and Public Policy. He works as the Communication Lead and Social Media & Networks Coordinator at CAEA. His work focuses on communicating CAEA’s research and campaigns, managing its digital platforms and network groups, and working with partners on joint communication initiatives. He works closely with the research and campaign teams to turn complex ideas and research into clear and engaging content. Through his work, he contributes to CAEA’s efforts to strengthen a people-centered climate justice movement.',
       image: 'Assets/Team/grid-3-3-muaz.png',
       email: 'khanmuaaz762@gmail.com',
+      showInGrid: true,
       sortOrder: 6
     },
     {
@@ -170,6 +176,7 @@ const SEED_DATA = {
       bio: 'Fizza Aman Bhutto is an Administration and HR Officer at the Climate Action and Energy Access (CAEA). She holds a Bachelor’s degree in Development Studies from Bahria University, Islamabad. Her development sector experience spans program coordination, engagement with Indigenous communities, and research on climate-induced disasters, with her undergraduate research focusing on the devastating 2022 floods in Pakistan. At CAEA, she works across administration, human resources, project coordination, and organizational development. She is particularly interested in the intersections of climate justice, development, and organizational development, and in how stronger, people-centered organizations can contribute to a more equitable and sustainable change.',
       image: 'Assets/Team/grid-1-3-fiza.png',
       email: 'fizzabhutto9@gmail.com',
+      showInGrid: true,
       sortOrder: 7
     },
     {
@@ -180,6 +187,7 @@ const SEED_DATA = {
       bio: 'Manahil Usman is an Associate in Fossil Fuel Phaseout at Climate Action for Energy Access (CAEA), where she focuses on research and data analysis at the intersection of energy policy and climate justice. With a background in Computer Science and an MBA, she brings an analytical foundation shaped by prior work in data management and sector-level analysis to her current focus on Pakistan\'s gas sector, LNG dynamics, and just transition frameworks. At CAEA, Manahil is committed to building the evidence base needed to advance credible, equitable fossil fuel phaseout policy in Pakistan and beyond.',
       image: 'Assets/CAEA-Navbar-Logo.png',
       email: 'manahilusman2@gmail.com',
+      showInGrid: false,
       sortOrder: 8
     },
     {
@@ -190,7 +198,19 @@ const SEED_DATA = {
       bio: 'Abid Azim is an experienced finance professional with expertise in financial management, budgeting, financial reporting, taxation, audit, and strategic financial planning. He has been serving as Finance Manager at Climate Action and Energy Access LLP since May 2024, where he oversees financial analysis, budgeting, cash-flow management, financial reporting, and tax compliance. With professional experience spanning finance, audit, accounting, and business management, Abid brings a strong analytical and results-oriented approach to supporting organizational growth and sustainability. He is a Certified Public Accountant (CPA) from England & Wales and a finalist of ICAEW.',
       image: 'Assets/Team/grid-2-2-abid.png',
       email: 'abidazeem101@gmail.com',
+      showInGrid: true,
       sortOrder: 9
+    },
+    {
+      id: 'ppl-10',
+      name: 'Spogmai Rabnawaz Maken',
+      role: 'Creative Director',
+      category: 'Core Team',
+      bio: 'Spogmai Rabnawaz Maken serves as Creative Director at CAEA, leading visual identity, campaign narratives, grassroots media production, and creative communications at the intersection of climate action and environmental justice.',
+      image: 'Assets/Team/grid-2-3-spogmai.png',
+      email: 'spogmai@climateactionenergyaccess.org',
+      showInGrid: true,
+      sortOrder: 10
     }
   ],
 
@@ -970,7 +990,7 @@ class CAEADataStore {
 
   init() {
     const DATA_VERSION_KEY = 'caea_data_version';
-    const CURRENT_VERSION = 'v22_shared_goal_pillars';
+    const CURRENT_VERSION = 'v23_team_photo_grid_selection';
     const storedVersion = localStorage.getItem(DATA_VERSION_KEY);
 
     if (storedVersion !== CURRENT_VERSION) {
@@ -998,6 +1018,33 @@ class CAEADataStore {
       }
       if (!localStorage.getItem(STORAGE_KEYS.PEOPLE)) {
         localStorage.setItem(STORAGE_KEYS.PEOPLE, JSON.stringify(SEED_DATA.people));
+      }
+
+      // Ensure every person in localStorage has showInGrid populated
+      try {
+        const storedPeople = JSON.parse(localStorage.getItem(STORAGE_KEYS.PEOPLE) || '[]');
+        if (Array.isArray(storedPeople) && storedPeople.length > 0) {
+          let changed = false;
+          if (!storedPeople.find(p => p.id === 'ppl-10' || (p.name && p.name.includes('Spogmai')))) {
+            const spogmaiSeed = SEED_DATA.people.find(p => p.id === 'ppl-10');
+            if (spogmaiSeed) {
+              storedPeople.push(spogmaiSeed);
+              changed = true;
+            }
+          }
+          storedPeople.forEach(p => {
+            if (p.showInGrid === undefined) {
+              const isLogo = p.image && p.image.includes('CAEA-Navbar-Logo');
+              p.showInGrid = !isLogo;
+              changed = true;
+            }
+          });
+          if (changed) {
+            localStorage.setItem(STORAGE_KEYS.PEOPLE, JSON.stringify(storedPeople));
+          }
+        }
+      } catch (e) {
+        console.warn('Migration for showInGrid failed:', e);
       }
       if (!localStorage.getItem(STORAGE_KEYS.ARTICLES)) {
         localStorage.setItem(STORAGE_KEYS.ARTICLES, JSON.stringify(SEED_DATA.articles));
@@ -1262,6 +1309,16 @@ class CAEADataStore {
       }
     }
 
+    // People specific enhancements
+    if (collection.toLowerCase() === 'people') {
+      if (newItem.showInGrid !== undefined) {
+        newItem.showInGrid = (newItem.showInGrid === true || newItem.showInGrid === 1 || newItem.showInGrid === '1' || newItem.showInGrid === 'true' || newItem.showInGrid === 'on');
+      } else {
+        const isLogo = newItem.image && newItem.image.includes('CAEA-Navbar-Logo');
+        newItem.showInGrid = !isLogo;
+      }
+    }
+
     items.push(newItem);
     localStorage.setItem(this.getKey(collection), JSON.stringify(items));
     this.dispatchUpdate(collection);
@@ -1305,6 +1362,13 @@ class CAEADataStore {
       }
       if (typeof updatedFields.images === 'string') {
         updatedItem.images = updatedFields.images.split(/[\n,]+/).map(s => s.trim()).filter(Boolean);
+      }
+    }
+
+    // People specific enhancements
+    if (collection.toLowerCase() === 'people') {
+      if (updatedFields.showInGrid !== undefined) {
+        updatedItem.showInGrid = (updatedFields.showInGrid === true || updatedFields.showInGrid === 1 || updatedFields.showInGrid === '1' || updatedFields.showInGrid === 'true' || updatedFields.showInGrid === 'on');
       }
     }
 

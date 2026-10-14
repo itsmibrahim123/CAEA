@@ -604,7 +604,20 @@ document.addEventListener('DOMContentLoaded', () => {
   // 5.2 People & Team Table
   function renderPeopleTable() {
     if (!tablePeopleBody || !window.DataStore) return;
-    let items = window.DataStore.get('people');
+    const allPeople = window.DataStore.get('people') || [];
+    const inGridCount = allPeople.filter(p => p.showInGrid !== false && p.showInGrid !== 0 && p.showInGrid !== '0' && p.showInGrid !== 'false').length;
+    const countBadge = document.getElementById('people-grid-count');
+    if (countBadge) {
+      if (inGridCount === 0) {
+        countBadge.textContent = '0 (Empty)';
+      } else if (inGridCount <= 4) {
+        countBadge.textContent = `${inGridCount}/4 in 2×2`;
+      } else {
+        countBadge.textContent = `${inGridCount}/9 in 3×3`;
+      }
+    }
+
+    let items = allPeople;
     const query = searchPeople ? searchPeople.value.toLowerCase().trim() : '';
     const cat = filterPeopleCategory ? filterPeopleCategory.value : '';
 
@@ -620,11 +633,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (items.length === 0) {
-      tablePeopleBody.innerHTML = `<tr><td colspan="6" class="text-center" style="padding:24px; color:#888;">No team members found matching criteria.</td></tr>`;
+      tablePeopleBody.innerHTML = `<tr><td colspan="7" class="text-center" style="padding:24px; color:#888;">No team members found matching criteria.</td></tr>`;
       return;
     }
 
-    tablePeopleBody.innerHTML = items.map((item, index) => `
+    tablePeopleBody.innerHTML = items.map((item, index) => {
+      const inGrid = item.showInGrid !== false && item.showInGrid !== 0 && item.showInGrid !== '0' && item.showInGrid !== 'false';
+      return `
       <tr>
         <td>
           <div style="display:flex; align-items:center; gap:6px;">
@@ -643,7 +658,16 @@ document.addEventListener('DOMContentLoaded', () => {
         <td>
           <span class="table-badge">${escapeHtml(item.category || 'Core Team')}</span>
         </td>
-        <td style="max-width:280px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:#9da5b4;">
+        <td>
+          <button type="button" 
+            class="grid-toggle-btn ${inGrid ? 'is-in-grid' : 'is-not-in-grid'}" 
+            onclick="togglePersonGridVisibility('${item.id}')" 
+            title="${inGrid ? 'Showing in photo grid on Our Story page (Click to exclude)' : 'Excluded from photo grid on Our Story page (Click to include)'}">
+            <span class="grid-toggle-icon">${inGrid ? '✓' : '✕'}</span>
+            <span>${inGrid ? 'In Grid' : 'Hidden'}</span>
+          </button>
+        </td>
+        <td style="max-width:260px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:#9da5b4;">
           ${escapeHtml(item.bio || 'N/A')}
         </td>
         <td class="text-right">
@@ -663,8 +687,20 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </td>
       </tr>
-    `).join('');
+      `;
+    }).join('');
   }
+
+  window.togglePersonGridVisibility = function(id) {
+    if (!window.DataStore) return;
+    const person = window.DataStore.getById('people', id);
+    if (!person) return;
+    const current = person.showInGrid !== false && person.showInGrid !== 0 && person.showInGrid !== '0' && person.showInGrid !== 'false';
+    const nextVal = !current;
+    window.DataStore.update('people', id, { showInGrid: nextVal });
+    renderPeopleTable();
+    showToast(`${person.name || 'Team member'} is now ${nextVal ? 'displayed in' : 'hidden from'} photo grid`);
+  };
 
   // 5.2b Fossil Fuel Phaseout Articles & Reader Grid Table
   function renderFossilArticlesTable() {
@@ -1416,6 +1452,16 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         ${orderFieldHtml}
         ${imageFieldHtml}
+        <div class="settings-toggle-row" style="margin-bottom: 16px; background: rgba(255,255,255,0.02); padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.07);">
+          <div class="toggle-info">
+            <strong style="color:#fff;">Display Photo in Our Story Grid</strong>
+            <span style="font-size:12px; color:#9da5b4;">Tick to show this team member's picture in the photo collage on Our Story page.</span>
+          </div>
+          <label class="switch-toggle">
+            <input type="checkbox" name="showInGrid" ${item.showInGrid !== false && item.showInGrid !== 0 && item.showInGrid !== '0' && item.showInGrid !== 'false' ? 'checked' : ''} />
+            <span class="slider round"></span>
+          </label>
+        </div>
         <div class="form-group">
           <label class="form-label">Biography</label>
           <textarea name="bio" class="admin-textarea" rows="5" placeholder="Brief biographical overview and focus areas..." required>${escapeHtml(item.bio || '')}</textarea>
@@ -1794,6 +1840,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
           });
         }
+      }
+
+      if (collection === 'people') {
+        dataObj.showInGrid = (dataObj.showInGrid === 'on' || dataObj.showInGrid === true || dataObj.showInGrid === '1' || dataObj.showInGrid === 'true');
       }
 
       const label = collection === 'mapPins' || collection === 'mappins' ? 'location pin' :

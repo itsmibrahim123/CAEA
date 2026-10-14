@@ -75,6 +75,7 @@ class Database {
             image VARCHAR(512),
             email VARCHAR(255),
             sortOrder INTEGER DEFAULT 0,
+            showInGrid INTEGER DEFAULT 1,
             createdAt DATETIME,
             updatedAt DATETIME
         );");
@@ -179,6 +180,13 @@ class Database {
         // Ensure images column exists for activities gallery slideshow
         try {
             $pdo->exec("ALTER TABLE activities ADD COLUMN images TEXT");
+        } catch (Exception $e) {
+            // Column already exists
+        }
+
+        // Ensure showInGrid column exists for people table
+        try {
+            $pdo->exec("ALTER TABLE people ADD COLUMN showInGrid INTEGER DEFAULT 1");
         } catch (Exception $e) {
             // Column already exists
         }

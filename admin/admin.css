@@ -644,6 +644,71 @@ body.admin-body {
 .table-badge.status-upcoming { background: rgba(56, 189, 248, 0.2); color: #38bdf8; }
 .table-badge.status-closed { background: rgba(239, 68, 68, 0.2); color: #f87171; }
 
+/* Grid Toggle Pill in Admin Table */
+.grid-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: 1px solid transparent;
+  outline: none;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+
+.grid-toggle-btn.is-in-grid {
+  background: rgba(75, 104, 255, 0.14);
+  color: #6c85ff;
+  border-color: rgba(75, 104, 255, 0.4);
+}
+
+.grid-toggle-btn.is-in-grid:hover {
+  background: rgba(75, 104, 255, 0.26);
+  border-color: #4b68ff;
+  color: #8da2ff;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(75, 104, 255, 0.2);
+}
+
+.grid-toggle-btn.is-not-in-grid {
+  background: rgba(255, 255, 255, 0.04);
+  color: #7a8292;
+  border-color: rgba(255, 255, 255, 0.09);
+}
+
+.grid-toggle-btn.is-not-in-grid:hover {
+  background: rgba(255, 255, 255, 0.09);
+  color: #abb3c4;
+  border-color: rgba(255, 255, 255, 0.18);
+  transform: translateY(-1px);
+}
+
+.grid-toggle-icon {
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.grid-header-count {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 2px 7px;
+  border-radius: 12px;
+  background: rgba(75, 104, 255, 0.14);
+  color: #8da2ff;
+  border: 1px solid rgba(75, 104, 255, 0.28);
+  margin-left: 6px;
+  text-transform: none;
+  letter-spacing: normal;
+  vertical-align: middle;
+}
+
 .table-actions {
   display: flex;
   align-items: center;

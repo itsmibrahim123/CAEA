@@ -291,6 +291,9 @@ if ($method === 'POST' && $action !== 'delete' && $action !== 'update') {
     if (isset($record['featured'])) {
         $record['featured'] = $record['featured'] ? 1 : 0;
     }
+    if (isset($record['showInGrid'])) {
+        $record['showInGrid'] = ($record['showInGrid'] && $record['showInGrid'] !== '0' && $record['showInGrid'] !== 'false') ? 1 : 0;
+    }
 
     // Serialize activities images array to JSON string
     if ($tableName === 'activities' && isset($record['images'])) {
@@ -343,6 +346,9 @@ if ($method === 'PUT' || ($method === 'POST' && ($action === 'update' || !empty(
     $record['updatedAt'] = date('Y-m-d H:i:s');
     if (isset($record['featured'])) {
         $record['featured'] = $record['featured'] ? 1 : 0;
+    }
+    if (isset($record['showInGrid'])) {
+        $record['showInGrid'] = ($record['showInGrid'] && $record['showInGrid'] !== '0' && $record['showInGrid'] !== 'false') ? 1 : 0;
     }
 
     // Serialize activities images array to JSON string
