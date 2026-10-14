@@ -129,6 +129,55 @@ body.our-work-page {
   box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
 }
 
+/* Standalone Unifying Section: Our Shared Goal */
+.work-shared-goal-section {
+  width: 100%;
+  background-color: #07090d;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 48px var(--page-margin) 56px;
+  box-sizing: border-box;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.work-shared-goal-content {
+  max-width: 840px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.shared-goal-kicker {
+  font-family: 'Roboto', sans-serif;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-green-arch);
+}
+
+.shared-goal-title {
+  font-family: var(--font-heading);
+  font-size: clamp(26px, 3vw, 38px);
+  font-weight: 400;
+  color: var(--color-white);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.shared-goal-desc {
+  font-family: var(--font-body);
+  font-size: clamp(14.5px, 1.25vw, 17px);
+  color: #cbd5e1;
+  line-height: 1.7;
+  margin: 0;
+  max-width: 760px;
+}
+
 /* Repeating Pattern Columns */
 .story-pattern-col,
 .arch-pattern-col,

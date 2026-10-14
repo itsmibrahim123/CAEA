@@ -1463,6 +1463,15 @@ document.addEventListener('DOMContentLoaded', () => {
       if (cj.opportunityTitle) cjBtn.setAttribute('data-opportunity-title', cj.opportunityTitle);
     }
 
+    // Shared Goal
+    const sharedGoal = settings.sharedGoal;
+    if (sharedGoal) {
+      const sgTitle = document.querySelector('.shared-goal-title');
+      const sgDesc = document.querySelector('.shared-goal-desc');
+      if (sgTitle && sharedGoal.title) sgTitle.textContent = sharedGoal.title;
+      if (sgDesc && sharedGoal.description) sgDesc.textContent = sharedGoal.description;
+    }
+
     // 4. Activities & Gatherings
     const actBanner = settings.activitiesBanner || {};
     const actBannerTitle = document.getElementById('activities-banner-title');

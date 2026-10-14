@@ -748,7 +748,7 @@ const SEED_DATA = {
         visible: true,
         title: 'OUR MISSION',
         subtitle: 'Rethinking energy systems for a cleaner, fairer, and climate-resilient future.',
-        description: "For CAEA, phasing out gas is not a distant policy idea — it is an urgent necessity. Pakistan's growing reliance on natural gas and imported LNG (liquefied natural gas) has trapped the country in a costly system, leading to wasted resources, financial losses, and long-term debts that burden the public for years.\n\nThis is not only an economic problem. Producing and transporting gas releases methane, a gas that heats the planet even faster than carbon dioxide, and the communities living closest to gas fields, pipelines, and power plants bear the greatest damage.\n\nOur research shows that the power sector is the most important place to begin this shift. Imported LNG was meant to bring energy security, but instead it has made.",
+        description: "Our mission is to advance a just energy transition by exposing the structural drivers of Pakistan’s gas and fossil-fuel dependence; challenging subsidies, governance failures, and entrenched industrial interests, especially captive power plants—that distort markets, deepen inequality, and worsen the climate crisis. CAEA works to democratize climate and energy discourse, center community experiences, and advocate for people-centric, rights-based policies across water, energy, and climate systems. Through evidence-based research, public mobilization, and strategic policy engagement, we strengthen national capacity to phase out gas from industrial and domestic sectors, counter fossil-fuel intensity in power and industry, and push for transparent, least-cost, and climate-just pathways that prioritize public health, economic stability, and intergenerational equity.",
         joinBtnText: 'JOIN US',
         opportunityTitle: 'General Volunteer / Open Application',
         bannerTitle: 'FOSSIL FUEL',
@@ -757,12 +757,12 @@ const SEED_DATA = {
       },
       textile: {
         visible: true,
-        bannerTitle: 'TEXTILE & FAST FASHION',
+        bannerTitle: 'FAST FASHION',
         bannerSubtitle: 'Supply chain transparency, industrial captive power emissions & fair worker transitions',
         bannerBtnText: 'EXPLORE WORK',
         iconStyle: 'double-blue',
-        title: 'TEXTILE & FAST FASHION',
-        subtitle: 'Rethinking energy systems for a cleaner, fairer, and climate-resilient future.',
+        title: 'FAST FASHION',
+        subtitle: 'Supply chain transparency, industrial captive power emissions & fair worker transitions',
         description: "The fashion industry today is built on deep-rooted injustice. What was once rooted in craft and creativity has become a system driven by fast, cheap consumption — and someone always pays the price.\n\nFast fashion runs on a global chain of exploitation. To meet demand from wealthier countries, factories in places like Pakistan push workers to their limits under poor and unsafe conditions. This exploitation also plays out locally: resources and labor move from less-developed regions to more industrialized ones, often with little fair compensation. Raw materials drawn from these regions rarely benefit the communities they come from.\n\nOur work traces this entire supply chain — from where raw materials are extracted, to where garments are made, to where they are sold — to expose these hidden patterns of extraction and inequality. By sharing the stories of the people and places usually left out of the conversation, we aim to build momentum for a fairer, more equitable alternative to the current system.",
         archPattern: 'white-semicircle',
         joinBtnText: 'JOIN US',
@@ -776,10 +776,14 @@ const SEED_DATA = {
         bannerSubtitle: "Ecological democracy, gender equity & frontline communities' sovereignty over resources",
         bannerBtnText: 'LEARN MORE',
         title: 'CLIMATE JUSTICE',
-        subtitle: 'Rethinking energy systems for a cleaner, fairer, and climate-resilient future.',
+        subtitle: "Ecological democracy, gender equity & frontline communities' sovereignty over resources",
         description: "At CAEA, we imagine climate justice beyond merely reducing emissions, compensating losses or making infrastructure resilient. We understand it as the task of refusing the conversion of living landscapes into empty, measurable and extractable space. Every ecology is also a world of knowledge, livelihood, memory, movement and social relations. Justice, therefore, asks who has the power to define a landscape’s problems, whose knowledge is recognised, who receives the benefits of an intervention and who is made to carry its violence. Climate justice means defending diverse ecologies from dispossession and restoring communities’ authority to adapt and steward the worlds that sustain them.\n\nPakistan inhabits different ecological worlds who are victims of the climate crises. Through intentional research, storytelling, and making a dialogic space, CAEA intends to centre the voices of communities victim of the climate crises. Part of this work involves closely examining the social and environmental costs of large infrastructure projects, costs that are often overlooked in official reports and government decisions.\n\nOur goal is to build narrative, shape climate conversations, and support creative reflective spaces to imagine just future that place communities, sustainability, and justice at the center of climate action.",
         joinBtnText: 'JOIN US',
         opportunityTitle: 'Climate Justice Organizer'
+      },
+      sharedGoal: {
+        title: 'Our Shared Goal',
+        description: 'Across all three areas, our work is guided by one principle: development that puts people first — solutions that are good for the planet and fair for the people living on it.'
       },
       activitiesBanner: {
         bannerTitle: 'ACTIVITIES & GATHERINGS',
@@ -966,7 +970,7 @@ class CAEADataStore {
 
   init() {
     const DATA_VERSION_KEY = 'caea_data_version';
-    const CURRENT_VERSION = 'v20_activities_gatherings_crud';
+    const CURRENT_VERSION = 'v22_shared_goal_pillars';
     const storedVersion = localStorage.getItem(DATA_VERSION_KEY);
 
     if (storedVersion !== CURRENT_VERSION) {
