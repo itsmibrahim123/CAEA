@@ -232,15 +232,46 @@
               </li>
               <li class="mobile-nav-item">
                 <a href="${pagesPath}our-story.html" class="mobile-nav-link ${isStories ? 'active' : ''}">
-                  <span class="mobile-nav-text">Our Stories</span>
+                  <span class="mobile-nav-text">Our Story</span>
                   <span class="mobile-nav-arrow" aria-hidden="true">&rarr;</span>
                 </a>
               </li>
-              <li class="mobile-nav-item">
-                <a href="${pagesPath}our-work.html" class="mobile-nav-link ${isWork ? 'active' : ''}">
-                  <span class="mobile-nav-text">Our Work</span>
-                  <span class="mobile-nav-arrow" aria-hidden="true">&rarr;</span>
-                </a>
+              <li class="mobile-nav-item mobile-nav-has-sub">
+                <div class="mobile-nav-link-row">
+                  <a href="${pagesPath}our-work.html" class="mobile-nav-link ${isWork ? 'active' : ''}">
+                    <span class="mobile-nav-text">Our Work</span>
+                    <span class="mobile-nav-arrow" aria-hidden="true">&rarr;</span>
+                  </a>
+                  <button type="button" class="mobile-subnav-toggle ${isWork ? 'is-open' : ''}" id="caea-work-subnav-toggle" aria-label="Toggle Our Work sections" aria-expanded="${isWork ? 'true' : 'false'}">
+                    <svg class="mobile-subnav-chevron" width="12" height="8" viewBox="0 0 12 8" fill="none"><path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </button>
+                </div>
+                <ul class="mobile-subnav-list ${isWork ? 'is-open' : ''}" id="caea-work-subnav-list">
+                  <li>
+                    <a href="${pagesPath}our-work.html#banner-fossil-fuel" class="mobile-subnav-link" data-mobile-banner="banner-fossil-fuel">
+                      <span class="mobile-subnav-bullet dot-fossil"></span>
+                      Fossil Fuel Phaseout
+                    </a>
+                  </li>
+                  <li>
+                    <a href="${pagesPath}our-work.html#banner-climate-justice" class="mobile-subnav-link" data-mobile-banner="banner-climate-justice">
+                      <span class="mobile-subnav-bullet dot-climate"></span>
+                      Climate Justice
+                    </a>
+                  </li>
+                  <li>
+                    <a href="${pagesPath}our-work.html#banner-textile" class="mobile-subnav-link" data-mobile-banner="banner-textile">
+                      <span class="mobile-subnav-bullet dot-fashion"></span>
+                      Fast Fashion
+                    </a>
+                  </li>
+                  <li>
+                    <a href="${pagesPath}our-work.html#banner-activities" class="mobile-subnav-link" data-mobile-banner="banner-activities">
+                      <span class="mobile-subnav-bullet dot-activities"></span>
+                      Activities &amp; Gatherings
+                    </a>
+                  </li>
+                </ul>
               </li>
               <li class="mobile-nav-item">
                 <a href="${pagesPath}our-analytics.html" class="mobile-nav-link ${isAnalytics ? 'active' : ''}">
@@ -328,12 +359,41 @@
       }
     });
 
-    // Close on clicking any link inside the drawer
+    // Close on clicking any link inside the drawer (with special handling for mobile subnav on Our Work)
     drawer.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
+      link.addEventListener('click', (e) => {
+        const mobileBanner = link.getAttribute('data-mobile-banner');
+        if (mobileBanner && isWork) {
+          e.preventDefault();
+          closeMenu();
+          window.location.hash = '#' + mobileBanner;
+          if (typeof window.expandBannerByTarget === 'function') {
+            window.expandBannerByTarget(mobileBanner);
+          }
+          return;
+        }
         closeMenu();
       });
     });
+
+    // Mobile Subnav Toggle Accordion
+    const workSubToggle = drawer.querySelector('#caea-work-subnav-toggle');
+    const workSubList = drawer.querySelector('#caea-work-subnav-list');
+    if (workSubToggle && workSubList) {
+      workSubToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = workSubList.classList.contains('is-open');
+        if (isOpen) {
+          workSubList.classList.remove('is-open');
+          workSubToggle.classList.remove('is-open');
+          workSubToggle.setAttribute('aria-expanded', 'false');
+        } else {
+          workSubList.classList.add('is-open');
+          workSubToggle.classList.add('is-open');
+          workSubToggle.setAttribute('aria-expanded', 'true');
+        }
+      });
+    }
 
     // Touch Swipe Gesture Support for Navigation Drawer
     const drawerPanel = drawer.querySelector('.mobile-drawer-panel');

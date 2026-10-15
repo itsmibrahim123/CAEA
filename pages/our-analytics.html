@@ -40,8 +40,45 @@
       <!-- Navigation buttons -->
       <div class="nav-col nav-col-center">
         <ul class="nav-content">
-          <li><a href="/pages/our-story.html" class="nav-item">Our Stories</a></li>
-          <li><a href="/pages/our-work.html" class="nav-item">Our Work</a></li>
+          <li><a href="/pages/our-story.html" class="nav-item">Our Story</a></li>
+          <li class="nav-item-dropdown-wrapper">
+            <a href="/pages/our-work.html" class="nav-item nav-item-has-dropdown">
+              <span>Our Work</span>
+              <svg class="nav-dropdown-caret" width="9" height="5" viewBox="0 0 9 5" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M1 1L4.5 4.5L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+            <div class="nav-dropdown-menu" role="menu" aria-label="Our Work Sections">
+              <a href="/pages/our-work.html#banner-fossil-fuel" class="nav-dropdown-item" role="menuitem" data-banner-target="banner-fossil-fuel">
+                <span class="nav-dropdown-dot dot-fossil"></span>
+                <span class="nav-dropdown-info">
+                  <span class="nav-dropdown-title">Fossil Fuel Phaseout</span>
+                  <span class="nav-dropdown-sub">Rethinking energy systems for a cleaner future</span>
+                </span>
+              </a>
+              <a href="/pages/our-work.html#banner-climate-justice" class="nav-dropdown-item" role="menuitem" data-banner-target="banner-climate-justice">
+                <span class="nav-dropdown-dot dot-climate"></span>
+                <span class="nav-dropdown-info">
+                  <span class="nav-dropdown-title">Climate Justice</span>
+                  <span class="nav-dropdown-sub">Ecological democracy &amp; community sovereignty</span>
+                </span>
+              </a>
+              <a href="/pages/our-work.html#banner-textile" class="nav-dropdown-item" role="menuitem" data-banner-target="banner-textile">
+                <span class="nav-dropdown-dot dot-fashion"></span>
+                <span class="nav-dropdown-info">
+                  <span class="nav-dropdown-title">Fast Fashion</span>
+                  <span class="nav-dropdown-sub">Supply chain transparency &amp; captive power</span>
+                </span>
+              </a>
+              <a href="/pages/our-work.html#banner-activities" class="nav-dropdown-item" role="menuitem" data-banner-target="banner-activities">
+                <span class="nav-dropdown-dot dot-activities"></span>
+                <span class="nav-dropdown-info">
+                  <span class="nav-dropdown-title">Activities &amp; Gatherings</span>
+                  <span class="nav-dropdown-sub">Field retreats, community kacheris &amp; workshops</span>
+                </span>
+              </a>
+            </div>
+          </li>
           <li><a href="/pages/our-analytics.html" class="nav-item active">Our Analytics</a></li>
           <li><a href="/pages/get-involved.html" class="nav-item">Get Involved</a></li>
         </ul>

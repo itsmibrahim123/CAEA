@@ -1837,6 +1837,57 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
+    function expandBannerByTarget(targetId) {
+      if (!targetId) return;
+      const cleanId = targetId.replace(/^#/, '');
+      let banner = document.getElementById(cleanId);
+      if (!banner) {
+        banner = document.querySelector(`[data-target="${cleanId}"]`) ||
+                 document.querySelector(`.expandable-bar-banner[id*="${cleanId}"]`);
+      }
+      if (!banner) return;
+
+      if (!banner.classList.contains('is-expanded')) {
+        toggleBanner(banner);
+      } else {
+        const bannerTop = banner.getBoundingClientRect().top + window.pageYOffset;
+        window.scrollTo({
+          top: Math.max(0, bannerTop - getScrollOffset()),
+          behavior: 'smooth'
+        });
+      }
+    }
+
+    // Expose expandBannerByTarget globally for mobile drawer and external triggers
+    window.expandBannerByTarget = expandBannerByTarget;
+
+    // Auto-expand if URL has a section or banner hash on load
+    if (window.location.hash) {
+      setTimeout(() => {
+        expandBannerByTarget(window.location.hash);
+      }, 350);
+    }
+
+    // React to hash changes (e.g. back/forward navigation or link clicks)
+    window.addEventListener('hashchange', () => {
+      if (window.location.hash) {
+        expandBannerByTarget(window.location.hash);
+      }
+    });
+
+    // In-page dropdown links handling
+    document.querySelectorAll('.nav-dropdown-item[data-banner-target]').forEach(item => {
+      item.addEventListener('click', (e) => {
+        const target = item.getAttribute('data-banner-target');
+        const banner = document.getElementById(target);
+        if (banner) {
+          e.preventDefault();
+          window.history.pushState(null, '', '#' + target);
+          expandBannerByTarget(target);
+        }
+      });
+    });
+
     // Fossil Fuel Phaseout Articles Filter & Search
     renderOurWorkArticles();
   }
