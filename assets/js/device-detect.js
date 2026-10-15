@@ -232,15 +232,24 @@
               </li>
               <li class="mobile-nav-item">
                 <a href="${pagesPath}our-story.html" class="mobile-nav-link ${isStories ? 'active' : ''}">
-                  <span class="mobile-nav-text">Our Stories</span>
+                  <span class="mobile-nav-text">Our Story</span>
                   <span class="mobile-nav-arrow" aria-hidden="true">&rarr;</span>
                 </a>
               </li>
-              <li class="mobile-nav-item">
-                <a href="${pagesPath}our-work.html" class="mobile-nav-link ${isWork ? 'active' : ''}">
-                  <span class="mobile-nav-text">Our Work</span>
-                  <span class="mobile-nav-arrow" aria-hidden="true">&rarr;</span>
-                </a>
+              <li class="mobile-nav-item mobile-nav-has-sub">
+                <div class="mobile-nav-link-row">
+                  <a href="${pagesPath}our-work.html" class="mobile-nav-link ${isWork ? 'active' : ''}">
+                    <span class="mobile-nav-text">Our Work</span>
+                  </a>
+                  <button type="button" class="mobile-subnav-toggle" id="caea-mobile-work-toggle" aria-label="Toggle Our Work sub-menu" aria-expanded="false">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                  </button>
+                </div>
+                <ul class="mobile-subnav-list" id="caea-mobile-work-subnav">
+                  <li><a href="${pagesPath}our-work.html#fossil-fuel-phaseout" class="mobile-subnav-link">Fossil Fuel Phaseout</a></li>
+                  <li><a href="${pagesPath}our-work.html#climate-justice" class="mobile-subnav-link">Climate Justice</a></li>
+                  <li><a href="${pagesPath}our-work.html#fast-fashion" class="mobile-subnav-link">Fast Fashion</a></li>
+                </ul>
               </li>
               <li class="mobile-nav-item">
                 <a href="${pagesPath}our-analytics.html" class="mobile-nav-link ${isAnalytics ? 'active' : ''}">
@@ -334,6 +343,19 @@
         closeMenu();
       });
     });
+
+    // Mobile Work Sub-menu accordion toggle
+    const workToggle = document.getElementById('caea-mobile-work-toggle');
+    const workSubnav = document.getElementById('caea-mobile-work-subnav');
+    if (workToggle && workSubnav) {
+      workToggle.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const isOpen = workSubnav.classList.toggle('is-open');
+        workToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        workToggle.classList.toggle('is-active', isOpen);
+      });
+    }
 
     // Touch Swipe Gesture Support for Navigation Drawer
     const drawerPanel = drawer.querySelector('.mobile-drawer-panel');

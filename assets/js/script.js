@@ -1837,6 +1837,61 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
+    // Interactive Content Category Tabs Filtering for Our Work Projects
+    const categoryBlocks = document.querySelectorAll('.content-categories-block');
+    categoryBlocks.forEach(block => {
+      const tabBtns = block.querySelectorAll('.category-tab-btn');
+      const cards = block.querySelectorAll('.resource-card');
+
+      tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          tabBtns.forEach(b => {
+            b.classList.remove('active');
+            b.setAttribute('aria-selected', 'false');
+          });
+          btn.classList.add('active');
+          btn.setAttribute('aria-selected', 'true');
+
+          const filter = btn.getAttribute('data-filter');
+          cards.forEach(card => {
+            const cat = card.getAttribute('data-category');
+            if (filter === 'all' || cat === filter) {
+              card.classList.remove('is-hidden');
+            } else {
+              card.classList.add('is-hidden');
+            }
+          });
+        });
+      });
+    });
+
+    // Smooth-scroll & drawer expansion for hash navigation (#fossil-fuel-phaseout, #climate-justice, #fast-fashion)
+    function handleWorkHashNavigation() {
+      const hash = window.location.hash;
+      if (!hash) return;
+      const targetEl = document.querySelector(hash);
+      if (!targetEl) return;
+
+      const parentDrawer = targetEl.querySelector('.expandable-drawer-content') || targetEl.closest('.expandable-drawer-content');
+      if (parentDrawer) {
+        parentDrawer.classList.add('is-open');
+        const targetId = parentDrawer.id;
+        const matchingBanner = document.querySelector(`[data-target="${targetId}"]`);
+        if (matchingBanner) {
+          matchingBanner.classList.add('is-expanded');
+          matchingBanner.setAttribute('aria-expanded', 'true');
+        }
+      }
+
+      setTimeout(() => {
+        const top = targetEl.getBoundingClientRect().top + window.pageYOffset - 85;
+        window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+      }, 100);
+    }
+
+    handleWorkHashNavigation();
+    window.addEventListener('hashchange', handleWorkHashNavigation);
+
     // Fossil Fuel Phaseout Articles Filter & Search
     renderOurWorkArticles();
   }
