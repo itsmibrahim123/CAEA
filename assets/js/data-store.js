@@ -13,7 +13,8 @@ const STORAGE_KEYS = {
   PAGE_SETTINGS: 'caea_page_settings',
   MAP_PINS: 'caea_map_pins_data',
   TEXTILE_CARDS: 'caea_textile_cards_data',
-  CLIMATE_REPORTS: 'caea_climate_reports_data'
+  CLIMATE_REPORTS: 'caea_climate_reports_data',
+  FOSSIL_LINKS: 'caea_fossil_links_data'
 };
 
 // Seed default data
@@ -265,6 +266,45 @@ const SEED_DATA = {
       excerpt: 'Climate Action & Energy Access (CAEA) is a Pakistan-based research and advocacy institute committed to advancing a just, people-centered energy transition.',
       content: 'We work at the intersection of climate justice, energy governance, and public accountability, focusing on how entrenched fossil-fuel interests, inequitable subsidies, and distorted gas and power policies undermine the rights, wellbeing, and economic futures of ordinary people.',
       image: 'assets/how-water-became-power.jpg',
+      sortOrder: 4
+    }
+  ],
+
+  fossilArticleLinks: [
+    {
+      id: 'flink-1',
+      title: 'RLNG disruption: a bane?',
+      publisher: 'Dawn · Opinion & Analysis',
+      url: 'https://www.dawn.com/news/1997175?utm_source=whatsapp',
+      badge: 'DAWN',
+      description: 'Analysis of LNG contract obligations, supply disruptions, and power sector vulnerabilities in Pakistan.',
+      sortOrder: 1
+    },
+    {
+      id: 'flink-2',
+      title: 'Our Remarkable Natural Gas Overshoot',
+      publisher: 'The News on Sunday · Special Report',
+      url: 'https://www.thenews.pk/tns/detail/1397737-our-remarkable-natural-gas-overshoot',
+      badge: 'THE NEWS',
+      description: 'An investigative review of Pakistan’s structural natural gas over-reliance and the urgent imperative for industrial phase-out.',
+      sortOrder: 2
+    },
+    {
+      id: 'flink-3',
+      title: 'Political Economy of Power, Energy, Climate and Justice',
+      publisher: 'CAEA Research Publication (PDF)',
+      url: 'https://drive.google.com/file/d/1LuXInnvuC11GMiHBM_NM4HoWxkRP_Fpa/view?usp=drive_link',
+      badge: 'PDF REPORT',
+      description: 'Flagship policy report on power sector subsidies, circular debt, and the political ecology of fossil extraction.',
+      sortOrder: 3
+    },
+    {
+      id: 'flink-4',
+      title: 'CAEA Climate Action & Energy Access Dashboard',
+      publisher: 'Interactive Data Platform',
+      url: 'https://dashboard.climateactionenergyaccess.org/',
+      badge: 'DATA DASHBOARD',
+      description: 'Real-time interactive dashboard tracking generation mix, LNG import costs, and fossil emissions across Pakistan.',
       sortOrder: 4
     }
   ],
@@ -1082,6 +1122,9 @@ class CAEADataStore {
       if (!localStorage.getItem(STORAGE_KEYS.CLIMATE_REPORTS)) {
         localStorage.setItem(STORAGE_KEYS.CLIMATE_REPORTS, JSON.stringify(SEED_DATA.climateReports));
       }
+      if (!localStorage.getItem(STORAGE_KEYS.FOSSIL_LINKS)) {
+        localStorage.setItem(STORAGE_KEYS.FOSSIL_LINKS, JSON.stringify(SEED_DATA.fossilArticleLinks));
+      }
       if (!localStorage.getItem(STORAGE_KEYS.PAGE_SETTINGS)) {
         localStorage.setItem(STORAGE_KEYS.PAGE_SETTINGS, JSON.stringify(SEED_DATA.pageSettings));
       }
@@ -1098,6 +1141,10 @@ class CAEADataStore {
       case 'articles':
       case 'fossilfuelarticles':
       case 'fossil_articles': return STORAGE_KEYS.ARTICLES;
+      case 'fossilarticlelinks':
+      case 'fossil_article_links':
+      case 'fossillinks':
+      case 'fossil_links': return STORAGE_KEYS.FOSSIL_LINKS;
       case 'opportunities':
       case 'get-involved':
       case 'positions': return STORAGE_KEYS.OPPORTUNITIES;
@@ -1132,6 +1179,7 @@ class CAEADataStore {
     if (c === 'applied' || c === 'applied_fields' || c === 'submissions') return 'applications';
     if (c === 'assets' || c === 'images') return 'media';
     if (c === 'settings' || c === 'pagesettings') return 'page_settings';
+    if (c === 'fossilarticlelinks' || c === 'fossillinks' || c === 'fossil_article_links') return 'fossil_article_links';
     return c;
   }
 
@@ -1147,6 +1195,8 @@ class CAEADataStore {
       } else if ((!items || items.length === 0) && collection === 'climateReports') {
         const settings = this.getPageSettings('ourWork');
         items = settings?.climateJustice?.reports || SEED_DATA.climateReports || [];
+      } else if ((!items || items.length === 0) && (collection === 'fossilArticleLinks' || collection === 'fossilLinks' || collection === 'fossil_links')) {
+        items = SEED_DATA.fossilArticleLinks || [];
       }
 
       if (Array.isArray(items)) {
@@ -1427,6 +1477,7 @@ class CAEADataStore {
     localStorage.setItem(STORAGE_KEYS.ACTIVITIES, JSON.stringify(SEED_DATA.activities));
     localStorage.setItem(STORAGE_KEYS.PEOPLE, JSON.stringify(SEED_DATA.people));
     localStorage.setItem(STORAGE_KEYS.ARTICLES, JSON.stringify(SEED_DATA.articles));
+    localStorage.setItem(STORAGE_KEYS.FOSSIL_LINKS, JSON.stringify(SEED_DATA.fossilArticleLinks));
     localStorage.setItem(STORAGE_KEYS.OPPORTUNITIES, JSON.stringify(SEED_DATA.opportunities));
     localStorage.setItem(STORAGE_KEYS.APPLICATIONS, JSON.stringify(SEED_DATA.applications));
     localStorage.setItem(STORAGE_KEYS.MEDIA, JSON.stringify(SEED_DATA.media));
@@ -1443,6 +1494,7 @@ class CAEADataStore {
       activities: this.get('activities'),
       people: this.get('people'),
       articles: this.get('articles'),
+      fossilArticleLinks: this.get('fossilArticleLinks'),
       opportunities: this.get('opportunities'),
       applications: this.get('applications'),
       media: this.get('media'),
@@ -1463,6 +1515,9 @@ class CAEADataStore {
       }
       if (data.articles && Array.isArray(data.articles)) {
         localStorage.setItem(STORAGE_KEYS.ARTICLES, JSON.stringify(data.articles));
+      }
+      if (data.fossilArticleLinks && Array.isArray(data.fossilArticleLinks)) {
+        localStorage.setItem(STORAGE_KEYS.FOSSIL_LINKS, JSON.stringify(data.fossilArticleLinks));
       }
       if (data.opportunities && Array.isArray(data.opportunities)) {
         localStorage.setItem(STORAGE_KEYS.OPPORTUNITIES, JSON.stringify(data.opportunities));
@@ -1487,6 +1542,7 @@ class CAEADataStore {
           activities: data.activities || [],
           people: data.people || [],
           articles: data.articles || [],
+          fossil_article_links: data.fossilArticleLinks || data.fossil_article_links || [],
           opportunities: data.opportunities || [],
           applications: data.applications || [],
           media: data.media || [],

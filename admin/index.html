@@ -561,19 +561,19 @@
             </div>
           </div>
 
-          <!-- Card 2: Fossil Fuel Articles & Reader Management (CRUD Table) -->
+          <!-- Card 2: Fossil Fuel Phaseout Article Links & Publications (CRUD Table) -->
           <div class="settings-card">
             <div class="settings-card-header">
-              <div class="settings-card-icon" style="background: rgba(245, 158, 11, 0.15); color: #fbbf24;">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+              <div class="settings-card-icon" style="background: rgba(59, 130, 246, 0.15); color: #60a5fa;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
               </div>
               <div style="flex:1;">
-                <h3 class="settings-card-title">Fossil Fuel Phaseout: Articles &amp; Field Reports (Reader Grid)</h3>
-                <p class="settings-card-subtitle">Manage the articles loaded into the interactive 2-column reader in <code>#drawer-fossil-fuel</code>.</p>
+                <h3 class="settings-card-title">Fossil Fuel Phaseout: Article Links &amp; Publications</h3>
+                <p class="settings-card-subtitle">Manage the published article links and external research reports displayed in <code>#drawer-fossil-fuel</code>.</p>
               </div>
-              <button type="button" class="admin-btn admin-btn-primary" id="btn-add-fossil-article">
+              <button type="button" class="admin-btn admin-btn-primary" id="btn-add-fossil-link">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                Add Fossil Fuel Article
+                Add Article Link
               </button>
             </div>
 
@@ -581,16 +581,8 @@
               <div class="panel-controls">
                 <div class="search-box">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                  <input type="text" id="search-fossil-articles" class="admin-input search-input" placeholder="Search fossil fuel articles by title, author, or excerpt..." />
+                  <input type="text" id="search-fossil-links" class="admin-input search-input" placeholder="Search article links by title, publisher, or URL..." />
                 </div>
-                <select id="filter-fossil-articles-tag" class="admin-select">
-                  <option value="">All Categories / Tags</option>
-                  <option value="KACHERI">KACHERI</option>
-                  <option value="FIELD REPORTS">FIELD REPORTS</option>
-                  <option value="POLICY BRIEF">POLICY BRIEF</option>
-                  <option value="CASE STUDY">CASE STUDY</option>
-                  <option value="LATEST">LATEST</option>
-                </select>
               </div>
             </div>
 
@@ -599,14 +591,14 @@
                 <thead>
                   <tr>
                     <th>ID</th>
-                    <th>Cover</th>
-                    <th>Title &amp; Author</th>
-                    <th>Tag / Kicker</th>
-                    <th>Date</th>
+                    <th>Title</th>
+                    <th>Publisher / Source</th>
+                    <th>Badge / Tag</th>
+                    <th>Link URL</th>
                     <th class="text-right">Actions</th>
                   </tr>
                 </thead>
-                <tbody id="table-fossil-articles-body">
+                <tbody id="table-fossil-links-body">
                   <!-- Dynamically Populated -->
                 </tbody>
               </table>
@@ -863,7 +855,59 @@
             </div>
           </div>
 
-          <!-- Card 2: Climate Justice Case Studies & Legal Reports (CRUD Table) -->
+          <!-- Card 2: Climate Justice Articles & Field Reports (Reader Grid CRUD Table) -->
+          <div class="settings-card" style="margin-bottom: 24px;">
+            <div class="settings-card-header">
+              <div class="settings-card-icon" style="background: rgba(245, 158, 11, 0.15); color: #fbbf24;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+              </div>
+              <div style="flex:1;">
+                <h3 class="settings-card-title">Climate Justice: Articles &amp; Field Reports (Reader Grid)</h3>
+                <p class="settings-card-subtitle">Manage the articles loaded into the interactive 2-column reader in <code>#drawer-climate-justice</code>.</p>
+              </div>
+              <button type="button" class="admin-btn admin-btn-primary" id="btn-add-climate-article">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Add Climate Justice Article
+              </button>
+            </div>
+
+            <div class="panel-header" style="padding: 16px 24px; border-bottom: 1px solid var(--admin-card-border);">
+              <div class="panel-controls">
+                <div class="search-box">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                  <input type="text" id="search-climate-articles" class="admin-input search-input" placeholder="Search climate justice articles by title, author, or excerpt..." />
+                </div>
+                <select id="filter-climate-articles-tag" class="admin-select">
+                  <option value="">All Categories / Tags</option>
+                  <option value="KACHERI">KACHERI</option>
+                  <option value="FIELD REPORTS">FIELD REPORTS</option>
+                  <option value="POLICY BRIEF">POLICY BRIEF</option>
+                  <option value="CASE STUDY">CASE STUDY</option>
+                  <option value="LATEST">LATEST</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="table-wrapper">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Cover</th>
+                    <th>Title &amp; Author</th>
+                    <th>Tag / Kicker</th>
+                    <th>Date</th>
+                    <th class="text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="table-climate-articles-body">
+                  <!-- Dynamically Populated -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Card 3: Climate Justice Case Studies & Legal Reports (CRUD Table) -->
           <div class="settings-card">
             <div class="settings-card-header">
               <div class="settings-card-icon" style="background: rgba(168, 85, 247, 0.15); color: #c084fc;">

@@ -1888,19 +1888,53 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-    // Fossil Fuel Phaseout Articles Filter & Search
+    // Fossil Fuel Phaseout Article Links & Published Reports
+    renderFossilArticleLinks();
+
+    // Climate Justice Articles Filter & Search (Reader Grid)
     renderOurWorkArticles();
   }
 
+  function renderFossilArticleLinks() {
+    const container = document.getElementById('fossil-links-list');
+    if (!container || !window.DataStore) return;
+
+    const links = window.DataStore.get('fossilArticleLinks') || [];
+    if (!links || !links.length) return;
+
+    container.innerHTML = links.map(link => {
+      const badge = link.badge || 'INSIGHT';
+      const pub = link.publisher || 'CAEA Publication';
+      const desc = link.description || link.excerpt || '';
+      const url = link.url || '#';
+      const isPdf = url.includes('.pdf') || url.includes('drive.google.com');
+      const isDashboard = url.includes('dashboard.');
+      const actionText = isPdf ? 'View Document (PDF) &rarr;' : isDashboard ? 'Explore Live Dashboard &rarr;' : 'Read Article &rarr;';
+
+      return `
+        <a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" class="fossil-link-card">
+          <div class="fossil-link-card-top">
+            <span class="fossil-link-badge">${escapeHtml(badge)}</span>
+            <span class="fossil-link-arrow" aria-hidden="true">&#8599;</span>
+          </div>
+          <h4 class="fossil-link-title">${escapeHtml(link.title)}</h4>
+          <p class="fossil-link-publisher">${escapeHtml(pub)}</p>
+          ${desc ? `<p class="fossil-link-desc">${escapeHtml(desc)}</p>` : ''}
+          <span class="fossil-link-action">${actionText}</span>
+        </a>
+      `;
+    }).join('');
+  }
+
   function renderOurWorkArticles() {
-    const listContainer = document.getElementById('fossil-articles-list');
+    const listContainer = document.getElementById('climate-articles-list') || document.getElementById('fossil-articles-list');
     if (!listContainer || !window.DataStore) return;
 
     let articles = window.DataStore.get('articles') || [];
     if (!articles.length) return;
 
-    const filterBtns = document.querySelectorAll('#fossil-filters .filter-pill');
-    const searchInput = document.getElementById('fossil-search-input');
+    const filterBtns = document.querySelectorAll('#climate-filters .filter-pill, #fossil-filters .filter-pill');
+    const searchInput = document.getElementById('climate-search-input') || document.getElementById('fossil-search-input');
 
     let currentFilter = 'all';
     let searchQuery = '';

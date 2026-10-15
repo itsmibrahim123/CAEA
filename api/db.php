@@ -160,6 +160,19 @@ class Database {
             updatedAt DATETIME
         );");
 
+        // Table: fossil_article_links
+        $pdo->exec("CREATE TABLE IF NOT EXISTS fossil_article_links (
+            id VARCHAR(64) PRIMARY KEY,
+            title VARCHAR(255) NOT NULL,
+            publisher VARCHAR(255) NOT NULL,
+            badge VARCHAR(64) DEFAULT 'ARTICLE',
+            url TEXT NOT NULL,
+            description TEXT,
+            sortOrder INTEGER DEFAULT 0,
+            createdAt DATETIME,
+            updatedAt DATETIME
+        );");
+
         // Table: page_settings
         $pdo->exec("CREATE TABLE IF NOT EXISTS page_settings (
             pageKey VARCHAR(64) PRIMARY KEY,
@@ -168,7 +181,7 @@ class Database {
         );");
 
         // Ensure sortOrder column exists on existing database tables
-        $tablesWithSortOrder = ['activities', 'people', 'articles', 'opportunities', 'media', 'map_pins'];
+        $tablesWithSortOrder = ['activities', 'people', 'articles', 'opportunities', 'media', 'map_pins', 'fossil_article_links'];
         foreach ($tablesWithSortOrder as $tbl) {
             try {
                 $pdo->exec("ALTER TABLE {$tbl} ADD COLUMN sortOrder INTEGER DEFAULT 0");
@@ -654,6 +667,51 @@ class Database {
         $stmt = $pdo->prepare("INSERT INTO page_settings (pageKey, settingsJson, updatedAt) VALUES (?, ?, ?)");
         foreach ($pageSettings as $pageKey => $settings) {
             $stmt->execute([$pageKey, json_encode($settings, JSON_UNESCAPED_UNICODE), $now]);
+        }
+
+        // 8. Seed Fossil Article Links
+        $fossilLinks = [
+            [
+                'id' => 'fl-1',
+                'title' => 'RLNG disruption: a bane?',
+                'publisher' => 'Dawn',
+                'badge' => 'ARTICLE',
+                'url' => 'https://www.dawn.com/news/1997175?utm_source=whatsapp',
+                'description' => 'Published in Dawn · Investigative policy piece exploring Pakistan’s LNG disruptions.',
+                'sortOrder' => 1
+            ],
+            [
+                'id' => 'fl-2',
+                'title' => 'Our Remarkable Natural Gas Overshoot',
+                'publisher' => 'The News on Sunday',
+                'badge' => 'ARTICLE',
+                'url' => 'https://www.thenews.pk/tns/detail/1397737-our-remarkable-natural-gas-overshoot',
+                'description' => 'Published in The News on Sunday · In-depth breakdown of gas oversupply and stranded assets.',
+                'sortOrder' => 2
+            ],
+            [
+                'id' => 'fl-3',
+                'title' => 'Political Economy of Power, Energy, Climate and Justice',
+                'publisher' => 'CAEA Research Report',
+                'badge' => 'RESEARCH REPORT',
+                'url' => 'https://drive.google.com/file/d/1LuXInnvuC11GMiHBM_NM4HoWxkRP_Fpa/view?usp=drive_link',
+                'description' => 'Comprehensive research publication interrogating gas as a system of power in Pakistan.',
+                'sortOrder' => 3
+            ],
+            [
+                'id' => 'fl-4',
+                'title' => 'CAEA Climate Action & Energy Access Dashboard',
+                'publisher' => 'Live Interactive Platform',
+                'badge' => 'DASHBOARD',
+                'url' => 'https://dashboard.climateactionenergyaccess.org/',
+                'description' => 'Interactive data portal for real-time energy capacity, transmission data, and emissions.',
+                'sortOrder' => 4
+            ]
+        ];
+
+        $stmt = $pdo->prepare("INSERT INTO fossil_article_links (id, title, publisher, badge, url, description, sortOrder, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        foreach ($fossilLinks as $link) {
+            $stmt->execute([$link['id'], $link['title'], $link['publisher'], $link['badge'], $link['url'], $link['description'], $link['sortOrder'], $now, $now]);
         }
     }
 }

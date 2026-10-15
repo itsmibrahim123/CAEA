@@ -26,7 +26,7 @@ $id = $_GET['id'] ?? $inputData['id'] ?? null;
 // Handle special bulk / maintenance actions
 if ($action === 'status') {
     $counts = [];
-    $tables = ['activities', 'people', 'articles', 'opportunities', 'applications', 'media', 'map_pins', 'page_settings'];
+    $tables = ['activities', 'people', 'articles', 'fossil_article_links', 'opportunities', 'applications', 'media', 'map_pins', 'page_settings'];
     foreach ($tables as $t) {
         $counts[$t] = (int)$pdo->query("SELECT COUNT(*) FROM $t")->fetchColumn();
     }
@@ -41,7 +41,7 @@ if ($action === 'status') {
 
 if ($action === 'export') {
     $export = [];
-    $tables = ['activities', 'people', 'articles', 'opportunities', 'applications', 'media', 'map_pins'];
+    $tables = ['activities', 'people', 'articles', 'fossil_article_links', 'opportunities', 'applications', 'media', 'map_pins'];
     foreach ($tables as $t) {
         $export[$t] = $pdo->query("SELECT * FROM $t")->fetchAll();
     }
@@ -70,7 +70,7 @@ if ($action === 'import' && ($method === 'POST' || $method === 'PUT')) {
 
     $pdo->beginTransaction();
     try {
-        $tables = ['activities', 'people', 'articles', 'opportunities', 'applications', 'media', 'map_pins', 'page_settings'];
+        $tables = ['activities', 'people', 'articles', 'fossil_article_links', 'opportunities', 'applications', 'media', 'map_pins', 'page_settings'];
         foreach ($tables as $t) {
             $pdo->exec("DELETE FROM $t");
         }
@@ -78,7 +78,7 @@ if ($action === 'import' && ($method === 'POST' || $method === 'PUT')) {
         $now = date('Y-m-d H:i:s');
 
         // Insert standard tables
-        foreach (['activities', 'people', 'articles', 'opportunities', 'applications', 'media', 'map_pins'] as $tbl) {
+        foreach (['activities', 'people', 'articles', 'fossil_article_links', 'opportunities', 'applications', 'media', 'map_pins'] as $tbl) {
             if (!empty($payload[$tbl]) && is_array($payload[$tbl])) {
                 foreach ($payload[$tbl] as $row) {
                     $keys = array_keys($row);
@@ -108,7 +108,7 @@ if ($action === 'import' && ($method === 'POST' || $method === 'PUT')) {
 
 if ($action === 'reset' && $method === 'POST') {
     try {
-        $tables = ['activities', 'people', 'articles', 'opportunities', 'applications', 'media', 'map_pins', 'page_settings'];
+        $tables = ['activities', 'people', 'articles', 'fossil_article_links', 'opportunities', 'applications', 'media', 'map_pins', 'page_settings'];
         foreach ($tables as $t) {
             $pdo->exec("DELETE FROM $t");
         }
@@ -129,6 +129,9 @@ $validTables = [
     'activities' => 'activities',
     'people' => 'people',
     'articles' => 'articles',
+    'fossil_article_links' => 'fossil_article_links',
+    'fossilarticlelinks' => 'fossil_article_links',
+    'fossillinks' => 'fossil_article_links',
     'opportunities' => 'opportunities',
     'applications' => 'applications',
     'media' => 'media',

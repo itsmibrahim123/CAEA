@@ -35,6 +35,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Tables
   const tableActivitiesBody = document.getElementById('table-activities-body');
   const tableFossilArticlesBody = document.getElementById('table-fossil-articles-body');
+  const tableFossilLinksBody = document.getElementById('table-fossil-links-body');
+  const tableClimateArticlesBody = document.getElementById('table-climate-articles-body');
   const tableTextileCardsBody = document.getElementById('table-textile-cards-body');
   const tableClimateReportsBody = document.getElementById('table-climate-reports-body');
   const tableMapPinsBody = document.getElementById('table-mappins-body');
@@ -50,6 +52,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const searchFossilArticles = document.getElementById('search-fossil-articles');
   const filterFossilArticlesTag = document.getElementById('filter-fossil-articles-tag');
   const btnAddFossilArticle = document.getElementById('btn-add-fossil-article');
+
+  const searchFossilLinks = document.getElementById('search-fossil-links');
+  const btnAddFossilLink = document.getElementById('btn-add-fossil-link');
+
+  const searchClimateArticles = document.getElementById('search-climate-articles');
+  const filterClimateArticlesTag = document.getElementById('filter-climate-articles-tag');
+  const btnAddClimateArticle = document.getElementById('btn-add-climate-article');
 
   const searchTextileCards = document.getElementById('search-textile-cards');
   const filterTextileTag = document.getElementById('filter-textile-tag');
@@ -434,6 +443,8 @@ document.addEventListener('DOMContentLoaded', () => {
     renderPeopleTable();
     renderActivitiesTable();
     renderFossilArticlesTable();
+    renderFossilLinksTable();
+    renderClimateArticlesTable();
     renderTextileCardsTable();
     renderClimateReportsTable();
     renderArticlesTable();
@@ -739,6 +750,133 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     tableFossilArticlesBody.innerHTML = items.map((item, index) => `
+      <tr>
+        <td>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <span class="order-badge">#${item.sortOrder || index + 1}</span>
+            <span style="font-family:monospace; font-size:11px; color:#888;">${item.id}</span>
+          </div>
+        </td>
+        <td>
+          <img src="${resolveAdminImg(item.image, 'assets/how-water-became-power.jpg')}" alt="" class="table-media-thumb" onerror="this.src='../assets/CAEA-Navbar-Logo.png'" />
+        </td>
+        <td>
+          <strong>${escapeHtml(item.title)}</strong>
+          <div style="font-size:12px; color:#9da5b4;">By ${escapeHtml(item.author || 'CAEA Team')}</div>
+        </td>
+        <td>
+          <span class="table-badge">${escapeHtml(item.kicker || item.category || 'CASE STUDY')}</span>
+        </td>
+        <td>${item.dateFormatted || item.date || 'N/A'}</td>
+        <td class="text-right">
+          <div class="table-actions">
+            <button class="action-icon-btn move-btn" onclick="moveItemOrder('articles', '${item.id}', 'up')" title="Move Up" ${index === 0 ? 'disabled style="opacity:0.3; cursor:not-allowed;"' : ''}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
+            </button>
+            <button class="action-icon-btn move-btn" onclick="moveItemOrder('articles', '${item.id}', 'down')" title="Move Down" ${index === items.length - 1 ? 'disabled style="opacity:0.3; cursor:not-allowed;"' : ''}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <button class="action-icon-btn edit-btn" onclick="openEditModal('articles', '${item.id}')" title="Edit Article">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            </button>
+            <button class="action-icon-btn delete-btn" onclick="confirmDelete('articles', '${item.id}')" title="Delete Article">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            </button>
+          </div>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  // 5.2b2 Fossil Fuel Phaseout Article Links Table
+  function renderFossilLinksTable() {
+    if (!tableFossilLinksBody || !window.DataStore) return;
+    let items = window.DataStore.get('fossilArticleLinks') || [];
+    const query = searchFossilLinks ? searchFossilLinks.value.toLowerCase().trim() : '';
+
+    if (query) {
+      items = items.filter(i =>
+        (i.title && i.title.toLowerCase().includes(query)) ||
+        (i.publisher && i.publisher.toLowerCase().includes(query)) ||
+        (i.badge && i.badge.toLowerCase().includes(query)) ||
+        (i.url && i.url.toLowerCase().includes(query)) ||
+        (i.description && i.description.toLowerCase().includes(query))
+      );
+    }
+
+    if (items.length === 0) {
+      tableFossilLinksBody.innerHTML = `<tr><td colspan="6" class="text-center" style="padding:24px; color:#888;">No fossil fuel article links found matching criteria. Click "Add Article Link" to create one.</td></tr>`;
+      return;
+    }
+
+    tableFossilLinksBody.innerHTML = items.map((item, index) => `
+      <tr>
+        <td>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <span class="order-badge">#${item.sortOrder || index + 1}</span>
+            <span style="font-family:monospace; font-size:11px; color:#888;">${item.id}</span>
+          </div>
+        </td>
+        <td>
+          <strong>${escapeHtml(item.title)}</strong>
+          ${item.description ? `<div style="font-size:12px; color:#9da5b4; margin-top:2px;">${escapeHtml(item.description)}</div>` : ''}
+        </td>
+        <td>${escapeHtml(item.publisher || 'N/A')}</td>
+        <td>
+          <span class="table-badge" style="background:rgba(96, 165, 250, 0.15); color:#60a5fa; border:1px solid rgba(96, 165, 250, 0.3);">${escapeHtml(item.badge || 'ARTICLE')}</span>
+        </td>
+        <td>
+          <a href="${escapeHtml(item.url || '#')}" target="_blank" rel="noopener noreferrer" style="color:#60a5fa; font-size:12px; text-decoration:none;">${escapeHtml((item.url || '').length > 35 ? item.url.substring(0, 35) + '...' : item.url)}</a>
+        </td>
+        <td class="text-right">
+          <div class="table-actions">
+            <button class="action-icon-btn move-btn" onclick="moveItemOrder('fossilArticleLinks', '${item.id}', 'up')" title="Move Up" ${index === 0 ? 'disabled style="opacity:0.3; cursor:not-allowed;"' : ''}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
+            </button>
+            <button class="action-icon-btn move-btn" onclick="moveItemOrder('fossilArticleLinks', '${item.id}', 'down')" title="Move Down" ${index === items.length - 1 ? 'disabled style="opacity:0.3; cursor:not-allowed;"' : ''}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <button class="action-icon-btn edit-btn" onclick="openEditModal('fossilArticleLinks', '${item.id}')" title="Edit Article Link">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            </button>
+            <button class="action-icon-btn delete-btn" onclick="confirmDelete('fossilArticleLinks', '${item.id}')" title="Delete Article Link">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            </button>
+          </div>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  // 5.2b3 Climate Justice Articles & Reader Grid Table
+  function renderClimateArticlesTable() {
+    if (!tableClimateArticlesBody || !window.DataStore) return;
+    let items = window.DataStore.get('articles');
+    const query = searchClimateArticles ? searchClimateArticles.value.toLowerCase().trim() : '';
+    const tagFilter = filterClimateArticlesTag ? filterClimateArticlesTag.value.toUpperCase().trim() : '';
+
+    if (query) {
+      items = items.filter(i =>
+        (i.title && i.title.toLowerCase().includes(query)) ||
+        (i.author && i.author.toLowerCase().includes(query)) ||
+        (i.excerpt && i.excerpt.toLowerCase().includes(query))
+      );
+    }
+
+    if (tagFilter) {
+      items = items.filter(i => {
+        const k = (i.kicker || '').toUpperCase();
+        const c = (i.category || '').toUpperCase();
+        return k.includes(tagFilter) || c.includes(tagFilter);
+      });
+    }
+
+    if (items.length === 0) {
+      tableClimateArticlesBody.innerHTML = `<tr><td colspan="6" class="text-center" style="padding:24px; color:#888;">No climate justice articles found matching criteria. Click "Add Climate Justice Article" to create one.</td></tr>`;
+      return;
+    }
+
+    tableClimateArticlesBody.innerHTML = items.map((item, index) => `
       <tr>
         <td>
           <div style="display:flex; align-items:center; gap:6px;">
@@ -1239,6 +1377,13 @@ document.addEventListener('DOMContentLoaded', () => {
   if (filterFossilArticlesTag) filterFossilArticlesTag.addEventListener('change', renderFossilArticlesTable);
   if (btnAddFossilArticle) btnAddFossilArticle.addEventListener('click', () => openEditModal('articles'));
 
+  if (searchFossilLinks) searchFossilLinks.addEventListener('input', renderFossilLinksTable);
+  if (btnAddFossilLink) btnAddFossilLink.addEventListener('click', () => openEditModal('fossilArticleLinks'));
+
+  if (searchClimateArticles) searchClimateArticles.addEventListener('input', renderClimateArticlesTable);
+  if (filterClimateArticlesTag) filterClimateArticlesTag.addEventListener('change', renderClimateArticlesTable);
+  if (btnAddClimateArticle) btnAddClimateArticle.addEventListener('click', () => openEditModal('articles'));
+
   if (searchTextileCards) searchTextileCards.addEventListener('input', renderTextileCardsTable);
   if (filterTextileTag) filterTextileTag.addEventListener('change', renderTextileCardsTable);
 
@@ -1275,6 +1420,7 @@ document.addEventListener('DOMContentLoaded', () => {
                            collection === 'activities' ? 'Activity / Work Item' :
                            collection === 'textileCards' ? 'Textile Investigation Card' :
                            collection === 'climateReports' ? 'Climate Justice Report / Case Study' :
+                           collection === 'fossilArticleLinks' || collection === 'fossilLinks' ? 'Fossil Fuel Article Link' :
                            collection === 'people' ? 'Team Member' :
                            collection === 'articles' ? 'Article' :
                            collection === 'mapPins' || collection === 'mappins' ? 'Pakistan Map Location Pin' : collection;
@@ -1639,6 +1785,32 @@ document.addEventListener('DOMContentLoaded', () => {
           <textarea name="content" class="admin-textarea" rows="4" placeholder="Full report content or key recommendations...">${escapeHtml(item.content || '')}</textarea>
         </div>
       `;
+    } else if (collection === 'fossilArticleLinks' || collection === 'fossilLinks') {
+      fieldsHtml = `
+        <div class="form-group">
+          <label class="form-label">Article / Publication Title</label>
+          <input type="text" name="title" class="admin-input" value="${escapeHtml(item.title || '')}" placeholder="e.g. RLNG disruption: a bane?" required />
+        </div>
+        <div class="form-row" style="display:flex; gap:16px;">
+          <div class="form-group flex-1" style="flex:1;">
+            <label class="form-label">Publisher / Source</label>
+            <input type="text" name="publisher" class="admin-input" value="${escapeHtml(item.publisher || '')}" placeholder="e.g. Dawn, The News, CAEA Research" required />
+          </div>
+          <div class="form-group flex-1" style="flex:1;">
+            <label class="form-label">Badge / Tag</label>
+            <input type="text" name="badge" class="admin-input" value="${escapeHtml(item.badge || 'ARTICLE')}" placeholder="e.g. ARTICLE, RESEARCH REPORT, DASHBOARD" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">External Link URL</label>
+          <input type="url" name="url" class="admin-input" value="${escapeHtml(item.url || '')}" placeholder="https://..." required />
+        </div>
+        ${orderFieldHtml}
+        <div class="form-group">
+          <label class="form-label">Short Description / Subtitle (Optional)</label>
+          <textarea name="description" class="admin-textarea" rows="2" placeholder="Brief context or summary of this article/report...">${escapeHtml(item.description || '')}</textarea>
+        </div>
+      `;
     }
 
     dynamicFieldsContainer.innerHTML = fieldsHtml;
@@ -1858,6 +2030,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     collection === 'opportunities' ? 'position' :
                     collection === 'activities' || collection === 'gatherings' ? 'activity / gathering' :
                     collection === 'people' ? 'team member' :
+                    collection === 'fossilArticleLinks' || collection === 'fossilLinks' ? 'article link' :
                     collection.slice(0, -1);
 
       if (recordId) {
