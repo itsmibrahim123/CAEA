@@ -1,4 +1,4 @@
-# CAEA Media Assets Inventory & Guidelines (`Assets/`)
+# CAEA Media Assets Inventory & Guidelines (`assets/`)
 
 This document catalogs the reorganized media repository, image paths, aspect ratio guidelines, and standardized directory conventions across the CAEA codebase.
 
@@ -7,7 +7,7 @@ This document catalogs the reorganized media repository, image paths, aspect rat
 ## 1. Directory Structure
 
 ```
-Assets/
+assets/
 ├── CAEA-Navbar-Logo.png               # Official brand logo (Header & Footers)
 ├── Hero-image.png                     # Default uncropped hero background
 ├── how-water-became-power.jpg         # Article cover graphic 1
@@ -68,17 +68,17 @@ To support deployment across root domains (`/`), subdirectory paths (`/CAEA/`), 
 - **Public Frontend (`script.js`)**:
   ```javascript
   function resolveImagePath(img) {
-    if (!img) return '/Assets/Hero-image.png';
+    if (!img) return '/assets/Hero-image.png';
     if (img.startsWith('http://') || img.startsWith('https://') || img.startsWith('data:') || img.startsWith('/')) return img;
-    if (img.startsWith('../Assets/')) return img.replace('../Assets/', '/Assets/');
-    if (img.startsWith('Assets/')) return '/' + img;
+    if (img.startsWith('../assets/')) return img.replace('../assets/', '/assets/');
+    if (img.startsWith('assets/')) return '/' + img;
     return '/' + img;
   }
   ```
 
 - **Admin Console (`admin/admin.js`)**:
   ```javascript
-  function resolveAdminImg(path, fallback = 'Assets/CAEA-Navbar-Logo.png') {
+  function resolveAdminImg(path, fallback = 'assets/CAEA-Navbar-Logo.png') {
     if (!path) return '../' + fallback;
     if (path.startsWith('data:') || path.startsWith('http://') || path.startsWith('https://') || path.startsWith('//')) {
       return path;

@@ -32,7 +32,7 @@ interface Activity {
   dateFormatted?: string;  // Formatted date "23.01.2026"
   location: string;        // "Tarbela & Indus River Basin, KPK"
   description: string;     // Summary of event and highlights
-  image: string;           // Path or base64 Data URL (e.g. "Assets/media/events/contested-waters/RAY00190.JPG")
+  image: string;           // Path or base64 Data URL (e.g. "assets/media/events/contested-waters/RAY00190.JPG")
   quote?: string;          // Hero spotlight quote
   quoteAuthor?: string;    // Author/speaker for quote
   featured?: boolean;      // True if spotlighted in homepage hero banner
@@ -48,7 +48,7 @@ interface Person {
   role: string;            // "Research Director"
   category: string;        // "Executive" | "Core Team" | "Fellows"
   bio: string;             // Detailed biographical statement
-  image: string;           // Path or base64 Data URL (e.g. "Assets/Team/sanaa-muhammad.jpg")
+  image: string;           // Path or base64 Data URL (e.g. "assets/team/sanaa-muhammad.jpg")
   createdAt?: string;      // ISO timestamp
 }
 ```

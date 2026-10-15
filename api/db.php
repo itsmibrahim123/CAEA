@@ -213,7 +213,7 @@ class Database {
                 'dateFormatted' => '23.01.2026',
                 'location' => 'Pakistan',
                 'description' => 'Examines how colonial and modern systems of water control through dams, barrages, and canals have transformed river ecosystems, displaced communities, and disrupted cultural relationships with water.',
-                'image' => 'Assets/media/events/contested-waters/RAY00190.JPG',
+                'image' => 'assets/media/events/contested-waters/RAY00190.JPG',
                 'featured' => 1,
                 'quote' => '“Those least responsible for climate change are worst affected by it”',
                 'quoteAuthor' => 'Vandana Shiva'
@@ -226,7 +226,7 @@ class Database {
                 'dateFormatted' => '23.04.2026',
                 'location' => 'Pakistan',
                 'description' => 'A 3-day retreat for climate activists and community organizers across Pakistan to reflect, reconnect with nature, and discuss energy, climate stories, burnout, and movement building.',
-                'image' => 'Assets/media/events/retreat/DSCF4154.JPG',
+                'image' => 'assets/media/events/retreat/DSCF4154.JPG',
                 'featured' => 0,
                 'quote' => '“Reconnecting with land and community to build resilience against climate burnout”',
                 'quoteAuthor' => 'CAEA Movement Gathering'
@@ -239,7 +239,7 @@ class Database {
                 'dateFormatted' => '20.05.2026',
                 'location' => 'Lake Manchhar, Sindh',
                 'description' => 'Discussion on the ecological destruction of Lake Manchhar, changes in water flow, infrastructure development, agricultural wastewater, and community-led resistance.',
-                'image' => 'Assets/media/events/manchar/WhatsApp Image 2026-08-27 at 12.08.18 PM.jpeg',
+                'image' => 'assets/media/events/manchar/WhatsApp Image 2026-08-27 at 12.08.18 PM.jpeg',
                 'featured' => 0,
                 'quote' => '“Manchhar is a mindful lake, yet it bears the heaviest burden of industrial discharge”',
                 'quoteAuthor' => 'Lake Manchhar Fisherman Community'
@@ -252,7 +252,7 @@ class Database {
                 'dateFormatted' => '28.07.2026',
                 'location' => 'Tarbela Dam',
                 'description' => 'Brought together perspectives from WAPDA and displaced communities to examine Tarbela\'s promises of power vs. its costs on land, livelihoods, culture, and ecosystems.',
-                'image' => 'Assets/media/events/exposure-visit/WhatsApp Image 2026-08-27 at 12.16.56 PM.jpeg',
+                'image' => 'assets/media/events/exposure-visit/WhatsApp Image 2026-08-27 at 12.16.56 PM.jpeg',
                 'featured' => 0,
                 'quote' => '“Uncovering the true human and ecological costs behind megastructures of power”',
                 'quoteAuthor' => 'Tarbela Exposure Delegation'
@@ -272,7 +272,7 @@ class Database {
                 'role' => 'Founder & CEO',
                 'category' => 'Executive',
                 'bio' => "Sanaa’i Muhammad is the Founder and Chief Executive Officer of the Climate Action & Energy Access Institute (CAEA), where she leads advocacy, and movement-building at the intersection of energy transition and climate justice in Pakistan. Her work focuses on phasing out fossil gas in power, industry, and households; advancing renewable energy pathways; and building public understanding of how colonial infrastructures, financial institutions, and policy choices shape today’s climate and energy crises.\n\nHer work is rooted in a commitment to just transitions, energy equity, and amplifying the experiences of communities most affected by environmental harm. She writes, organizes, and teaches with the belief that climate justice is inseparable from economic democracy, gender justice, and people’s sovereignty over energy and resources.",
-                'image' => 'Assets/Team/grid-1-2-Sanaa.png',
+                'image' => 'assets/team/grid-1-2-Sanaa.png',
                 'email' => 'sanaaimuhammad@climateactionenergyaccess.org'
             ],
             [
@@ -281,7 +281,7 @@ class Database {
                 'role' => 'Founding Partner & Director Research',
                 'category' => 'Core Team',
                 'bio' => 'Kamran Aziz is the Director Research and a founding partner, working at the intersection of Pakistan’s electricity and gas systems, with a focus on advancing a just energy transition. His work combines historical analysis, political economy, and the lived experiences of communities directly affected by fossil fuel extraction and its social and environmental harms. His research is grounded in a commitment to center frontline communities, democratize energy governance, and support policy transformations aligned with climate justice.',
-                'image' => 'Assets/Team/grid-2-1-kamran.png',
+                'image' => 'assets/team/grid-2-1-kamran.png',
                 'email' => 'kamranaziz@climateactionenergyaccess.org'
             ],
             [
@@ -290,7 +290,7 @@ class Database {
                 'role' => 'Research Associate',
                 'category' => 'Core Team',
                 'bio' => 'Asad is a law graduate from IIUI and a committed worker organizing with the oppressed communities. During his last experience as a Research Associate at Alternative Law Collective, his role involved conducting field research and supporting studies related to the land stewardship, and the concerns of communities victims of climate change and the developmental projects. He has been involved in organizing the students and the marches for their cultural and political rights. By engaging directly with communities, he has developed critical understanding of mainstream discourses around development and knowledge systems with a focus on the laws perpetuating inequalities and the local systems of justice. His role involved research and advocacy at Climate Action and Energy Access',
-                'image' => 'Assets/CAEA-Navbar-Logo.png',
+                'image' => 'assets/CAEA-Navbar-Logo.png',
                 'email' => 'asadjuttah@climateactionenergyaccess.org'
             ],
             [
@@ -299,7 +299,7 @@ class Database {
                 'role' => 'Textile Associate',
                 'category' => 'Core Team',
                 'bio' => 'Hamna has a bachelors in environmental engineering from NUST and is a passionate environmentalist. Her commitment to addressing critical issues such as climate change, and sustainability has only deepened with her academic journey. She aspires to focus her professional efforts to bring positive change in both our society and environment. As a Textile Associate at CAEA, Hamna focuses on textile-sector emissions and the global fast-fashion supply chain. She works on research, campaigns, and public engagement strategies that highlight the social, environmental, and climate impacts of the industry, and she is committed to advocating for a more equitable and sustainable future for both people and the planet.',
-                'image' => 'Assets/Team/grid-1-1-hamna.png',
+                'image' => 'assets/team/grid-1-1-hamna.png',
                 'email' => 'hamnaanwar@climateactionenergyaccess.org'
             ],
             [
@@ -308,7 +308,7 @@ class Database {
                 'role' => 'Climate Justice Lead',
                 'category' => 'Core Team',
                 'bio' => 'Muhammad Saeed is an PHD Scholar whose research focuses on the intricate relationship between water, identity, and politics, specifically exploring "Sindhu and the making of Sindhi nationalism: River Politics during the colonial era. His academic work explores key thematic areas including water governance, floods, river infrastructures, and hydro-power development. His research also contributes to a critical understanding of riverine identity and the historical emergence of riverine movements, with a specific focus on the intersection of water and nationalism. Beyond his scholarship, Saeed is a political activist committed to organizing with oppressed communities, nations and people. He is currently serving as a Climate justice Lead at Climate Action and Energy Access, where his work involves both research and advocacy for equitable climate and energy solutions. His direct engagement with communities and academic study inform a critical perspective on mainstream development narratives and knowledge systems, particularly concerning the policies that impact vulnerable populations and perpetuate inequalities.',
-                'image' => 'Assets/Team/grid-3-2-muhammad.png',
+                'image' => 'assets/team/grid-3-2-muhammad.png',
                 'email' => 'guramanisaeed98@gmail.com'
             ],
             [
@@ -317,7 +317,7 @@ class Database {
                 'role' => 'Communication Lead',
                 'category' => 'Core Team',
                 'bio' => 'Muaaz Ahmad Khan is currently pursuing his MPhil in Government and Public Policy. He works as the Communication Lead and Social Media & Networks Coordinator at CAEA. His work focuses on communicating CAEA’s research and campaigns, managing its digital platforms and network groups, and working with partners on joint communication initiatives. He works closely with the research and campaign teams to turn complex ideas and research into clear and engaging content. Through his work, he contributes to CAEA’s efforts to strengthen a people-centered climate justice movement.',
-                'image' => 'Assets/Team/grid-3-3-muaz.png',
+                'image' => 'assets/team/grid-3-3-muaz.png',
                 'email' => 'khanmuaaz762@gmail.com'
             ],
             [
@@ -326,7 +326,7 @@ class Database {
                 'role' => 'Admin & HR Officer',
                 'category' => 'Core Team',
                 'bio' => 'Fizza Aman Bhutto is an Administration and HR Officer at the Climate Action and Energy Access (CAEA). She holds a Bachelor’s degree in Development Studies from Bahria University, Islamabad. Her development sector experience spans program coordination, engagement with Indigenous communities, and research on climate-induced disasters, with her undergraduate research focusing on the devastating 2022 floods in Pakistan. At CAEA, she works across administration, human resources, project coordination, and organizational development. She is particularly interested in the intersections of climate justice, development, and organizational development, and in how stronger, people-centered organizations can contribute to a more equitable and sustainable change.',
-                'image' => 'Assets/Team/grid-1-3-fiza.png',
+                'image' => 'assets/team/grid-1-3-fiza.png',
                 'email' => 'fizzabhutto9@gmail.com'
             ],
             [
@@ -335,7 +335,7 @@ class Database {
                 'role' => 'Associate Fossil Fuel Phaseout',
                 'category' => 'Core Team',
                 'bio' => "Manahil Usman is an Associate in Fossil Fuel Phaseout at Climate Action for Energy Access (CAEA), where she focuses on research and data analysis at the intersection of energy policy and climate justice. With a background in Computer Science and an MBA, she brings an analytical foundation shaped by prior work in data management and sector-level analysis to her current focus on Pakistan's gas sector, LNG dynamics, and just transition frameworks. At CAEA, Manahil is committed to building the evidence base needed to advance credible, equitable fossil fuel phaseout policy in Pakistan and beyond.",
-                'image' => 'Assets/CAEA-Navbar-Logo.png',
+                'image' => 'assets/CAEA-Navbar-Logo.png',
                 'email' => 'manahilusman2@gmail.com'
             ],
             [
@@ -344,7 +344,7 @@ class Database {
                 'role' => 'Finance Officer',
                 'category' => 'Core Team',
                 'bio' => 'Abid Azim is an experienced finance professional with expertise in financial management, budgeting, financial reporting, taxation, audit, and strategic financial planning. He has been serving as Finance Manager at Climate Action and Energy Access LLP since May 2024, where he oversees financial analysis, budgeting, cash-flow management, financial reporting, and tax compliance. With professional experience spanning finance, audit, accounting, and business management, Abid brings a strong analytical and results-oriented approach to supporting organizational growth and sustainability. He is a Certified Public Accountant (CPA) from England & Wales and a finalist of ICAEW.',
-                'image' => 'Assets/Team/grid-2-2-abid.png',
+                'image' => 'assets/team/grid-2-2-abid.png',
                 'email' => 'abidazeem101@gmail.com'
             ]
         ];
@@ -366,7 +366,7 @@ class Database {
                 'dateFormatted' => '10.02.2024',
                 'excerpt' => 'A comprehensive review of Pakistan’s domestic natural gas allocation and its economic burden on working-class households.',
                 'content' => 'Natural gas has long been treated as an abundant domestic resource in Pakistan. However, decades of preferential allocation and depleting reserves have precipitated a severe energy crisis.',
-                'image' => 'Assets/Hero-image.png'
+                'image' => 'assets/Hero-image.png'
             ],
             [
                 'id' => 'art-2',
@@ -378,7 +378,7 @@ class Database {
                 'dateFormatted' => '15.03.2024',
                 'excerpt' => 'An investigation into how large development projects have impacted aquatic ecosystems and fishing livelihoods around Lake Manchhar.',
                 'content' => 'Lake Manchhar is located in Sindh between the Dadu and Khanpur districts. Manchhar comes from the Sindhi words Man meaning mind and Chhar meaning lake or pond. Manchhar translates to "mindful lake". It is the largest natural freshwater lake in Asia.',
-                'image' => 'Assets/how-water-became-power-ai.jpg'
+                'image' => 'assets/how-water-became-power-ai.jpg'
             ]
         ];
 
@@ -434,7 +434,7 @@ class Database {
                 'theme' => 'blue',
                 'description' => 'We\'re looking for passionate, curious interns looking to be a part of the climate justice movement in Pakistan. Whether your strengths lie in research, storytelling, design, communications, advocacy, or community engagement, there\'s space for you here.',
                 'status' => 'Open',
-                'image' => 'Assets/how-water-became-power.jpg',
+                'image' => 'assets/how-water-became-power.jpg',
                 'gridArea' => 'card4'
             ]
         ];
@@ -571,14 +571,14 @@ class Database {
                 'latestVideoTitle' => 'Community Kacheri & Field Briefing',
                 'latestVideoDescription' => 'Experience our frontline grassroots gatherings across Pakistan, exploring public energy ownership and water justice.',
                 'latestVideoUrl' => '',
-                'latestVideoThumbnail' => 'Assets/how-water-became-power.jpg'
+                'latestVideoThumbnail' => 'assets/how-water-became-power.jpg'
             ],
             'activities' => [
                 'showVideo' => true,
                 'videoTitle' => 'More than a retreat (CAEA Community Documentary)',
                 'videoDescription' => 'No experience needed. Just a willingness to show up and act. Reconnecting with nature, exploring movement building, and building resilience against climate burnout.',
                 'videoUrl' => '',
-                'videoThumbnail' => 'Assets/how-water-became-power-ai.jpg',
+                'videoThumbnail' => 'assets/how-water-became-power-ai.jpg',
                 'autoplayImages' => true,
                 'imageCycleInterval' => 5000
             ],

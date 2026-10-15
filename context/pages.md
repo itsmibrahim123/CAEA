@@ -16,14 +16,14 @@ The Our Work page presents CAEA's 4 core strategic pillars, starting directly wi
 ### 1.2 Interactive Features
 - **Direct Top Section & Expandable Pillars**:
   - **Fossil Fuel Phaseout** is permanently visible and accessible at the top of the page.
-  - The subsequent pillars (**Textile & Fast Fashion**, **Climate Justice**, **Activities & Gatherings**) feature high-contrast expandable banners with `/Assets/Tab-scroll.png` and smooth accordions.
+  - The subsequent pillars (**Textile & Fast Fashion**, **Climate Justice**, **Activities & Gatherings**) feature high-contrast expandable banners with `/assets/Tab-scroll.png` and smooth accordions.
 - **Dynamic Articles Filter & In-Page Reader**:
   - Filterable by topic tags with real-time text search and an inline reader modal for comprehensive research documents.
 - **Activities Slideshow & Video Documentary**:
   - Integrated field activities feed from `DataStore` with auto-cycling photo galleries and documentary video playback.
 - **Direct Opportunity Applications**:
   - Embedded "JOIN US" and "Apply" actions link seamlessly to the universal application modal.
-  - Standardized media galleries under `Assets/media/events/` (`contested-waters/`, `exposure-visit/`, `manchar/`, `retreat/`).
+  - Standardized media galleries under `assets/media/events/` (`contested-waters/`, `exposure-visit/`, `manchar/`, `retreat/`).
 
 ---
 
@@ -56,15 +56,15 @@ The Our Story page details CAEA's history, theoretical foundation, community-fir
   - Traces the history of energy privatization, water rights in Sindh, and community mobilization in Pakistan.
 - **Leadership & Team Bios Grid**:
   - Comprehensive bio profiles and photography for:
-    - **Sanaa’i Muhammad** — Founder & CEO (`Assets/Team/sanaa-muhammad.jpg`)
-    - **Kamran Aziz** — Founding Partner & Director Research (`Assets/Team/kamran-aziz.jpg`)
-    - **Muhammad Asad** — Research Associate (`Assets/Team/asad-juttah.jpg`)
-    - **Hamna Anwaar** — Textile Associate (`Assets/Team/hamna-anwaar.jpg`)
-    - **Muhammad Saeed** — Climate Justice Lead (`Assets/Team/muhammad-saeed.jpg`)
-    - **Muaaz Ahmad Khan** — Communication Lead (`Assets/Team/muaaz-khan.jpg`)
-    - **Fizza Aman Bhutto** — Admin & HR Officer (`Assets/Team/grid-1-3-fiza.png`)
-    - **Manahil Usman** — Associate Fossil Fuel Phaseout (`Assets/Team/hina-yousaf.jpg`)
-    - **Abid Azim** — Finance Officer / CPA (`Assets/Team/nabeel-ahmad.jpg`)
+    - **Sanaa’i Muhammad** — Founder & CEO (`assets/team/sanaa-muhammad.jpg`)
+    - **Kamran Aziz** — Founding Partner & Director Research (`assets/team/kamran-aziz.jpg`)
+    - **Muhammad Asad** — Research Associate (`assets/team/asad-juttah.jpg`)
+    - **Hamna Anwaar** — Textile Associate (`assets/team/hamna-anwaar.jpg`)
+    - **Muhammad Saeed** — Climate Justice Lead (`assets/team/muhammad-saeed.jpg`)
+    - **Muaaz Ahmad Khan** — Communication Lead (`assets/team/muaaz-khan.jpg`)
+    - **Fizza Aman Bhutto** — Admin & HR Officer (`assets/team/grid-1-3-fiza.png`)
+    - **Manahil Usman** — Associate Fossil Fuel Phaseout (`assets/team/hina-yousaf.jpg`)
+    - **Abid Azim** — Finance Officer / CPA (`assets/team/nabeel-ahmad.jpg`)
 - **Allies & Partners Section**:
   - Showcases civil society alliances and grassroots coalitions (*Alternative Law Collective*, *Alliance for Climate Justice & Clean Energy*, *Climate Action Center*, *PRIED*, and *Verrha Research*).
 

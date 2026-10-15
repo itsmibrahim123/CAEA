@@ -7,8 +7,8 @@
   <meta name="description" content="CAEA Admin Dashboard — Management Console" />
   <meta name="theme-color" content="#000000" />
   <title>Admin Console — CAEA</title>
-  <link rel="icon" type="image/png" href="../Assets/CAEA-Navbar-Logo.png" />
-  <link rel="apple-touch-icon" href="../Assets/CAEA-Navbar-Logo.png" />
+  <link rel="icon" type="image/png" href="../assets/CAEA-Navbar-Logo.png" />
+  <link rel="apple-touch-icon" href="../assets/CAEA-Navbar-Logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -16,7 +16,7 @@
     rel="stylesheet" />
   
   <!-- Deployment-Resilient Stylesheet Resolution -->
-  <link rel="stylesheet" href="../styles.css" onerror="this.onerror=null;this.href='/styles.css';" />
+  <link rel="stylesheet" href="../assets/css/styles.css" onerror="this.onerror=null;this.href='/assets/css/styles.css';" />
   <link rel="stylesheet" href="admin.css" onerror="this.onerror=null;this.href='/admin/admin.css';" />
   
   <script>
@@ -25,7 +25,7 @@
       window.history.replaceState(null, '', '/admin/');
     }
   </script>
-  <script src="/device-detect.js" onerror="this.onerror=null;this.src='../device-detect.js';"></script>
+  <script src="/assets/js/device-detect.js" onerror="this.onerror=null;this.src='../assets/js/device-detect.js';"></script>
 </head>
 
 <body class="admin-body">
@@ -61,7 +61,7 @@
     <div class="admin-header-container">
       <div class="admin-brand">
         <a href="/" class="brand-link" aria-label="CAEA Home">
-          <img src="../Assets/CAEA-Navbar-Logo.png" alt="CAEA Logo" class="brand-logo" />
+          <img src="../assets/CAEA-Navbar-Logo.png" alt="CAEA Logo" class="brand-logo" />
         </a>
         <div class="admin-badge-wrap">
           <span class="admin-console-badge">Management Console</span>
@@ -357,7 +357,7 @@
                 <label class="form-label">Video Cover Thumbnail</label>
                 <div class="image-upload-wrapper" id="setting-home-thumb-dropzone">
                   <div class="image-preview-container">
-                    <img id="setting-home-thumb-preview" src="../Assets/how-water-became-power.jpg" alt="Video Thumbnail" class="form-img-preview" onerror="this.src='../Assets/Hero-image.png'" />
+                    <img id="setting-home-thumb-preview" src="../assets/how-water-became-power.jpg" alt="Video Thumbnail" class="form-img-preview" onerror="this.src='../assets/Hero-image.png'" />
                   </div>
                   <div class="image-upload-controls">
                     <div class="upload-actions-row">
@@ -372,7 +372,7 @@
                       </button>
                       <span class="upload-filename-badge" id="setting-home-thumb-filename" style="display:none;"></span>
                     </div>
-                    <input type="text" id="setting-home-thumb-url" class="admin-input" placeholder="Or paste image path / URL (e.g. Assets/how-water-became-power.jpg)" />
+                    <input type="text" id="setting-home-thumb-url" class="admin-input" placeholder="Or paste image path / URL (e.g. assets/how-water-became-power.jpg)" />
                   </div>
                 </div>
               </div>
@@ -690,8 +690,8 @@
                 <div class="form-group" style="width:220px;">
                   <label class="form-label" for="setting-work-textile-arch-pattern">Side Column Arch Pattern</label>
                   <select id="setting-work-textile-arch-pattern" class="admin-select">
-                    <option value="white-semicircle">White Semi-Circles (/Assets/White-Semi-circle.png)</option>
-                    <option value="green-arch">Green Arch Pattern (/Assets/repeating-our-story.png)</option>
+                    <option value="white-semicircle">White Semi-Circles (/assets/White-Semi-circle.png)</option>
+                    <option value="green-arch">Green Arch Pattern (/assets/repeating-our-story.png)</option>
                   </select>
                 </div>
               </div>
@@ -1269,7 +1269,7 @@
                   <label class="form-label">Video Cover Thumbnail</label>
                   <div class="image-upload-wrapper" id="setting-video-thumb-dropzone">
                     <div class="image-preview-container">
-                      <img id="setting-act-thumb-preview" src="../Assets/how-water-became-power-ai.jpg" alt="Video Thumbnail" class="form-img-preview" onerror="this.src='../Assets/CAEA-Navbar-Logo.png'" />
+                      <img id="setting-act-thumb-preview" src="../assets/how-water-became-power-ai.jpg" alt="Video Thumbnail" class="form-img-preview" onerror="this.src='../assets/CAEA-Navbar-Logo.png'" />
                     </div>
                     <div class="image-upload-controls">
                       <div class="upload-actions-row">
@@ -1284,7 +1284,7 @@
                         </button>
                         <span class="upload-filename-badge" id="setting-act-thumb-filename" style="display:none;"></span>
                       </div>
-                      <input type="text" id="setting-act-thumb-url" class="admin-input" placeholder="Or paste image path / URL (e.g. Assets/how-water-became-power-ai.jpg)" />
+                      <input type="text" id="setting-act-thumb-url" class="admin-input" placeholder="Or paste image path / URL (e.g. assets/how-water-became-power-ai.jpg)" />
                     </div>
                   </div>
                 </div>
@@ -1481,7 +1481,7 @@
   <!-- Toast Notifications Container -->
   <div id="admin-toast-container" class="toast-container" aria-live="polite"></div>
 
-  <script src="../data-store.js" onerror="this.onerror=null;this.src='/data-store.js';"></script>
+  <script src="../assets/js/data-store.js" onerror="this.onerror=null;this.src='/assets/js/data-store.js';"></script>
   <script src="admin.js" onerror="this.onerror=null;this.src='/admin/admin.js';"></script>
 </body>
 

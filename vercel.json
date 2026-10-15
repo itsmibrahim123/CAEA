@@ -38,6 +38,34 @@
       "destination": "/pages/get-involved.html"
     },
     {
+      "source": "/styles.css",
+      "destination": "/assets/css/styles.css"
+    },
+    {
+      "source": "/home.css",
+      "destination": "/assets/css/home.css"
+    },
+    {
+      "source": "/script.js",
+      "destination": "/assets/js/script.js"
+    },
+    {
+      "source": "/data-store.js",
+      "destination": "/assets/js/data-store.js"
+    },
+    {
+      "source": "/device-detect.js",
+      "destination": "/assets/js/device-detect.js"
+    },
+    {
+      "source": "/analytics.js",
+      "destination": "/assets/js/analytics.js"
+    },
+    {
+      "source": "/Assets/:path*",
+      "destination": "/assets/:path*"
+    },
+    {
       "source": "/:file.css",
       "destination": "/pages/:file.css"
     }

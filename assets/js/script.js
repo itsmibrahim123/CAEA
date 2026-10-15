@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
       container.appendChild(bgImg);
     } else {
       const newBg = document.createElement('img');
-      newBg.src = '/Assets/Pak-map.png';
+      newBg.src = '/assets/Pak-map.png';
       newBg.alt = 'Map of Pakistan highlighting CAEA project locations';
       newBg.className = 'map-bg';
       newBg.setAttribute('aria-hidden', 'true');
@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <span class="ripple r2"></span>
           <span class="ripple r3"></span>
         </div>
-        <img src="/Assets/Map-leaf.png" alt="" class="city-leaf" aria-hidden="true" />
+        <img src="/assets/Map-leaf.png" alt="" class="city-leaf" aria-hidden="true" />
         <div class="city-label">${escapeHtml(pin.city)}</div>
         <div class="city-popup" aria-hidden="true">
           <span class="popup-badge">${escapeHtml(pin.badge || pin.city)}</span>
@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .map(p => `<p>${escapeHtml(p)}</p>`)
         .join('');
 
-      const imgSrc = resolveImagePath(person.image || 'Assets/Team/sanaa-muhammad.jpg');
+      const imgSrc = resolveImagePath(person.image || 'assets/team/sanaa-muhammad.jpg');
       const isLogo = imgSrc && imgSrc.includes('CAEA-Navbar-Logo');
 
       return `
@@ -201,7 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="accordion-content" aria-hidden="true">
             <div class="accordion-inner">
               <div class="accordion-photo-box">
-                <img src="${imgSrc}" alt="${escapeHtml(person.name || '')}" class="accordion-photo${isLogo ? ' is-logo' : ''}" loading="lazy" onerror="this.src='/Assets/Team/sanaa-muhammad.jpg'" />
+                <img src="${imgSrc}" alt="${escapeHtml(person.name || '')}" class="accordion-photo${isLogo ? ' is-logo' : ''}" loading="lazy" onerror="this.src='/assets/team/sanaa-muhammad.jpg'" />
               </div>
               <div class="accordion-bio">
                 ${bioParagraphs || `<p>${escapeHtml(person.bio || '')}</p>`}
@@ -254,7 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
         displayItems.push({
           name: 'CAEA',
           isLogoTile: true,
-          image: '/Assets/CAEA-Navbar-Logo.png'
+          image: '/assets/CAEA-Navbar-Logo.png'
         });
       }
     } else {
@@ -267,7 +267,7 @@ document.addEventListener('DOMContentLoaded', () => {
           displayItems.push({
             name: 'CAEA',
             isLogoTile: true,
-            image: '/Assets/CAEA-Navbar-Logo.png'
+            image: '/assets/CAEA-Navbar-Logo.png'
           });
         }
       }
@@ -280,14 +280,14 @@ document.addEventListener('DOMContentLoaded', () => {
       if (item.isLogoTile) {
         return `
           <div class="team-photo-item is-logo-tile" title="Centre for Aquatic Ecology &amp; Art">
-            <img src="/Assets/CAEA-Navbar-Logo.png" alt="CAEA Emblem" class="team-photo brand-tile-logo" loading="lazy" />
+            <img src="/assets/CAEA-Navbar-Logo.png" alt="CAEA Emblem" class="team-photo brand-tile-logo" loading="lazy" />
           </div>
         `;
       }
-      const imgSrc = resolveImagePath(item.image || 'Assets/Team/grid-1-2-Sanaa.png');
+      const imgSrc = resolveImagePath(item.image || 'assets/team/grid-1-2-Sanaa.png');
       return `
         <div class="team-photo-item" title="${escapeHtml(item.name || '')}">
-          <img src="${imgSrc}" alt="${escapeHtml(item.name || '')}" class="team-photo" loading="lazy" onerror="this.src='/Assets/Team/grid-1-2-Sanaa.png'" />
+          <img src="${imgSrc}" alt="${escapeHtml(item.name || '')}" class="team-photo" loading="lazy" onerror="this.src='/assets/team/grid-1-2-Sanaa.png'" />
         </div>
       `;
     }).join('');
@@ -299,11 +299,24 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentHeroEventIndex = 0;
 
   function resolveImagePath(img) {
-    if (!img) return '/Assets/Hero-image.png';
-    if (img.startsWith('http://') || img.startsWith('https://') || img.startsWith('data:') || img.startsWith('/')) return img;
-    if (img.startsWith('../Assets/')) return img.replace('../Assets/', '/Assets/');
-    if (img.startsWith('Assets/')) return '/' + img;
-    return '/' + img;
+    if (!img) return '/assets/Hero-image.png';
+    if (typeof img !== 'string') return '';
+    if (img.startsWith('http://') || img.startsWith('https://') || img.startsWith('data:')) return img;
+    let normalized = img;
+    if (normalized.startsWith('../')) {
+      normalized = normalized.substring(2);
+    }
+    if (!normalized.startsWith('/')) {
+      normalized = '/' + normalized;
+    }
+    if (normalized.startsWith('/Assets/')) {
+      normalized = '/assets/' + normalized.substring(8);
+    }
+    normalized = normalized
+      .replace(/\/assets\/Team\//i, '/assets/team/')
+      .replace(/\/assets\/Allies\//i, '/assets/allies/')
+      .replace(/\/assets\/Video\//i, '/assets/video/');
+    return normalized;
   }
 
   function escapeHtml(str) {
@@ -328,7 +341,7 @@ document.addEventListener('DOMContentLoaded', () => {
         date: '2026-01-23',
         dateFormatted: '23.01.2026',
         description: 'Examines how colonial and modern systems of water control through dams, barrages, and canals have transformed river ecosystems, displaced communities, and disrupted cultural relationships with water.',
-        image: '/Assets/media/events/contested-waters/RAY00190.JPG',
+        image: '/assets/media/events/contested-waters/RAY00190.JPG',
         quote: '“Those least responsible for climate change are worst affected by it”',
         quoteAuthor: 'Waseem Ul Haq'
       },
@@ -339,7 +352,7 @@ document.addEventListener('DOMContentLoaded', () => {
         date: '2026-04-23',
         dateFormatted: '23.04.2026',
         description: 'A 3-day retreat for climate activists and community organizers across Pakistan to reflect, reconnect with nature, and discuss energy, climate stories, burnout, and movement building.',
-        image: '/Assets/media/events/retreat/DSCF4154.JPG',
+        image: '/assets/media/events/retreat/DSCF4154.JPG',
         quote: '“Reconnecting with land and community to build resilience against climate burnout”',
         quoteAuthor: 'CAEA Movement Gathering'
       },
@@ -350,7 +363,7 @@ document.addEventListener('DOMContentLoaded', () => {
         date: '2026-05-20',
         dateFormatted: '20.05.2026',
         description: 'Discussion on the ecological destruction of Lake Manchhar, changes in water flow, infrastructure development, agricultural wastewater, and community-led resistance.',
-        image: '/Assets/media/events/manchar/WhatsApp Image 2026-08-27 at 12.08.18 PM.jpeg',
+        image: '/assets/media/events/manchar/WhatsApp Image 2026-08-27 at 12.08.18 PM.jpeg',
         quote: '“Manchhar is a mindful lake, yet it bears the heaviest burden of industrial discharge”',
         quoteAuthor: 'Lake Manchhar Fisherman Community'
       },
@@ -361,7 +374,7 @@ document.addEventListener('DOMContentLoaded', () => {
         date: '2026-07-28',
         dateFormatted: '28.07.2026',
         description: 'Brought together perspectives from WAPDA and displaced communities to examine Tarbela\'s promises of power vs. its costs on land, livelihoods, culture, and ecosystems.',
-        image: '/Assets/media/events/exposure-visit/WhatsApp Image 2026-08-27 at 12.16.56 PM.jpeg',
+        image: '/assets/media/events/exposure-visit/WhatsApp Image 2026-08-27 at 12.16.56 PM.jpeg',
         quote: '“Uncovering the true human and ecological costs behind megastructures of power”',
         quoteAuthor: 'Tarbela Exposure Delegation'
       }
@@ -377,7 +390,7 @@ document.addEventListener('DOMContentLoaded', () => {
     thumbsContainers.forEach(container => {
       container.innerHTML = activities.map((item, idx) => `
         <div class="thumb-item ${idx === currentHeroEventIndex ? 'active' : ''}" data-index="${idx}" data-id="${item.id}" title="${escapeHtml(item.title)}">
-          <img src="${resolveImagePath(item.image)}" alt="${escapeHtml(item.title)}" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='/Assets/Hero-image.png'" />
+          <img src="${resolveImagePath(item.image)}" alt="${escapeHtml(item.title)}" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='/assets/Hero-image.png'" />
         </div>
       `).join('');
 
@@ -657,7 +670,7 @@ document.addEventListener('DOMContentLoaded', () => {
       videoTitle: 'More than a retreat (CAEA Community Documentary)',
       videoDescription: 'No experience needed. Just a willingness to show up and act. Reconnecting with nature, exploring movement building, and building resilience against climate burnout.',
       videoUrl: '',
-      videoThumbnail: 'Assets/how-water-became-power-ai.jpg'
+      videoThumbnail: 'assets/how-water-became-power-ai.jpg'
     };
 
     if (!settings.showVideo) {
@@ -828,7 +841,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Hero Background Video Setup
     const bgVideoEl = document.getElementById('hero-bg-video');
     const heroMediaContainer = document.getElementById('hero-media-container');
-    const videoUrl = homeSettings.heroVideoUrl || homeSettings.latestVideoUrl || 'Assets/Video/Hero.mov';
+    const videoUrl = homeSettings.heroVideoUrl || homeSettings.latestVideoUrl || 'assets/video/Hero.mov';
     
     if (bgVideoEl && videoUrl) {
       bgVideoEl.src = resolveImagePath(videoUrl);
@@ -877,7 +890,7 @@ document.addEventListener('DOMContentLoaded', () => {
       videoBtn.addEventListener('click', (e) => {
         e.preventDefault();
         const curSettings = window.DataStore ? window.DataStore.getPageSettings('home') : homeSettings;
-        openVideoModal(curSettings.latestVideoTitle || 'Featured Video', curSettings.heroVideoUrl || curSettings.latestVideoUrl || 'Assets/Video/Hero.mov');
+        openVideoModal(curSettings.latestVideoTitle || 'Featured Video', curSettings.heroVideoUrl || curSettings.latestVideoUrl || 'assets/video/Hero.mov');
       });
       videoBtn.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
@@ -914,39 +927,39 @@ document.addEventListener('DOMContentLoaded', () => {
       const img = item.image;
       if (img.includes('contested-waters')) {
         return [
-          'Assets/media/events/contested-waters/RAY00190.JPG',
-          'Assets/media/events/contested-waters/RAY00059.JPG',
-          'Assets/media/events/contested-waters/RAY00118.JPG',
-          'Assets/media/events/contested-waters/RAY00212.JPG'
+          'assets/media/events/contested-waters/RAY00190.JPG',
+          'assets/media/events/contested-waters/RAY00059.JPG',
+          'assets/media/events/contested-waters/RAY00118.JPG',
+          'assets/media/events/contested-waters/RAY00212.JPG'
         ];
       }
       if (img.includes('retreat')) {
         return [
-          'Assets/media/events/retreat/DSCF4154.JPG',
-          'Assets/media/events/retreat/DSCF3966.JPG',
-          'Assets/media/events/retreat/DSCF4356.JPG',
-          'Assets/media/events/retreat/DSCF4512.JPG'
+          'assets/media/events/retreat/DSCF4154.JPG',
+          'assets/media/events/retreat/DSCF3966.JPG',
+          'assets/media/events/retreat/DSCF4356.JPG',
+          'assets/media/events/retreat/DSCF4512.JPG'
         ];
       }
       if (img.includes('manchar')) {
         return [
-          'Assets/media/events/manchar/WhatsApp Image 2026-08-27 at 12.08.18 PM.jpeg',
-          'Assets/media/events/manchar/WhatsApp Image 2026-08-27 at 12.08.18 PM (1).jpeg',
-          'Assets/media/events/manchar/WhatsApp Image 2026-08-27 at 12.08.18 PM (2).jpeg',
-          'Assets/media/events/manchar/WhatsApp Image 2026-08-27 at 12.08.28 PM.jpeg'
+          'assets/media/events/manchar/WhatsApp Image 2026-08-27 at 12.08.18 PM.jpeg',
+          'assets/media/events/manchar/WhatsApp Image 2026-08-27 at 12.08.18 PM (1).jpeg',
+          'assets/media/events/manchar/WhatsApp Image 2026-08-27 at 12.08.18 PM (2).jpeg',
+          'assets/media/events/manchar/WhatsApp Image 2026-08-27 at 12.08.28 PM.jpeg'
         ];
       }
       if (img.includes('exposure-visit')) {
         return [
-          'Assets/media/events/exposure-visit/WhatsApp Image 2026-08-27 at 12.16.56 PM.jpeg',
-          'Assets/media/events/exposure-visit/WhatsApp Image 2026-08-27 at 12.16.57 PM (1).jpeg',
-          'Assets/media/events/exposure-visit/WhatsApp Image 2026-08-27 at 12.16.58 PM (2).jpeg',
-          'Assets/media/events/exposure-visit/WhatsApp Image 2026-08-27 at 12.16.59 PM.jpeg'
+          'assets/media/events/exposure-visit/WhatsApp Image 2026-08-27 at 12.16.56 PM.jpeg',
+          'assets/media/events/exposure-visit/WhatsApp Image 2026-08-27 at 12.16.57 PM (1).jpeg',
+          'assets/media/events/exposure-visit/WhatsApp Image 2026-08-27 at 12.16.58 PM (2).jpeg',
+          'assets/media/events/exposure-visit/WhatsApp Image 2026-08-27 at 12.16.59 PM.jpeg'
         ];
       }
       return [item.image];
     }
-    return ['/Assets/Hero-image.png'];
+    return ['/assets/Hero-image.png'];
   }
 
   function renderDynamicActivities() {
@@ -958,12 +971,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     activitiesContainer.innerHTML = activities.map((item) => {
       const imgList = getActivityImages(item);
-      const initialImg = imgList[0] || item.image || '/Assets/Hero-image.png';
+      const initialImg = imgList[0] || item.image || '/assets/Hero-image.png';
 
       return `
         <article class="activity-card" data-id="${item.id}">
           <div class="activity-media-box" data-act-id="${item.id}" data-current-index="0">
-            <img class="activity-card-img" src="${resolveImagePath(initialImg)}" alt="${escapeHtml(item.title)}" onerror="this.src='/Assets/how-water-became-power.jpg'" />
+            <img class="activity-card-img" src="${resolveImagePath(initialImg)}" alt="${escapeHtml(item.title)}" onerror="this.src='/assets/how-water-became-power.jpg'" />
             <button type="button" class="act-card-arrow prev-act-img" aria-label="Previous photo">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
             </button>
@@ -1063,7 +1076,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="cause-card ${themeClass} ${areaClass}" data-opportunity-id="${item.id}">
             <div class="cause-card-4-inner">
               <div class="cause-card-graphic-box">
-                <img src="${resolveImagePath(item.image)}" alt="${escapeHtml(item.title)}" class="cause-card-graphic" onerror="this.src='/Assets/how-water-became-power.jpg'" />
+                <img src="${resolveImagePath(item.image)}" alt="${escapeHtml(item.title)}" class="cause-card-graphic" onerror="this.src='/assets/how-water-became-power.jpg'" />
               </div>
               <div class="cause-card-4-content">
                 <h2 class="cause-card-title">${escapeHtml(item.title).replace(/:\s*/g, ':<br />')}</h2>
@@ -1938,7 +1951,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (subEl) subEl.textContent = item.subtitle || item.excerpt || '';
       if (authorEl) authorEl.textContent = item.author ? `BY ${item.author.toUpperCase()}` : 'BY HAMNA ANWAR';
       if (dateEl) dateEl.textContent = item.dateFormatted || item.date || '';
-      if (imgEl) imgEl.src = resolveImagePath(item.image || 'Assets/how-water-became-power.jpg');
+      if (imgEl) imgEl.src = resolveImagePath(item.image || 'assets/how-water-became-power.jpg');
 
       if (contentEl) {
         const paras = (item.content || item.excerpt || '').split('\n').filter(Boolean);

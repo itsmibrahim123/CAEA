@@ -212,7 +212,7 @@
         <div class="mobile-drawer-panel" role="dialog" aria-modal="true" aria-label="Navigation Menu">
           <div class="mobile-drawer-header">
             <a href="${basePath}" class="mobile-drawer-brand">
-              <img src="${basePath}Assets/CAEA-Navbar-Logo.png" alt="CAEA Logo" class="mobile-drawer-logo" onerror="this.src='/Assets/CAEA-Navbar-Logo.png'" />
+              <img src="${basePath}assets/CAEA-Navbar-Logo.png" alt="CAEA Logo" class="mobile-drawer-logo" onerror="this.src='/assets/CAEA-Navbar-Logo.png'" />
             </a>
             <button type="button" class="mobile-drawer-close-btn" id="caea-drawer-close" aria-label="Close navigation menu">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

@@ -35,7 +35,7 @@ CAEA is an advocacy, research, and community-led energy justice platform based i
 ```
 CAEA/
 ├── index.html                   # Homepage (Hero switcher, Team grid, Causes, Dynamic Activities, Newsletter)
-├── styles.css                   # Global responsive design tokens, typography, layout & animations
+├── assets/css/styles.css                   # Global responsive design tokens, typography, layout & animations
 ├── script.js                    # Core frontend controller, hero switcher, dynamic renderers & Apply Modal
 ├── data-store.js                # Universal reactive DataStore API & seed database
 ├── api/                         # PHP Backend & REST APIs
@@ -48,7 +48,7 @@ CAEA/
 ├── data/                        # SQLite database directory (protected via .htaccess)
 │   └── database.sqlite          # Auto-generated SQLite database file
 ├── uploads/                     # Server-side uploaded media & videos
-├── Assets/                      # Centralized media and branding repository
+├── assets/                      # Centralized media and branding repository
 │   ├── CAEA-Navbar-Logo.png     # Official navbar brand logo
 │   ├── Hero-image.png           # Default hero event background
 │   ├── how-water-became-power.jpg # Article cover graphic

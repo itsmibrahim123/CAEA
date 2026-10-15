@@ -5,6 +5,18 @@
     RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /index\.html\ HTTP/
     RewriteRule ^index\.html$ / [R=301,L]
     
+    # Legacy Root Assets / Styles / Scripts Rewrites
+    RewriteRule ^styles\.css$ assets/css/styles.css [L]
+    RewriteRule ^home\.css$ assets/css/home.css [L]
+    RewriteRule ^script\.js$ assets/js/script.js [L]
+    RewriteRule ^data-store\.js$ assets/js/data-store.js [L]
+    RewriteRule ^device-detect\.js$ assets/js/device-detect.js [L]
+    RewriteRule ^analytics\.js$ assets/js/analytics.js [L]
+    RewriteRule ^Assets/(.*)$ assets/$1 [NC,L]
+    RewriteRule ^assets/Team/(.*)$ assets/team/$1 [NC,L]
+    RewriteRule ^assets/Allies/(.*)$ assets/allies/$1 [NC,L]
+    RewriteRule ^assets/Video/(.*)$ assets/video/$1 [NC,L]
+
     # If request is not a file or directory, default to clean routes
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d

@@ -24,7 +24,7 @@ This document specifies the layout geometry, component architecture, dynamic dat
 - **Background**: Solid black (`#000000`)
 - **Container**: Max width 1440px with `52/1440` side margins.
 - **Brand Column (Left)**:
-  - CAEA Logo (`Assets/CAEA-Navbar-Logo.png`) linking to `index.html`.
+  - CAEA Logo (`assets/CAEA-Navbar-Logo.png`) linking to `index.html`.
 - **Navigation Capsule Pill Group (Center)**:
   - Floating capsule container with backdrop blur (`backdrop-filter: blur(12px)`).
   - Navigation links:
@@ -44,7 +44,7 @@ This document specifies the layout geometry, component architecture, dynamic dat
   - Controlled by `script.js` via `window.DataStore.get('activities')`.
   - Automatically loads the activity flagged with `featured: true` (or the default seed event).
 - **Hero Background Image (`#hero-main-img`)**:
-  - Dynamically updates to `item.image` (e.g. `Assets/media/events/contested-waters/RAY00190.JPG` or uploaded base64 Data URL).
+  - Dynamically updates to `item.image` (e.g. `assets/media/events/contested-waters/RAY00190.JPG` or uploaded base64 Data URL).
 - **Hero Event Tag Pill (`#hero-event-tag-pill`)**:
   - Displays category tag (e.g., `WORKSHOP`, `RETREAT`, `COMMUNITY KACHERI`).
 - **Hero Quote Block (`#hero-quote-text` & `#hero-quote-author`)**:
@@ -57,7 +57,7 @@ This document specifies the layout geometry, component architecture, dynamic dat
 ---
 
 ### 2.3 "Catch Up on Our Latest" Video Section (`.bottom-header-section` / `#latest-section`)
-- **Repeating Banner**: Green leaf pattern (`Assets/Home_Catch_up.png`).
+- **Repeating Banner**: Green leaf pattern (`assets/Home_Catch_up.png`).
 - **Dynamic Content**:
   - Title: Controlled by `DataStore.getPageSettings('home').latestTitle` (`#latest-section-title`).
   - Subtitle: Controlled by `DataStore.getPageSettings('home').latestSubtitle` (`#latest-section-desc`).
@@ -67,25 +67,25 @@ This document specifies the layout geometry, component architecture, dynamic dat
 ---
 
 ### 2.4 Pakistan Map Location Pins (`.map-section` / `#our-stories`)
-- **Base Visual**: High-resolution Pakistan map (`Assets/Pak-map.png`).
+- **Base Visual**: High-resolution Pakistan map (`assets/Pak-map.png`).
 - **Dynamic Markers**:
   - Rendered dynamically via `renderPakistanMapPins()` from `DataStore.get('mapPins')`.
   - Configurable coordinates: `left: X%`, `top: Y%`.
-  - Animated ripple pulses (`.ripple.r1`, `.ripple.r2`, `.ripple.r3`), leaf marker icon (`Assets/Map-leaf.png`), and label badge.
+  - Animated ripple pulses (`.ripple.r1`, `.ripple.r2`, `.ripple.r3`), leaf marker icon (`assets/Map-leaf.png`), and label badge.
   - Interactive Story Popup: Shows city badge and community background on click / Enter key, with full external click dismiss and Escape key handlers.
 
 ---
 
 ### 2.4 Team & Leadership Grid (`.team-section`)
 - 3x3 Responsive Grid showcasing real CAEA core leadership and researchers:
-  - **Sanaa Muhammad**: Research Director (`Assets/Team/sanaa-muhammad.jpg`)
-  - **Hamna Anwaar**: Policy Lead (`Assets/Team/hamna-anwaar.jpg`)
-  - **Asad Juttah**: Field Operations Lead (`Assets/Team/asad-juttah.jpg`)
-  - **Muaaz Khan**: Energy Analyst (`Assets/Team/muaaz-khan.jpg`)
-  - **Hina Yousaf**: Community Organizer (`Assets/Team/hina-yousaf.jpg`)
-  - **Muhammad Saeed**: Environmental Researcher (`Assets/Team/muhammad-saeed.jpg`)
-  - **Nabeel Ahmad**: Advocacy Specialist (`Assets/Team/nabeel-ahmad.jpg`)
-  - **Kamran Aziz**: Research Fellow (`Assets/Team/kamran-aziz.jpg`)
+  - **Sanaa Muhammad**: Research Director (`assets/team/sanaa-muhammad.jpg`)
+  - **Hamna Anwaar**: Policy Lead (`assets/team/hamna-anwaar.jpg`)
+  - **Asad Juttah**: Field Operations Lead (`assets/team/asad-juttah.jpg`)
+  - **Muaaz Khan**: Energy Analyst (`assets/team/muaaz-khan.jpg`)
+  - **Hina Yousaf**: Community Organizer (`assets/team/hina-yousaf.jpg`)
+  - **Muhammad Saeed**: Environmental Researcher (`assets/team/muhammad-saeed.jpg`)
+  - **Nabeel Ahmad**: Advocacy Specialist (`assets/team/nabeel-ahmad.jpg`)
+  - **Kamran Aziz**: Research Fellow (`assets/team/kamran-aziz.jpg`)
 
 ---
 

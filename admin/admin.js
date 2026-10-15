@@ -164,8 +164,16 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ============================================================
      1. Image Resolution Helper
      ============================================================ */
-  function resolveAdminImg(path, fallback = 'Assets/CAEA-Navbar-Logo.png') {
+  function resolveAdminImg(path, fallback = 'assets/CAEA-Navbar-Logo.png') {
     if (!path) return '../' + fallback;
+    if (typeof path === 'string') {
+      if (path.startsWith('/Assets/')) path = '/assets/' + path.substring(8);
+      else if (path.startsWith('Assets/')) path = 'assets/' + path.substring(7);
+      else if (path.startsWith('../Assets/')) path = '../assets/' + path.substring(10);
+      path = path.replace(/assets\/Team\//i, 'assets/team/')
+                 .replace(/assets\/Allies\//i, 'assets/allies/')
+                 .replace(/assets\/Video\//i, 'assets/video/');
+    }
     if (path.startsWith('data:') || path.startsWith('http://') || path.startsWith('https://') || path.startsWith('//')) {
       return path;
     }
@@ -539,7 +547,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </td>
         <td>
           <div style="position:relative; width:48px; height:36px;">
-            <img src="${resolveAdminImg(item.image, 'Assets/Hero-image.png')}" alt="" class="table-media-thumb" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='../Assets/CAEA-Navbar-Logo.png'" />
+            <img src="${resolveAdminImg(item.image, 'assets/Hero-image.png')}" alt="" class="table-media-thumb" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='../assets/CAEA-Navbar-Logo.png'" />
             ${galleryCount > 1 ? `<span style="position:absolute; bottom:-3px; right:-3px; background:#4b68ff; color:#fff; font-size:9.5px; font-weight:700; border-radius:10px; padding:1px 4px; line-height:1;" title="${galleryCount} slideshow photos">📷${galleryCount}</span>` : ''}
           </div>
         </td>
@@ -648,7 +656,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </td>
         <td>
-          <img src="${resolveAdminImg(item.image, 'Assets/Team/grid-1-2-Sanaa.png')}" alt="" class="table-media-thumb" style="border-radius:50%; width:36px; height:36px; object-fit:cover;" onerror="this.src='../Assets/CAEA-Navbar-Logo.png'" />
+          <img src="${resolveAdminImg(item.image, 'assets/team/grid-1-2-Sanaa.png')}" alt="" class="table-media-thumb" style="border-radius:50%; width:36px; height:36px; object-fit:cover;" onerror="this.src='../assets/CAEA-Navbar-Logo.png'" />
         </td>
         <td>
           <strong>${escapeHtml(item.name)}</strong>
@@ -739,7 +747,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </td>
         <td>
-          <img src="${resolveAdminImg(item.image, 'Assets/how-water-became-power.jpg')}" alt="" class="table-media-thumb" onerror="this.src='../Assets/CAEA-Navbar-Logo.png'" />
+          <img src="${resolveAdminImg(item.image, 'assets/how-water-became-power.jpg')}" alt="" class="table-media-thumb" onerror="this.src='../assets/CAEA-Navbar-Logo.png'" />
         </td>
         <td>
           <strong>${escapeHtml(item.title)}</strong>
@@ -941,7 +949,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </td>
         <td>
-          <img src="${resolveAdminImg(item.image, 'Assets/how-water-became-power.jpg')}" alt="" class="table-media-thumb" onerror="this.src='../Assets/CAEA-Navbar-Logo.png'" />
+          <img src="${resolveAdminImg(item.image, 'assets/how-water-became-power.jpg')}" alt="" class="table-media-thumb" onerror="this.src='../assets/CAEA-Navbar-Logo.png'" />
         </td>
         <td>
           <strong>${escapeHtml(item.title)}</strong>
@@ -1298,7 +1306,7 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
 
     // Image preview resolution
-    const currentImg = item.image || (collection === 'activities' ? 'Assets/Hero-image.png' : collection === 'people' ? 'Assets/Team/grid-1-2-Sanaa.png' : 'Assets/how-water-became-power.jpg');
+    const currentImg = item.image || (collection === 'activities' ? 'assets/Hero-image.png' : collection === 'people' ? 'assets/team/grid-1-2-Sanaa.png' : 'assets/how-water-became-power.jpg');
     const previewSrc = resolveAdminImg(currentImg);
 
     const imageFieldHtml = `
@@ -1306,7 +1314,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <label class="form-label">Media / Image Asset</label>
         <div class="image-upload-wrapper" id="modal-image-dropzone">
           <div class="image-preview-container">
-            <img id="form-image-preview" src="${previewSrc}" alt="Preview" class="form-img-preview" onerror="this.src='../Assets/CAEA-Navbar-Logo.png'" />
+            <img id="form-image-preview" src="${previewSrc}" alt="Preview" class="form-img-preview" onerror="this.src='../assets/CAEA-Navbar-Logo.png'" />
           </div>
           <div class="image-upload-controls">
             <div class="upload-actions-row">
@@ -1321,7 +1329,7 @@ document.addEventListener('DOMContentLoaded', () => {
               </button>
               <span class="upload-filename-badge" id="upload-filename-badge" style="display:none;"></span>
             </div>
-            <input type="text" name="image" id="form-image-url" class="admin-input" value="${escapeHtml(item.image || '')}" placeholder="Or paste image path / URL (e.g. Assets/Team/member-photo.jpg or https://...)" />
+            <input type="text" name="image" id="form-image-url" class="admin-input" value="${escapeHtml(item.image || '')}" placeholder="Or paste image path / URL (e.g. assets/team/member-photo.jpg or https://...)" />
           </div>
         </div>
       </div>
@@ -1420,7 +1428,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ${imageFieldHtml}
         <div class="form-group">
           <label class="form-label">Photo Gallery / Multi-Image Slideshow (One image path or URL per line)</label>
-          <textarea name="imagesList" class="admin-textarea" rows="3" placeholder="Assets/media/events/retreat/DSCF4154.JPG&#10;Assets/media/events/retreat/DSCF3966.JPG&#10;Assets/media/events/retreat/DSCF4356.JPG&#10;Assets/media/events/retreat/DSCF4512.JPG">${escapeHtml(imagesVal)}</textarea>
+          <textarea name="imagesList" class="admin-textarea" rows="3" placeholder="assets/media/events/retreat/DSCF4154.JPG&#10;assets/media/events/retreat/DSCF3966.JPG&#10;assets/media/events/retreat/DSCF4356.JPG&#10;assets/media/events/retreat/DSCF4512.JPG">${escapeHtml(imagesVal)}</textarea>
           <div style="font-size:11.5px; color:#9da5b4; margin-top:4px;">These images power the cycling photo arrows (&lt; &gt;) on the live activity card. If left blank, the primary image will be used.</div>
         </div>
         <div class="form-group">
@@ -1578,7 +1586,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ${orderFieldHtml}
         <div class="form-group">
           <label class="form-label">Video or Media URL (Optional)</label>
-          <input type="text" name="videoUrl" class="admin-input" value="${escapeHtml(item.videoUrl || '')}" placeholder="e.g. https://youtube.com/... or Assets/video.mp4" />
+          <input type="text" name="videoUrl" class="admin-input" value="${escapeHtml(item.videoUrl || '')}" placeholder="e.g. https://youtube.com/... or assets/video.mp4" />
         </div>
       `;
     } else if (collection === 'climateReports') {
@@ -1717,7 +1725,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnClearImage) {
       btnClearImage.addEventListener('click', () => {
         if (imageUrlInput) imageUrlInput.value = '';
-        if (imagePreview) imagePreview.src = '../Assets/CAEA-Navbar-Logo.png';
+        if (imagePreview) imagePreview.src = '../assets/CAEA-Navbar-Logo.png';
         if (fileInput) fileInput.value = '';
         if (filenameBadge) {
           filenameBadge.textContent = '';
@@ -2138,10 +2146,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (settingHomeVideoTitle) settingHomeVideoTitle.value = home.latestVideoTitle || '';
     if (settingHomeVideoDesc) settingHomeVideoDesc.value = home.latestVideoDescription || '';
-    if (settingHomeVideoUrl) settingHomeVideoUrl.value = home.latestVideoUrl || home.heroVideoUrl || 'Assets/Video/Hero.mov';
+    if (settingHomeVideoUrl) settingHomeVideoUrl.value = home.latestVideoUrl || home.heroVideoUrl || 'assets/video/Hero.mov';
     if (settingHomeThumbUrl) settingHomeThumbUrl.value = home.latestVideoThumbnail || '';
     if (settingHomeThumbPreview) {
-      settingHomeThumbPreview.src = resolveAdminImg(home.latestVideoThumbnail || 'Assets/how-water-became-power.jpg');
+      settingHomeThumbPreview.src = resolveAdminImg(home.latestVideoThumbnail || 'assets/how-water-became-power.jpg');
     }
     if (settingHomeHeroQuote) settingHomeHeroQuote.value = home.heroQuote || '';
     if (settingHomeHeroAuthor) settingHomeHeroAuthor.value = home.heroQuoteAuthor || '';
@@ -2161,7 +2169,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (settingActVideoUrl) settingActVideoUrl.value = act.videoUrl || '';
     if (settingActThumbUrl) settingActThumbUrl.value = act.videoThumbnail || '';
     if (settingActThumbPreview) {
-      settingActThumbPreview.src = resolveAdminImg(act.videoThumbnail || 'Assets/how-water-became-power-ai.jpg');
+      settingActThumbPreview.src = resolveAdminImg(act.videoThumbnail || 'assets/how-water-became-power-ai.jpg');
     }
     if (settingActAutoplay) settingActAutoplay.checked = act.autoplayImages !== false;
     if (settingActInterval) {
@@ -2355,7 +2363,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnClearHomeThumb) {
     btnClearHomeThumb.addEventListener('click', () => {
       if (settingHomeThumbUrl) settingHomeThumbUrl.value = '';
-      if (settingHomeThumbPreview) settingHomeThumbPreview.src = '../Assets/CAEA-Navbar-Logo.png';
+      if (settingHomeThumbPreview) settingHomeThumbPreview.src = '../assets/CAEA-Navbar-Logo.png';
       if (settingHomeThumbFile) settingHomeThumbFile.value = '';
       if (settingHomeThumbFilename) {
         settingHomeThumbFilename.textContent = '';
@@ -2493,8 +2501,8 @@ document.addEventListener('DOMContentLoaded', () => {
         showLatestVideo: settingHomeShowVideo ? settingHomeShowVideo.checked : true,
         latestVideoTitle: (settingHomeVideoTitle ? settingHomeVideoTitle.value : '').trim(),
         latestVideoDescription: (settingHomeVideoDesc ? settingHomeVideoDesc.value : '').trim(),
-        latestVideoUrl: videoUrlVal || 'Assets/Video/Hero.mov',
-        heroVideoUrl: videoUrlVal || 'Assets/Video/Hero.mov',
+        latestVideoUrl: videoUrlVal || 'assets/video/Hero.mov',
+        heroVideoUrl: videoUrlVal || 'assets/video/Hero.mov',
         latestVideoThumbnail: (settingHomeThumbUrl ? settingHomeThumbUrl.value : '').trim(),
         heroQuote: adminQuotesList.length > 0 ? adminQuotesList[0].text : (settingHomeHeroQuote ? settingHomeHeroQuote.value : '').trim(),
         heroQuoteAuthor: adminQuotesList.length > 0 ? adminQuotesList[0].author : (settingHomeHeroAuthor ? settingHomeHeroAuthor.value : '').trim(),
@@ -2622,7 +2630,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnClearActThumb) {
     btnClearActThumb.addEventListener('click', () => {
       if (settingActThumbUrl) settingActThumbUrl.value = '';
-      if (settingActThumbPreview) settingActThumbPreview.src = '../Assets/CAEA-Navbar-Logo.png';
+      if (settingActThumbPreview) settingActThumbPreview.src = '../assets/CAEA-Navbar-Logo.png';
       if (settingActThumbFile) settingActThumbFile.value = '';
       if (settingActThumbFilename) {
         settingActThumbFilename.textContent = '';

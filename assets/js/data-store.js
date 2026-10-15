@@ -27,12 +27,12 @@ const SEED_DATA = {
       dateFormatted: '23.01.2026',
       location: 'Pakistan',
       description: 'Examines how colonial and modern systems of water control through dams, barrages, and canals have transformed river ecosystems, displaced communities, and disrupted cultural relationships with water.',
-      image: 'Assets/media/events/contested-waters/RAY00190.JPG',
+      image: 'assets/media/events/contested-waters/RAY00190.JPG',
       images: [
-        'Assets/media/events/contested-waters/RAY00190.JPG',
-        'Assets/media/events/contested-waters/RAY00059.JPG',
-        'Assets/media/events/contested-waters/RAY00118.JPG',
-        'Assets/media/events/contested-waters/RAY00212.JPG'
+        'assets/media/events/contested-waters/RAY00190.JPG',
+        'assets/media/events/contested-waters/RAY00059.JPG',
+        'assets/media/events/contested-waters/RAY00118.JPG',
+        'assets/media/events/contested-waters/RAY00212.JPG'
       ],
       featured: true,
       quote: '“Those least responsible for climate change are worst affected by it”',
@@ -47,12 +47,12 @@ const SEED_DATA = {
       dateFormatted: '23.04.2026',
       location: 'Pakistan',
       description: 'A 3-day retreat for climate activists and community organizers across Pakistan to reflect, reconnect with nature, and discuss energy, climate stories, burnout, and movement building.',
-      image: 'Assets/media/events/retreat/DSCF4154.JPG',
+      image: 'assets/media/events/retreat/DSCF4154.JPG',
       images: [
-        'Assets/media/events/retreat/DSCF4154.JPG',
-        'Assets/media/events/retreat/DSCF3966.JPG',
-        'Assets/media/events/retreat/DSCF4356.JPG',
-        'Assets/media/events/retreat/DSCF4512.JPG'
+        'assets/media/events/retreat/DSCF4154.JPG',
+        'assets/media/events/retreat/DSCF3966.JPG',
+        'assets/media/events/retreat/DSCF4356.JPG',
+        'assets/media/events/retreat/DSCF4512.JPG'
       ],
       featured: false,
       quote: '“Reconnecting with land and community to build resilience against climate burnout”',
@@ -67,12 +67,12 @@ const SEED_DATA = {
       dateFormatted: '20.05.2026',
       location: 'Lake Manchhar, Sindh',
       description: 'Discussion on the ecological destruction of Lake Manchhar, changes in water flow, infrastructure development, agricultural wastewater, and community-led resistance.',
-      image: 'Assets/media/events/manchar/WhatsApp Image 2026-08-27 at 12.08.18 PM.jpeg',
+      image: 'assets/media/events/manchar/WhatsApp Image 2026-08-27 at 12.08.18 PM.jpeg',
       images: [
-        'Assets/media/events/manchar/WhatsApp Image 2026-08-27 at 12.08.18 PM.jpeg',
-        'Assets/media/events/manchar/WhatsApp Image 2026-08-27 at 12.08.18 PM (1).jpeg',
-        'Assets/media/events/manchar/WhatsApp Image 2026-08-27 at 12.08.18 PM (2).jpeg',
-        'Assets/media/events/manchar/WhatsApp Image 2026-08-27 at 12.08.28 PM.jpeg'
+        'assets/media/events/manchar/WhatsApp Image 2026-08-27 at 12.08.18 PM.jpeg',
+        'assets/media/events/manchar/WhatsApp Image 2026-08-27 at 12.08.18 PM (1).jpeg',
+        'assets/media/events/manchar/WhatsApp Image 2026-08-27 at 12.08.18 PM (2).jpeg',
+        'assets/media/events/manchar/WhatsApp Image 2026-08-27 at 12.08.28 PM.jpeg'
       ],
       featured: false,
       quote: '“Manchhar is a mindful lake, yet it bears the heaviest burden of industrial discharge”',
@@ -87,12 +87,12 @@ const SEED_DATA = {
       dateFormatted: '28.07.2026',
       location: 'Tarbela Dam',
       description: 'Brought together perspectives from WAPDA and displaced communities to examine Tarbela\'s promises of power vs. its costs on land, livelihoods, culture, and ecosystems.',
-      image: 'Assets/media/events/exposure-visit/WhatsApp Image 2026-08-27 at 12.16.56 PM.jpeg',
+      image: 'assets/media/events/exposure-visit/WhatsApp Image 2026-08-27 at 12.16.56 PM.jpeg',
       images: [
-        'Assets/media/events/exposure-visit/WhatsApp Image 2026-08-27 at 12.16.56 PM.jpeg',
-        'Assets/media/events/exposure-visit/WhatsApp Image 2026-08-27 at 12.16.57 PM (1).jpeg',
-        'Assets/media/events/exposure-visit/WhatsApp Image 2026-08-27 at 12.16.58 PM (2).jpeg',
-        'Assets/media/events/exposure-visit/WhatsApp Image 2026-08-27 at 12.16.59 PM.jpeg'
+        'assets/media/events/exposure-visit/WhatsApp Image 2026-08-27 at 12.16.56 PM.jpeg',
+        'assets/media/events/exposure-visit/WhatsApp Image 2026-08-27 at 12.16.57 PM (1).jpeg',
+        'assets/media/events/exposure-visit/WhatsApp Image 2026-08-27 at 12.16.58 PM (2).jpeg',
+        'assets/media/events/exposure-visit/WhatsApp Image 2026-08-27 at 12.16.59 PM.jpeg'
       ],
       featured: false,
       quote: '“Uncovering the true human and ecological costs behind megastructures of power”',
@@ -108,7 +108,7 @@ const SEED_DATA = {
       role: 'Founder & CEO',
       category: 'Executive',
       bio: 'Sanaa’i Muhammad is the Founder and Chief Executive Officer of the Climate Action & Energy Access Institute (CAEA), where she leads advocacy, and movement-building at the intersection of energy transition and climate justice in Pakistan. Her work focuses on phasing out fossil gas in power, industry, and households; advancing renewable energy pathways; and building public understanding of how colonial infrastructures, financial institutions, and policy choices shape today’s climate and energy crises.\n\nHer work is rooted in a commitment to just transitions, energy equity, and amplifying the experiences of communities most affected by environmental harm. She writes, organizes, and teaches with the belief that climate justice is inseparable from economic democracy, gender justice, and people’s sovereignty over energy and resources.',
-      image: 'Assets/Team/grid-1-2-Sanaa.png',
+      image: 'assets/team/grid-1-2-Sanaa.png',
       email: 'sanaaimuhammad@climateactionenergyaccess.org',
       showInGrid: true,
       sortOrder: 1
@@ -119,7 +119,7 @@ const SEED_DATA = {
       role: 'Founding Partner & Director Research',
       category: 'Core Team',
       bio: 'Kamran Aziz is the Director Research and a founding partner, working at the intersection of Pakistan’s electricity and gas systems, with a focus on advancing a just energy transition. His work combines historical analysis, political economy, and the lived experiences of communities directly affected by fossil fuel extraction and its social and environmental harms. His research is grounded in a commitment to center frontline communities, democratize energy governance, and support policy transformations aligned with climate justice.',
-      image: 'Assets/Team/grid-2-1-kamran.png',
+      image: 'assets/team/grid-2-1-kamran.png',
       email: 'kamranaziz@climateactionenergyaccess.org',
       showInGrid: true,
       sortOrder: 2
@@ -130,7 +130,7 @@ const SEED_DATA = {
       role: 'Research Associate',
       category: 'Core Team',
       bio: 'Asad is a law graduate from IIUI and a committed worker organizing with the oppressed communities. During his last experience as a Research Associate at Alternative Law Collective, his role involved conducting field research and supporting studies related to the land stewardship, and the concerns of communities victims of climate change and the developmental projects. He has been involved in organizing the students and the marches for their cultural and political rights. By engaging directly with communities, he has developed critical understanding of mainstream discourses around development and knowledge systems with a focus on the laws perpetuating inequalities and the local systems of justice. His role involved research and advocacy at Climate Action and Energy Access',
-      image: 'Assets/CAEA-Navbar-Logo.png',
+      image: 'assets/CAEA-Navbar-Logo.png',
       email: 'asadjuttah@climateactionenergyaccess.org',
       showInGrid: false,
       sortOrder: 3
@@ -141,7 +141,7 @@ const SEED_DATA = {
       role: 'Textile Associate',
       category: 'Core Team',
       bio: 'Hamna has a bachelors in environmental engineering from NUST and is a passionate environmentalist. Her commitment to addressing critical issues such as climate change, and sustainability has only deepened with her academic journey. She aspires to focus her professional efforts to bring positive change in both our society and environment. As a Textile Associate at CAEA, Hamna focuses on textile-sector emissions and the global fast-fashion supply chain. She works on research, campaigns, and public engagement strategies that highlight the social, environmental, and climate impacts of the industry, and she is committed to advocating for a more equitable and sustainable future for both people and the planet.',
-      image: 'Assets/Team/grid-1-1-hamna.png',
+      image: 'assets/team/grid-1-1-hamna.png',
       email: 'hamnaanwar@climateactionenergyaccess.org',
       showInGrid: true,
       sortOrder: 4
@@ -152,7 +152,7 @@ const SEED_DATA = {
       role: 'Climate Justice Lead',
       category: 'Core Team',
       bio: 'Muhammad Saeed is an PHD Scholar whose research focuses on the intricate relationship between water, identity, and politics, specifically exploring "Sindhu and the making of Sindhi nationalism: River Politics during the colonial era. His academic work explores key thematic areas including water governance, floods, river infrastructures, and hydro-power development. His research also contributes to a critical understanding of riverine identity and the historical emergence of riverine movements, with a specific focus on the intersection of water and nationalism. Beyond his scholarship, Saeed is a political activist committed to organizing with oppressed communities, nations and people. He is currently serving as a Climate justice Lead at Climate Action and Energy Access, where his work involves both research and advocacy for equitable climate and energy solutions. His direct engagement with communities and academic study inform a critical perspective on mainstream development narratives and knowledge systems, particularly concerning the policies that impact vulnerable populations and perpetuate inequalities.',
-      image: 'Assets/Team/grid-3-2-muhammad.png',
+      image: 'assets/team/grid-3-2-muhammad.png',
       email: 'guramanisaeed98@gmail.com',
       showInGrid: true,
       sortOrder: 5
@@ -163,7 +163,7 @@ const SEED_DATA = {
       role: 'Communication Lead',
       category: 'Core Team',
       bio: 'Muaaz Ahmad Khan is currently pursuing his MPhil in Government and Public Policy. He works as the Communication Lead and Social Media & Networks Coordinator at CAEA. His work focuses on communicating CAEA’s research and campaigns, managing its digital platforms and network groups, and working with partners on joint communication initiatives. He works closely with the research and campaign teams to turn complex ideas and research into clear and engaging content. Through his work, he contributes to CAEA’s efforts to strengthen a people-centered climate justice movement.',
-      image: 'Assets/Team/grid-3-3-muaz.png',
+      image: 'assets/team/grid-3-3-muaz.png',
       email: 'khanmuaaz762@gmail.com',
       showInGrid: true,
       sortOrder: 6
@@ -174,7 +174,7 @@ const SEED_DATA = {
       role: 'Admin & HR Officer',
       category: 'Core Team',
       bio: 'Fizza Aman Bhutto is an Administration and HR Officer at the Climate Action and Energy Access (CAEA). She holds a Bachelor’s degree in Development Studies from Bahria University, Islamabad. Her development sector experience spans program coordination, engagement with Indigenous communities, and research on climate-induced disasters, with her undergraduate research focusing on the devastating 2022 floods in Pakistan. At CAEA, she works across administration, human resources, project coordination, and organizational development. She is particularly interested in the intersections of climate justice, development, and organizational development, and in how stronger, people-centered organizations can contribute to a more equitable and sustainable change.',
-      image: 'Assets/Team/grid-1-3-fiza.png',
+      image: 'assets/team/grid-1-3-fiza.png',
       email: 'fizzabhutto9@gmail.com',
       showInGrid: true,
       sortOrder: 7
@@ -185,7 +185,7 @@ const SEED_DATA = {
       role: 'Associate Fossil Fuel Phaseout',
       category: 'Core Team',
       bio: 'Manahil Usman is an Associate in Fossil Fuel Phaseout at Climate Action for Energy Access (CAEA), where she focuses on research and data analysis at the intersection of energy policy and climate justice. With a background in Computer Science and an MBA, she brings an analytical foundation shaped by prior work in data management and sector-level analysis to her current focus on Pakistan\'s gas sector, LNG dynamics, and just transition frameworks. At CAEA, Manahil is committed to building the evidence base needed to advance credible, equitable fossil fuel phaseout policy in Pakistan and beyond.',
-      image: 'Assets/CAEA-Navbar-Logo.png',
+      image: 'assets/CAEA-Navbar-Logo.png',
       email: 'manahilusman2@gmail.com',
       showInGrid: false,
       sortOrder: 8
@@ -196,7 +196,7 @@ const SEED_DATA = {
       role: 'Finance Officer',
       category: 'Core Team',
       bio: 'Abid Azim is an experienced finance professional with expertise in financial management, budgeting, financial reporting, taxation, audit, and strategic financial planning. He has been serving as Finance Manager at Climate Action and Energy Access LLP since May 2024, where he oversees financial analysis, budgeting, cash-flow management, financial reporting, and tax compliance. With professional experience spanning finance, audit, accounting, and business management, Abid brings a strong analytical and results-oriented approach to supporting organizational growth and sustainability. He is a Certified Public Accountant (CPA) from England & Wales and a finalist of ICAEW.',
-      image: 'Assets/Team/grid-2-2-abid.png',
+      image: 'assets/team/grid-2-2-abid.png',
       email: 'abidazeem101@gmail.com',
       showInGrid: true,
       sortOrder: 9
@@ -207,7 +207,7 @@ const SEED_DATA = {
       role: 'Creative Director',
       category: 'Core Team',
       bio: 'Spogmai Rabnawaz Maken serves as Creative Director at CAEA, leading visual identity, campaign narratives, grassroots media production, and creative communications at the intersection of climate action and environmental justice.',
-      image: 'Assets/Team/grid-2-3-spogmai.png',
+      image: 'assets/team/grid-2-3-spogmai.png',
       email: 'spogmai@climateactionenergyaccess.org',
       showInGrid: true,
       sortOrder: 10
@@ -225,7 +225,7 @@ const SEED_DATA = {
       dateFormatted: '28.07.2026',
       excerpt: 'The kacheri was based on the case of Lake Manchar. The discussion focused on the ecological destruction of the lake, and how large development projects have affected the people, culture, and livelihoods connected to it.',
       content: 'The kacheri was based on the case of Lake Manchar. The discussion focused on the ecological destruction of the lake, and how large development projects have affected the people, culture, and livelihoods connected to it.\n\nLake Manchar is located in Sindh between the Khirthar mountain range and the River Sindhu. The lake is 360 miles long and 170 miles wide. It is the biggest natural sweet water lake in Asia. The word "Manchar" comes from the Sindhi words Meeh meaning rain and Chhar meaning a vast expanse. Together, "Meeh + Chhar" means a vast spread of Rain waters.\n\nIndustrial discharge and skewed water management have devastated the livelihood of thousands of fisherfolk families. CAEA continues to mobilize community kacheris to demand immediate ecological remediation and water rights.',
-      image: 'Assets/how-water-became-power.jpg',
+      image: 'assets/how-water-became-power.jpg',
       sortOrder: 1
     },
     {
@@ -238,7 +238,7 @@ const SEED_DATA = {
       dateFormatted: '10.02.2024',
       excerpt: 'A comprehensive review of Pakistan’s domestic natural gas allocation and its economic burden on working-class households.',
       content: 'Natural gas has long been treated as an abundant domestic resource in Pakistan. However, decades of preferential allocation and depleting reserves have precipitated a severe energy crisis.\n\nOur research shows that the power sector is the most important place to begin this shift. Imported LNG was meant to bring energy security, but instead it has made electricity more expensive and left Pakistan dependent on unpredictable global markets.',
-      image: 'Assets/Hero-image.png',
+      image: 'assets/Hero-image.png',
       sortOrder: 2
     },
     {
@@ -251,7 +251,7 @@ const SEED_DATA = {
       dateFormatted: '15.03.2024',
       excerpt: 'An investigation into how large development projects have impacted aquatic ecosystems and fishing livelihoods around Lake Manchhar.',
       content: 'Lake Manchhar is located in Sindh between the Dadu and Khanpur districts. Manchhar comes from the Sindhi words Man meaning mind and Chhar meaning lake or pond. Manchhar translates to "mindful lake". It is the largest natural freshwater lake in Asia.',
-      image: 'Assets/how-water-became-power-ai.jpg',
+      image: 'assets/how-water-became-power-ai.jpg',
       sortOrder: 3
     },
     {
@@ -264,7 +264,7 @@ const SEED_DATA = {
       dateFormatted: '10.04.2024',
       excerpt: 'Climate Action & Energy Access (CAEA) is a Pakistan-based research and advocacy institute committed to advancing a just, people-centered energy transition.',
       content: 'We work at the intersection of climate justice, energy governance, and public accountability, focusing on how entrenched fossil-fuel interests, inequitable subsidies, and distorted gas and power policies undermine the rights, wellbeing, and economic futures of ordinary people.',
-      image: 'Assets/how-water-became-power.jpg',
+      image: 'assets/how-water-became-power.jpg',
       sortOrder: 4
     }
   ],
@@ -318,7 +318,7 @@ const SEED_DATA = {
       theme: 'blue',
       description: 'We\'re looking for passionate, curious interns looking to be a part of the climate justice movement in Pakistan. Whether your strengths lie in research, storytelling, design, communications, advocacy, or community engagement, there\'s space for you here.',
       status: 'Open',
-      image: 'Assets/how-water-became-power.jpg',
+      image: 'assets/how-water-became-power.jpg',
       gridArea: 'card4',
       sortOrder: 4
     }
@@ -386,7 +386,7 @@ const SEED_DATA = {
       id: 'med-1',
       title: 'Contested Waters Session 1',
       category: 'Events',
-      path: 'Assets/media/events/contested-waters/RAY00190.JPG',
+      path: 'assets/media/events/contested-waters/RAY00190.JPG',
       tags: ['workshop', 'rivers', 'contested-waters'],
       date: '2026-01-23'
     },
@@ -394,7 +394,7 @@ const SEED_DATA = {
       id: 'med-2',
       title: 'Contested Waters Session 2',
       category: 'Events',
-      path: 'Assets/media/events/contested-waters/RAY00118.JPG',
+      path: 'assets/media/events/contested-waters/RAY00118.JPG',
       tags: ['workshop', 'rivers', 'contested-waters'],
       date: '2026-01-23'
     },
@@ -402,7 +402,7 @@ const SEED_DATA = {
       id: 'med-3',
       title: 'Contested Waters Session 3',
       category: 'Events',
-      path: 'Assets/media/events/contested-waters/RAY00059.JPG',
+      path: 'assets/media/events/contested-waters/RAY00059.JPG',
       tags: ['workshop', 'rivers', 'contested-waters'],
       date: '2026-01-23'
     },
@@ -410,7 +410,7 @@ const SEED_DATA = {
       id: 'med-4',
       title: 'Contested Waters Session 4',
       category: 'Events',
-      path: 'Assets/media/events/contested-waters/RAY00212.JPG',
+      path: 'assets/media/events/contested-waters/RAY00212.JPG',
       tags: ['workshop', 'rivers', 'contested-waters'],
       date: '2026-01-23'
     },
@@ -418,7 +418,7 @@ const SEED_DATA = {
       id: 'med-5',
       title: 'Climate Justice Retreat 1',
       category: 'Events',
-      path: 'Assets/media/events/retreat/DSCF4154.JPG',
+      path: 'assets/media/events/retreat/DSCF4154.JPG',
       tags: ['retreat', 'climate-justice', 'gathering'],
       date: '2026-04-23'
     },
@@ -426,7 +426,7 @@ const SEED_DATA = {
       id: 'med-6',
       title: 'Climate Justice Retreat 2',
       category: 'Events',
-      path: 'Assets/media/events/retreat/DSCF4356.JPG',
+      path: 'assets/media/events/retreat/DSCF4356.JPG',
       tags: ['retreat', 'climate-justice', 'gathering'],
       date: '2026-04-23'
     },
@@ -434,7 +434,7 @@ const SEED_DATA = {
       id: 'med-7',
       title: 'Climate Justice Retreat 3',
       category: 'Events',
-      path: 'Assets/media/events/retreat/DSCF3966.JPG',
+      path: 'assets/media/events/retreat/DSCF3966.JPG',
       tags: ['retreat', 'climate-justice', 'gathering'],
       date: '2026-04-23'
     },
@@ -442,7 +442,7 @@ const SEED_DATA = {
       id: 'med-8',
       title: 'Climate Justice Retreat 4',
       category: 'Events',
-      path: 'Assets/media/events/retreat/DSCF4512.JPG',
+      path: 'assets/media/events/retreat/DSCF4512.JPG',
       tags: ['retreat', 'climate-justice', 'gathering'],
       date: '2026-04-23'
     },
@@ -450,7 +450,7 @@ const SEED_DATA = {
       id: 'med-9',
       title: 'Manchar Sunvai Kacheri 1',
       category: 'Events',
-      path: 'Assets/media/events/manchar/WhatsApp Image 2026-08-27 at 12.08.18 PM.jpeg',
+      path: 'assets/media/events/manchar/WhatsApp Image 2026-08-27 at 12.08.18 PM.jpeg',
       tags: ['kacheri', 'manchar', 'community'],
       date: '2026-05-20'
     },
@@ -458,7 +458,7 @@ const SEED_DATA = {
       id: 'med-10',
       title: 'Manchar Sunvai Kacheri 2',
       category: 'Events',
-      path: 'Assets/media/events/manchar/WhatsApp Image 2026-08-27 at 12.08.18 PM (1).jpeg',
+      path: 'assets/media/events/manchar/WhatsApp Image 2026-08-27 at 12.08.18 PM (1).jpeg',
       tags: ['kacheri', 'manchar', 'community'],
       date: '2026-05-20'
     },
@@ -466,7 +466,7 @@ const SEED_DATA = {
       id: 'med-11',
       title: 'Manchar Sunvai Kacheri 3',
       category: 'Events',
-      path: 'Assets/media/events/manchar/WhatsApp Image 2026-08-27 at 12.08.28 PM.jpeg',
+      path: 'assets/media/events/manchar/WhatsApp Image 2026-08-27 at 12.08.28 PM.jpeg',
       tags: ['kacheri', 'manchar', 'community'],
       date: '2026-05-20'
     },
@@ -474,7 +474,7 @@ const SEED_DATA = {
       id: 'med-12',
       title: 'Manchar Sunvai Kacheri 4',
       category: 'Events',
-      path: 'Assets/media/events/manchar/WhatsApp Image 2026-08-27 at 12.08.18 PM (2).jpeg',
+      path: 'assets/media/events/manchar/WhatsApp Image 2026-08-27 at 12.08.18 PM (2).jpeg',
       tags: ['kacheri', 'manchar', 'community'],
       date: '2026-05-20'
     },
@@ -482,7 +482,7 @@ const SEED_DATA = {
       id: 'med-13',
       title: 'Tarbela Dam Exposure Visit 1',
       category: 'Events',
-      path: 'Assets/media/events/exposure-visit/WhatsApp Image 2026-08-27 at 12.16.56 PM.jpeg',
+      path: 'assets/media/events/exposure-visit/WhatsApp Image 2026-08-27 at 12.16.56 PM.jpeg',
       tags: ['tarbela', 'exposure-visit', 'dam'],
       date: '2026-07-28'
     },
@@ -490,7 +490,7 @@ const SEED_DATA = {
       id: 'med-14',
       title: 'Tarbela Dam Exposure Visit 2',
       category: 'Events',
-      path: 'Assets/media/events/exposure-visit/WhatsApp Image 2026-08-27 at 12.16.57 PM (1).jpeg',
+      path: 'assets/media/events/exposure-visit/WhatsApp Image 2026-08-27 at 12.16.57 PM (1).jpeg',
       tags: ['tarbela', 'exposure-visit', 'dam'],
       date: '2026-07-28'
     },
@@ -498,7 +498,7 @@ const SEED_DATA = {
       id: 'med-15',
       title: 'Tarbela Dam Exposure Visit 3',
       category: 'Events',
-      path: 'Assets/media/events/exposure-visit/WhatsApp Image 2026-08-27 at 12.16.58 PM (2).jpeg',
+      path: 'assets/media/events/exposure-visit/WhatsApp Image 2026-08-27 at 12.16.58 PM (2).jpeg',
       tags: ['tarbela', 'exposure-visit', 'dam'],
       date: '2026-07-28'
     },
@@ -506,7 +506,7 @@ const SEED_DATA = {
       id: 'med-16',
       title: 'Tarbela Dam Exposure Visit 4',
       category: 'Events',
-      path: 'Assets/media/events/exposure-visit/WhatsApp Image 2026-08-27 at 12.16.59 PM.jpeg',
+      path: 'assets/media/events/exposure-visit/WhatsApp Image 2026-08-27 at 12.16.59 PM.jpeg',
       tags: ['tarbela', 'exposure-visit', 'dam'],
       date: '2026-07-28'
     },
@@ -514,7 +514,7 @@ const SEED_DATA = {
       id: 'med-17',
       title: 'Sanaa’i Muhammad (CEO)',
       category: 'Team',
-      path: 'Assets/Team/grid-1-2-Sanaa.png',
+      path: 'assets/team/grid-1-2-Sanaa.png',
       tags: ['team', 'leadership', 'executive'],
       date: '2024-01-01'
     },
@@ -522,7 +522,7 @@ const SEED_DATA = {
       id: 'med-18',
       title: 'Kamran Aziz',
       category: 'Team',
-      path: 'Assets/Team/grid-2-1-kamran.png',
+      path: 'assets/team/grid-2-1-kamran.png',
       tags: ['team', 'operations', 'lead'],
       date: '2024-01-01'
     },
@@ -530,7 +530,7 @@ const SEED_DATA = {
       id: 'med-19',
       title: 'Muhammad Asad',
       category: 'Team',
-      path: 'Assets/Team/grid-3-2-muhammad.png',
+      path: 'assets/team/grid-3-2-muhammad.png',
       tags: ['team', 'research'],
       date: '2024-01-01'
     },
@@ -538,7 +538,7 @@ const SEED_DATA = {
       id: 'med-20',
       title: 'Hamna Anwaar',
       category: 'Team',
-      path: 'Assets/Team/grid-1-1-hamna.png',
+      path: 'assets/team/grid-1-1-hamna.png',
       tags: ['team', 'textile', 'associate'],
       date: '2024-01-01'
     },
@@ -546,7 +546,7 @@ const SEED_DATA = {
       id: 'med-21',
       title: 'Fizza Aman Bhutto',
       category: 'Team',
-      path: 'Assets/Team/grid-1-3-fiza.png',
+      path: 'assets/team/grid-1-3-fiza.png',
       tags: ['team', 'admin', 'hr'],
       date: '2024-01-01'
     },
@@ -554,7 +554,7 @@ const SEED_DATA = {
       id: 'med-22',
       title: 'Muaaz Ahmad Khan',
       category: 'Team',
-      path: 'Assets/Team/grid-3-3-muaz.png',
+      path: 'assets/team/grid-3-3-muaz.png',
       tags: ['team', 'communications', 'lead'],
       date: '2024-01-01'
     },
@@ -562,7 +562,7 @@ const SEED_DATA = {
       id: 'med-23',
       title: 'Manahil Usman',
       category: 'Team',
-      path: 'Assets/Team/grid-2-3-spogmai.png',
+      path: 'assets/team/grid-2-3-spogmai.png',
       tags: ['team', 'fossil-fuel'],
       date: '2024-01-01'
     },
@@ -570,7 +570,7 @@ const SEED_DATA = {
       id: 'med-24',
       title: 'Abid Azim',
       category: 'Team',
-      path: 'Assets/Team/grid-2-2-abid.png',
+      path: 'assets/team/grid-2-2-abid.png',
       tags: ['team', 'finance'],
       date: '2024-01-01'
     },
@@ -578,7 +578,7 @@ const SEED_DATA = {
       id: 'med-25',
       title: 'Homepage Hero Banner Visual',
       category: 'Graphics',
-      path: 'Assets/Hero-image.png',
+      path: 'assets/Hero-image.png',
       tags: ['hero', 'graphics', 'banner'],
       date: '2024-01-01'
     },
@@ -586,7 +586,7 @@ const SEED_DATA = {
       id: 'med-26',
       title: 'Pakistan Project Map',
       category: 'Graphics',
-      path: 'Assets/Pak-map.png',
+      path: 'assets/Pak-map.png',
       tags: ['map', 'pakistan', 'projects'],
       date: '2024-01-01'
     },
@@ -594,7 +594,7 @@ const SEED_DATA = {
       id: 'med-27',
       title: 'How Water Became Power - Cover',
       category: 'Articles',
-      path: 'Assets/how-water-became-power.jpg',
+      path: 'assets/how-water-became-power.jpg',
       tags: ['article', 'publication', 'water'],
       date: '2024-01-01'
     },
@@ -602,7 +602,7 @@ const SEED_DATA = {
       id: 'med-28',
       title: 'CAEA Navbar Logo',
       category: 'Graphics',
-      path: 'Assets/CAEA-Navbar-Logo.png',
+      path: 'assets/CAEA-Navbar-Logo.png',
       tags: ['logo', 'brand', 'navigation'],
       date: '2024-01-01'
     }
@@ -665,7 +665,7 @@ const SEED_DATA = {
       btnText: 'WATCH NOW',
       targetOpportunity: 'Textile Watch',
       videoUrl: '',
-      image: 'Assets/Hero-image.png',
+      image: 'assets/Hero-image.png',
       orderIndex: 1,
       sortOrder: 1,
       active: true
@@ -678,7 +678,7 @@ const SEED_DATA = {
       btnText: 'WATCH NOW',
       targetOpportunity: 'Textile Watch',
       videoUrl: '',
-      image: 'Assets/how-water-became-power.jpg',
+      image: 'assets/how-water-became-power.jpg',
       orderIndex: 2,
       sortOrder: 2,
       active: true
@@ -691,7 +691,7 @@ const SEED_DATA = {
       btnText: 'WATCH NOW',
       targetOpportunity: 'Textile Watch',
       videoUrl: '',
-      image: 'Assets/how-water-became-power-ai.jpg',
+      image: 'assets/how-water-became-power-ai.jpg',
       orderIndex: 3,
       sortOrder: 3,
       active: true
@@ -709,7 +709,7 @@ const SEED_DATA = {
       dateFormatted: '12.06.2026',
       summary: 'Examines international climate finance mechanisms and domestic litigation frameworks to establish legal liability and community-centered restitution.',
       pdfUrl: '',
-      image: 'Assets/how-water-became-power.jpg',
+      image: 'assets/how-water-became-power.jpg',
       status: 'Published',
       sortOrder: 1
     },
@@ -723,7 +723,7 @@ const SEED_DATA = {
       dateFormatted: '18.04.2026',
       summary: 'Documentation of community resistance against mega-dam diversions and unequal water allocation across lower Sindh.',
       pdfUrl: '',
-      image: 'Assets/how-water-became-power-ai.jpg',
+      image: 'assets/how-water-became-power-ai.jpg',
       status: 'Published',
       sortOrder: 2
     }
@@ -733,15 +733,15 @@ const SEED_DATA = {
     home: {
       heroQuote: 'The climate crisis is a call to transform the systems that brought us here.',
       heroQuoteAuthor: 'Naomi Klein',
-      heroVideoUrl: 'Assets/Video/Hero.mov',
+      heroVideoUrl: 'assets/video/Hero.mov',
       showLatestSection: true,
       latestTitle: 'BE A PART OF OUR LATEST',
       latestSubtitle: 'Watch our latest field updates, community kacheri highlights, and climate documentaries across Pakistan.',
       showLatestVideo: true,
       latestVideoTitle: 'Community Kacheri & Field Briefing',
       latestVideoDescription: 'Experience our frontline grassroots gatherings across Pakistan, exploring public energy ownership and water justice.',
-      latestVideoUrl: 'Assets/Video/Hero.mov',
-      latestVideoThumbnail: 'Assets/how-water-became-power.jpg',
+      latestVideoUrl: 'assets/video/Hero.mov',
+      latestVideoThumbnail: 'assets/how-water-became-power.jpg',
       quotes: [
         { text: "The climate crisis is a call to transform the systems that brought us here.", author: "Naomi Klein" },
         { text: "What is the use of a house if you haven't got a tolerable planet to put it on?", author: "Vandana Shiva" },
@@ -754,7 +754,7 @@ const SEED_DATA = {
       videoTitle: 'More than a retreat (CAEA Community Documentary)',
       videoDescription: 'No experience needed. Just a willingness to show up and act. Reconnecting with nature, exploring movement building, and building resilience against climate burnout.',
       videoUrl: '', // Video URL or uploaded data URI / file path
-      videoThumbnail: 'Assets/how-water-became-power-ai.jpg',
+      videoThumbnail: 'assets/how-water-became-power-ai.jpg',
       autoplayImages: true,
       imageCycleInterval: 5000 // In milliseconds
     },
@@ -817,7 +817,7 @@ const SEED_DATA = {
         videoTitle: 'More than a retreat (CAEA Community Documentary)',
         videoDescription: 'No experience needed. Just a willingness to show up and act. Reconnecting with nature, exploring movement building, and building resilience against climate burnout.',
         videoUrl: '',
-        videoThumbnail: 'Assets/how-water-became-power-ai.jpg',
+        videoThumbnail: 'assets/how-water-became-power-ai.jpg',
         upcomingGathering: {
           visible: true,
           title: 'CATCH THE UPCOMING GATHERING',
@@ -990,10 +990,25 @@ class CAEADataStore {
 
   init() {
     const DATA_VERSION_KEY = 'caea_data_version';
-    const CURRENT_VERSION = 'v23_team_photo_grid_selection';
+    const CURRENT_VERSION = 'v24_directory_reorganization';
     const storedVersion = localStorage.getItem(DATA_VERSION_KEY);
 
     if (storedVersion !== CURRENT_VERSION) {
+      // Migrate all existing localStorage keys to lowercase assets/
+      Object.values(STORAGE_KEYS).forEach(k => {
+        try {
+          const raw = localStorage.getItem(k);
+          if (raw && typeof raw === 'string') {
+            const migrated = raw
+              .replace(/Assets\/Team\//g, 'assets/team/')
+              .replace(/Assets\/Allies\//g, 'assets/allies/')
+              .replace(/Assets\/Video\//g, 'assets/video/')
+              .replace(/Assets\//g, 'assets/')
+              .replace(/\/Assets\//g, '/assets/');
+            localStorage.setItem(k, migrated);
+          }
+        } catch (e) {}
+      });
       // Refresh seed activities, people, media, mapPins, textileCards, climateReports, and pageSettings
       localStorage.setItem(STORAGE_KEYS.ACTIVITIES, JSON.stringify(SEED_DATA.activities));
       localStorage.setItem(STORAGE_KEYS.PEOPLE, JSON.stringify(SEED_DATA.people));
@@ -1305,7 +1320,7 @@ class CAEADataStore {
         newItem.images = newItem.images.split(/[\n,]+/).map(s => s.trim()).filter(Boolean);
       }
       if (!Array.isArray(newItem.images) || !newItem.images.length) {
-        newItem.images = newItem.image ? [newItem.image] : ['Assets/Hero-image.png'];
+        newItem.images = newItem.image ? [newItem.image] : ['assets/Hero-image.png'];
       }
     }
 
