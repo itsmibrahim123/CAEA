@@ -173,6 +173,19 @@ class Database {
             updatedAt DATETIME
         );");
 
+        // Table: climate_article_links
+        $pdo->exec("CREATE TABLE IF NOT EXISTS climate_article_links (
+            id VARCHAR(64) PRIMARY KEY,
+            title VARCHAR(255) NOT NULL,
+            publisher VARCHAR(255) NOT NULL,
+            badge VARCHAR(64) DEFAULT 'THE NEWS',
+            url TEXT NOT NULL,
+            description TEXT,
+            sortOrder INTEGER DEFAULT 0,
+            createdAt DATETIME,
+            updatedAt DATETIME
+        );");
+
         // Table: page_settings
         $pdo->exec("CREATE TABLE IF NOT EXISTS page_settings (
             pageKey VARCHAR(64) PRIMARY KEY,
@@ -181,7 +194,7 @@ class Database {
         );");
 
         // Ensure sortOrder column exists on existing database tables
-        $tablesWithSortOrder = ['activities', 'people', 'articles', 'opportunities', 'media', 'map_pins', 'fossil_article_links'];
+        $tablesWithSortOrder = ['activities', 'people', 'articles', 'opportunities', 'media', 'map_pins', 'fossil_article_links', 'climate_article_links'];
         foreach ($tablesWithSortOrder as $tbl) {
             try {
                 $pdo->exec("ALTER TABLE {$tbl} ADD COLUMN sortOrder INTEGER DEFAULT 0");
@@ -202,6 +215,26 @@ class Database {
             $pdo->exec("ALTER TABLE people ADD COLUMN showInGrid INTEGER DEFAULT 1");
         } catch (Exception $e) {
             // Column already exists
+        }
+
+        // Ensure climate_article_links has default seed data if table is empty
+        try {
+            $clCount = (int)$pdo->query("SELECT COUNT(*) FROM climate_article_links")->fetchColumn();
+            if ($clCount === 0) {
+                $now = date('Y-m-d H:i:s');
+                $stmt = $pdo->prepare("INSERT INTO climate_article_links (id, title, publisher, badge, url, description, sortOrder, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                $climateLinks = [
+                    ['cl-1', 'The hidden cost of development', 'The News on Sunday', 'THE NEWS', 'https://www.thenews.com.pk/tns/detail/1023422-the-hidden-cost-of-development', 'A critical look at the social and ecological costs behind infrastructure development.', 1],
+                    ['cl-2', 'E-11 interchange: boon or bane?', 'The News on Sunday', 'THE NEWS', 'https://www.thenews.com.pk/tns/detail/1074418-e-11-interchange-boon-or-bane', 'Interrogating urban infrastructure, displacement, and environmental degradation.', 2],
+                    ['cl-3', 'Loss and displacement', 'The News on Sunday', 'THE NEWS', 'https://www.thenews.pk/tns/detail/1390589-loss-and-displacement', 'Stories and research on frontline communities facing climate displacement.', 3],
+                    ['cl-4', 'The development scarcity', 'The News on Sunday', 'THE NEWS', 'https://www.thenews.pk/tns/detail/1292148-the-development-scarcity', 'Unpacking the structural inequities in Pakistan’s development paradigms.', 4]
+                ];
+                foreach ($climateLinks as $link) {
+                    $stmt->execute([$link[0], $link[1], $link[2], $link[3], $link[4], $link[5], $link[6], $now, $now]);
+                }
+            }
+        } catch (Exception $e) {
+            // Non-critical seed fallback
         }
 
         // Seed data if database is empty
@@ -607,7 +640,7 @@ class Database {
                     'description' => "For CAEA, phasing out gas is not a distant policy idea — it is an urgent necessity. Pakistan's growing reliance on natural gas and imported LNG (liquefied natural gas) has trapped the country in a costly system, leading to wasted resources, financial losses, and long-term debts that burden the public for years.\n\nThis is not only an economic problem. Producing and transporting gas releases methane, a gas that heats the planet even faster than carbon dioxide, and the communities living closest to gas fields, pipelines, and power plants bear the greatest damage.\n\nOur research shows that the power sector is the most important place to begin this shift. Imported LNG was meant to bring energy security, but instead it has made.",
                     'joinBtnText' => 'JOIN US',
                     'opportunityTitle' => 'General Volunteer / Open Application',
-                    'bannerTitle' => 'FOSSIL FUEL',
+                    'bannerTitle' => 'FOSSIL FUEL PHASEOUT',
                     'bannerSubtitle' => 'Rethinking energy systems for a cleaner, fairer, and climate-resilient future.',
                     'bannerBtnText' => 'EXPLORE WORK'
                 ],
@@ -711,6 +744,51 @@ class Database {
 
         $stmt = $pdo->prepare("INSERT INTO fossil_article_links (id, title, publisher, badge, url, description, sortOrder, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
         foreach ($fossilLinks as $link) {
+            $stmt->execute([$link['id'], $link['title'], $link['publisher'], $link['badge'], $link['url'], $link['description'], $link['sortOrder'], $now, $now]);
+        }
+
+        // 8. Seed Climate Justice Article Links
+        $climateLinks = [
+            [
+                'id' => 'cl-1',
+                'title' => 'The hidden cost of development',
+                'publisher' => 'The News on Sunday',
+                'badge' => 'THE NEWS',
+                'url' => 'https://www.thenews.com.pk/tns/detail/1023422-the-hidden-cost-of-development',
+                'description' => 'A critical look at the social and ecological costs behind infrastructure development.',
+                'sortOrder' => 1
+            ],
+            [
+                'id' => 'cl-2',
+                'title' => 'E-11 interchange: boon or bane?',
+                'publisher' => 'The News on Sunday',
+                'badge' => 'THE NEWS',
+                'url' => 'https://www.thenews.com.pk/tns/detail/1074418-e-11-interchange-boon-or-bane',
+                'description' => 'Interrogating urban infrastructure, displacement, and environmental degradation.',
+                'sortOrder' => 2
+            ],
+            [
+                'id' => 'cl-3',
+                'title' => 'Loss and displacement',
+                'publisher' => 'The News on Sunday',
+                'badge' => 'THE NEWS',
+                'url' => 'https://www.thenews.pk/tns/detail/1390589-loss-and-displacement',
+                'description' => 'Stories and research on frontline communities facing climate displacement.',
+                'sortOrder' => 3
+            ],
+            [
+                'id' => 'cl-4',
+                'title' => 'The development scarcity',
+                'publisher' => 'The News on Sunday',
+                'badge' => 'THE NEWS',
+                'url' => 'https://www.thenews.pk/tns/detail/1292148-the-development-scarcity',
+                'description' => 'Unpacking the structural inequities in Pakistan’s development paradigms.',
+                'sortOrder' => 4
+            ]
+        ];
+
+        $stmt = $pdo->prepare("INSERT INTO climate_article_links (id, title, publisher, badge, url, description, sortOrder, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        foreach ($climateLinks as $link) {
             $stmt->execute([$link['id'], $link['title'], $link['publisher'], $link['badge'], $link['url'], $link['description'], $link['sortOrder'], $now, $now]);
         }
     }

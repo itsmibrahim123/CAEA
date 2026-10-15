@@ -1433,7 +1433,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const bTitle = fossilBanner.querySelector('.bar-title');
       const bSub = fossilBanner.querySelector('.bar-subtitle');
       const bBtn = fossilBanner.querySelector('.btn-bar-action');
-      if (bTitle && fossil.bannerTitle) bTitle.textContent = fossil.bannerTitle;
+      if (bTitle) {
+        const titleText = (fossil.bannerTitle === 'FOSSIL FUEL' || !fossil.bannerTitle) ? 'FOSSIL FUEL PHASEOUT' : fossil.bannerTitle;
+        bTitle.textContent = titleText;
+      }
       if (bSub && fossil.bannerSubtitle) bSub.textContent = fossil.bannerSubtitle;
       if (bBtn && fossil.bannerBtnText) bBtn.textContent = fossil.bannerBtnText;
     }
@@ -1891,7 +1894,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Fossil Fuel Phaseout Article Links & Published Reports
     renderFossilArticleLinks();
 
-    // Climate Justice Articles Filter & Search (Reader Grid)
+    // Climate Justice Article Links & Publications
+    renderClimateArticleLinks();
+
+    // Legacy Articles Reader (if container exists)
     renderOurWorkArticles();
   }
 
@@ -1921,6 +1927,35 @@ document.addEventListener('DOMContentLoaded', () => {
           <p class="fossil-link-publisher">${escapeHtml(pub)}</p>
           ${desc ? `<p class="fossil-link-desc">${escapeHtml(desc)}</p>` : ''}
           <span class="fossil-link-action">${actionText}</span>
+        </a>
+      `;
+    }).join('');
+  }
+
+  function renderClimateArticleLinks() {
+    const container = document.getElementById('climate-links-list');
+    if (!container || !window.DataStore) return;
+
+    const links = window.DataStore.get('climateArticleLinks') || [];
+    if (!links || !links.length) return;
+
+    container.innerHTML = links.map(link => {
+      const badge = link.badge || 'THE NEWS';
+      const pub = link.publisher || 'The News on Sunday';
+      const desc = link.description || link.excerpt || '';
+      const url = link.url || '#';
+      const actionText = url.includes('thenews') ? 'Read on The News &rarr;' : 'Read Article &rarr;';
+
+      return `
+        <a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" class="fossil-link-card climate-link-card">
+          <div class="fossil-link-card-top">
+            <span class="fossil-link-badge climate-link-badge">${escapeHtml(badge)}</span>
+            <span class="fossil-link-arrow" aria-hidden="true">&#8599;</span>
+          </div>
+          <h4 class="fossil-link-title">${escapeHtml(link.title)}</h4>
+          <p class="fossil-link-publisher">${escapeHtml(pub)}</p>
+          ${desc ? `<p class="fossil-link-desc">${escapeHtml(desc)}</p>` : ''}
+          <span class="fossil-link-action climate-link-action">${actionText}</span>
         </a>
       `;
     }).join('');

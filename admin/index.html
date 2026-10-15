@@ -496,7 +496,7 @@
               </div>
               <button type="button" class="admin-btn admin-btn-primary" id="btn-save-fossil-settings">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-                Save Fossil Fuel Settings
+                Save Fossil Fuel Phaseout Settings
               </button>
             </div>
 
@@ -547,15 +547,15 @@
               <div class="form-row">
                 <div class="form-group flex-1">
                   <label class="form-label" for="setting-work-fossil-banner-title">Banner Title</label>
-                  <input type="text" id="setting-work-fossil-banner-title" class="admin-input" placeholder="e.g. The Life Story of Manchhar Lake" />
+                  <input type="text" id="setting-work-fossil-banner-title" class="admin-input" placeholder="e.g. FOSSIL FUEL PHASEOUT" />
                 </div>
                 <div class="form-group flex-1">
                   <label class="form-label" for="setting-work-fossil-banner-sub">Banner Subtitle</label>
-                  <input type="text" id="setting-work-fossil-banner-sub" class="admin-input" placeholder="e.g. The story written is not the story that was lived" />
+                  <input type="text" id="setting-work-fossil-banner-sub" class="admin-input" placeholder="e.g. Rethinking energy systems for a cleaner, fairer, and climate-resilient future." />
                 </div>
                 <div class="form-group" style="width:200px;">
                   <label class="form-label" for="setting-work-fossil-banner-btn-text">Button Label</label>
-                  <input type="text" id="setting-work-fossil-banner-btn-text" class="admin-input" placeholder="e.g. READ MORE" />
+                  <input type="text" id="setting-work-fossil-banner-btn-text" class="admin-input" placeholder="e.g. EXPLORE WORK" />
                 </div>
               </div>
             </div>
@@ -855,19 +855,19 @@
             </div>
           </div>
 
-          <!-- Card 2: Climate Justice Articles & Field Reports (Reader Grid CRUD Table) -->
+          <!-- Card 2: Climate Justice Article Links & Publications (CRUD Table) -->
           <div class="settings-card" style="margin-bottom: 24px;">
             <div class="settings-card-header">
               <div class="settings-card-icon" style="background: rgba(245, 158, 11, 0.15); color: #fbbf24;">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
               </div>
               <div style="flex:1;">
-                <h3 class="settings-card-title">Climate Justice: Articles &amp; Field Reports (Reader Grid)</h3>
-                <p class="settings-card-subtitle">Manage the articles loaded into the interactive 2-column reader in <code>#drawer-climate-justice</code>.</p>
+                <h3 class="settings-card-title">Climate Justice: Article Links &amp; Publications</h3>
+                <p class="settings-card-subtitle">Manage the published article links displayed in <code>#drawer-climate-justice</code>.</p>
               </div>
-              <button type="button" class="admin-btn admin-btn-primary" id="btn-add-climate-article">
+              <button type="button" class="admin-btn admin-btn-primary" id="btn-add-climate-link">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                Add Climate Justice Article
+                Add Article Link
               </button>
             </div>
 
@@ -875,16 +875,8 @@
               <div class="panel-controls">
                 <div class="search-box">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                  <input type="text" id="search-climate-articles" class="admin-input search-input" placeholder="Search climate justice articles by title, author, or excerpt..." />
+                  <input type="text" id="search-climate-links" class="admin-input search-input" placeholder="Search climate article links by title, publisher, or URL..." />
                 </div>
-                <select id="filter-climate-articles-tag" class="admin-select">
-                  <option value="">All Categories / Tags</option>
-                  <option value="KACHERI">KACHERI</option>
-                  <option value="FIELD REPORTS">FIELD REPORTS</option>
-                  <option value="POLICY BRIEF">POLICY BRIEF</option>
-                  <option value="CASE STUDY">CASE STUDY</option>
-                  <option value="LATEST">LATEST</option>
-                </select>
               </div>
             </div>
 
@@ -893,14 +885,14 @@
                 <thead>
                   <tr>
                     <th>ID</th>
-                    <th>Cover</th>
-                    <th>Title &amp; Author</th>
-                    <th>Tag / Kicker</th>
-                    <th>Date</th>
+                    <th>Title</th>
+                    <th>Publisher / Source</th>
+                    <th>Badge / Tag</th>
+                    <th>Link URL</th>
                     <th class="text-right">Actions</th>
                   </tr>
                 </thead>
-                <tbody id="table-climate-articles-body">
+                <tbody id="table-climate-links-body">
                   <!-- Dynamically Populated -->
                 </tbody>
               </table>

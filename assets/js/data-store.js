@@ -14,7 +14,8 @@ const STORAGE_KEYS = {
   MAP_PINS: 'caea_map_pins_data',
   TEXTILE_CARDS: 'caea_textile_cards_data',
   CLIMATE_REPORTS: 'caea_climate_reports_data',
-  FOSSIL_LINKS: 'caea_fossil_links_data'
+  FOSSIL_LINKS: 'caea_fossil_links_data',
+  CLIMATE_LINKS: 'caea_climate_links_data'
 };
 
 // Seed default data
@@ -305,6 +306,45 @@ const SEED_DATA = {
       url: 'https://dashboard.climateactionenergyaccess.org/',
       badge: 'DATA DASHBOARD',
       description: 'Real-time interactive dashboard tracking generation mix, LNG import costs, and fossil emissions across Pakistan.',
+      sortOrder: 4
+    }
+  ],
+
+  climateArticleLinks: [
+    {
+      id: 'clink-1',
+      title: 'The hidden cost of development',
+      publisher: 'The News on Sunday · Special Report',
+      url: 'https://www.thenews.com.pk/tns/detail/1023422-the-hidden-cost-of-development',
+      badge: 'THE NEWS',
+      description: 'Investigating the uncalculated social, ecological, and human costs of large-scale infrastructure and extractive projects in Pakistan.',
+      sortOrder: 1
+    },
+    {
+      id: 'clink-2',
+      title: 'E-11 interchange: boon or bane?',
+      publisher: 'The News on Sunday · Urban Ecology',
+      url: 'https://www.thenews.com.pk/tns/detail/1074418-e-11-interchange-boon-or-bane',
+      badge: 'THE NEWS',
+      description: 'Critical analysis of urban displacement, car-centric road developments, and ecological disruption in Islamabad.',
+      sortOrder: 2
+    },
+    {
+      id: 'clink-3',
+      title: 'Loss and displacement',
+      publisher: 'The News on Sunday · Climate Justice',
+      url: 'https://www.thenews.com.pk/tns/detail/1390589-loss-and-displacement',
+      badge: 'THE NEWS',
+      description: 'Frontline field reporting on communities experiencing climate catastrophe, involuntary displacement, and loss of sovereignty.',
+      sortOrder: 3
+    },
+    {
+      id: 'clink-4',
+      title: 'The development scarcity',
+      publisher: 'The News on Sunday · Political Economy',
+      url: 'https://www.thenews.com.pk/tns/detail/1292148-the-development-scarcity',
+      badge: 'THE NEWS',
+      description: 'Investigating manufactured resource scarcity, unequal distribution of energy and water, and structural vulnerability.',
       sortOrder: 4
     }
   ],
@@ -811,7 +851,7 @@ const SEED_DATA = {
         description: "Our mission is to advance a just energy transition by exposing the structural drivers of Pakistan’s gas and fossil-fuel dependence; challenging subsidies, governance failures, and entrenched industrial interests, especially captive power plants—that distort markets, deepen inequality, and worsen the climate crisis. CAEA works to democratize climate and energy discourse, center community experiences, and advocate for people-centric, rights-based policies across water, energy, and climate systems. Through evidence-based research, public mobilization, and strategic policy engagement, we strengthen national capacity to phase out gas from industrial and domestic sectors, counter fossil-fuel intensity in power and industry, and push for transparent, least-cost, and climate-just pathways that prioritize public health, economic stability, and intergenerational equity.",
         joinBtnText: 'JOIN US',
         opportunityTitle: 'General Volunteer / Open Application',
-        bannerTitle: 'FOSSIL FUEL',
+        bannerTitle: 'FOSSIL FUEL PHASEOUT',
         bannerSubtitle: 'Rethinking energy systems for a cleaner, fairer, and climate-resilient future.',
         bannerBtnText: 'EXPLORE WORK'
       },
@@ -1125,8 +1165,24 @@ class CAEADataStore {
       if (!localStorage.getItem(STORAGE_KEYS.FOSSIL_LINKS)) {
         localStorage.setItem(STORAGE_KEYS.FOSSIL_LINKS, JSON.stringify(SEED_DATA.fossilArticleLinks));
       }
+      if (!localStorage.getItem(STORAGE_KEYS.CLIMATE_LINKS)) {
+        localStorage.setItem(STORAGE_KEYS.CLIMATE_LINKS, JSON.stringify(SEED_DATA.climateArticleLinks));
+      }
       if (!localStorage.getItem(STORAGE_KEYS.PAGE_SETTINGS)) {
         localStorage.setItem(STORAGE_KEYS.PAGE_SETTINGS, JSON.stringify(SEED_DATA.pageSettings));
+      } else {
+        try {
+          const storedSettings = localStorage.getItem(STORAGE_KEYS.PAGE_SETTINGS);
+          if (storedSettings) {
+            const parsed = JSON.parse(storedSettings);
+            if (parsed?.ourWork?.fossilFuel?.bannerTitle === 'FOSSIL FUEL') {
+              parsed.ourWork.fossilFuel.bannerTitle = 'FOSSIL FUEL PHASEOUT';
+              localStorage.setItem(STORAGE_KEYS.PAGE_SETTINGS, JSON.stringify(parsed));
+            }
+          }
+        } catch (e) {
+          console.warn('Settings bannerTitle migration check error:', e);
+        }
       }
     }
   }
@@ -1145,6 +1201,10 @@ class CAEADataStore {
       case 'fossil_article_links':
       case 'fossillinks':
       case 'fossil_links': return STORAGE_KEYS.FOSSIL_LINKS;
+      case 'climatearticlelinks':
+      case 'climate_article_links':
+      case 'climatelinks':
+      case 'climate_links': return STORAGE_KEYS.CLIMATE_LINKS;
       case 'opportunities':
       case 'get-involved':
       case 'positions': return STORAGE_KEYS.OPPORTUNITIES;
@@ -1180,6 +1240,7 @@ class CAEADataStore {
     if (c === 'assets' || c === 'images') return 'media';
     if (c === 'settings' || c === 'pagesettings') return 'page_settings';
     if (c === 'fossilarticlelinks' || c === 'fossillinks' || c === 'fossil_article_links') return 'fossil_article_links';
+    if (c === 'climatearticlelinks' || c === 'climatelinks' || c === 'climate_article_links') return 'climate_article_links';
     return c;
   }
 
@@ -1197,6 +1258,8 @@ class CAEADataStore {
         items = settings?.climateJustice?.reports || SEED_DATA.climateReports || [];
       } else if ((!items || items.length === 0) && (collection === 'fossilArticleLinks' || collection === 'fossilLinks' || collection === 'fossil_links')) {
         items = SEED_DATA.fossilArticleLinks || [];
+      } else if ((!items || items.length === 0) && (collection === 'climateArticleLinks' || collection === 'climateLinks' || collection === 'climate_links')) {
+        items = SEED_DATA.climateArticleLinks || [];
       }
 
       if (Array.isArray(items)) {
@@ -1238,6 +1301,10 @@ class CAEADataStore {
         ourStory: { ...defaults.ourStory, ...(parsed.ourStory || {}) },
         ourWork: { ...defaults.ourWork, ...(parsed.ourWork || {}) }
       };
+
+      if (merged.ourWork?.fossilFuel?.bannerTitle === 'FOSSIL FUEL') {
+        merged.ourWork.fossilFuel.bannerTitle = 'FOSSIL FUEL PHASEOUT';
+      }
 
       if (page) {
         return merged[page] || null;
@@ -1478,6 +1545,7 @@ class CAEADataStore {
     localStorage.setItem(STORAGE_KEYS.PEOPLE, JSON.stringify(SEED_DATA.people));
     localStorage.setItem(STORAGE_KEYS.ARTICLES, JSON.stringify(SEED_DATA.articles));
     localStorage.setItem(STORAGE_KEYS.FOSSIL_LINKS, JSON.stringify(SEED_DATA.fossilArticleLinks));
+    localStorage.setItem(STORAGE_KEYS.CLIMATE_LINKS, JSON.stringify(SEED_DATA.climateArticleLinks));
     localStorage.setItem(STORAGE_KEYS.OPPORTUNITIES, JSON.stringify(SEED_DATA.opportunities));
     localStorage.setItem(STORAGE_KEYS.APPLICATIONS, JSON.stringify(SEED_DATA.applications));
     localStorage.setItem(STORAGE_KEYS.MEDIA, JSON.stringify(SEED_DATA.media));
@@ -1495,6 +1563,7 @@ class CAEADataStore {
       people: this.get('people'),
       articles: this.get('articles'),
       fossilArticleLinks: this.get('fossilArticleLinks'),
+      climateArticleLinks: this.get('climateArticleLinks'),
       opportunities: this.get('opportunities'),
       applications: this.get('applications'),
       media: this.get('media'),
@@ -1518,6 +1587,9 @@ class CAEADataStore {
       }
       if (data.fossilArticleLinks && Array.isArray(data.fossilArticleLinks)) {
         localStorage.setItem(STORAGE_KEYS.FOSSIL_LINKS, JSON.stringify(data.fossilArticleLinks));
+      }
+      if (data.climateArticleLinks && Array.isArray(data.climateArticleLinks)) {
+        localStorage.setItem(STORAGE_KEYS.CLIMATE_LINKS, JSON.stringify(data.climateArticleLinks));
       }
       if (data.opportunities && Array.isArray(data.opportunities)) {
         localStorage.setItem(STORAGE_KEYS.OPPORTUNITIES, JSON.stringify(data.opportunities));
@@ -1543,6 +1615,7 @@ class CAEADataStore {
           people: data.people || [],
           articles: data.articles || [],
           fossil_article_links: data.fossilArticleLinks || data.fossil_article_links || [],
+          climate_article_links: data.climateArticleLinks || data.climate_article_links || [],
           opportunities: data.opportunities || [],
           applications: data.applications || [],
           media: data.media || [],
