@@ -1482,23 +1482,104 @@ document.addEventListener('DOMContentLoaded', () => {
     if (texSecHeading && tex.sectionHeading) texSecHeading.textContent = tex.sectionHeading;
     if (texSecIntro && tex.sectionIntro) texSecIntro.textContent = tex.sectionIntro;
 
-    const cards = window.DataStore.get('textileCards') || tex.cards || [];
-    if (texCardsGrid && Array.isArray(cards) && cards.length > 0) {
-      texCardsGrid.innerHTML = cards.map(c => `
-        <div class="insta-card">
-          <div>
-            <h4 class="insta-card-title">${escapeHtml(c.title || 'Fashion and Fossil Fuels')}</h4>
-            <p class="insta-card-desc">
-              ${escapeHtml(c.description || '')}
-            </p>
-          </div>
-          <a href="${c.videoUrl ? escapeHtml(c.videoUrl) : '#video-modal'}" class="btn-watch-now" data-apply-btn data-opportunity-title="${escapeHtml(c.targetOpportunity || 'Textile Watch')}">
-            <span>${escapeHtml(c.btnText || 'WATCH NOW')}</span>
-            <span>&gt;</span>
-          </a>
-        </div>
-      `).join('');
+    function getDerivedTextileTag(category) {
+      const c = (category || '').toLowerCase().trim();
+      if (c.includes('research') || c.includes('report')) return 'research';
+      if (c.includes('article') || c.includes('insight')) return 'article';
+      if (c.includes('testimonial') || c.includes('testimony')) return 'testimonials';
+      if (c.includes('petition') || c.includes('sign')) return 'petition';
+      return c.replace(/[^a-z0-9]+/g, '-');
     }
+
+    function getDerivedTextileBtnText(category) {
+      const tag = getDerivedTextileTag(category);
+      if (tag === 'research') return 'READ REPORT';
+      if (tag === 'article') return 'READ ARTICLE';
+      if (tag === 'testimonials') return 'WATCH TESTIMONY';
+      if (tag === 'petition') return 'SIGN PETITION';
+      return 'EXPLORE';
+    }
+
+    function renderFilteredTextileCards() {
+      if (!texCardsGrid || !window.DataStore) return;
+      const cards = window.DataStore.get('textileCards') || [];
+
+      if (!Array.isArray(cards) || cards.length === 0) {
+        texCardsGrid.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 40px 20px; color: #64748b; font-size: 14px;">
+            No publications or articles found.
+          </div>
+        `;
+        return;
+      }
+
+      const activeFilterBtn = document.querySelector('#textile-filters .filter-pill.active');
+      const activeFilter = (activeFilterBtn ? activeFilterBtn.getAttribute('data-filter') : 'all') || 'all';
+      const filterLower = activeFilter.toLowerCase().trim();
+
+      const filtered = filterLower === 'all'
+        ? cards
+        : cards.filter(c => getDerivedTextileTag(c.category) === filterLower);
+
+      if (filtered.length === 0) {
+        texCardsGrid.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 40px 20px; color: #64748b; font-size: 14px;">
+            No items found under <strong>${escapeHtml(activeFilter.toUpperCase())}</strong>.
+          </div>
+        `;
+        return;
+      }
+
+      texCardsGrid.innerHTML = filtered.map(c => {
+        const derivedTag = getDerivedTextileTag(c.category);
+        const btnText = getDerivedTextileBtnText(c.category);
+        const url = (c.url || '').trim();
+        const isExternal = url.startsWith('http://') || url.startsWith('https://');
+        const isActionModal = !url || url.startsWith('#');
+
+        let btnHtml = '';
+        if (isActionModal) {
+          btnHtml = `
+            <a href="${url || '#apply'}" class="btn-watch-now" data-apply-btn data-opportunity-title="${escapeHtml(c.title || 'Fast Fashion Initiative')}">
+              <span>${escapeHtml(btnText)}</span>
+              <span>&gt;</span>
+            </a>
+          `;
+        } else {
+          btnHtml = `
+            <a href="${escapeHtml(url)}" target="${isExternal ? '_blank' : '_self'}" ${isExternal ? 'rel="noopener noreferrer"' : ''} class="btn-watch-now">
+              <span>${escapeHtml(btnText)}</span>
+              <span>&gt;</span>
+            </a>
+          `;
+        }
+
+        return `
+          <div class="insta-card" data-category="${escapeHtml(derivedTag)}">
+            <div>
+              <h4 class="insta-card-title">${escapeHtml(c.title || '')}</h4>
+              <p class="insta-card-desc">
+                ${escapeHtml(c.description || '')}
+              </p>
+            </div>
+            ${btnHtml}
+          </div>
+        `;
+      }).join('');
+    }
+
+    renderFilteredTextileCards();
+
+    const textileFilterBtns = document.querySelectorAll('#textile-filters .filter-pill');
+    textileFilterBtns.forEach(btn => {
+      if (btn.dataset.filterBound) return;
+      btn.dataset.filterBound = 'true';
+      btn.addEventListener('click', () => {
+        textileFilterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderFilteredTextileCards();
+      });
+    });
 
     // 3. Climate Justice
     const cj = settings.climateJustice || {};
@@ -1908,28 +1989,77 @@ document.addEventListener('DOMContentLoaded', () => {
     const links = window.DataStore.get('fossilArticleLinks') || [];
     if (!links || !links.length) return;
 
-    container.innerHTML = links.map(link => {
-      const badge = link.badge || 'INSIGHT';
-      const pub = link.publisher || 'CAEA Publication';
-      const desc = link.description || link.excerpt || '';
-      const url = link.url || '#';
-      const isPdf = url.includes('.pdf') || url.includes('drive.google.com');
-      const isDashboard = url.includes('dashboard.');
-      const actionText = isPdf ? 'View Document (PDF) &rarr;' : isDashboard ? 'Explore Live Dashboard &rarr;' : 'Read Article &rarr;';
+    const activeFilterBtn = document.querySelector('#fossil-filters .filter-pill.active');
+    const activeFilter = (activeFilterBtn ? activeFilterBtn.getAttribute('data-filter') : 'all') || 'all';
+    const filterLower = activeFilter.toLowerCase().trim();
 
-      return `
-        <a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" class="fossil-link-card">
-          <div class="fossil-link-card-top">
-            <span class="fossil-link-badge">${escapeHtml(badge)}</span>
-            <span class="fossil-link-arrow" aria-hidden="true">&#8599;</span>
-          </div>
-          <h4 class="fossil-link-title">${escapeHtml(link.title)}</h4>
-          <p class="fossil-link-publisher">${escapeHtml(pub)}</p>
-          ${desc ? `<p class="fossil-link-desc">${escapeHtml(desc)}</p>` : ''}
-          <span class="fossil-link-action">${actionText}</span>
-        </a>
+    const filtered = filterLower === 'all'
+      ? links
+      : links.filter(link => {
+          const cat = (link.category || '').toLowerCase().trim();
+          const badge = (link.badge || '').toLowerCase().trim();
+          const title = (link.title || '').toLowerCase().trim();
+          const url = (link.url || '').toLowerCase().trim();
+          const desc = (link.description || '').toLowerCase().trim();
+
+          if (filterLower === 'research') {
+            return cat.includes('research') || cat.includes('report') || badge.includes('report') || badge.includes('research') || url.includes('.pdf') || url.includes('drive.google') || title.includes('political economy');
+          }
+          if (filterLower === 'articles' || filterLower === 'article' || filterLower === 'insights') {
+            return cat.includes('article') || cat.includes('insight') || badge.includes('dawn') || badge.includes('news') || url.includes('dawn.com') || url.includes('thenews') || title.includes('rlng') || title.includes('overshoot');
+          }
+          if (filterLower === 'dashboard' || filterLower === 'data') {
+            return cat.includes('dashboard') || cat.includes('data') || badge.includes('dashboard') || url.includes('dashboard') || url.includes('our-analytics') || title.includes('dashboard');
+          }
+          if (filterLower === 'policy' || filterLower === 'analysis') {
+            return cat.includes('policy') || cat.includes('analysis') || badge.includes('policy') || title.includes('policy') || desc.includes('regulatory');
+          }
+
+          return cat === filterLower || cat.includes(filterLower) || badge.includes(filterLower);
+        });
+
+    if (filtered.length === 0) {
+      container.innerHTML = `
+        <div style="grid-column: 1 / -1; text-align: center; padding: 48px 20px; color: #94a3b8; font-size: 14px;">
+          No resources found under <strong>${escapeHtml(activeFilter.toUpperCase())}</strong>.
+        </div>
       `;
-    }).join('');
+    } else {
+      container.innerHTML = filtered.map(link => {
+        const badge = link.badge || 'INSIGHT';
+        const pub = link.publisher || 'CAEA Publication';
+        const desc = link.description || link.excerpt || '';
+        const url = link.url || '#';
+        const isPdf = url.includes('.pdf') || url.includes('drive.google.com');
+        const isDashboard = url.includes('dashboard.') || url.includes('our-analytics');
+        const actionText = isPdf ? 'View Document (PDF) &rarr;' : isDashboard ? 'Explore Live Dashboard &rarr;' : 'Read Article &rarr;';
+
+        return `
+          <a href="${escapeHtml(url)}" ${url.startsWith('http') ? 'target="_blank" rel="noopener noreferrer"' : ''} class="fossil-link-card">
+            <div class="fossil-link-card-top">
+              <span class="fossil-link-badge">${escapeHtml(badge)}</span>
+              <span class="fossil-link-arrow" aria-hidden="true">&#8599;</span>
+            </div>
+            <h4 class="fossil-link-title">${escapeHtml(link.title)}</h4>
+            <p class="fossil-link-publisher">${escapeHtml(pub)}</p>
+            ${desc ? `<p class="fossil-link-desc">${escapeHtml(desc)}</p>` : ''}
+            <span class="fossil-link-action">${actionText}</span>
+          </a>
+        `;
+      }).join('');
+    }
+
+    // Attach filter pill listeners
+    const filterBtns = document.querySelectorAll('#fossil-filters .filter-pill');
+    filterBtns.forEach(btn => {
+      if (btn.dataset.filterBound) return;
+      btn.dataset.filterBound = 'true';
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderFossilArticleLinks();
+      });
+    });
   }
 
   function renderClimateArticleLinks() {
@@ -1939,26 +2069,82 @@ document.addEventListener('DOMContentLoaded', () => {
     const links = window.DataStore.get('climateArticleLinks') || [];
     if (!links || !links.length) return;
 
-    container.innerHTML = links.map(link => {
-      const badge = link.badge || 'THE NEWS';
-      const pub = link.publisher || 'The News on Sunday';
-      const desc = link.description || link.excerpt || '';
-      const url = link.url || '#';
-      const actionText = url.includes('thenews') ? 'Read on The News &rarr;' : 'Read Article &rarr;';
+    const activeFilterBtn = document.querySelector('#climate-filters .filter-pill.active');
+    const activeFilter = (activeFilterBtn ? activeFilterBtn.getAttribute('data-filter') : 'all') || 'all';
+    const filterLower = activeFilter.toLowerCase().trim();
 
-      return `
-        <a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" class="fossil-link-card climate-link-card">
-          <div class="fossil-link-card-top">
-            <span class="fossil-link-badge climate-link-badge">${escapeHtml(badge)}</span>
-            <span class="fossil-link-arrow" aria-hidden="true">&#8599;</span>
-          </div>
-          <h4 class="fossil-link-title">${escapeHtml(link.title)}</h4>
-          <p class="fossil-link-publisher">${escapeHtml(pub)}</p>
-          ${desc ? `<p class="fossil-link-desc">${escapeHtml(desc)}</p>` : ''}
-          <span class="fossil-link-action climate-link-action">${actionText}</span>
-        </a>
+    const filtered = filterLower === 'all'
+      ? links
+      : links.filter(link => {
+          const cat = (link.category || '').toLowerCase().trim();
+          const badge = (link.badge || '').toLowerCase().trim();
+          const title = (link.title || '').toLowerCase().trim();
+          const url = (link.url || '').toLowerCase().trim();
+          const desc = (link.description || '').toLowerCase().trim();
+
+          if (filterLower === 'research') {
+            return cat.includes('research') || cat.includes('documentation') || badge.includes('research') || badge.includes('documentation') || title.includes('living landscapes') || title.includes('water rights');
+          }
+          if (filterLower === 'reports' || filterLower === 'report') {
+            return cat.includes('report') || badge.includes('report') || title.includes('legal framework') || title.includes('loss & damage') || desc.includes('constitutional');
+          }
+          if (filterLower === 'articles' || filterLower === 'article') {
+            return cat.includes('article') || badge.includes('news') || url.includes('thenews') || title.includes('hidden cost') || title.includes('e-11') || title.includes('displacement') || title.includes('development scarcity');
+          }
+          if (filterLower === 'multimedia' || filterLower === 'stories') {
+            return cat.includes('multimedia') || cat.includes('stories') || badge.includes('multimedia') || title.includes('voices') || title.includes('manchar') || desc.includes('photo');
+          }
+          if (filterLower === 'campaigns' || filterLower === 'campaign') {
+            return cat.includes('campaign') || badge.includes('campaign') || title.includes('defending') || title.includes('sovereignty') || desc.includes('kacheri');
+          }
+
+          return cat === filterLower || cat.includes(filterLower) || badge.includes(filterLower);
+        });
+
+    if (filtered.length === 0) {
+      container.innerHTML = `
+        <div style="grid-column: 1 / -1; text-align: center; padding: 48px 20px; color: #94a3b8; font-size: 14px;">
+          No resources found under <strong>${escapeHtml(activeFilter.toUpperCase())}</strong>.
+        </div>
       `;
-    }).join('');
+    } else {
+      container.innerHTML = filtered.map(link => {
+        const badge = link.badge || 'THE NEWS';
+        const pub = link.publisher || 'The News on Sunday';
+        const desc = link.description || link.excerpt || '';
+        const url = link.url || '#';
+        const actionText = url.includes('thenews') ? 'Read on The News &rarr;' :
+                           badge.includes('RESEARCH') ? 'View Documentation &rarr;' :
+                           badge.includes('REPORT') ? 'Read Legal Report &rarr;' :
+                           badge.includes('MULTIMEDIA') ? 'Explore Stories &rarr;' :
+                           badge.includes('CAMPAIGN') ? 'Join Campaign &rarr;' : 'Read Article &rarr;';
+
+        return `
+          <a href="${escapeHtml(url)}" ${url.startsWith('http') ? 'target="_blank" rel="noopener noreferrer"' : ''} class="fossil-link-card climate-link-card">
+            <div class="fossil-link-card-top">
+              <span class="fossil-link-badge climate-link-badge">${escapeHtml(badge)}</span>
+              <span class="fossil-link-arrow" aria-hidden="true">&#8599;</span>
+            </div>
+            <h4 class="fossil-link-title">${escapeHtml(link.title)}</h4>
+            <p class="fossil-link-publisher">${escapeHtml(pub)}</p>
+            ${desc ? `<p class="fossil-link-desc">${escapeHtml(desc)}</p>` : ''}
+            <span class="fossil-link-action climate-link-action">${actionText}</span>
+          </a>
+        `;
+      }).join('');
+    }
+
+    // Attach filter pill listeners
+    const filterBtns = document.querySelectorAll('#climate-filters .filter-pill');
+    filterBtns.forEach(btn => {
+      if (btn.dataset.filterBound) return;
+      btn.dataset.filterBound = 'true';
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderClimateArticleLinks();
+      });
+    });
   }
 
   function renderOurWorkArticles() {
@@ -2092,15 +2278,6 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.classList.add('active');
         currentFilter = btn.getAttribute('data-filter');
         filterAndRender();
-      });
-    });
-
-    // Textile filter buttons
-    const textileFilterBtns = document.querySelectorAll('#textile-filters .filter-pill');
-    textileFilterBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        textileFilterBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
       });
     });
 

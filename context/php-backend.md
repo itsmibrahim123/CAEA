@@ -62,7 +62,7 @@ CAEA/
 
 ## 3. Database Schema
 
-All 8 collections are defined with strongly-typed schemas:
+All 11 collections are defined with strongly-typed schemas:
 
 ### 3.1 `activities`
 - `id` (VARCHAR 64, PK)
@@ -156,8 +156,44 @@ All 8 collections are defined with strongly-typed schemas:
 - `createdAt` (DATETIME)
 - `updatedAt` (DATETIME)
 
-### 3.8 `page_settings`
-- `pageKey` (VARCHAR 64, PK) — e.g. `'home'`, `'activities'`, `'ourStory'`
+### 3.8 `fossil_article_links`
+- `id` (VARCHAR 64, PK)
+- `title` (VARCHAR 255 NOT NULL)
+- `publisher` (VARCHAR 255 NOT NULL)
+- `badge` (VARCHAR 64 DEFAULT 'ARTICLE')
+- `url` (VARCHAR 512 NOT NULL)
+- `description` (TEXT)
+- `sortOrder` (INTEGER DEFAULT 0)
+- `createdAt` (DATETIME)
+- `updatedAt` (DATETIME)
+
+### 3.9 `climate_article_links`
+- `id` (VARCHAR 64, PK)
+- `title` (VARCHAR 255 NOT NULL)
+- `publisher` (VARCHAR 255 NOT NULL)
+- `badge` (VARCHAR 64 DEFAULT 'ARTICLE')
+- `url` (VARCHAR 512 NOT NULL)
+- `description` (TEXT)
+- `sortOrder` (INTEGER DEFAULT 0)
+- `createdAt` (DATETIME)
+- `updatedAt` (DATETIME)
+
+### 3.10 `textile_cards`
+- `id` (VARCHAR 64, PK)
+- `title` (VARCHAR 255 NOT NULL)
+- `description` (TEXT)
+- `category` (VARCHAR 64 DEFAULT 'WATER')
+- `tag` (VARCHAR 64 DEFAULT 'water')
+- `btnText` (VARCHAR 64 DEFAULT 'WATCH NOW')
+- `targetOpportunity` (VARCHAR 255 DEFAULT 'Textile Watch')
+- `videoUrl` (TEXT)
+- `image` (VARCHAR 512)
+- `sortOrder` (INTEGER DEFAULT 0)
+- `createdAt` (DATETIME)
+- `updatedAt` (DATETIME)
+
+### 3.11 `page_settings`
+- `pageKey` (VARCHAR 64, PK) — e.g. `'home'`, `'activities'`, `'ourStory'`, `'ourWork'`
 - `settingsJson` (TEXT NOT NULL) — JSON encoded page configuration
 - `updatedAt` (DATETIME)
 
@@ -173,7 +209,7 @@ All responses return standard JSON format: `{ "success": true, "data": ... }`.
 - **Full Database Export**: `GET /api/api.php?action=export`
   - Returns JSON payload containing all tables and unpacked page settings.
 - **Full Database Import**: `POST /api/api.php?action=import`
-  - Body: `{ "data": { "activities": [...], "people": [...], ... } }`
+  - Body: `{ "data": { "activities": [...], "people": [...], "textile_cards": [...], ... } }`
 - **Factory Reset**: `POST /api/api.php?action=reset`
   - Resets database back to default seed data.
 
@@ -181,13 +217,13 @@ All responses return standard JSON format: `{ "success": true, "data": ... }`.
 
 | Action | Method | URL | Body / Notes |
 | :--- | :--- | :--- | :--- |
-| **List All** | `GET` | `/api/api.php?collection={name}` | Supports filter params (e.g. `?category=WORKSHOP&limit=10`) |
+| **List All** | `GET` | `/api/api.php?collection={name}` | Supports filter params (e.g. `?category=WATER&limit=10`) |
 | **Get by ID** | `GET` | `/api/api.php?collection={name}&id={id}` | Returns single record object |
 | **Create** | `POST` | `/api/api.php?collection={name}` | JSON payload with item attributes |
 | **Update** | `POST` / `PUT` | `/api/api.php?collection={name}&id={id}` | JSON payload with updated fields (or `action=update`) |
 | **Delete** | `POST` / `DELETE` | `/api/api.php?collection={name}&id={id}` | Deletes record (or `action=delete`) |
 
-*Valid collections*: `activities`, `people`, `articles`, `opportunities`, `applications`, `media`, `map_pins`, `page_settings`.
+*Valid collections*: `activities`, `people`, `articles`, `fossil_article_links`, `climate_article_links`, `textile_cards`, `opportunities`, `applications`, `media`, `map_pins`, `page_settings`.
 
 ---
 

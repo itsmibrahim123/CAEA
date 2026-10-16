@@ -55,6 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnAddFossilArticle = document.getElementById('btn-add-fossil-article');
 
   const searchFossilLinks = document.getElementById('search-fossil-links');
+  const filterFossilLinksCategory = document.getElementById('filter-fossil-links-category');
   const btnAddFossilLink = document.getElementById('btn-add-fossil-link');
 
   const searchClimateArticles = document.getElementById('search-climate-articles');
@@ -62,6 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnAddClimateArticle = document.getElementById('btn-add-climate-article');
 
   const searchClimateLinks = document.getElementById('search-climate-links');
+  const filterClimateLinksCategory = document.getElementById('filter-climate-links-category');
   const btnAddClimateLink = document.getElementById('btn-add-climate-link');
 
   const searchTextileCards = document.getElementById('search-textile-cards');
@@ -798,6 +800,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!tableFossilLinksBody || !window.DataStore) return;
     let items = window.DataStore.get('fossilArticleLinks') || [];
     const query = searchFossilLinks ? searchFossilLinks.value.toLowerCase().trim() : '';
+    const catFilter = filterFossilLinksCategory ? filterFossilLinksCategory.value.toLowerCase().trim() : '';
 
     if (query) {
       items = items.filter(i =>
@@ -805,12 +808,20 @@ document.addEventListener('DOMContentLoaded', () => {
         (i.publisher && i.publisher.toLowerCase().includes(query)) ||
         (i.badge && i.badge.toLowerCase().includes(query)) ||
         (i.url && i.url.toLowerCase().includes(query)) ||
+        (i.category && i.category.toLowerCase().includes(query)) ||
         (i.description && i.description.toLowerCase().includes(query))
       );
     }
 
+    if (catFilter) {
+      items = items.filter(i => {
+        const cat = (i.category || '').toLowerCase();
+        return cat === catFilter || cat.includes(catFilter);
+      });
+    }
+
     if (items.length === 0) {
-      tableFossilLinksBody.innerHTML = `<tr><td colspan="6" class="text-center" style="padding:24px; color:#888;">No fossil fuel phaseout article links found matching criteria. Click "Add Article Link" to create one.</td></tr>`;
+      tableFossilLinksBody.innerHTML = `<tr><td colspan="7" class="text-center" style="padding:24px; color:#888;">No fossil fuel phaseout article links found matching criteria. Click "Add Article Link" to create one.</td></tr>`;
       return;
     }
 
@@ -825,6 +836,9 @@ document.addEventListener('DOMContentLoaded', () => {
         <td>
           <strong>${escapeHtml(item.title)}</strong>
           ${item.description ? `<div style="font-size:12px; color:#9da5b4; margin-top:2px;">${escapeHtml(item.description)}</div>` : ''}
+        </td>
+        <td>
+          <span class="table-badge" style="background:rgba(96, 165, 250, 0.12); color:#60a5fa; border:1px solid rgba(96, 165, 250, 0.25); text-transform:uppercase;">${escapeHtml(item.category || 'articles')}</span>
         </td>
         <td>${escapeHtml(item.publisher || 'N/A')}</td>
         <td>
@@ -925,6 +939,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!tableClimateLinksBody || !window.DataStore) return;
     let items = window.DataStore.get('climateArticleLinks') || [];
     const query = searchClimateLinks ? searchClimateLinks.value.toLowerCase().trim() : '';
+    const catFilter = filterClimateLinksCategory ? filterClimateLinksCategory.value.toLowerCase().trim() : '';
 
     if (query) {
       items = items.filter(i =>
@@ -932,12 +947,20 @@ document.addEventListener('DOMContentLoaded', () => {
         (i.publisher && i.publisher.toLowerCase().includes(query)) ||
         (i.badge && i.badge.toLowerCase().includes(query)) ||
         (i.url && i.url.toLowerCase().includes(query)) ||
+        (i.category && i.category.toLowerCase().includes(query)) ||
         (i.description && i.description.toLowerCase().includes(query))
       );
     }
 
+    if (catFilter) {
+      items = items.filter(i => {
+        const cat = (i.category || '').toLowerCase();
+        return cat === catFilter || cat.includes(catFilter);
+      });
+    }
+
     if (items.length === 0) {
-      tableClimateLinksBody.innerHTML = `<tr><td colspan="6" class="text-center" style="padding:24px; color:#888;">No climate justice article links found matching criteria. Click "Add Article Link" to create one.</td></tr>`;
+      tableClimateLinksBody.innerHTML = `<tr><td colspan="7" class="text-center" style="padding:24px; color:#888;">No climate justice article links found matching criteria. Click "Add Article Link" to create one.</td></tr>`;
       return;
     }
 
@@ -952,6 +975,9 @@ document.addEventListener('DOMContentLoaded', () => {
         <td>
           <strong>${escapeHtml(item.title)}</strong>
           ${item.description ? `<div style="font-size:12px; color:#9da5b4; margin-top:2px;">${escapeHtml(item.description)}</div>` : ''}
+        </td>
+        <td>
+          <span class="table-badge" style="background:rgba(245, 158, 11, 0.12); color:#fbbf24; border:1px solid rgba(245, 158, 11, 0.25); text-transform:uppercase;">${escapeHtml(item.category || 'articles')}</span>
         </td>
         <td>${escapeHtml(item.publisher || 'N/A')}</td>
         <td>
@@ -980,14 +1006,19 @@ document.addEventListener('DOMContentLoaded', () => {
     `).join('');
   }
 
-  // 5.2c Textile Investigation Spotlight Cards Table
+  // 5.2c Fast Fashion Articles & Publications Table
+  function getDerivedTextileTag(category) {
+    const c = (category || '').toLowerCase().trim();
+    if (c.includes('research') || c.includes('report')) return 'research';
+    if (c.includes('article') || c.includes('insight')) return 'article';
+    if (c.includes('testimonial') || c.includes('testimony')) return 'testimonials';
+    if (c.includes('petition') || c.includes('sign')) return 'petition';
+    return c.replace(/[^a-z0-9]+/g, '-');
+  }
+
   function renderTextileCardsTable() {
     if (!tableTextileCardsBody || !window.DataStore) return;
-    let cards = window.DataStore.get('textileCards');
-    if (!cards || !cards.length) {
-      const settings = window.DataStore.getPageSettings();
-      cards = settings.ourWork?.textile?.cards || [];
-    }
+    let cards = window.DataStore.get('textileCards') || [];
     const query = searchTextileCards ? searchTextileCards.value.toLowerCase().trim() : '';
     const tagFilter = filterTextileTag ? filterTextileTag.value.toLowerCase().trim() : '';
 
@@ -995,22 +1026,27 @@ document.addEventListener('DOMContentLoaded', () => {
       cards = cards.filter(c =>
         (c.title && c.title.toLowerCase().includes(query)) ||
         (c.description && c.description.toLowerCase().includes(query)) ||
-        (c.targetOpportunity && c.targetOpportunity.toLowerCase().includes(query))
+        (c.category && c.category.toLowerCase().includes(query)) ||
+        (c.publisher && c.publisher.toLowerCase().includes(query)) ||
+        (c.url && c.url.toLowerCase().includes(query))
       );
     }
     if (tagFilter) {
       cards = cards.filter(c => {
-        const cat = (c.category || c.targetOpportunity || '').toLowerCase();
-        return cat.includes(tagFilter);
+        const cat = (c.category || '').toLowerCase();
+        const derived = getDerivedTextileTag(c.category);
+        return cat === tagFilter || derived === tagFilter || cat.includes(tagFilter) || derived.includes(tagFilter);
       });
     }
 
     if (!cards.length) {
-      tableTextileCardsBody.innerHTML = `<tr><td colspan="7" class="text-center" style="padding:24px; color:#888;">No textile investigation cards found. Click "Add Investigation Card" to create one.</td></tr>`;
+      tableTextileCardsBody.innerHTML = `<tr><td colspan="7" class="text-center" style="padding:24px; color:#888;">No fast fashion articles found. Click "Add Article Link" to create one.</td></tr>`;
       return;
     }
 
-    tableTextileCardsBody.innerHTML = cards.map((c, index) => `
+    tableTextileCardsBody.innerHTML = cards.map((c, index) => {
+      const derivedTag = getDerivedTextileTag(c.category);
+      return `
       <tr>
         <td>
           <div style="display:flex; align-items:center; gap:6px;">
@@ -1018,11 +1054,16 @@ document.addEventListener('DOMContentLoaded', () => {
             <span style="font-family:monospace; font-size:11px; color:#888;">${c.id}</span>
           </div>
         </td>
-        <td><strong>${escapeHtml(c.title || 'Investigation')}</strong></td>
-        <td style="max-width:260px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${escapeHtml(c.description || '')}">${escapeHtml(c.description || '')}</td>
-        <td><span class="table-badge" style="background:rgba(149,220,111,0.15); color:#95dc6f; border:1px solid rgba(149,220,111,0.3);">${escapeHtml(c.category || 'WATER')}</span></td>
-        <td><span class="table-badge">${escapeHtml(c.btnText || 'WATCH NOW')}</span></td>
-        <td style="font-family:monospace; font-size:11px; color:#9da5b4; max-width:140px; overflow:hidden; text-overflow:ellipsis;">${escapeHtml(c.videoUrl || '—')}</td>
+        <td>
+          <strong>${escapeHtml(c.title || 'Untitled Article')}</strong>
+          ${c.description ? `<div style="font-size:12px; color:#9da5b4; margin-top:2px; max-width:260px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${escapeHtml(c.description)}">${escapeHtml(c.description)}</div>` : ''}
+        </td>
+        <td><span class="table-badge" style="background:rgba(149,220,111,0.15); color:#95dc6f; border:1px solid rgba(149,220,111,0.3);">${escapeHtml(c.category || 'Research & Reports')}</span></td>
+        <td>${escapeHtml(c.publisher || 'CAEA')}</td>
+        <td><span class="table-badge" style="background:rgba(149,220,111,0.1); color:#95dc6f; font-weight:600; text-transform:uppercase;">${escapeHtml(derivedTag)}</span></td>
+        <td>
+          <a href="${escapeHtml(c.url || '#')}" target="_blank" rel="noopener noreferrer" style="color:#95dc6f; font-size:12px; text-decoration:none;">${escapeHtml((c.url || '').length > 35 ? c.url.substring(0, 35) + '...' : (c.url || '—'))}</a>
+        </td>
         <td class="text-right">
           <div class="table-actions">
             <button class="action-icon-btn move-btn" onclick="moveItemOrder('textileCards', '${c.id}', 'up')" title="Move Up" ${index === 0 ? 'disabled style="opacity:0.3; cursor:not-allowed;"' : ''}>
@@ -1031,16 +1072,17 @@ document.addEventListener('DOMContentLoaded', () => {
             <button class="action-icon-btn move-btn" onclick="moveItemOrder('textileCards', '${c.id}', 'down')" title="Move Down" ${index === cards.length - 1 ? 'disabled style="opacity:0.3; cursor:not-allowed;"' : ''}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
             </button>
-            <button class="action-icon-btn edit-btn" onclick="openEditModal('textileCards', '${c.id}')" title="Edit Card">
+            <button class="action-icon-btn edit-btn" onclick="openEditModal('textileCards', '${c.id}')" title="Edit Article Link">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
             </button>
-            <button class="action-icon-btn delete-btn" onclick="confirmDelete('textileCards', '${c.id}')" title="Delete Card">
+            <button class="action-icon-btn delete-btn" onclick="confirmDelete('textileCards', '${c.id}')" title="Delete Article Link">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
             </button>
           </div>
         </td>
       </tr>
-    `).join('');
+      `;
+    }).join('');
   }
 
   // 5.2d Climate Justice Legal Reports & Case Studies Table
@@ -1361,17 +1403,9 @@ document.addEventListener('DOMContentLoaded', () => {
   window.moveItemOrder = async function(collection, id, direction) {
     if (!window.DataStore) return;
     let allItems = [];
-    let isNestedTextile = false;
     let isNestedClimate = false;
 
-    if (collection === 'textileCards') {
-      allItems = window.DataStore.get('textileCards');
-      if (!allItems || !allItems.length) {
-        const s = window.DataStore.getPageSettings();
-        allItems = s.ourWork?.textile?.cards || [];
-      }
-      isNestedTextile = true;
-    } else if (collection === 'climateReports') {
+    if (collection === 'climateReports') {
       allItems = window.DataStore.get('climateReports');
       if (!allItems || !allItems.length) {
         const s = window.DataStore.getPageSettings();
@@ -1401,15 +1435,7 @@ document.addEventListener('DOMContentLoaded', () => {
       item.orderIndex = i + 1;
     });
 
-    if (isNestedTextile) {
-      window.DataStore.set('textileCards', allItems);
-      const currentSettings = window.DataStore.getPageSettings();
-      const ourWork = currentSettings.ourWork || {};
-      if (!ourWork.textile) ourWork.textile = {};
-      ourWork.textile.cards = allItems;
-      window.DataStore.savePageSettings('ourWork', ourWork);
-      renderTextileCardsTable();
-    } else if (isNestedClimate) {
+    if (isNestedClimate) {
       window.DataStore.set('climateReports', allItems);
       const currentSettings = window.DataStore.getPageSettings();
       const ourWork = currentSettings.ourWork || {};
@@ -1443,6 +1469,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnAddFossilArticle) btnAddFossilArticle.addEventListener('click', () => openEditModal('articles'));
 
   if (searchFossilLinks) searchFossilLinks.addEventListener('input', renderFossilLinksTable);
+  if (filterFossilLinksCategory) filterFossilLinksCategory.addEventListener('change', renderFossilLinksTable);
   if (btnAddFossilLink) btnAddFossilLink.addEventListener('click', () => openEditModal('fossilArticleLinks'));
 
   if (searchClimateArticles) searchClimateArticles.addEventListener('input', renderClimateArticlesTable);
@@ -1450,6 +1477,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnAddClimateArticle) btnAddClimateArticle.addEventListener('click', () => openEditModal('articles'));
 
   if (searchClimateLinks) searchClimateLinks.addEventListener('input', renderClimateLinksTable);
+  if (filterClimateLinksCategory) filterClimateLinksCategory.addEventListener('change', renderClimateLinksTable);
   if (btnAddClimateLink) btnAddClimateLink.addEventListener('click', () => openEditModal('climateArticleLinks'));
 
   if (searchTextileCards) searchTextileCards.addEventListener('input', renderTextileCardsTable);
@@ -1486,7 +1514,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const collectionName = collection === 'opportunities' ? 'Get Involved Position' :
                            collection === 'activities' ? 'Activity / Work Item' :
-                           collection === 'textileCards' ? 'Textile Investigation Card' :
+                           collection === 'textileCards' || collection === 'textile' || collection === 'fastFashion' ? 'Fast Fashion Article Link' :
                            collection === 'climateReports' ? 'Climate Justice Report / Case Study' :
                            collection === 'fossilArticleLinks' || collection === 'fossilLinks' ? 'Fossil Fuel Phaseout Article Link' :
                            collection === 'climateArticleLinks' || collection === 'climateLinks' ? 'Climate Justice Article Link' :
@@ -1496,15 +1524,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let item = {};
     if (isEdit) {
-      if (collection === 'textileCards') {
-        const directItem = window.DataStore.getById('textileCards', id);
-        if (directItem) {
-          item = directItem;
-        } else {
-          const settings = window.DataStore.getPageSettings();
-          const cards = settings.ourWork?.textile?.cards || [];
-          item = cards.find(c => c.id === id) || {};
-        }
+      if (collection === 'textileCards' || collection === 'textile' || collection === 'fastFashion') {
+        item = window.DataStore.getById('textileCards', id) || {};
       } else {
         item = window.DataStore.getById(collection, id) || {};
       }
@@ -1769,40 +1790,37 @@ document.addEventListener('DOMContentLoaded', () => {
           <textarea name="description" class="admin-textarea" rows="4" required>${escapeHtml(item.description || '')}</textarea>
         </div>
       `;
-    } else if (collection === 'textileCards') {
+    } else if (collection === 'textileCards' || collection === 'textile' || collection === 'fastFashion') {
       fieldsHtml = `
         <div class="form-group">
-          <label class="form-label">Investigation Card Title</label>
-          <input type="text" name="title" class="admin-input" value="${escapeHtml(item.title || '')}" placeholder="e.g. Fashion and Fossil Fuels" required />
-        </div>
-        <div class="form-group">
-          <label class="form-label">Category / Pillar Tag</label>
-          <select name="category" class="admin-input">
-            <option value="WATER" ${item.category === 'WATER' ? 'selected' : ''}>WATER</option>
-            <option value="LAND" ${item.category === 'LAND' ? 'selected' : ''}>LAND</option>
-            <option value="HYDROPOWER" ${item.category === 'HYDROPOWER' ? 'selected' : ''}>HYDROPOWER</option>
-            <option value="ENERGY" ${item.category === 'ENERGY' ? 'selected' : ''}>ENERGY</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Description / Investigation Brief</label>
-          <textarea name="description" class="admin-textarea" rows="4" placeholder="Brief summary of the investigation or field report..." required>${escapeHtml(item.description || '')}</textarea>
+          <label class="form-label">Article / Publication Title</label>
+          <input type="text" name="title" class="admin-input" value="${escapeHtml(item.title || '')}" placeholder="e.g. Fashion and Fossil Fuels: Supply Chain Investigation" required />
         </div>
         <div class="form-row" style="display:flex; gap:16px;">
           <div class="form-group flex-1" style="flex:1;">
-            <label class="form-label">Action Button Text</label>
-            <input type="text" name="btnText" class="admin-input" value="${escapeHtml(item.btnText || 'WATCH NOW')}" placeholder="e.g. WATCH NOW" required />
+            <label class="form-label">Category</label>
+            <select name="category" class="admin-input" required>
+              <option value="Research &amp; Reports" ${(!item.category || item.category === 'Research & Reports' || item.category.toLowerCase().includes('research')) ? 'selected' : ''}>Research &amp; Reports</option>
+              <option value="Article" ${(item.category === 'Article' || item.category.toLowerCase().includes('article')) ? 'selected' : ''}>Article</option>
+              <option value="Testimonials" ${(item.category === 'Testimonials' || item.category.toLowerCase().includes('testimonial')) ? 'selected' : ''}>Testimonials</option>
+              <option value="Sign Our Petition" ${(item.category === 'Sign Our Petition' || item.category.toLowerCase().includes('petition')) ? 'selected' : ''}>Sign Our Petition</option>
+            </select>
           </div>
           <div class="form-group flex-1" style="flex:1;">
-            <label class="form-label">Target Opportunity / Modal Tag</label>
-            <input type="text" name="targetOpportunity" class="admin-input" value="${escapeHtml(item.targetOpportunity || 'Textile Watch')}" placeholder="e.g. Textile Watch" required />
+            <label class="form-label">Publisher / Source</label>
+            <input type="text" name="publisher" class="admin-input" value="${escapeHtml(item.publisher || 'CAEA')}" placeholder="e.g. CAEA, Dawn, The News, External" />
           </div>
         </div>
-        ${orderFieldHtml}
         <div class="form-group">
-          <label class="form-label">Video or Media URL (Optional)</label>
-          <input type="text" name="videoUrl" class="admin-input" value="${escapeHtml(item.videoUrl || '')}" placeholder="e.g. https://youtube.com/... or assets/video.mp4" />
+          <label class="form-label">Link URL</label>
+          <input type="text" name="url" class="admin-input" value="${escapeHtml(item.url || '')}" placeholder="e.g. https://... or /pages/... or #" required />
+          <small style="color:#888; font-size:11px;">External web address (https://...), relative path (/pages/...), or #</small>
         </div>
+        <div class="form-group">
+          <label class="form-label">Summary / Description (Optional)</label>
+          <textarea name="description" class="admin-textarea" rows="3" placeholder="Brief summary of the publication, article, or petition...">${escapeHtml(item.description || '')}</textarea>
+        </div>
+        ${orderFieldHtml}
       `;
     } else if (collection === 'climateReports') {
       fieldsHtml = `
@@ -1866,13 +1884,24 @@ document.addEventListener('DOMContentLoaded', () => {
             <input type="text" name="publisher" class="admin-input" value="${escapeHtml(item.publisher || '')}" placeholder="e.g. Dawn, The News, CAEA Research" required />
           </div>
           <div class="form-group flex-1" style="flex:1;">
+            <label class="form-label">Category</label>
+            <select name="category" class="admin-input">
+              <option value="research" ${item.category === 'research' ? 'selected' : ''}>Research and Reports</option>
+              <option value="articles" ${(!item.category || item.category === 'articles') ? 'selected' : ''}>Articles &amp; Insights</option>
+              <option value="dashboard" ${item.category === 'dashboard' ? 'selected' : ''}>Data Dashboard</option>
+              <option value="policy" ${item.category === 'policy' ? 'selected' : ''}>Policy Analysis</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row" style="display:flex; gap:16px;">
+          <div class="form-group flex-1" style="flex:1;">
             <label class="form-label">Badge / Tag</label>
             <input type="text" name="badge" class="admin-input" value="${escapeHtml(item.badge || 'ARTICLE')}" placeholder="e.g. ARTICLE, RESEARCH REPORT, DASHBOARD" />
           </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">External Link URL</label>
-          <input type="url" name="url" class="admin-input" value="${escapeHtml(item.url || '')}" placeholder="https://..." required />
+          <div class="form-group flex-1" style="flex:1;">
+            <label class="form-label">External Link URL</label>
+            <input type="text" name="url" class="admin-input" value="${escapeHtml(item.url || '')}" placeholder="https://... or /pages/our-analytics.html" required />
+          </div>
         </div>
         ${orderFieldHtml}
         <div class="form-group">
@@ -1892,13 +1921,25 @@ document.addEventListener('DOMContentLoaded', () => {
             <input type="text" name="publisher" class="admin-input" value="${escapeHtml(item.publisher || 'The News on Sunday')}" placeholder="e.g. The News on Sunday" required />
           </div>
           <div class="form-group flex-1" style="flex:1;">
+            <label class="form-label">Category</label>
+            <select name="category" class="admin-input">
+              <option value="research" ${item.category === 'research' ? 'selected' : ''}>Research and documentation</option>
+              <option value="reports" ${item.category === 'reports' ? 'selected' : ''}>Reports</option>
+              <option value="articles" ${(!item.category || item.category === 'articles') ? 'selected' : ''}>Articles</option>
+              <option value="multimedia" ${item.category === 'multimedia' ? 'selected' : ''}>Multimedia Stories</option>
+              <option value="campaigns" ${item.category === 'campaigns' ? 'selected' : ''}>Campaigns</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row" style="display:flex; gap:16px;">
+          <div class="form-group flex-1" style="flex:1;">
             <label class="form-label">Badge / Tag</label>
             <input type="text" name="badge" class="admin-input" value="${escapeHtml(item.badge || 'THE NEWS')}" placeholder="e.g. THE NEWS, SPECIAL REPORT" />
           </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">External Link URL</label>
-          <input type="url" name="url" class="admin-input" value="${escapeHtml(item.url || '')}" placeholder="https://..." required />
+          <div class="form-group flex-1" style="flex:1;">
+            <label class="form-label">External Link URL</label>
+            <input type="text" name="url" class="admin-input" value="${escapeHtml(item.url || '')}" placeholder="https://..." required />
+          </div>
         </div>
         ${orderFieldHtml}
         <div class="form-group">
@@ -2039,47 +2080,12 @@ document.addEventListener('DOMContentLoaded', () => {
         dataObj.orderIndex = dataObj.sortOrder;
       }
 
-      if (collection === 'textileCards') {
-        const currentSettings = window.DataStore.getPageSettings();
-        const ourWork = currentSettings.ourWork || {};
-        if (!ourWork.textile) ourWork.textile = {};
-        if (!Array.isArray(ourWork.textile.cards)) ourWork.textile.cards = [];
-
-        if (recordId) {
-          const idx = ourWork.textile.cards.findIndex(c => c.id === recordId);
-          if (idx !== -1) {
-            ourWork.textile.cards[idx] = {
-              ...ourWork.textile.cards[idx],
-              title: dataObj.title,
-              description: dataObj.description,
-              btnText: dataObj.btnText || 'WATCH NOW',
-              targetOpportunity: dataObj.targetOpportunity || 'Textile Watch',
-              videoUrl: dataObj.videoUrl || '',
-              sortOrder: dataObj.sortOrder !== undefined ? dataObj.sortOrder : ourWork.textile.cards[idx].sortOrder,
-              orderIndex: dataObj.sortOrder !== undefined ? dataObj.sortOrder : ourWork.textile.cards[idx].sortOrder
-            };
-          }
-          showToast('Updated textile investigation card successfully');
-        } else {
-          const newCardOrder = dataObj.sortOrder !== undefined ? dataObj.sortOrder : ourWork.textile.cards.length + 1;
-          ourWork.textile.cards.push({
-            id: `tex-${Date.now()}`,
-            title: dataObj.title,
-            description: dataObj.description,
-            btnText: dataObj.btnText || 'WATCH NOW',
-            targetOpportunity: dataObj.targetOpportunity || 'Textile Watch',
-            videoUrl: dataObj.videoUrl || '',
-            sortOrder: newCardOrder,
-            orderIndex: newCardOrder
-          });
-          showToast('Added new textile investigation card successfully');
-        }
-
-        window.DataStore.set('textileCards', ourWork.textile.cards);
-        window.DataStore.savePageSettings('ourWork', ourWork);
-        renderTextileCardsTable();
-        closeModal();
-        return;
+      if (collection === 'textileCards' || collection === 'textile' || collection === 'fastFashion') {
+        if (!dataObj.publisher) dataObj.publisher = 'CAEA';
+        delete dataObj.tag;
+        delete dataObj.btnText;
+        delete dataObj.targetOpportunity;
+        delete dataObj.videoUrl;
       }
 
       if (collection === 'activities' || collection === 'gatherings') {
@@ -2127,6 +2133,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     collection === 'people' ? 'team member' :
                     collection === 'fossilArticleLinks' || collection === 'fossilLinks' ? 'fossil fuel phaseout article link' :
                     collection === 'climateArticleLinks' || collection === 'climateLinks' ? 'climate article link' :
+                    collection === 'textileCards' || collection === 'textile' || collection === 'fastFashion' ? 'fast fashion article' :
                     collection.slice(0, -1);
 
       if (recordId) {
@@ -2262,24 +2269,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Delete Action
   window.confirmDelete = function(collection, id) {
-    if (collection === 'textileCards') {
-      if (confirm(`Are you sure you want to delete this textile investigation card (${id})?`)) {
-        const currentSettings = window.DataStore.getPageSettings();
-        const ourWork = currentSettings.ourWork || {};
-        if (ourWork.textile && Array.isArray(ourWork.textile.cards)) {
-          ourWork.textile.cards = ourWork.textile.cards.filter(c => c.id !== id);
-          window.DataStore.savePageSettings('ourWork', ourWork);
-          renderTextileCardsTable();
-          showToast(`Deleted textile card ${id} successfully`);
-        }
-      }
-      return;
-    }
-
-    const itemLabel = collection === 'applications' ? 'application' : collection.slice(0, -1);
+    const itemLabel = collection === 'applications' ? 'application' :
+                      collection === 'textileCards' || collection === 'textile' || collection === 'fastFashion' ? 'fast fashion card' :
+                      collection === 'fossilArticleLinks' || collection === 'fossilLinks' ? 'fossil fuel phaseout article link' :
+                      collection === 'climateArticleLinks' || collection === 'climateLinks' ? 'climate article link' :
+                      collection.slice(0, -1);
     if (confirm(`Are you sure you want to delete this ${itemLabel} (${id})?`)) {
       const res = window.DataStore.delete(collection, id);
       if (res) {
+        if (collection === 'textileCards' || collection === 'textile' || collection === 'fastFashion') {
+          const currentSettings = window.DataStore.getPageSettings();
+          const ourWork = currentSettings.ourWork || {};
+          if (ourWork.textile && Array.isArray(ourWork.textile.cards)) {
+            ourWork.textile.cards = ourWork.textile.cards.filter(c => c.id !== id);
+            window.DataStore.savePageSettings('ourWork', ourWork);
+          }
+        }
         showToast(`Deleted ${id} successfully`);
         updateStats();
         renderAllTables();

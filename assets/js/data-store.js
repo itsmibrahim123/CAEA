@@ -278,6 +278,7 @@ const SEED_DATA = {
       publisher: 'Dawn · Opinion & Analysis',
       url: 'https://www.dawn.com/news/1997175?utm_source=whatsapp',
       badge: 'DAWN',
+      category: 'articles',
       description: 'Analysis of LNG contract obligations, supply disruptions, and power sector vulnerabilities in Pakistan.',
       sortOrder: 1
     },
@@ -287,6 +288,7 @@ const SEED_DATA = {
       publisher: 'The News on Sunday · Special Report',
       url: 'https://www.thenews.pk/tns/detail/1397737-our-remarkable-natural-gas-overshoot',
       badge: 'THE NEWS',
+      category: 'articles',
       description: 'An investigative review of Pakistan’s structural natural gas over-reliance and the urgent imperative for industrial phase-out.',
       sortOrder: 2
     },
@@ -295,18 +297,30 @@ const SEED_DATA = {
       title: 'Political Economy of Power, Energy, Climate and Justice',
       publisher: 'CAEA Research Publication (PDF)',
       url: 'https://drive.google.com/file/d/1LuXInnvuC11GMiHBM_NM4HoWxkRP_Fpa/view?usp=drive_link',
-      badge: 'PDF REPORT',
+      badge: 'RESEARCH REPORT',
+      category: 'research',
       description: 'Flagship policy report on power sector subsidies, circular debt, and the political ecology of fossil extraction.',
       sortOrder: 3
     },
     {
       id: 'flink-4',
       title: 'CAEA Climate Action & Energy Access Dashboard',
-      publisher: 'Interactive Data Platform',
-      url: 'https://dashboard.climateactionenergyaccess.org/',
+      publisher: 'Live Interactive Platform',
+      url: '/pages/our-analytics.html',
       badge: 'DATA DASHBOARD',
-      description: 'Real-time interactive dashboard tracking generation mix, LNG import costs, and fossil emissions across Pakistan.',
+      category: 'dashboard',
+      description: 'Interactive data portal for real-time energy capacity, transmission data, and emissions.',
       sortOrder: 4
+    },
+    {
+      id: 'flink-5',
+      title: 'Policy Analysis & Regulatory Briefs',
+      publisher: 'CAEA Policy Briefs',
+      url: '#',
+      badge: 'POLICY ANALYSIS',
+      category: 'policy',
+      description: 'Upcoming policy briefs, regulatory submissions to NEPRA, and power sector restructuring proposals.',
+      sortOrder: 5
     }
   ],
 
@@ -317,6 +331,7 @@ const SEED_DATA = {
       publisher: 'The News on Sunday · Special Report',
       url: 'https://www.thenews.com.pk/tns/detail/1023422-the-hidden-cost-of-development',
       badge: 'THE NEWS',
+      category: 'articles',
       description: 'Investigating the uncalculated social, ecological, and human costs of large-scale infrastructure and extractive projects in Pakistan.',
       sortOrder: 1
     },
@@ -326,6 +341,7 @@ const SEED_DATA = {
       publisher: 'The News on Sunday · Urban Ecology',
       url: 'https://www.thenews.com.pk/tns/detail/1074418-e-11-interchange-boon-or-bane',
       badge: 'THE NEWS',
+      category: 'articles',
       description: 'Critical analysis of urban displacement, car-centric road developments, and ecological disruption in Islamabad.',
       sortOrder: 2
     },
@@ -333,8 +349,9 @@ const SEED_DATA = {
       id: 'clink-3',
       title: 'Loss and displacement',
       publisher: 'The News on Sunday · Climate Justice',
-      url: 'https://www.thenews.com.pk/tns/detail/1390589-loss-and-displacement',
+      url: 'https://www.thenews.pk/tns/detail/1390589-loss-and-displacement',
       badge: 'THE NEWS',
+      category: 'articles',
       description: 'Frontline field reporting on communities experiencing climate catastrophe, involuntary displacement, and loss of sovereignty.',
       sortOrder: 3
     },
@@ -342,10 +359,51 @@ const SEED_DATA = {
       id: 'clink-4',
       title: 'The development scarcity',
       publisher: 'The News on Sunday · Political Economy',
-      url: 'https://www.thenews.com.pk/tns/detail/1292148-the-development-scarcity',
+      url: 'https://www.thenews.pk/tns/detail/1292148-the-development-scarcity',
       badge: 'THE NEWS',
+      category: 'articles',
       description: 'Investigating manufactured resource scarcity, unequal distribution of energy and water, and structural vulnerability.',
       sortOrder: 4
+    },
+    {
+      id: 'clink-5',
+      title: 'Living Landscapes & Community Water Rights',
+      publisher: 'CAEA Field Research',
+      url: '#',
+      badge: 'RESEARCH & DOCUMENTATION',
+      category: 'research',
+      description: 'Ongoing field investigations documenting the political ecology of the Indus Basin and community water sovereignty.',
+      sortOrder: 5
+    },
+    {
+      id: 'clink-6',
+      title: 'Legal Frameworks for Climate Loss & Damage in Pakistan',
+      publisher: 'CAEA Legal & Policy Team',
+      url: '#',
+      badge: 'REPORTS',
+      category: 'reports',
+      description: 'Policy frameworks evaluating constitutional rights, environmental tribunals, and state accountability for displaced populations.',
+      sortOrder: 6
+    },
+    {
+      id: 'clink-7',
+      title: 'Voices from the Frontlines: Lake Manchar & Beyond',
+      publisher: 'Visual & Audio Storytelling Archive',
+      url: '#',
+      badge: 'MULTIMEDIA STORIES',
+      category: 'multimedia',
+      description: 'Interactive photo essays, community audio testimonies, and visual archives capturing the lived realities of climate-hit ecologies.',
+      sortOrder: 7
+    },
+    {
+      id: 'clink-8',
+      title: 'Defending Ecologies & Community Sovereignty',
+      publisher: 'CAEA Movement Building & Advocacy',
+      url: '#',
+      badge: 'CAMPAIGNS',
+      category: 'campaigns',
+      description: 'Grassroots mobilization campaigns, community kacheris, and participatory climate justice dialogues across Pakistan.',
+      sortOrder: 8
     }
   ],
 
@@ -739,42 +797,39 @@ const SEED_DATA = {
   textileCards: [
     {
       id: 'tex-1',
-      title: 'Fashion and Fossil Fuels',
-      description: 'Climate Action & Energy Access (CAEA) is a Pakistan-based research and advocacy institute committed to transparent supply chain accountability.',
-      tag: 'water',
-      btnText: 'WATCH NOW',
-      targetOpportunity: 'Textile Watch',
-      videoUrl: '',
-      image: 'assets/Hero-image.png',
-      orderIndex: 1,
-      sortOrder: 1,
-      active: true
+      title: 'Fashion and Fossil Fuels: Supply Chain Investigation',
+      publisher: 'CAEA Research Publication',
+      category: 'Research & Reports',
+      url: 'https://drive.google.com/file/d/1LuXInnvuC11GMiHBM_NM4HoWxkRP_Fpa/view?usp=drive_link',
+      description: "Tracing synthetic fiber reliance, coal-fired industrial captive power plants, and supply chain accountability across Pakistan's textile hubs.",
+      sortOrder: 1
     },
     {
       id: 'tex-2',
-      title: 'Fashion and Fossil Fuels',
+      title: 'The Carbon Thread: Fast Fashion Exploitation',
+      publisher: 'The News on Sunday',
+      category: 'Article',
+      url: 'https://www.thenews.pk/tns/detail/1023422-the-hidden-cost-of-development',
       description: 'Investigating synthetic fiber reliance, coal-fired industrial captive power plants, and fair wage transitions for garment workers across industrial zones.',
-      tag: 'land',
-      btnText: 'WATCH NOW',
-      targetOpportunity: 'Textile Watch',
-      videoUrl: '',
-      image: 'assets/how-water-became-power.jpg',
-      orderIndex: 2,
-      sortOrder: 2,
-      active: true
+      sortOrder: 2
     },
     {
       id: 'tex-3',
-      title: 'Fashion and Fossil Fuels',
-      description: "Advocating for clean industrial energy microgrids, zero liquid discharge standards, and community-led environmental auditing in textile hubs.",
-      tag: 'hydropower',
-      btnText: 'WATCH NOW',
-      targetOpportunity: 'Textile Watch',
-      videoUrl: '',
-      image: 'assets/how-water-became-power-ai.jpg',
-      orderIndex: 3,
-      sortOrder: 3,
-      active: true
+      title: 'Garment Workers & Community Testimonies',
+      publisher: 'CAEA Field Briefing',
+      category: 'Testimonials',
+      url: '#apply',
+      description: 'First-hand oral accounts and video recordings from garment workers and fenceline communities living along polluted industrial drainage canals.',
+      sortOrder: 3
+    },
+    {
+      id: 'tex-4',
+      title: "Demand Clean Energy & Fair Wages in Pakistan's Textile Sector",
+      publisher: 'CAEA Public Action',
+      category: 'Sign Our Petition',
+      url: '#apply',
+      description: 'Join our urgent public campaign petition demanding mandatory solarization of textile power, zero liquid discharge, and living wage protections.',
+      sortOrder: 4
     }
   ],
 
@@ -959,6 +1014,9 @@ class CAEADataStore {
         if (d.activities) localStorage.setItem(STORAGE_KEYS.ACTIVITIES, JSON.stringify(d.activities));
         if (d.people) localStorage.setItem(STORAGE_KEYS.PEOPLE, JSON.stringify(d.people));
         if (d.articles) localStorage.setItem(STORAGE_KEYS.ARTICLES, JSON.stringify(d.articles));
+        if (d.fossil_article_links) localStorage.setItem(STORAGE_KEYS.FOSSIL_LINKS, JSON.stringify(d.fossil_article_links));
+        if (d.climate_article_links) localStorage.setItem(STORAGE_KEYS.CLIMATE_LINKS, JSON.stringify(d.climate_article_links));
+        if (d.textile_cards) localStorage.setItem(STORAGE_KEYS.TEXTILE_CARDS, JSON.stringify(d.textile_cards));
         if (d.opportunities) localStorage.setItem(STORAGE_KEYS.OPPORTUNITIES, JSON.stringify(d.opportunities));
         if (d.applications) localStorage.setItem(STORAGE_KEYS.APPLICATIONS, JSON.stringify(d.applications));
         if (d.media) localStorage.setItem(STORAGE_KEYS.MEDIA, JSON.stringify(d.media));
@@ -1221,7 +1279,11 @@ class CAEADataStore {
       case 'map': return STORAGE_KEYS.MAP_PINS;
       case 'textilecards':
       case 'textile_cards':
-      case 'textile': return STORAGE_KEYS.TEXTILE_CARDS;
+      case 'textile':
+      case 'fastfashion':
+      case 'fast_fashion':
+      case 'fastfashioncards':
+      case 'fast_fashion_cards': return STORAGE_KEYS.TEXTILE_CARDS;
       case 'climatereports':
       case 'climate_reports':
       case 'climatereport': return STORAGE_KEYS.CLIMATE_REPORTS;
@@ -1241,6 +1303,7 @@ class CAEADataStore {
     if (c === 'settings' || c === 'pagesettings') return 'page_settings';
     if (c === 'fossilarticlelinks' || c === 'fossillinks' || c === 'fossil_article_links') return 'fossil_article_links';
     if (c === 'climatearticlelinks' || c === 'climatelinks' || c === 'climate_article_links') return 'climate_article_links';
+    if (c === 'textilecards' || c === 'textile_cards' || c === 'textile' || c === 'fastfashion' || c === 'fast_fashion' || c === 'fastfashioncards' || c === 'fast_fashion_cards') return 'textile_cards';
     return c;
   }
 
@@ -1250,7 +1313,7 @@ class CAEADataStore {
       const data = localStorage.getItem(key);
       let items = data ? JSON.parse(data) : [];
 
-      if ((!items || items.length === 0) && collection === 'textileCards') {
+      if ((!items || items.length === 0) && (collection === 'textileCards' || collection === 'textile_cards' || collection === 'fastFashionCards' || collection === 'textile' || collection === 'fastfashion')) {
         const settings = this.getPageSettings('ourWork');
         items = settings?.textile?.cards || SEED_DATA.textileCards || [];
       } else if ((!items || items.length === 0) && collection === 'climateReports') {
@@ -1402,6 +1465,7 @@ class CAEADataStore {
                    collection.toLowerCase().startsWith('opp') ? 'opp' :
                    collection.toLowerCase().startsWith('med') ? 'med' :
                    collection.toLowerCase().startsWith('map') || collection.toLowerCase().startsWith('pin') ? 'pin' :
+                   collection.toLowerCase().startsWith('tex') || collection.toLowerCase().startsWith('fast') ? 'tex' :
                    collection.substring(0, 3);
     const defaultSortOrder = (item.sortOrder !== undefined && item.sortOrder !== null && item.sortOrder !== '') ? parseInt(item.sortOrder, 10) : (items.length + 1);
     const newItem = {
@@ -1546,6 +1610,7 @@ class CAEADataStore {
     localStorage.setItem(STORAGE_KEYS.ARTICLES, JSON.stringify(SEED_DATA.articles));
     localStorage.setItem(STORAGE_KEYS.FOSSIL_LINKS, JSON.stringify(SEED_DATA.fossilArticleLinks));
     localStorage.setItem(STORAGE_KEYS.CLIMATE_LINKS, JSON.stringify(SEED_DATA.climateArticleLinks));
+    localStorage.setItem(STORAGE_KEYS.TEXTILE_CARDS, JSON.stringify(SEED_DATA.textileCards));
     localStorage.setItem(STORAGE_KEYS.OPPORTUNITIES, JSON.stringify(SEED_DATA.opportunities));
     localStorage.setItem(STORAGE_KEYS.APPLICATIONS, JSON.stringify(SEED_DATA.applications));
     localStorage.setItem(STORAGE_KEYS.MEDIA, JSON.stringify(SEED_DATA.media));
@@ -1564,6 +1629,7 @@ class CAEADataStore {
       articles: this.get('articles'),
       fossilArticleLinks: this.get('fossilArticleLinks'),
       climateArticleLinks: this.get('climateArticleLinks'),
+      textileCards: this.get('textileCards'),
       opportunities: this.get('opportunities'),
       applications: this.get('applications'),
       media: this.get('media'),
@@ -1591,6 +1657,9 @@ class CAEADataStore {
       if (data.climateArticleLinks && Array.isArray(data.climateArticleLinks)) {
         localStorage.setItem(STORAGE_KEYS.CLIMATE_LINKS, JSON.stringify(data.climateArticleLinks));
       }
+      if (data.textileCards && Array.isArray(data.textileCards)) {
+        localStorage.setItem(STORAGE_KEYS.TEXTILE_CARDS, JSON.stringify(data.textileCards));
+      }
       if (data.opportunities && Array.isArray(data.opportunities)) {
         localStorage.setItem(STORAGE_KEYS.OPPORTUNITIES, JSON.stringify(data.opportunities));
       }
@@ -1616,6 +1685,7 @@ class CAEADataStore {
           articles: data.articles || [],
           fossil_article_links: data.fossilArticleLinks || data.fossil_article_links || [],
           climate_article_links: data.climateArticleLinks || data.climate_article_links || [],
+          textile_cards: data.textileCards || data.textile_cards || [],
           opportunities: data.opportunities || [],
           applications: data.applications || [],
           media: data.media || [],

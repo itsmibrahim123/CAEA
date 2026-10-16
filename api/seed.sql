@@ -116,6 +116,47 @@ CREATE TABLE IF NOT EXISTS page_settings (
     updatedAt DATETIME
 );
 
+-- 9. Table: fossil_article_links
+CREATE TABLE IF NOT EXISTS fossil_article_links (
+    id VARCHAR(64) PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    publisher VARCHAR(255) NOT NULL,
+    badge VARCHAR(64) DEFAULT 'ARTICLE',
+    category VARCHAR(64) DEFAULT 'articles',
+    url VARCHAR(512) NOT NULL,
+    description TEXT,
+    sortOrder INTEGER DEFAULT 0,
+    createdAt DATETIME,
+    updatedAt DATETIME
+);
+
+-- 10. Table: climate_article_links
+CREATE TABLE IF NOT EXISTS climate_article_links (
+    id VARCHAR(64) PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    publisher VARCHAR(255) NOT NULL,
+    badge VARCHAR(64) DEFAULT 'THE NEWS',
+    category VARCHAR(64) DEFAULT 'articles',
+    url VARCHAR(512) NOT NULL,
+    description TEXT,
+    sortOrder INTEGER DEFAULT 0,
+    createdAt DATETIME,
+    updatedAt DATETIME
+);
+
+-- 11. Table: textile_cards
+CREATE TABLE IF NOT EXISTS textile_cards (
+    id VARCHAR(64) PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    publisher VARCHAR(255) DEFAULT 'CAEA',
+    category VARCHAR(64) DEFAULT 'Research & Reports',
+    url TEXT,
+    description TEXT,
+    sortOrder INTEGER DEFAULT 0,
+    createdAt DATETIME,
+    updatedAt DATETIME
+);
+
 -- ============================================================
 -- INITIAL SEED DATA
 -- ============================================================
@@ -143,3 +184,26 @@ INSERT INTO map_pins (id, city, leftPos, topPos, badge, description, createdAt, 
 ('pin-tarbela', 'TARBELA, KP', '56%', '20%', 'TARBELA, KP', 'At Tarbela Dam in Khyber Pakhtunkhwa, CAEA brings together community perspectives to examine megastructure energy promises vs. its human and ecological costs on land and riverine ecosystems.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('pin-jalalpur', 'JALALPUR, PB', '66%', '34%', 'JALALPUR, PB', 'Our team works closely with agrarian communities in Jalalpur advancing decentralized solar irrigation, groundwater conservation, and community energy governance.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('pin-khirthar', 'KHIRTHAR, SD', '42%', '68%', 'KHIRTHAR, SD', 'Across the Khirthar Range in Sindh, CAEA investigates the impacts of fossil fuel exploration, industrial wastewater, and climate shocks on indigenous communities and fragile desert ecologies.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+INSERT INTO fossil_article_links (id, title, publisher, badge, category, url, description, sortOrder, createdAt, updatedAt) VALUES
+('fl-1', 'RLNG disruption: a bane?', 'Dawn · Opinion & Analysis', 'DAWN', 'articles', 'https://www.dawn.com/news/1997175?utm_source=whatsapp', 'Published in Dawn · Investigative policy piece exploring Pakistan’s LNG disruptions.', 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('fl-2', 'Our Remarkable Natural Gas Overshoot', 'The News on Sunday · Special Report', 'THE NEWS', 'articles', 'https://www.thenews.pk/tns/detail/1397737-our-remarkable-natural-gas-overshoot', 'Published in The News on Sunday · In-depth breakdown of gas oversupply and stranded assets.', 2, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('fl-3', 'Political Economy of Power, Energy, Climate and Justice', 'CAEA Research Publication (PDF)', 'RESEARCH REPORT', 'research', 'https://drive.google.com/file/d/1LuXInnvuC11GMiHBM_NM4HoWxkRP_Fpa/view?usp=drive_link', 'Comprehensive research publication interrogating gas as a system of power in Pakistan.', 3, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('fl-4', 'CAEA Climate Action & Energy Access Dashboard', 'Live Interactive Platform', 'DATA DASHBOARD', 'dashboard', '/pages/our-analytics.html', 'Interactive data portal for real-time energy capacity, transmission data, and emissions.', 4, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('fl-5', 'Policy Analysis & Regulatory Briefs', 'CAEA Policy Briefs', 'POLICY ANALYSIS', 'policy', '#', 'Upcoming policy briefs, regulatory submissions to NEPRA, and power sector restructuring proposals.', 5, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+INSERT INTO climate_article_links (id, title, publisher, badge, category, url, description, sortOrder, createdAt, updatedAt) VALUES
+('cl-1', 'The hidden cost of development', 'The News on Sunday · Special Report', 'THE NEWS', 'articles', 'https://www.thenews.com.pk/tns/detail/1023422-the-hidden-cost-of-development', 'A critical look at the social and ecological costs behind infrastructure development.', 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('cl-2', 'E-11 interchange: boon or bane?', 'The News on Sunday · Urban Ecology', 'THE NEWS', 'articles', 'https://www.thenews.com.pk/tns/detail/1074418-e-11-interchange-boon-or-bane', 'Interrogating urban infrastructure, displacement, and environmental degradation.', 2, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('cl-3', 'Loss and displacement', 'The News on Sunday · Climate Justice', 'THE NEWS', 'articles', 'https://www.thenews.pk/tns/detail/1390589-loss-and-displacement', 'Stories and research on frontline communities facing climate displacement.', 3, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('cl-4', 'The development scarcity', 'The News on Sunday · Political Economy', 'THE NEWS', 'articles', 'https://www.thenews.pk/tns/detail/1292148-the-development-scarcity', 'Unpacking the structural inequities in Pakistan’s development paradigms.', 4, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('cl-5', 'Living Landscapes & Community Water Rights', 'CAEA Field Research', 'RESEARCH & DOCUMENTATION', 'research', '#', 'Ongoing field investigations documenting the political ecology of the Indus Basin and community water sovereignty.', 5, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('cl-6', 'Legal Frameworks for Climate Loss & Damage in Pakistan', 'CAEA Legal & Policy Team', 'REPORTS', 'reports', '#', 'Policy frameworks evaluating constitutional rights, environmental tribunals, and state accountability for displaced populations.', 6, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('cl-7', 'Voices from the Frontlines: Lake Manchar & Beyond', 'Visual & Audio Storytelling Archive', 'MULTIMEDIA STORIES', 'multimedia', '#', 'Interactive photo essays, community audio testimonies, and visual archives capturing the lived realities of climate-hit ecologies.', 7, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('cl-8', 'Defending Ecologies & Community Sovereignty', 'CAEA Movement Building & Advocacy', 'CAMPAIGNS', 'campaigns', '#', 'Grassroots mobilization campaigns, community kacheris, and participatory climate justice dialogues across Pakistan.', 8, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+INSERT INTO textile_cards (id, title, publisher, category, url, description, sortOrder, createdAt, updatedAt) VALUES
+('tex-1', 'Fashion and Fossil Fuels: Supply Chain Investigation', 'CAEA Research Publication', 'Research & Reports', 'https://drive.google.com/file/d/1LuXInnvuC11GMiHBM_NM4HoWxkRP_Fpa/view?usp=drive_link', 'Tracing synthetic fiber reliance, coal-fired industrial captive power plants, and supply chain accountability across Pakistan''s textile hubs.', 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('tex-2', 'The Carbon Thread: Fast Fashion Exploitation', 'The News on Sunday', 'Article', 'https://www.thenews.pk/tns/detail/1023422-the-hidden-cost-of-development', 'Investigating synthetic fiber reliance, coal-fired industrial captive power plants, and fair wage transitions for garment workers across industrial zones.', 2, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('tex-3', 'Garment Workers & Community Testimonies', 'CAEA Field Briefing', 'Testimonials', '#apply', 'First-hand oral accounts and video recordings from garment workers and fenceline communities living along polluted industrial drainage canals.', 3, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('tex-4', 'Demand Clean Energy & Fair Wages in Pakistan''s Textile Sector', 'CAEA Public Action', 'Sign Our Petition', '#apply', 'Join our urgent public campaign petition demanding mandatory solarization of textile power, zero liquid discharge, and living wage protections.', 4, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

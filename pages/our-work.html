@@ -209,12 +209,21 @@
               Access our investigative articles, op-eds in national press, and policy analyses exploring the political
               ecology and economic costs of natural gas and LNG dependence.
             </p>
+
+            <!-- Filter Pills for Fossil Fuel Phaseout -->
+            <div class="filter-pills-group" id="fossil-filters" style="margin-top: 20px;">
+              <button type="button" class="filter-pill active" data-filter="all">ALL</button>
+              <button type="button" class="filter-pill" data-filter="research">RESEARCH AND REPORTS</button>
+              <button type="button" class="filter-pill" data-filter="articles">ARTICLES &amp; INSIGHTS</button>
+              <button type="button" class="filter-pill" data-filter="dashboard">DATA DASHBOARD</button>
+              <button type="button" class="filter-pill" data-filter="policy">POLICY ANALYSIS</button>
+            </div>
           </div>
 
           <div class="fossil-links-grid" id="fossil-links-list">
             <!-- Dynamically populated from DataStore with robust fallback -->
             <a href="https://www.dawn.com/news/1997175?utm_source=whatsapp" target="_blank" rel="noopener noreferrer"
-              class="fossil-link-card">
+              class="fossil-link-card" data-category="articles">
               <div class="fossil-link-card-top">
                 <span class="fossil-link-badge">DAWN</span>
                 <span class="fossil-link-arrow" aria-hidden="true">&#8599;</span>
@@ -227,7 +236,7 @@
             </a>
 
             <a href="https://www.thenews.pk/tns/detail/1397737-our-remarkable-natural-gas-overshoot" target="_blank"
-              rel="noopener noreferrer" class="fossil-link-card">
+              rel="noopener noreferrer" class="fossil-link-card" data-category="articles">
               <div class="fossil-link-card-top">
                 <span class="fossil-link-badge">THE NEWS</span>
                 <span class="fossil-link-arrow" aria-hidden="true">&#8599;</span>
@@ -240,7 +249,7 @@
             </a>
 
             <a href="https://drive.google.com/file/d/1LuXInnvuC11GMiHBM_NM4HoWxkRP_Fpa/view?usp=drive_link"
-              target="_blank" rel="noopener noreferrer" class="fossil-link-card">
+              target="_blank" rel="noopener noreferrer" class="fossil-link-card" data-category="research">
               <div class="fossil-link-card-top">
                 <span class="fossil-link-badge">RESEARCH REPORT</span>
                 <span class="fossil-link-arrow" aria-hidden="true">&#8599;</span>
@@ -252,8 +261,7 @@
               <span class="fossil-link-action">View Document (PDF) &rarr;</span>
             </a>
 
-            <a href="https://dashboard.climateactionenergyaccess.org/" target="_blank" rel="noopener noreferrer"
-              class="fossil-link-card">
+            <a href="/pages/our-analytics.html" class="fossil-link-card" data-category="dashboard">
               <div class="fossil-link-card-top">
                 <span class="fossil-link-badge">DATA DASHBOARD</span>
                 <span class="fossil-link-arrow" aria-hidden="true">&#8599;</span>
@@ -263,6 +271,17 @@
               <p class="fossil-link-desc">Real-time interactive dashboard tracking generation mix, LNG import costs, and
                 fossil emissions across Pakistan.</p>
               <span class="fossil-link-action">Explore Live Dashboard &rarr;</span>
+            </a>
+
+            <a href="#" class="fossil-link-card" data-category="policy">
+              <div class="fossil-link-card-top">
+                <span class="fossil-link-badge">POLICY ANALYSIS</span>
+                <span class="fossil-link-arrow" aria-hidden="true">&#8599;</span>
+              </div>
+              <h4 class="fossil-link-title">Policy Analysis &amp; Regulatory Frameworks</h4>
+              <p class="fossil-link-publisher">CAEA Energy Policy Group</p>
+              <p class="fossil-link-desc">In-depth regulatory reviews analyzing power purchase agreements, capacity payment structures, and sovereign guarantee phase-outs.</p>
+              <span class="fossil-link-action">Read Policy Brief &rarr;</span>
             </a>
           </div>
         </div>
@@ -338,12 +357,22 @@
               Explore our investigative reports and national press publications examining development costs,
               displacement, and environmental justice across Pakistan.
             </p>
+
+            <!-- Filter Pills for Climate Justice -->
+            <div class="filter-pills-group" id="climate-filters" style="margin-top: 20px;">
+              <button type="button" class="filter-pill active" data-filter="all">ALL</button>
+              <button type="button" class="filter-pill" data-filter="research">RESEARCH AND DOCUMENTATION</button>
+              <button type="button" class="filter-pill" data-filter="reports">REPORTS</button>
+              <button type="button" class="filter-pill" data-filter="articles">ARTICLES</button>
+              <button type="button" class="filter-pill" data-filter="multimedia">MULTIMEDIA STORIES</button>
+              <button type="button" class="filter-pill" data-filter="campaigns">CAMPAIGNS</button>
+            </div>
           </div>
 
           <div class="fossil-links-grid" id="climate-links-list">
             <!-- Dynamically populated from DataStore with robust fallback -->
             <a href="https://www.thenews.com.pk/tns/detail/1023422-the-hidden-cost-of-development" target="_blank"
-              rel="noopener noreferrer" class="fossil-link-card climate-link-card">
+              rel="noopener noreferrer" class="fossil-link-card climate-link-card" data-category="articles">
               <div class="fossil-link-card-top">
                 <span class="fossil-link-badge climate-link-badge">THE NEWS</span>
                 <span class="fossil-link-arrow" aria-hidden="true">&#8599;</span>
@@ -356,7 +385,7 @@
             </a>
 
             <a href="https://www.thenews.com.pk/tns/detail/1074418-e-11-interchange-boon-or-bane" target="_blank"
-              rel="noopener noreferrer" class="fossil-link-card climate-link-card">
+              rel="noopener noreferrer" class="fossil-link-card climate-link-card" data-category="articles">
               <div class="fossil-link-card-top">
                 <span class="fossil-link-badge climate-link-badge">THE NEWS</span>
                 <span class="fossil-link-arrow" aria-hidden="true">&#8599;</span>
@@ -369,7 +398,7 @@
             </a>
 
             <a href="https://www.thenews.com.pk/tns/detail/1390589-loss-and-displacement" target="_blank"
-              rel="noopener noreferrer" class="fossil-link-card climate-link-card">
+              rel="noopener noreferrer" class="fossil-link-card climate-link-card" data-category="articles">
               <div class="fossil-link-card-top">
                 <span class="fossil-link-badge climate-link-badge">THE NEWS</span>
                 <span class="fossil-link-arrow" aria-hidden="true">&#8599;</span>
@@ -382,7 +411,7 @@
             </a>
 
             <a href="https://www.thenews.com.pk/tns/detail/1292148-the-development-scarcity" target="_blank"
-              rel="noopener noreferrer" class="fossil-link-card climate-link-card">
+              rel="noopener noreferrer" class="fossil-link-card climate-link-card" data-category="articles">
               <div class="fossil-link-card-top">
                 <span class="fossil-link-badge climate-link-badge">THE NEWS</span>
                 <span class="fossil-link-arrow" aria-hidden="true">&#8599;</span>
@@ -392,6 +421,50 @@
               <p class="fossil-link-desc">Investigating manufactured resource scarcity, unequal distribution of energy
                 and water, and structural vulnerability.</p>
               <span class="fossil-link-action climate-link-action">Read on The News &rarr;</span>
+            </a>
+
+            <a href="#" class="fossil-link-card climate-link-card" data-category="research">
+              <div class="fossil-link-card-top">
+                <span class="fossil-link-badge climate-link-badge">RESEARCH &amp; DOCUMENTATION</span>
+                <span class="fossil-link-arrow" aria-hidden="true">&#8599;</span>
+              </div>
+              <h4 class="fossil-link-title">Living Landscapes &amp; Community Water Rights</h4>
+              <p class="fossil-link-publisher">CAEA Field Research</p>
+              <p class="fossil-link-desc">Ongoing field investigations documenting the political ecology of the Indus Basin and community water sovereignty.</p>
+              <span class="fossil-link-action climate-link-action">View Documentation &rarr;</span>
+            </a>
+
+            <a href="#" class="fossil-link-card climate-link-card" data-category="reports">
+              <div class="fossil-link-card-top">
+                <span class="fossil-link-badge climate-link-badge">REPORTS</span>
+                <span class="fossil-link-arrow" aria-hidden="true">&#8599;</span>
+              </div>
+              <h4 class="fossil-link-title">Legal Frameworks for Climate Loss &amp; Damage in Pakistan</h4>
+              <p class="fossil-link-publisher">CAEA Legal &amp; Policy Team</p>
+              <p class="fossil-link-desc">Policy frameworks evaluating constitutional rights, environmental tribunals, and state accountability for displaced populations.</p>
+              <span class="fossil-link-action climate-link-action">Read Legal Report &rarr;</span>
+            </a>
+
+            <a href="#" class="fossil-link-card climate-link-card" data-category="multimedia">
+              <div class="fossil-link-card-top">
+                <span class="fossil-link-badge climate-link-badge">MULTIMEDIA STORIES</span>
+                <span class="fossil-link-arrow" aria-hidden="true">&#8599;</span>
+              </div>
+              <h4 class="fossil-link-title">Voices from the Frontlines: Lake Manchar &amp; Beyond</h4>
+              <p class="fossil-link-publisher">Visual &amp; Audio Storytelling Archive</p>
+              <p class="fossil-link-desc">Interactive photo essays, community audio testimonies, and visual archives capturing the lived realities of climate-hit ecologies.</p>
+              <span class="fossil-link-action climate-link-action">Explore Stories &rarr;</span>
+            </a>
+
+            <a href="#" class="fossil-link-card climate-link-card" data-category="campaigns">
+              <div class="fossil-link-card-top">
+                <span class="fossil-link-badge climate-link-badge">CAMPAIGNS</span>
+                <span class="fossil-link-arrow" aria-hidden="true">&#8599;</span>
+              </div>
+              <h4 class="fossil-link-title">Defending Ecologies &amp; Community Sovereignty</h4>
+              <p class="fossil-link-publisher">CAEA Movement Building &amp; Advocacy</p>
+              <p class="fossil-link-desc">Grassroots mobilization campaigns, community kacheris, and participatory climate justice dialogues across Pakistan.</p>
+              <span class="fossil-link-action climate-link-action">Join Campaign &rarr;</span>
             </a>
           </div>
         </div>
@@ -468,60 +541,18 @@
               you.
             </p>
 
-            <!-- Filter Pills for Textile -->
+            <!-- Filter Pills for Fast Fashion -->
             <div class="filter-pills-group" id="textile-filters" style="margin-top: 20px;">
-              <button class="filter-pill active" data-filter="all">ALL</button>
-              <button class="filter-pill" data-filter="water">WATER</button>
-              <button class="filter-pill" data-filter="land">LAND</button>
-              <button class="filter-pill" data-filter="hydropower">HYDROPOWER</button>
+              <button type="button" class="filter-pill active" data-filter="all">ALL</button>
+              <button type="button" class="filter-pill" data-filter="research">RESEARCH &amp; REPORTS</button>
+              <button type="button" class="filter-pill" data-filter="article">ARTICLE</button>
+              <button type="button" class="filter-pill" data-filter="testimonials">TESTIMONIALS</button>
+              <button type="button" class="filter-pill" data-filter="petition">SIGN OUR PETITION</button>
             </div>
           </div>
 
           <div class="instagram-cards-grid" id="textile-cards-grid">
-            <!-- Card 1 -->
-            <div class="insta-card">
-              <div>
-                <h4 class="insta-card-title">Fashion and Fossil Fuels</h4>
-                <p class="insta-card-desc">
-                  Climate Action &amp; Energy Access (CAEA) is a Pakistan-based research and advocacy institute
-                  committed to transparent supply chain accountability.
-                </p>
-              </div>
-              <a href="#video-modal" class="btn-watch-now" data-apply-btn data-opportunity-title="Textile Watch">
-                <span>WATCH NOW</span>
-                <span>&gt;</span>
-              </a>
-            </div>
-
-            <!-- Card 2 -->
-            <div class="insta-card">
-              <div>
-                <h4 class="insta-card-title">Fashion and Fossil Fuels</h4>
-                <p class="insta-card-desc">
-                  Investigating synthetic fiber reliance, coal-fired industrial captive power plants, and fair wage
-                  transitions for garment workers across industrial zones.
-                </p>
-              </div>
-              <a href="#video-modal" class="btn-watch-now" data-apply-btn data-opportunity-title="Textile Watch">
-                <span>WATCH NOW</span>
-                <span>&gt;</span>
-              </a>
-            </div>
-
-            <!-- Card 3 -->
-            <div class="insta-card">
-              <div>
-                <h4 class="insta-card-title">Fashion and Fossil Fuels</h4>
-                <p class="insta-card-desc">
-                  Advocating for clean industrial energy microgrids, zero liquid discharge standards, and community-led
-                  environmental auditing in textile hubs.
-                </p>
-              </div>
-              <a href="#video-modal" class="btn-watch-now" data-apply-btn data-opportunity-title="Textile Watch">
-                <span>WATCH NOW</span>
-                <span>&gt;</span>
-              </a>
-            </div>
+            <!-- Dynamically populated from database only -->
           </div>
         </div>
       </section>

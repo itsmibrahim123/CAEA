@@ -166,6 +166,7 @@ class Database {
             title VARCHAR(255) NOT NULL,
             publisher VARCHAR(255) NOT NULL,
             badge VARCHAR(64) DEFAULT 'ARTICLE',
+            category VARCHAR(64) DEFAULT 'articles',
             url TEXT NOT NULL,
             description TEXT,
             sortOrder INTEGER DEFAULT 0,
@@ -179,7 +180,21 @@ class Database {
             title VARCHAR(255) NOT NULL,
             publisher VARCHAR(255) NOT NULL,
             badge VARCHAR(64) DEFAULT 'THE NEWS',
+            category VARCHAR(64) DEFAULT 'articles',
             url TEXT NOT NULL,
+            description TEXT,
+            sortOrder INTEGER DEFAULT 0,
+            createdAt DATETIME,
+            updatedAt DATETIME
+        );");
+
+        // Table: textile_cards (Fast Fashion Article Links & Publications)
+        $pdo->exec("CREATE TABLE IF NOT EXISTS textile_cards (
+            id VARCHAR(64) PRIMARY KEY,
+            title VARCHAR(255) NOT NULL,
+            publisher VARCHAR(255) DEFAULT 'CAEA',
+            category VARCHAR(64) DEFAULT 'Research & Reports',
+            url TEXT,
             description TEXT,
             sortOrder INTEGER DEFAULT 0,
             createdAt DATETIME,
@@ -194,7 +209,7 @@ class Database {
         );");
 
         // Ensure sortOrder column exists on existing database tables
-        $tablesWithSortOrder = ['activities', 'people', 'articles', 'opportunities', 'media', 'map_pins', 'fossil_article_links', 'climate_article_links'];
+        $tablesWithSortOrder = ['activities', 'people', 'articles', 'opportunities', 'media', 'map_pins', 'fossil_article_links', 'climate_article_links', 'textile_cards'];
         foreach ($tablesWithSortOrder as $tbl) {
             try {
                 $pdo->exec("ALTER TABLE {$tbl} ADD COLUMN sortOrder INTEGER DEFAULT 0");
@@ -202,6 +217,32 @@ class Database {
                 // Column already exists
             }
         }
+
+        // Ensure category column exists on fossil_article_links and climate_article_links
+        try {
+            $pdo->exec("ALTER TABLE fossil_article_links ADD COLUMN category VARCHAR(64) DEFAULT 'articles'");
+        } catch (Exception $e) {}
+
+        try {
+            $pdo->exec("ALTER TABLE climate_article_links ADD COLUMN category VARCHAR(64) DEFAULT 'articles'");
+        } catch (Exception $e) {}
+
+        // Ensure publisher and url columns exist on textile_cards
+        try {
+            $pdo->exec("ALTER TABLE textile_cards ADD COLUMN publisher VARCHAR(255) DEFAULT 'CAEA'");
+        } catch (Exception $e) {}
+
+        try {
+            $pdo->exec("ALTER TABLE textile_cards ADD COLUMN url TEXT");
+        } catch (Exception $e) {}
+
+        // Migrate and backfill existing category tags if missing or default
+        try {
+            $pdo->exec("UPDATE fossil_article_links SET category = 'research' WHERE badge LIKE '%REPORT%' OR badge LIKE '%PDF%' OR url LIKE '%.pdf%' OR url LIKE '%drive.google%'");
+            $pdo->exec("UPDATE fossil_article_links SET category = 'dashboard' WHERE badge LIKE '%DASHBOARD%' OR url LIKE '%dashboard%' OR url LIKE '%analytics%'");
+            $pdo->exec("UPDATE fossil_article_links SET category = 'policy' WHERE badge LIKE '%POLICY%' OR title LIKE '%Policy%'");
+            $pdo->exec("UPDATE fossil_article_links SET category = 'articles' WHERE category IS NULL OR category = ''");
+        } catch (Exception $e) {}
 
         // Ensure images column exists for activities gallery slideshow
         try {
@@ -217,20 +258,65 @@ class Database {
             // Column already exists
         }
 
+        // Ensure fossil_article_links has default seed data if table is empty
+        try {
+            $flCount = (int)$pdo->query("SELECT COUNT(*) FROM fossil_article_links")->fetchColumn();
+            if ($flCount === 0) {
+                $now = date('Y-m-d H:i:s');
+                $stmt = $pdo->prepare("INSERT INTO fossil_article_links (id, title, publisher, badge, category, url, description, sortOrder, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                $fossilLinks = [
+                    ['fl-1', 'RLNG disruption: a bane?', 'Dawn · Opinion & Analysis', 'DAWN', 'articles', 'https://www.dawn.com/news/1997175?utm_source=whatsapp', 'Analysis of LNG contract obligations, supply disruptions, and power sector vulnerabilities in Pakistan.', 1],
+                    ['fl-2', 'Our Remarkable Natural Gas Overshoot', 'The News on Sunday · Special Report', 'THE NEWS', 'articles', 'https://www.thenews.pk/tns/detail/1397737-our-remarkable-natural-gas-overshoot', 'An investigative review of Pakistan’s structural natural gas over-reliance and the urgent imperative for industrial phase-out.', 2],
+                    ['fl-3', 'Political Economy of Power, Energy, Climate and Justice', 'CAEA Research Publication (PDF)', 'RESEARCH REPORT', 'research', 'https://drive.google.com/file/d/1LuXInnvuC11GMiHBM_NM4HoWxkRP_Fpa/view?usp=drive_link', 'Flagship research report on power sector subsidies, circular debt, and the political ecology of fossil extraction.', 3],
+                    ['fl-4', 'CAEA Climate Action & Energy Access Dashboard', 'Live Interactive Platform', 'DATA DASHBOARD', 'dashboard', '/pages/our-analytics.html', 'Interactive data portal for real-time energy capacity, transmission data, and emissions.', 4],
+                    ['fl-5', 'Policy Analysis & Regulatory Briefs', 'CAEA Policy Briefs', 'POLICY ANALYSIS', 'policy', '#', 'Upcoming policy briefs, regulatory submissions to NEPRA, and power sector restructuring proposals.', 5]
+                ];
+                foreach ($fossilLinks as $link) {
+                    $stmt->execute([$link[0], $link[1], $link[2], $link[3], $link[4], $link[5], $link[6], $link[7], $now, $now]);
+                }
+            }
+        } catch (Exception $e) {
+            // Non-critical seed fallback
+        }
+
         // Ensure climate_article_links has default seed data if table is empty
         try {
             $clCount = (int)$pdo->query("SELECT COUNT(*) FROM climate_article_links")->fetchColumn();
             if ($clCount === 0) {
                 $now = date('Y-m-d H:i:s');
-                $stmt = $pdo->prepare("INSERT INTO climate_article_links (id, title, publisher, badge, url, description, sortOrder, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                $stmt = $pdo->prepare("INSERT INTO climate_article_links (id, title, publisher, badge, category, url, description, sortOrder, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
                 $climateLinks = [
-                    ['cl-1', 'The hidden cost of development', 'The News on Sunday', 'THE NEWS', 'https://www.thenews.com.pk/tns/detail/1023422-the-hidden-cost-of-development', 'A critical look at the social and ecological costs behind infrastructure development.', 1],
-                    ['cl-2', 'E-11 interchange: boon or bane?', 'The News on Sunday', 'THE NEWS', 'https://www.thenews.com.pk/tns/detail/1074418-e-11-interchange-boon-or-bane', 'Interrogating urban infrastructure, displacement, and environmental degradation.', 2],
-                    ['cl-3', 'Loss and displacement', 'The News on Sunday', 'THE NEWS', 'https://www.thenews.pk/tns/detail/1390589-loss-and-displacement', 'Stories and research on frontline communities facing climate displacement.', 3],
-                    ['cl-4', 'The development scarcity', 'The News on Sunday', 'THE NEWS', 'https://www.thenews.pk/tns/detail/1292148-the-development-scarcity', 'Unpacking the structural inequities in Pakistan’s development paradigms.', 4]
+                    ['cl-1', 'The hidden cost of development', 'The News on Sunday · Special Report', 'THE NEWS', 'articles', 'https://www.thenews.com.pk/tns/detail/1023422-the-hidden-cost-of-development', 'A critical look at the social and ecological costs behind infrastructure development.', 1],
+                    ['cl-2', 'E-11 interchange: boon or bane?', 'The News on Sunday · Urban Ecology', 'THE NEWS', 'articles', 'https://www.thenews.com.pk/tns/detail/1074418-e-11-interchange-boon-or-bane', 'Interrogating urban infrastructure, displacement, and environmental degradation.', 2],
+                    ['cl-3', 'Loss and displacement', 'The News on Sunday · Climate Justice', 'THE NEWS', 'articles', 'https://www.thenews.pk/tns/detail/1390589-loss-and-displacement', 'Stories and research on frontline communities facing climate displacement.', 3],
+                    ['cl-4', 'The development scarcity', 'The News on Sunday · Political Economy', 'THE NEWS', 'articles', 'https://www.thenews.pk/tns/detail/1292148-the-development-scarcity', 'Unpacking the structural inequities in Pakistan’s development paradigms.', 4],
+                    ['cl-5', 'Living Landscapes & Community Water Rights', 'CAEA Field Research', 'RESEARCH & DOCUMENTATION', 'research', '#', 'Ongoing field investigations documenting the political ecology of the Indus Basin and community water sovereignty.', 5],
+                    ['cl-6', 'Legal Frameworks for Climate Loss & Damage in Pakistan', 'CAEA Legal & Policy Team', 'REPORTS', 'reports', '#', 'Policy frameworks evaluating constitutional rights, environmental tribunals, and state accountability for displaced populations.', 6],
+                    ['cl-7', 'Voices from the Frontlines: Lake Manchar & Beyond', 'Visual & Audio Storytelling Archive', 'MULTIMEDIA STORIES', 'multimedia', '#', 'Interactive photo essays, community audio testimonies, and visual archives capturing the lived realities of climate-hit ecologies.', 7],
+                    ['cl-8', 'Defending Ecologies & Community Sovereignty', 'CAEA Movement Building & Advocacy', 'CAMPAIGNS', 'campaigns', '#', 'Grassroots mobilization campaigns, community kacheris, and participatory climate justice dialogues across Pakistan.', 8]
                 ];
                 foreach ($climateLinks as $link) {
-                    $stmt->execute([$link[0], $link[1], $link[2], $link[3], $link[4], $link[5], $link[6], $now, $now]);
+                    $stmt->execute([$link[0], $link[1], $link[2], $link[3], $link[4], $link[5], $link[6], $link[7], $now, $now]);
+                }
+            }
+        } catch (Exception $e) {
+            // Non-critical seed fallback
+        }
+
+        // Ensure textile_cards has default seed data if table is empty
+        try {
+            $tcCount = (int)$pdo->query("SELECT COUNT(*) FROM textile_cards")->fetchColumn();
+            if ($tcCount === 0) {
+                $now = date('Y-m-d H:i:s');
+                $stmt = $pdo->prepare("INSERT INTO textile_cards (id, title, description, category, tag, btnText, targetOpportunity, videoUrl, image, sortOrder, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                $textileCards = [
+                    ['tex-1', 'Fashion and Fossil Fuels: Supply Chain Investigation', 'Tracing synthetic fiber reliance, coal-fired industrial captive power plants, and supply chain accountability across Pakistan\'s textile hubs.', 'Research & Reports', 'research', 'READ REPORT', 'Textile Sector Researcher', '', 'assets/Hero-image.png', 1],
+                    ['tex-2', 'The Carbon Thread: Fast Fashion Exploitation', 'Investigating synthetic fiber reliance, coal-fired industrial captive power plants, and fair wage transitions for garment workers across industrial zones.', 'Article', 'article', 'READ ARTICLE', 'Textile Watch', '', 'assets/how-water-became-power.jpg', 2],
+                    ['tex-3', 'Garment Workers & Community Testimonies', 'First-hand oral accounts and video recordings from garment workers and fenceline communities living along polluted industrial drainage canals.', 'Testimonials', 'testimonials', 'WATCH TESTIMONY', 'Textile Watch', '', 'assets/how-water-became-power-ai.jpg', 3],
+                    ['tex-4', 'Demand Clean Energy & Fair Wages in Pakistan\'s Textile Sector', 'Join our urgent public campaign petition demanding mandatory solarization of textile power, zero liquid discharge, and living wage protections.', 'Sign Our Petition', 'petition', 'SIGN PETITION', 'Textile Campaign Petition', '', 'assets/media/events/retreat/DSCF4154.JPG', 4]
+                ];
+                foreach ($textileCards as $card) {
+                    $stmt->execute([$card[0], $card[1], $card[2], $card[3], $card[4], $card[5], $card[6], $card[7], $card[8], $card[9], $now, $now]);
                 }
             }
         } catch (Exception $e) {
@@ -707,8 +793,9 @@ class Database {
             [
                 'id' => 'fl-1',
                 'title' => 'RLNG disruption: a bane?',
-                'publisher' => 'Dawn',
-                'badge' => 'ARTICLE',
+                'publisher' => 'Dawn · Opinion & Analysis',
+                'badge' => 'DAWN',
+                'category' => 'articles',
                 'url' => 'https://www.dawn.com/news/1997175?utm_source=whatsapp',
                 'description' => 'Published in Dawn · Investigative policy piece exploring Pakistan’s LNG disruptions.',
                 'sortOrder' => 1
@@ -716,8 +803,9 @@ class Database {
             [
                 'id' => 'fl-2',
                 'title' => 'Our Remarkable Natural Gas Overshoot',
-                'publisher' => 'The News on Sunday',
-                'badge' => 'ARTICLE',
+                'publisher' => 'The News on Sunday · Special Report',
+                'badge' => 'THE NEWS',
+                'category' => 'articles',
                 'url' => 'https://www.thenews.pk/tns/detail/1397737-our-remarkable-natural-gas-overshoot',
                 'description' => 'Published in The News on Sunday · In-depth breakdown of gas oversupply and stranded assets.',
                 'sortOrder' => 2
@@ -725,8 +813,9 @@ class Database {
             [
                 'id' => 'fl-3',
                 'title' => 'Political Economy of Power, Energy, Climate and Justice',
-                'publisher' => 'CAEA Research Report',
+                'publisher' => 'CAEA Research Publication (PDF)',
                 'badge' => 'RESEARCH REPORT',
+                'category' => 'research',
                 'url' => 'https://drive.google.com/file/d/1LuXInnvuC11GMiHBM_NM4HoWxkRP_Fpa/view?usp=drive_link',
                 'description' => 'Comprehensive research publication interrogating gas as a system of power in Pakistan.',
                 'sortOrder' => 3
@@ -735,16 +824,27 @@ class Database {
                 'id' => 'fl-4',
                 'title' => 'CAEA Climate Action & Energy Access Dashboard',
                 'publisher' => 'Live Interactive Platform',
-                'badge' => 'DASHBOARD',
-                'url' => 'https://dashboard.climateactionenergyaccess.org/',
+                'badge' => 'DATA DASHBOARD',
+                'category' => 'dashboard',
+                'url' => '/pages/our-analytics.html',
                 'description' => 'Interactive data portal for real-time energy capacity, transmission data, and emissions.',
                 'sortOrder' => 4
+            ],
+            [
+                'id' => 'fl-5',
+                'title' => 'Policy Analysis & Regulatory Briefs',
+                'publisher' => 'CAEA Policy Briefs',
+                'badge' => 'POLICY ANALYSIS',
+                'category' => 'policy',
+                'url' => '#',
+                'description' => 'Upcoming policy briefs, regulatory submissions to NEPRA, and power sector restructuring proposals.',
+                'sortOrder' => 5
             ]
         ];
 
-        $stmt = $pdo->prepare("INSERT INTO fossil_article_links (id, title, publisher, badge, url, description, sortOrder, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt = $pdo->prepare("INSERT INTO fossil_article_links (id, title, publisher, badge, category, url, description, sortOrder, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         foreach ($fossilLinks as $link) {
-            $stmt->execute([$link['id'], $link['title'], $link['publisher'], $link['badge'], $link['url'], $link['description'], $link['sortOrder'], $now, $now]);
+            $stmt->execute([$link['id'], $link['title'], $link['publisher'], $link['badge'], $link['category'], $link['url'], $link['description'], $link['sortOrder'], $now, $now]);
         }
 
         // 8. Seed Climate Justice Article Links
@@ -752,8 +852,9 @@ class Database {
             [
                 'id' => 'cl-1',
                 'title' => 'The hidden cost of development',
-                'publisher' => 'The News on Sunday',
+                'publisher' => 'The News on Sunday · Special Report',
                 'badge' => 'THE NEWS',
+                'category' => 'articles',
                 'url' => 'https://www.thenews.com.pk/tns/detail/1023422-the-hidden-cost-of-development',
                 'description' => 'A critical look at the social and ecological costs behind infrastructure development.',
                 'sortOrder' => 1
@@ -761,8 +862,9 @@ class Database {
             [
                 'id' => 'cl-2',
                 'title' => 'E-11 interchange: boon or bane?',
-                'publisher' => 'The News on Sunday',
+                'publisher' => 'The News on Sunday · Urban Ecology',
                 'badge' => 'THE NEWS',
+                'category' => 'articles',
                 'url' => 'https://www.thenews.com.pk/tns/detail/1074418-e-11-interchange-boon-or-bane',
                 'description' => 'Interrogating urban infrastructure, displacement, and environmental degradation.',
                 'sortOrder' => 2
@@ -770,8 +872,9 @@ class Database {
             [
                 'id' => 'cl-3',
                 'title' => 'Loss and displacement',
-                'publisher' => 'The News on Sunday',
+                'publisher' => 'The News on Sunday · Climate Justice',
                 'badge' => 'THE NEWS',
+                'category' => 'articles',
                 'url' => 'https://www.thenews.pk/tns/detail/1390589-loss-and-displacement',
                 'description' => 'Stories and research on frontline communities facing climate displacement.',
                 'sortOrder' => 3
@@ -779,17 +882,103 @@ class Database {
             [
                 'id' => 'cl-4',
                 'title' => 'The development scarcity',
-                'publisher' => 'The News on Sunday',
+                'publisher' => 'The News on Sunday · Political Economy',
                 'badge' => 'THE NEWS',
+                'category' => 'articles',
                 'url' => 'https://www.thenews.pk/tns/detail/1292148-the-development-scarcity',
                 'description' => 'Unpacking the structural inequities in Pakistan’s development paradigms.',
+                'sortOrder' => 4
+            ],
+            [
+                'id' => 'cl-5',
+                'title' => 'Living Landscapes & Community Water Rights',
+                'publisher' => 'CAEA Field Research',
+                'badge' => 'RESEARCH & DOCUMENTATION',
+                'category' => 'research',
+                'url' => '#',
+                'description' => 'Ongoing field investigations documenting the political ecology of the Indus Basin and community water sovereignty.',
+                'sortOrder' => 5
+            ],
+            [
+                'id' => 'cl-6',
+                'title' => 'Legal Frameworks for Climate Loss & Damage in Pakistan',
+                'publisher' => 'CAEA Legal & Policy Team',
+                'badge' => 'REPORTS',
+                'category' => 'reports',
+                'url' => '#',
+                'description' => 'Policy frameworks evaluating constitutional rights, environmental tribunals, and state accountability for displaced populations.',
+                'sortOrder' => 6
+            ],
+            [
+                'id' => 'cl-7',
+                'title' => 'Voices from the Frontlines: Lake Manchar & Beyond',
+                'publisher' => 'Visual & Audio Storytelling Archive',
+                'badge' => 'MULTIMEDIA STORIES',
+                'category' => 'multimedia',
+                'url' => '#',
+                'description' => 'Interactive photo essays, community audio testimonies, and visual archives capturing the lived realities of climate-hit ecologies.',
+                'sortOrder' => 7
+            ],
+            [
+                'id' => 'cl-8',
+                'title' => 'Defending Ecologies & Community Sovereignty',
+                'publisher' => 'CAEA Movement Building & Advocacy',
+                'badge' => 'CAMPAIGNS',
+                'category' => 'campaigns',
+                'url' => '#',
+                'description' => 'Grassroots mobilization campaigns, community kacheris, and participatory climate justice dialogues across Pakistan.',
+                'sortOrder' => 8
+            ]
+        ];
+
+        $stmt = $pdo->prepare("INSERT INTO climate_article_links (id, title, publisher, badge, category, url, description, sortOrder, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        foreach ($climateLinks as $link) {
+            $stmt->execute([$link['id'], $link['title'], $link['publisher'], $link['badge'], $link['category'], $link['url'], $link['description'], $link['sortOrder'], $now, $now]);
+        }
+
+        // 9. Seed Textile & Fast Fashion Article Links
+        $textileCards = [
+            [
+                'id' => 'tex-1',
+                'title' => 'Fashion and Fossil Fuels: Supply Chain Investigation',
+                'publisher' => 'CAEA Research Publication',
+                'category' => 'Research & Reports',
+                'url' => 'https://drive.google.com/file/d/1LuXInnvuC11GMiHBM_NM4HoWxkRP_Fpa/view?usp=drive_link',
+                'description' => "Tracing synthetic fiber reliance, coal-fired industrial captive power plants, and supply chain accountability across Pakistan's textile hubs.",
+                'sortOrder' => 1
+            ],
+            [
+                'id' => 'tex-2',
+                'title' => 'The Carbon Thread: Fast Fashion Exploitation',
+                'publisher' => 'The News on Sunday',
+                'category' => 'Article',
+                'url' => 'https://www.thenews.pk/tns/detail/1023422-the-hidden-cost-of-development',
+                'description' => 'Investigating synthetic fiber reliance, coal-fired industrial captive power plants, and fair wage transitions for garment workers across industrial zones.',
+                'sortOrder' => 2
+            ],
+            [
+                'id' => 'tex-3',
+                'title' => 'Garment Workers & Community Testimonies',
+                'publisher' => 'CAEA Field Briefing',
+                'category' => 'Testimonials',
+                'url' => '#apply',
+                'description' => 'First-hand oral accounts and video recordings from garment workers and fenceline communities living along polluted industrial drainage canals.',
+                'sortOrder' => 3
+            ],
+            [
+                'id' => 'tex-4',
+                'title' => "Demand Clean Energy & Fair Wages in Pakistan's Textile Sector",
+                'publisher' => 'CAEA Public Action',
+                'category' => 'Sign Our Petition',
+                'url' => '#apply',
+                'description' => 'Join our urgent public campaign petition demanding mandatory solarization of textile power, zero liquid discharge, and living wage protections.',
                 'sortOrder' => 4
             ]
         ];
 
-        $stmt = $pdo->prepare("INSERT INTO climate_article_links (id, title, publisher, badge, url, description, sortOrder, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        foreach ($climateLinks as $link) {
-            $stmt->execute([$link['id'], $link['title'], $link['publisher'], $link['badge'], $link['url'], $link['description'], $link['sortOrder'], $now, $now]);
+        $stmt = $pdo->prepare("INSERT INTO textile_cards (id, title, publisher, category, url, description, sortOrder, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        foreach ($textileCards as $card) {
+            $stmt->execute([$card['id'], $card['title'], $card['publisher'], $card['category'], $card['url'], $card['description'], $card['sortOrder'], $now, $now]);
         }
     }
 }
