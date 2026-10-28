@@ -751,7 +751,7 @@ const SEED_DATA = {
       id: 'pin-hunza',
       city: 'HUNZA, GB',
       left: '64%',
-      top: '6%',
+      top: '7%',
       badge: 'HUNZA, GB',
       description: 'Our team comes from diverse backgrounds across Gilgit-Baltistan. Climate Action & Energy Access (CAEA) is committed to empowering mountain communities through renewable energy and local climate resilience.',
       sortOrder: 1
@@ -759,8 +759,8 @@ const SEED_DATA = {
     {
       id: 'pin-dhirkot',
       city: 'DHIRKOT, AJK',
-      left: '70%',
-      top: '18%',
+      left: '66%',
+      top: '27.5%',
       badge: 'DHIRKOT, AJK',
       description: 'In Dhirkot, Azad Kashmir, CAEA works alongside local community organizers on watershed protection, community forestry, and decentralized clean energy solutions for mountain terrains.',
       sortOrder: 2
@@ -768,8 +768,8 @@ const SEED_DATA = {
     {
       id: 'pin-tarbela',
       city: 'TARBELA, KP',
-      left: '56%',
-      top: '20%',
+      left: '59%',
+      top: '25%',
       badge: 'TARBELA, KP',
       description: 'At Tarbela Dam in Khyber Pakhtunkhwa, CAEA brings together community perspectives to examine megastructure energy promises vs. its human and ecological costs on land and riverine ecosystems.',
       sortOrder: 3
@@ -777,7 +777,7 @@ const SEED_DATA = {
     {
       id: 'pin-jalalpur',
       city: 'JALALPUR, PB',
-      left: '66%',
+      left: '63.5%',
       top: '34%',
       badge: 'JALALPUR, PB',
       description: 'Our team works closely with agrarian communities in Jalalpur advancing decentralized solar irrigation, groundwater conservation, and community energy governance.',
@@ -786,8 +786,8 @@ const SEED_DATA = {
     {
       id: 'pin-khirthar',
       city: 'KHIRTHAR, SD',
-      left: '42%',
-      top: '68%',
+      left: '36%',
+      top: '76%',
       badge: 'KHIRTHAR, SD',
       description: 'Across the Khirthar Range in Sindh, CAEA investigates the impacts of fossil fuel exploration, industrial wastewater, and climate shocks on indigenous communities and fragile desert ecologies.',
       sortOrder: 5
@@ -1137,7 +1137,7 @@ class CAEADataStore {
 
   init() {
     const DATA_VERSION_KEY = 'caea_data_version';
-    const CURRENT_VERSION = 'v24_directory_reorganization';
+    const CURRENT_VERSION = 'v25_map_pins_update';
     const storedVersion = localStorage.getItem(DATA_VERSION_KEY);
 
     if (storedVersion !== CURRENT_VERSION) {

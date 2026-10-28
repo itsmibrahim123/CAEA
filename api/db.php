@@ -653,30 +653,30 @@ class Database {
                 'id' => 'pin-hunza',
                 'city' => 'HUNZA, GB',
                 'leftPos' => '64%',
-                'topPos' => '6%',
+                'topPos' => '7%',
                 'badge' => 'HUNZA, GB',
                 'description' => 'Our team comes from diverse backgrounds across Gilgit-Baltistan. Climate Action & Energy Access (CAEA) is committed to empowering mountain communities through renewable energy and local climate resilience.'
             ],
             [
                 'id' => 'pin-dhirkot',
                 'city' => 'DHIRKOT, AJK',
-                'leftPos' => '70%',
-                'topPos' => '18%',
+                'leftPos' => '66%',
+                'topPos' => '27.5%',
                 'badge' => 'DHIRKOT, AJK',
                 'description' => 'In Dhirkot, Azad Kashmir, CAEA works alongside local community organizers on watershed protection, community forestry, and decentralized clean energy solutions for mountain terrains.'
             ],
             [
                 'id' => 'pin-tarbela',
                 'city' => 'TARBELA, KP',
-                'leftPos' => '56%',
-                'topPos' => '20%',
+                'leftPos' => '59%',
+                'topPos' => '25%',
                 'badge' => 'TARBELA, KP',
                 'description' => 'At Tarbela Dam in Khyber Pakhtunkhwa, CAEA brings together community perspectives to examine megastructure energy promises vs. its human and ecological costs on land and riverine ecosystems.'
             ],
             [
                 'id' => 'pin-jalalpur',
                 'city' => 'JALALPUR, PB',
-                'leftPos' => '66%',
+                'leftPos' => '63.5%',
                 'topPos' => '34%',
                 'badge' => 'JALALPUR, PB',
                 'description' => 'Our team works closely with agrarian communities in Jalalpur advancing decentralized solar irrigation, groundwater conservation, and community energy governance.'
@@ -684,8 +684,8 @@ class Database {
             [
                 'id' => 'pin-khirthar',
                 'city' => 'KHIRTHAR, SD',
-                'leftPos' => '42%',
-                'topPos' => '68%',
+                'leftPos' => '36%',
+                'topPos' => '76%',
                 'badge' => 'KHIRTHAR, SD',
                 'description' => 'Across the Khirthar Range in Sindh, CAEA investigates the impacts of fossil fuel exploration, industrial wastewater, and climate shocks on indigenous communities and fragile desert ecologies.'
             ]
