@@ -1020,8 +1020,23 @@ class CAEADataStore {
       if (json.success && json.data) {
         this.isServerConnected = true;
         const d = json.data;
-        if (d.activities) localStorage.setItem(STORAGE_KEYS.ACTIVITIES, JSON.stringify(d.activities));
-        if (d.people) localStorage.setItem(STORAGE_KEYS.PEOPLE, JSON.stringify(d.people));
+        if (d.activities && Array.isArray(d.activities)) {
+          const normActs = d.activities.map(act => {
+            if (typeof act.images === 'string') {
+              try { act.images = JSON.parse(act.images); } catch (e) { act.images = [act.image]; }
+            }
+            act.featured = (act.featured === true || act.featured === 1 || act.featured === '1' || act.featured === 'true');
+            return act;
+          });
+          localStorage.setItem(STORAGE_KEYS.ACTIVITIES, JSON.stringify(normActs));
+        }
+        if (d.people && Array.isArray(d.people)) {
+          const normPeople = d.people.map(p => {
+            p.showInGrid = (p.showInGrid === true || p.showInGrid === 1 || p.showInGrid === '1' || p.showInGrid === 'true');
+            return p;
+          });
+          localStorage.setItem(STORAGE_KEYS.PEOPLE, JSON.stringify(normPeople));
+        }
         if (d.articles) localStorage.setItem(STORAGE_KEYS.ARTICLES, JSON.stringify(d.articles));
         if (d.fossil_article_links) localStorage.setItem(STORAGE_KEYS.FOSSIL_LINKS, JSON.stringify(d.fossil_article_links));
         if (d.climate_article_links) localStorage.setItem(STORAGE_KEYS.CLIMATE_LINKS, JSON.stringify(d.climate_article_links));
@@ -1029,7 +1044,16 @@ class CAEADataStore {
         if (d.opportunities) localStorage.setItem(STORAGE_KEYS.OPPORTUNITIES, JSON.stringify(d.opportunities));
         if (d.applications) localStorage.setItem(STORAGE_KEYS.APPLICATIONS, JSON.stringify(d.applications));
         if (d.media) localStorage.setItem(STORAGE_KEYS.MEDIA, JSON.stringify(d.media));
-        if (d.map_pins) localStorage.setItem(STORAGE_KEYS.MAP_PINS, JSON.stringify(d.map_pins));
+        if (d.map_pins && Array.isArray(d.map_pins)) {
+          const normPins = d.map_pins.map(pin => ({
+            ...pin,
+            left: pin.left || pin.leftPos || '50%',
+            top: pin.top || pin.topPos || '50%',
+            leftPos: pin.leftPos || pin.left || '50%',
+            topPos: pin.topPos || pin.top || '50%'
+          }));
+          localStorage.setItem(STORAGE_KEYS.MAP_PINS, JSON.stringify(normPins));
+        }
         if (d.page_settings) localStorage.setItem(STORAGE_KEYS.PAGE_SETTINGS, JSON.stringify(d.page_settings));
 
         this.dispatchUpdate('all');
@@ -1137,7 +1161,7 @@ class CAEADataStore {
 
   init() {
     const DATA_VERSION_KEY = 'caea_data_version';
-    const CURRENT_VERSION = 'v25_map_pins_update';
+    const CURRENT_VERSION = 'v26_normalize_pins_and_schema';
     const storedVersion = localStorage.getItem(DATA_VERSION_KEY);
 
     if (storedVersion !== CURRENT_VERSION) {
@@ -1163,6 +1187,8 @@ class CAEADataStore {
       localStorage.setItem(STORAGE_KEYS.MAP_PINS, JSON.stringify(SEED_DATA.mapPins));
       localStorage.setItem(STORAGE_KEYS.TEXTILE_CARDS, JSON.stringify(SEED_DATA.textileCards));
       localStorage.setItem(STORAGE_KEYS.CLIMATE_REPORTS, JSON.stringify(SEED_DATA.climateReports));
+      localStorage.setItem(STORAGE_KEYS.FOSSIL_LINKS, JSON.stringify(SEED_DATA.fossilArticleLinks));
+      localStorage.setItem(STORAGE_KEYS.CLIMATE_LINKS, JSON.stringify(SEED_DATA.climateArticleLinks));
       if (!localStorage.getItem(STORAGE_KEYS.OPPORTUNITIES)) {
         localStorage.setItem(STORAGE_KEYS.OPPORTUNITIES, JSON.stringify(SEED_DATA.opportunities));
       }
@@ -1346,6 +1372,24 @@ class CAEADataStore {
       }
 
       if (Array.isArray(items)) {
+        const cLower = collection.toLowerCase();
+        if (cLower.includes('pin') || cLower.includes('map')) {
+          items = items.map(pin => ({
+            ...pin,
+            left: pin.left || pin.leftPos || '50%',
+            top: pin.top || pin.topPos || '50%',
+            leftPos: pin.leftPos || pin.left || '50%',
+            topPos: pin.topPos || pin.top || '50%'
+          }));
+        } else if (cLower.includes('act') || cLower.includes('gather')) {
+          items = items.map(act => {
+            if (typeof act.images === 'string') {
+              try { act.images = JSON.parse(act.images); } catch (e) { act.images = [act.image]; }
+            }
+            return act;
+          });
+        }
+
         return items.sort((a, b) => {
           const orderA = (a && a.sortOrder !== undefined && a.sortOrder !== null && a.sortOrder !== '') ? Number(a.sortOrder) : 
                          (a && a.orderIndex !== undefined ? Number(a.orderIndex) : 999);

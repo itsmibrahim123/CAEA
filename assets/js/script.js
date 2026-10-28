@@ -99,8 +99,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const markerEl = document.createElement('div');
       markerEl.className = 'city-marker';
       markerEl.id = `marker-${pin.id || pin.city.toLowerCase().replace(/[^a-z0-9]/g, '')}`;
-      markerEl.style.left = pin.left || '50%';
-      markerEl.style.top = pin.top || '50%';
+      markerEl.style.left = pin.left || pin.leftPos || '50%';
+      markerEl.style.top = pin.top || pin.topPos || '50%';
       markerEl.setAttribute('role', 'button');
       markerEl.setAttribute('tabindex', '0');
       markerEl.setAttribute('aria-expanded', 'false');
@@ -919,6 +919,13 @@ document.addEventListener('DOMContentLoaded', () => {
      Dynamic Activities Feed Rendering (DataStore)
      ============================================================ */
   function getActivityImages(item) {
+    if (!item) return ['/assets/Hero-image.png'];
+    if (typeof item.images === 'string') {
+      try {
+        const parsed = JSON.parse(item.images);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      } catch (e) {}
+    }
     if (Array.isArray(item.images) && item.images.length > 0) {
       return item.images;
     }

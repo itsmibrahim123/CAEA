@@ -493,7 +493,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </td>
         <td>
           <span style="font-family:monospace; font-size:12px; color:#798dff; background:rgba(79,103,237,0.1); padding:3px 8px; border-radius:4px;">
-            Left: ${escapeHtml(item.left || '50%')}, Top: ${escapeHtml(item.top || '50%')}
+            Left: ${escapeHtml(item.left || item.leftPos || '50%')}, Top: ${escapeHtml(item.top || item.topPos || '50%')}
           </span>
         </td>
         <td>
@@ -1587,11 +1587,11 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="form-row" style="display:flex; gap:16px;">
           <div class="form-group flex-1" style="flex:1;">
             <label class="form-label">Position Left % (X Coordinate)</label>
-            <input type="text" name="left" class="admin-input" value="${escapeHtml(item.left || '50%')}" placeholder="e.g. 53%" required />
+            <input type="text" name="left" class="admin-input" value="${escapeHtml(item.left || item.leftPos || '50%')}" placeholder="e.g. 53%" required />
           </div>
           <div class="form-group flex-1" style="flex:1;">
             <label class="form-label">Position Top % (Y Coordinate)</label>
-            <input type="text" name="top" class="admin-input" value="${escapeHtml(item.top || '50%')}" placeholder="e.g. 19%" required />
+            <input type="text" name="top" class="admin-input" value="${escapeHtml(item.top || item.topPos || '50%')}" placeholder="e.g. 19%" required />
           </div>
         </div>
         ${orderFieldHtml}
@@ -2125,6 +2125,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (collection === 'people') {
         dataObj.showInGrid = (dataObj.showInGrid === 'on' || dataObj.showInGrid === true || dataObj.showInGrid === '1' || dataObj.showInGrid === 'true');
+      }
+
+      if (collection === 'mapPins' || collection === 'mappins') {
+        dataObj.leftPos = dataObj.left || dataObj.leftPos || '50%';
+        dataObj.topPos = dataObj.top || dataObj.topPos || '50%';
+        dataObj.left = dataObj.leftPos;
+        dataObj.top = dataObj.topPos;
       }
 
       const label = collection === 'mapPins' || collection === 'mappins' ? 'location pin' :

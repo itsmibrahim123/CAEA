@@ -22,15 +22,15 @@ if (session_status() === PHP_SESSION_NONE) {
 // Database Configuration
 define('DB_DRIVER', 'sqlite'); // Options: 'sqlite' or 'mysql'
 
-// SQLite Configuration
+// SQLite Configuration (Fallback)
 define('SQLITE_FILE', __DIR__ . '/../data/database.sqlite');
 
-// MySQL Configuration (Optional - for external MySQL servers)
-define('DB_HOST', '127.0.0.1');
+// MySQL Configuration (Hostinger MySQL)
+define('DB_HOST', 'localhost');
 define('DB_PORT', '3306');
-define('DB_NAME', 'caea_db');
-define('DB_USER', 'root');
-define('DB_PASS', '');
+define('DB_NAME', 'u139314753_db_ko6NBXr5');
+define('DB_USER', 'u139314753_usr_ko6NBXr5');
+define('DB_PASS', 'YOUR_DB_PASSWORD_HERE'); // Enter your MySQL user password
 define('DB_CHARSET', 'utf8mb4');
 
 // Upload Paths

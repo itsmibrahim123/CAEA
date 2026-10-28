@@ -43,7 +43,28 @@ if ($action === 'export') {
     $export = [];
     $tables = ['activities', 'people', 'articles', 'fossil_article_links', 'climate_article_links', 'textile_cards', 'opportunities', 'applications', 'media', 'map_pins'];
     foreach ($tables as $t) {
-        $export[$t] = $pdo->query("SELECT * FROM $t")->fetchAll();
+        $rows = $pdo->query("SELECT * FROM $t")->fetchAll();
+        if ($t === 'map_pins') {
+            foreach ($rows as &$r) {
+                $r['left'] = $r['leftPos'] ?? ($r['left'] ?? '50%');
+                $r['top'] = $r['topPos'] ?? ($r['top'] ?? '50%');
+            }
+        }
+        if ($t === 'activities') {
+            foreach ($rows as &$r) {
+                if (!empty($r['images']) && is_string($r['images'])) {
+                    $decoded = json_decode($r['images'], true);
+                    $r['images'] = is_array($decoded) ? $decoded : [$r['image'] ?? 'assets/Hero-image.png'];
+                }
+                $r['featured'] = (bool)($r['featured'] ?? false);
+            }
+        }
+        if ($t === 'people') {
+            foreach ($rows as &$r) {
+                $r['showInGrid'] = (bool)($r['showInGrid'] ?? true);
+            }
+        }
+        $export[$t] = $rows;
     }
     
     // Unpack page_settings
