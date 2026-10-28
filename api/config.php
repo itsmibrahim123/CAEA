@@ -20,7 +20,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 // Database Configuration
-define('DB_DRIVER', 'sqlite'); // Options: 'sqlite' or 'mysql'
+define('DB_DRIVER', 'mysql'); // Explicitly set to MySQL for Hostinger
 
 // SQLite Configuration (Fallback)
 define('SQLITE_FILE', __DIR__ . '/../data/database.sqlite');
@@ -30,7 +30,7 @@ define('DB_HOST', 'localhost');
 define('DB_PORT', '3306');
 define('DB_NAME', 'u139314753_db_ko6NBXr5');
 define('DB_USER', 'u139314753_usr_ko6NBXr5');
-define('DB_PASS', 'YOUR_DB_PASSWORD_HERE'); // Enter your MySQL user password
+define('DB_PASS', '<USER_DB_PASSWORD>'); // Enter your MySQL user password
 define('DB_CHARSET', 'utf8mb4');
 
 // Upload Paths

@@ -1005,7 +1005,7 @@ class CAEADataStore {
   }
 
   async syncWithServer() {
-    const url = this.getApiUrl('api.php?action=export');
+    const url = this.getApiUrl('api.php?action=all');
     if (!url) return false;
 
     try {
@@ -1017,9 +1017,10 @@ class CAEADataStore {
 
       if (!resp.ok) return false;
       const json = await resp.json();
-      if (json.success && json.data) {
+      if (json.success && (json.data || json.collections)) {
         this.isServerConnected = true;
-        const d = json.data;
+        console.log('[CAEA DataStore] Connected to Hostinger MySQL Database');
+        const d = json.data || json.collections;
         if (d.activities && Array.isArray(d.activities)) {
           const normActs = d.activities.map(act => {
             if (typeof act.images === 'string') {

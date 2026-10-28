@@ -18,13 +18,14 @@ class Database {
             $pdo = null;
 
             // Attempt MySQL if configured
-            if (DB_DRIVER === 'mysql' && DB_PASS !== 'YOUR_DB_PASSWORD_HERE') {
+            if (DB_DRIVER === 'mysql' && DB_PASS !== 'YOUR_DB_PASSWORD_HERE' && DB_PASS !== '<USER_DB_PASSWORD>') {
                 try {
                     $dsn = sprintf('mysql:host=%s;port=%s;dbname=%s;charset=%s', DB_HOST, DB_PORT, DB_NAME, DB_CHARSET);
                     $pdo = new PDO($dsn, DB_USER, DB_PASS, [
                         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
                         PDO::ATTR_EMULATE_PREPARES => false,
+                        PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci",
                     ]);
                 } catch (PDOException $mySqlEx) {
                     error_log('CAEA: MySQL connection failed (' . $mySqlEx->getMessage() . '). Falling back to SQLite.');
@@ -68,6 +69,12 @@ class Database {
     }
 
     private static function initializeSchema(PDO $pdo): void {
+        $isMySQL = ($pdo->getAttribute(PDO::ATTR_DRIVER_NAME) === 'mysql');
+        $tableEngine = $isMySQL ? " ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" : "";
+        $longTextType = $isMySQL ? "LONGTEXT" : "TEXT";
+        $dtType = $isMySQL ? "DATETIME DEFAULT CURRENT_TIMESTAMP" : "DATETIME";
+        $intType = $isMySQL ? "TINYINT(1)" : "INTEGER";
+
         // Table: activities
         $pdo->exec("CREATE TABLE IF NOT EXISTS activities (
             id VARCHAR(64) PRIMARY KEY,
@@ -76,16 +83,16 @@ class Database {
             date DATE NOT NULL,
             dateFormatted VARCHAR(32) NOT NULL,
             location VARCHAR(255) DEFAULT 'Pakistan',
-            description TEXT,
+            description {$longTextType},
             image VARCHAR(512),
-            images TEXT,
-            featured INTEGER DEFAULT 0,
-            quote TEXT,
+            images {$longTextType},
+            featured {$intType} DEFAULT 0,
+            quote {$longTextType},
             quoteAuthor VARCHAR(255),
             sortOrder INTEGER DEFAULT 0,
-            createdAt DATETIME,
-            updatedAt DATETIME
-        );");
+            createdAt {$dtType},
+            updatedAt {$dtType}
+        ){$tableEngine};");
 
         // Table: people
         $pdo->exec("CREATE TABLE IF NOT EXISTS people (
@@ -93,14 +100,14 @@ class Database {
             name VARCHAR(255) NOT NULL,
             role VARCHAR(255) NOT NULL,
             category VARCHAR(64) NOT NULL,
-            bio TEXT,
+            bio {$longTextType},
             image VARCHAR(512),
             email VARCHAR(255),
             sortOrder INTEGER DEFAULT 0,
-            showInGrid INTEGER DEFAULT 1,
-            createdAt DATETIME,
-            updatedAt DATETIME
-        );");
+            showInGrid {$intType} DEFAULT 1,
+            createdAt {$dtType},
+            updatedAt {$dtType}
+        ){$tableEngine};");
 
         // Table: articles
         $pdo->exec("CREATE TABLE IF NOT EXISTS articles (
@@ -111,13 +118,13 @@ class Database {
             author VARCHAR(255) NOT NULL,
             date DATE NOT NULL,
             dateFormatted VARCHAR(32) NOT NULL,
-            excerpt TEXT,
-            content TEXT,
+            excerpt {$longTextType},
+            content {$longTextType},
             image VARCHAR(512),
             sortOrder INTEGER DEFAULT 0,
-            createdAt DATETIME,
-            updatedAt DATETIME
-        );");
+            createdAt {$dtType},
+            updatedAt {$dtType}
+        ){$tableEngine};");
 
         // Table: opportunities
         $pdo->exec("CREATE TABLE IF NOT EXISTS opportunities (
@@ -127,14 +134,14 @@ class Database {
             category VARCHAR(255) NOT NULL,
             type VARCHAR(64) NOT NULL,
             theme VARCHAR(32) DEFAULT 'blue',
-            description TEXT,
+            description {$longTextType},
             status VARCHAR(32) DEFAULT 'Open',
             image VARCHAR(512),
             gridArea VARCHAR(32),
             sortOrder INTEGER DEFAULT 0,
-            createdAt DATETIME,
-            updatedAt DATETIME
-        );");
+            createdAt {$dtType},
+            updatedAt {$dtType}
+        ){$tableEngine};");
 
         // Table: applications
         $pdo->exec("CREATE TABLE IF NOT EXISTS applications (
@@ -147,15 +154,15 @@ class Database {
             opportunityTitle VARCHAR(255),
             category VARCHAR(255),
             commitment VARCHAR(64),
-            message TEXT,
-            experience TEXT,
+            message {$longTextType},
+            experience {$longTextType},
             status VARCHAR(32) DEFAULT 'Pending',
             date DATE NOT NULL,
             dateFormatted VARCHAR(32) NOT NULL,
-            notes TEXT,
-            createdAt DATETIME,
-            updatedAt DATETIME
-        );");
+            notes {$longTextType},
+            createdAt {$dtType},
+            updatedAt {$dtType}
+        ){$tableEngine};");
 
         // Table: media
         $pdo->exec("CREATE TABLE IF NOT EXISTS media (
@@ -163,11 +170,11 @@ class Database {
             title VARCHAR(255) NOT NULL,
             category VARCHAR(64) NOT NULL,
             path VARCHAR(512) NOT NULL,
-            tags TEXT,
+            tags {$longTextType},
             date DATE,
             sortOrder INTEGER DEFAULT 0,
-            createdAt DATETIME
-        );");
+            createdAt {$dtType}
+        ){$tableEngine};");
 
         // Table: map_pins
         $pdo->exec("CREATE TABLE IF NOT EXISTS map_pins (
@@ -176,11 +183,11 @@ class Database {
             leftPos VARCHAR(32) NOT NULL,
             topPos VARCHAR(32) NOT NULL,
             badge VARCHAR(255) NOT NULL,
-            description TEXT,
+            description {$longTextType},
             sortOrder INTEGER DEFAULT 0,
-            createdAt DATETIME,
-            updatedAt DATETIME
-        );");
+            createdAt {$dtType},
+            updatedAt {$dtType}
+        ){$tableEngine};");
 
         // Table: fossil_article_links
         $pdo->exec("CREATE TABLE IF NOT EXISTS fossil_article_links (
@@ -189,12 +196,12 @@ class Database {
             publisher VARCHAR(255) NOT NULL,
             badge VARCHAR(64) DEFAULT 'ARTICLE',
             category VARCHAR(64) DEFAULT 'articles',
-            url TEXT NOT NULL,
-            description TEXT,
+            url {$longTextType} NOT NULL,
+            description {$longTextType},
             sortOrder INTEGER DEFAULT 0,
-            createdAt DATETIME,
-            updatedAt DATETIME
-        );");
+            createdAt {$dtType},
+            updatedAt {$dtType}
+        ){$tableEngine};");
 
         // Table: climate_article_links
         $pdo->exec("CREATE TABLE IF NOT EXISTS climate_article_links (
@@ -203,12 +210,12 @@ class Database {
             publisher VARCHAR(255) NOT NULL,
             badge VARCHAR(64) DEFAULT 'THE NEWS',
             category VARCHAR(64) DEFAULT 'articles',
-            url TEXT NOT NULL,
-            description TEXT,
+            url {$longTextType} NOT NULL,
+            description {$longTextType},
             sortOrder INTEGER DEFAULT 0,
-            createdAt DATETIME,
-            updatedAt DATETIME
-        );");
+            createdAt {$dtType},
+            updatedAt {$dtType}
+        ){$tableEngine};");
 
         // Table: textile_cards (Fast Fashion Article Links & Publications)
         $pdo->exec("CREATE TABLE IF NOT EXISTS textile_cards (
@@ -216,19 +223,19 @@ class Database {
             title VARCHAR(255) NOT NULL,
             publisher VARCHAR(255) DEFAULT 'CAEA',
             category VARCHAR(64) DEFAULT 'Research & Reports',
-            url TEXT,
-            description TEXT,
+            url {$longTextType},
+            description {$longTextType},
             sortOrder INTEGER DEFAULT 0,
-            createdAt DATETIME,
-            updatedAt DATETIME
-        );");
+            createdAt {$dtType},
+            updatedAt {$dtType}
+        ){$tableEngine};");
 
         // Table: page_settings
         $pdo->exec("CREATE TABLE IF NOT EXISTS page_settings (
             pageKey VARCHAR(64) PRIMARY KEY,
-            settingsJson TEXT NOT NULL,
-            updatedAt DATETIME
-        );");
+            settingsJson {$longTextType} NOT NULL,
+            updatedAt {$dtType}
+        ){$tableEngine};");
 
         // Ensure sortOrder column exists on existing database tables
         $tablesWithSortOrder = ['activities', 'people', 'articles', 'opportunities', 'media', 'map_pins', 'fossil_article_links', 'climate_article_links', 'textile_cards'];
@@ -330,15 +337,15 @@ class Database {
             $tcCount = (int)$pdo->query("SELECT COUNT(*) FROM textile_cards")->fetchColumn();
             if ($tcCount === 0) {
                 $now = date('Y-m-d H:i:s');
-                $stmt = $pdo->prepare("INSERT INTO textile_cards (id, title, description, category, tag, btnText, targetOpportunity, videoUrl, image, sortOrder, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                $stmt = $pdo->prepare("INSERT INTO textile_cards (id, title, publisher, category, url, description, sortOrder, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
                 $textileCards = [
-                    ['tex-1', 'Fashion and Fossil Fuels: Supply Chain Investigation', 'Tracing synthetic fiber reliance, coal-fired industrial captive power plants, and supply chain accountability across Pakistan\'s textile hubs.', 'Research & Reports', 'research', 'READ REPORT', 'Textile Sector Researcher', '', 'assets/Hero-image.png', 1],
-                    ['tex-2', 'The Carbon Thread: Fast Fashion Exploitation', 'Investigating synthetic fiber reliance, coal-fired industrial captive power plants, and fair wage transitions for garment workers across industrial zones.', 'Article', 'article', 'READ ARTICLE', 'Textile Watch', '', 'assets/how-water-became-power.jpg', 2],
-                    ['tex-3', 'Garment Workers & Community Testimonies', 'First-hand oral accounts and video recordings from garment workers and fenceline communities living along polluted industrial drainage canals.', 'Testimonials', 'testimonials', 'WATCH TESTIMONY', 'Textile Watch', '', 'assets/how-water-became-power-ai.jpg', 3],
-                    ['tex-4', 'Demand Clean Energy & Fair Wages in Pakistan\'s Textile Sector', 'Join our urgent public campaign petition demanding mandatory solarization of textile power, zero liquid discharge, and living wage protections.', 'Sign Our Petition', 'petition', 'SIGN PETITION', 'Textile Campaign Petition', '', 'assets/media/events/retreat/DSCF4154.JPG', 4]
+                    ['tex-1', 'Fashion and Fossil Fuels: Supply Chain Investigation', 'CAEA Research Publication', 'Research & Reports', 'https://drive.google.com/file/d/1LuXInnvuC11GMiHBM_NM4HoWxkRP_Fpa/view?usp=drive_link', 'Tracing synthetic fiber reliance, coal-fired industrial captive power plants, and supply chain accountability across Pakistan\'s textile hubs.', 1],
+                    ['tex-2', 'The Carbon Thread: Fast Fashion Exploitation', 'The News on Sunday', 'Article', 'https://www.thenews.pk/tns/detail/1023422-the-hidden-cost-of-development', 'Investigating synthetic fiber reliance, coal-fired industrial captive power plants, and fair wage transitions for garment workers across industrial zones.', 2],
+                    ['tex-3', 'Garment Workers & Community Testimonies', 'CAEA Field Briefing', 'Testimonials', '#apply', 'First-hand oral accounts and video recordings from garment workers and fenceline communities living along polluted industrial drainage canals.', 3],
+                    ['tex-4', 'Demand Clean Energy & Fair Wages in Pakistan\'s Textile Sector', 'CAEA Public Action', 'Sign Our Petition', '#apply', 'Join our urgent public campaign petition demanding mandatory solarization of textile power, zero liquid discharge, and living wage protections.', 4]
                 ];
                 foreach ($textileCards as $card) {
-                    $stmt->execute([$card[0], $card[1], $card[2], $card[3], $card[4], $card[5], $card[6], $card[7], $card[8], $card[9], $now, $now]);
+                    $stmt->execute([$card[0], $card[1], $card[2], $card[3], $card[4], $card[5], $card[6], $now, $now]);
                 }
             }
         } catch (Exception $e) {

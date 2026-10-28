@@ -39,7 +39,7 @@ if ($action === 'status') {
     ]);
 }
 
-if ($action === 'export') {
+if ($action === 'export' || $action === 'all') {
     $export = [];
     $tables = ['activities', 'people', 'articles', 'fossil_article_links', 'climate_article_links', 'textile_cards', 'opportunities', 'applications', 'media', 'map_pins'];
     foreach ($tables as $t) {
@@ -77,9 +77,11 @@ if ($action === 'export') {
     
     sendJsonResponse([
         'success' => true,
+        'driver' => $pdo->getAttribute(PDO::ATTR_DRIVER_NAME),
         'version' => '1.0',
         'exportedAt' => date('Y-m-d H:i:s'),
-        'data' => $export
+        'data' => $export,
+        'collections' => $export
     ]);
 }
 
@@ -216,13 +218,13 @@ if ($tableName === 'page_settings') {
         $now = date('Y-m-d H:i:s');
         $jsonStr = json_encode($settings, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 
-        $stmt = $pdo->prepare("INSERT INTO page_settings (pageKey, settingsJson, updatedAt) VALUES (?, ?, ?)
-            ON CONFLICT(pageKey) DO UPDATE SET settingsJson = excluded.settingsJson, updatedAt = excluded.updatedAt");
-        
-        // SQLite / MySQL compatibility
-        if (DB_DRIVER === 'mysql') {
+        $isMySQL = ($pdo->getAttribute(PDO::ATTR_DRIVER_NAME) === 'mysql');
+        if ($isMySQL) {
             $stmt = $pdo->prepare("INSERT INTO page_settings (pageKey, settingsJson, updatedAt) VALUES (?, ?, ?)
                 ON DUPLICATE KEY UPDATE settingsJson = VALUES(settingsJson), updatedAt = VALUES(updatedAt)");
+        } else {
+            $stmt = $pdo->prepare("INSERT INTO page_settings (pageKey, settingsJson, updatedAt) VALUES (?, ?, ?)
+                ON CONFLICT(pageKey) DO UPDATE SET settingsJson = excluded.settingsJson, updatedAt = excluded.updatedAt");
         }
 
         $stmt->execute([$pageKey, $jsonStr, $now]);
