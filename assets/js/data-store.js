@@ -978,12 +978,21 @@ class CAEADataStore {
   }
 
   detectApiBase() {
-    if (typeof window === 'undefined') return null;
+    if (typeof window === 'undefined' || !window.location) return null;
     if (window.CAEA_API_BASE) return window.CAEA_API_BASE.replace(/\/$/, '');
     if (window.location.protocol === 'file:') return null;
     
-    // Determine relative API path based on directory structure
-    const path = window.location.pathname;
+    // In web browsers, root-relative '/api' works cleanly across all clean URL routes
+    const path = window.location.pathname || '';
+    if (window.location.origin) {
+      // Check if installed in a subfolder (e.g., /caea/)
+      const subfolderMatch = path.match(/^(\/[^\/]+)\/(?:pages|admin|api)\b/i);
+      if (subfolderMatch && subfolderMatch[1]) {
+        return `${subfolderMatch[1]}/api`;
+      }
+      return '/api';
+    }
+
     if (path.includes('/admin/') || path.includes('/pages/')) {
       return '../api';
     }

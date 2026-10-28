@@ -1,10 +1,14 @@
-# Protect SQLite database files from direct web access
-<FilesMatch "\.(sqlite|db|sql|log)$">
-    Order Deny,Allow
-    Deny from all
+# Protect SQLite database, SQL dumps, and sensitive files from direct web access
+<FilesMatch "\.(sqlite|db|sql|log|csv)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order Deny,Allow
+        Deny from all
+    </IfModule>
 </FilesMatch>
 
-# Apache 2.4+
-<IfModule mod_authz_core.c>
-    Require all denied
+<IfModule mod_autoindex.c>
+    Options -Indexes
 </IfModule>

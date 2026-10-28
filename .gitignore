@@ -26,3 +26,6 @@ data/*.log
 
 # Local Documentation & Context Notes
 context/
+
+# Deployment archives
+*.zip

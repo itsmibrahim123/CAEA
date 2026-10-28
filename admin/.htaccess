@@ -1,0 +1,8 @@
+# ============================================================
+# Admin Directory Configuration
+# ============================================================
+DirectoryIndex index.html
+
+<IfModule mod_autoindex.c>
+    Options -Indexes
+</IfModule>

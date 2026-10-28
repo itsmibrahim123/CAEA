@@ -16,17 +16,28 @@ class Database {
 
         try {
             if (DB_DRIVER === 'sqlite') {
+                if (!extension_loaded('pdo_sqlite')) {
+                    throw new PDOException('PHP PDO SQLite extension is not enabled on this server.');
+                }
+
                 $dir = dirname(SQLITE_FILE);
                 if (!is_dir($dir)) {
-                    mkdir($dir, 0755, true);
+                    @mkdir($dir, 0755, true);
                 }
 
                 $pdo = new PDO('sqlite:' . SQLITE_FILE);
                 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-                // Enable foreign keys and WAL mode for high concurrency
+                // Enable foreign keys
                 $pdo->exec('PRAGMA foreign_keys = ON;');
-                $pdo->exec('PRAGMA journal_mode = WAL;');
+                // Attempt WAL mode; gracefully fall back to standard journal mode on shared hosting
+                try {
+                    $pdo->exec('PRAGMA journal_mode = WAL;');
+                } catch (Exception $journalEx) {
+                    try {
+                        $pdo->exec('PRAGMA journal_mode = DELETE;');
+                    } catch (Exception $e) {}
+                }
             } else {
                 $dsn = sprintf('mysql:host=%s;port=%s;dbname=%s;charset=%s', DB_HOST, DB_PORT, DB_NAME, DB_CHARSET);
                 $pdo = new PDO($dsn, DB_USER, DB_PASS, [
