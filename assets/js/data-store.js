@@ -918,7 +918,7 @@ const SEED_DATA = {
         iconStyle: 'double-blue',
         title: 'FAST FASHION',
         subtitle: 'Supply chain transparency, industrial captive power emissions & fair worker transitions',
-        description: "A basic knit dress can reach mass consumers within ten days of being designed and approved by a global brand’s headquarters. Fashion seasons, previously just summer and winter, have now quadrupled as a result of the shortened production time, while labour rights, quality controls, and ecological sustainability, continue to suffer. Already responsible for around 10% of global GHG emissions, the UNFCCC predicts that the textile industry’s carbon footprint will have skyrocketed by 60% in 2030. A dedicated portion of this is attributed to global fast fashion, along with one of the largest contributions to water stress worldwide.\n\nPakistan’s own textile export industry is valued at approximately $18 billion and caters to multiple global brands such as H&M, Zara, Gap, Mango, ASOS, NEXT, and IKEA. Mired with labour rights violations, unsustainable agricultural practices, water waste, and heavy fossil fuel usage, the depth of its climate justice concerns is barely captured in conventional frameworks for industrial “greening”.\n\nAt CAEA, the Climate Justice in Textiles team aims to tackle structural inequalities embedded in the textiles value chain by targeting the need for stronger regulations around energy, water, and land usage on the international, regional, and local levels. Through policy research and public campaigning, we advocate for stronger corporate accountability in the face of environmental harm and labour rights abuses. Our partnerships with students, youth climate activists, affected communities, and local consumers, help us imagine alternatives to modern-day capitalistic production that center local craft and climate-suitable methods.",
+        description: "At CAEA, the Climate Justice in Textiles team aims to tackle structural inequalities embedded in the textiles value chain by targeting the need for stronger regulations around energy, water, and land usage on the international, regional, and local levels. Through policy research and public campaigning, we advocate for stronger corporate accountability in the face of environmental harm and labour rights abuses. Our partnerships with students, youth climate activists, affected communities, and local consumers, help us imagine alternatives to modern-day capitalistic production that center local craft and climate-suitable methods.",
         archPattern: 'white-semicircle',
         joinBtnText: 'JOIN US',
         opportunityTitle: 'Textile Sector Researcher',
@@ -1238,7 +1238,10 @@ class CAEADataStore {
               parsed.ourWork.fossilFuel.bannerTitle = 'FOSSIL FUEL PHASEOUT';
               updated = true;
             }
-            if (parsed?.ourWork?.textile?.description?.includes('The fashion industry today is built on deep-rooted injustice')) {
+            if (
+              parsed?.ourWork?.textile?.description?.includes('The fashion industry today is built on deep-rooted injustice') ||
+              parsed?.ourWork?.textile?.description?.includes('A basic knit dress can reach mass consumers')
+            ) {
               parsed.ourWork.textile.description = SEED_DATA.pageSettings.ourWork.textile.description;
               updated = true;
             }
@@ -1376,7 +1379,10 @@ class CAEADataStore {
       if (merged.ourWork?.fossilFuel?.bannerTitle === 'FOSSIL FUEL') {
         merged.ourWork.fossilFuel.bannerTitle = 'FOSSIL FUEL PHASEOUT';
       }
-      if (merged.ourWork?.textile?.description?.includes('The fashion industry today is built on deep-rooted injustice')) {
+      if (
+        merged.ourWork?.textile?.description?.includes('The fashion industry today is built on deep-rooted injustice') ||
+        merged.ourWork?.textile?.description?.includes('A basic knit dress can reach mass consumers')
+      ) {
         merged.ourWork.textile.description = defaults.ourWork.textile.description;
       }
 
