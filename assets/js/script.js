@@ -1423,7 +1423,6 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       if (fossilSection) fossilSection.style.display = '';
       if (fossilBanner) fossilBanner.style.display = '';
-      if (fossilDrawer) fossilDrawer.style.display = '';
     }
 
     if (fossilTitle && fossil.title) fossilTitle.textContent = fossil.title;
@@ -1467,7 +1466,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (texDrawer) texDrawer.style.display = 'none';
     } else {
       if (texBanner) texBanner.style.display = '';
-      if (texDrawer) texDrawer.style.display = '';
     }
 
     if (texBannerTitle && tex.bannerTitle) texBannerTitle.textContent = tex.bannerTitle;
@@ -1604,7 +1602,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (cjDrawer) cjDrawer.style.display = 'none';
     } else {
       if (cjBanner) cjBanner.style.display = '';
-      if (cjDrawer) cjDrawer.style.display = '';
     }
 
     if (cjBannerTitle && cj.bannerTitle) cjBannerTitle.textContent = cj.bannerTitle;
@@ -1884,9 +1881,19 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    function toggleBanner(banner) {
+    function toggleBanner(bannerOrTarget) {
+      if (!bannerOrTarget) return;
+      let banner = bannerOrTarget;
+      if (typeof bannerOrTarget === 'string') {
+        const cleanId = bannerOrTarget.replace(/^#/, '');
+        banner = document.getElementById(cleanId) ||
+                 document.querySelector(`[data-target="${cleanId}"]`) ||
+                 document.querySelector(`.expandable-bar-banner[id*="${cleanId}"]`);
+      }
+      if (!banner) return;
+
       const targetId = banner.getAttribute('data-target');
-      const drawer = document.getElementById(targetId);
+      const drawer = targetId ? document.getElementById(targetId) : null;
       if (!drawer) return;
 
       const isExpanded = banner.classList.contains('is-expanded');
@@ -1895,14 +1902,14 @@ document.addEventListener('DOMContentLoaded', () => {
         banner.classList.remove('is-expanded');
         banner.setAttribute('aria-expanded', 'false');
         drawer.classList.remove('is-open');
-        drawer.style.removeProperty('display');
+        drawer.style.display = 'none';
         stopAutoScroll();
       } else {
         // Expand
         banner.classList.add('is-expanded');
         banner.setAttribute('aria-expanded', 'true');
         drawer.classList.add('is-open');
-        drawer.style.removeProperty('display');
+        drawer.style.display = 'block';
 
         // Initial smooth scroll to bring banner into view
         const scrollY = window.scrollY !== undefined ? window.scrollY : window.pageYOffset;
@@ -1924,19 +1931,22 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
+    // Expose toggleOurWorkBanner globally
+    window.toggleOurWorkBanner = toggleBanner;
+
     // Expandable Bar Banners Accordion
     barBanners.forEach(banner => {
       banner.onclick = (e) => {
-        if (e.target.closest('a')) return;
-        e.preventDefault();
+        if (e && e.target && typeof e.target.closest === 'function' && e.target.closest('a')) return;
+        if (e && typeof e.preventDefault === 'function') e.preventDefault();
         toggleBanner(banner);
       };
 
       const btnAction = banner.querySelector('.btn-bar-action');
       if (btnAction) {
         btnAction.onclick = (e) => {
-          e.preventDefault();
-          e.stopPropagation();
+          if (e && typeof e.preventDefault === 'function') e.preventDefault();
+          if (e && typeof e.stopPropagation === 'function') e.stopPropagation();
           toggleBanner(banner);
         };
       }
@@ -1952,9 +1962,16 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       if (!banner) return;
 
+      const targetDrawerId = banner.getAttribute('data-target');
+      const drawer = targetDrawerId ? document.getElementById(targetDrawerId) : null;
+
       if (!banner.classList.contains('is-expanded')) {
         toggleBanner(banner);
       } else {
+        if (drawer) {
+          drawer.classList.add('is-open');
+          drawer.style.display = 'block';
+        }
         const bannerTop = banner.getBoundingClientRect().top + window.pageYOffset;
         window.scrollTo({
           top: Math.max(0, bannerTop - getScrollOffset()),

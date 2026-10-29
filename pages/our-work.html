@@ -17,10 +17,47 @@
     rel="stylesheet" />
 
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="/assets/css/styles.css?v=2.2" />
-  <link rel="stylesheet" href="/pages/our-work.css?v=2.3" />
-  <script src="/assets/js/device-detect.js?v=2.2"
-    onerror="this.onerror=null;this.src='../assets/js/device-detect.js?v=2.2';"></script>
+  <link rel="stylesheet" href="/assets/css/styles.css?v=3.0" />
+  <link rel="stylesheet" href="/pages/our-work.css?v=3.0" />
+  <script src="/assets/js/device-detect.js?v=3.0"
+    onerror="this.onerror=null;this.src='../assets/js/device-detect.js?v=3.0';"></script>
+  <script>
+    // Immediate fallback toggle handler for Our Work drawers
+    function toggleOurWorkBanner(bannerOrTarget) {
+      if (!bannerOrTarget) return;
+      var banner = (typeof bannerOrTarget === 'string') 
+        ? (document.getElementById(bannerOrTarget.replace(/^#/, '')) || document.querySelector('[data-target="' + bannerOrTarget.replace(/^#/, '') + '"]'))
+        : bannerOrTarget;
+      if (!banner) return;
+      var targetId = banner.getAttribute('data-target');
+      var drawer = targetId ? document.getElementById(targetId) : null;
+      if (!drawer) return;
+
+      var isExpanded = banner.classList.contains('is-expanded');
+      if (isExpanded) {
+        banner.classList.remove('is-expanded');
+        banner.setAttribute('aria-expanded', 'false');
+        drawer.classList.remove('is-open');
+        drawer.style.display = 'none';
+        if (typeof window.stopWorkAutoScroll === 'function') window.stopWorkAutoScroll();
+      } else {
+        banner.classList.add('is-expanded');
+        banner.setAttribute('aria-expanded', 'true');
+        drawer.classList.add('is-open');
+        drawer.style.display = 'block';
+
+        var scrollY = window.scrollY !== undefined ? window.scrollY : window.pageYOffset;
+        var bannerTop = banner.getBoundingClientRect().top + scrollY;
+        var offset = 72 + 16;
+        window.scrollTo({
+          top: Math.max(0, bannerTop - offset),
+          behavior: 'smooth'
+        });
+      }
+    }
+    window.toggleOurWorkBanner = toggleOurWorkBanner;
+    window.expandBannerByTarget = toggleOurWorkBanner;
+  </script>
 </head>
 
 <body class="our-work-page">
@@ -129,14 +166,14 @@
          ============================================================ -->
     <!-- B. Expandable Blue Banner 1: Fossil Fuel Phaseout Resources -->
     <div class="expandable-bar-banner royal-blue-banner" id="banner-fossil-fuel" data-target="drawer-fossil-fuel"
-      role="button" aria-expanded="false">
+      role="button" aria-expanded="false" onclick="if(window.toggleOurWorkBanner) window.toggleOurWorkBanner(this);">
       <div class="bar-icon-wrap">
         <img src="/assets/icons/banner-logo-arch-top.png" alt="" class="tab-scroll-icon"
           onerror="this.src='/assets/Tab-scroll.png'" />
       </div>
       <h2 class="bar-title">FOSSIL FUEL PHASEOUT</h2>
       <p class="bar-subtitle">Rethinking energy systems for a cleaner, fairer, and climate-resilient future.</p>
-      <button type="button" class="btn-bar-action">EXPLORE WORK</button>
+      <button type="button" class="btn-bar-action" onclick="event.stopPropagation(); if(window.toggleOurWorkBanner) window.toggleOurWorkBanner(this.closest('.expandable-bar-banner'));">EXPLORE WORK</button>
       <div class="bar-toggle-indicator">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
           <polyline points="6 9 12 15 18 9" />
@@ -288,14 +325,14 @@
          2. CLIMATE JUSTICE (Obsidian / Dark Charcoal)
          ============================================================ -->
     <div class="expandable-bar-banner dark-banner" id="banner-climate-justice" data-target="drawer-climate-justice"
-      role="button" aria-expanded="false">
+      role="button" aria-expanded="false" onclick="if(window.toggleOurWorkBanner) window.toggleOurWorkBanner(this);">
       <div class="bar-icon-wrap">
         <img src="/assets/Tab-scroll.png" alt="" class="tab-scroll-icon" />
       </div>
       <h2 class="bar-title" id="climate-banner-title">CLIMATE JUSTICE</h2>
       <p class="bar-subtitle" id="climate-banner-sub">Ecological democracy, gender equity &amp; frontline communities'
         sovereignty over resources</p>
-      <button type="button" class="btn-bar-action white-btn">EXPLORE WORK</button>
+      <button type="button" class="btn-bar-action white-btn" onclick="event.stopPropagation(); if(window.toggleOurWorkBanner) window.toggleOurWorkBanner(this.closest('.expandable-bar-banner'));">EXPLORE WORK</button>
       <div class="bar-toggle-indicator">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
           <polyline points="6 9 12 15 18 9" />
@@ -471,14 +508,14 @@
          3. FAST FASHION (Vibrant Green)
          ============================================================ -->
     <div class="expandable-bar-banner green-banner" id="banner-textile" data-target="drawer-textile" role="button"
-      aria-expanded="false">
+      aria-expanded="false" onclick="if(window.toggleOurWorkBanner) window.toggleOurWorkBanner(this);">
       <div class="bar-icon-wrap">
         <img src="/assets/Tab-scroll-blue.png" alt="" class="tab-scroll-icon" />
       </div>
       <h2 class="bar-title" id="textile-banner-title">FAST FASHION</h2>
       <p class="bar-subtitle" id="textile-banner-sub">Supply chain transparency, industrial captive power emissions
         &amp; fair worker transitions</p>
-      <button type="button" class="btn-bar-action">EXPLORE WORK</button>
+      <button type="button" class="btn-bar-action" onclick="event.stopPropagation(); if(window.toggleOurWorkBanner) window.toggleOurWorkBanner(this.closest('.expandable-bar-banner'));">EXPLORE WORK</button>
       <div class="bar-icon-wrap">
         <img src="/assets/Tab-scroll-blue.png" alt="" class="tab-scroll-icon rotated-180" />
       </div>
@@ -544,14 +581,14 @@
          4. BANNER 4: ACTIVITIES & GATHERINGS (Signature Blue)
          ============================================================ -->
     <div class="expandable-bar-banner blue-activities-banner" id="banner-activities" data-target="drawer-activities"
-      role="button" aria-expanded="false">
+      role="button" aria-expanded="false" onclick="if(window.toggleOurWorkBanner) window.toggleOurWorkBanner(this);">
       <div class="bar-icon-wrap">
         <img src="/assets/Tab-scroll.png" alt="" class="tab-scroll-icon" />
       </div>
       <h2 class="bar-title" id="activities-banner-title">ACTIVITIES &amp; GATHERINGS</h2>
       <p class="bar-subtitle" id="activities-banner-sub">Field retreats, community kacheris, exposure visits &amp;
         workshops across Pakistan</p>
-      <button type="button" class="btn-bar-action white-btn">SEE MORE</button>
+      <button type="button" class="btn-bar-action white-btn" onclick="event.stopPropagation(); if(window.toggleOurWorkBanner) window.toggleOurWorkBanner(this.closest('.expandable-bar-banner'));">SEE MORE</button>
       <div class="bar-toggle-indicator">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
           <polyline points="6 9 12 15 18 9" />
@@ -747,8 +784,8 @@
   </footer>
 
   <!-- Scripts -->
-  <script src="/assets/js/data-store.js?v=2.3" onerror="this.onerror=null;this.src='../assets/js/data-store.js?v=2.3';"></script>
-  <script src="/assets/js/script.js?v=2.3" onerror="this.onerror=null;this.src='../assets/js/script.js?v=2.3';"></script>
+  <script src="/assets/js/data-store.js?v=3.0" onerror="this.onerror=null;this.src='../assets/js/data-store.js?v=3.0';"></script>
+  <script src="/assets/js/script.js?v=3.0" onerror="this.onerror=null;this.src='../assets/js/script.js?v=3.0';"></script>
 </body>
 
 </html>

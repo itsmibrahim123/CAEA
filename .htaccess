@@ -61,3 +61,18 @@ AddDefaultCharset UTF-8
     RewriteRule ^get-involved/?$ pages/get-involved.html [L]
     RewriteRule ^admin/?$ admin/index.html [L]
 </IfModule>
+
+# 5. Browser Caching & Instant Update Headers (Prevents stale code on refresh)
+<IfModule mod_headers.c>
+    # HTML and PHP files: never cache so live updates show immediately
+    <FilesMatch "\.(html|htm|php)$">
+        Header set Cache-Control "no-cache, no-store, must-revalidate"
+        Header set Pragma "no-cache"
+        Header set Expires 0
+    </FilesMatch>
+
+    # CSS and JavaScript: revalidate so changes reflect without hard refresh
+    <FilesMatch "\.(css|js)$">
+        Header set Cache-Control "public, max-age=0, must-revalidate"
+    </FilesMatch>
+</IfModule>
