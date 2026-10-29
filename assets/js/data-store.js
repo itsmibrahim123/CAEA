@@ -1005,13 +1005,17 @@ class CAEADataStore {
   }
 
   async syncWithServer() {
-    const url = this.getApiUrl('api.php?action=all');
+    const url = this.getApiUrl(`api.php?action=all&_t=${Date.now()}`);
     if (!url) return false;
 
     try {
       const resp = await fetch(url, {
         method: 'GET',
-        headers: { 'Accept': 'application/json' },
+        headers: { 
+          'Accept': 'application/json',
+          'Cache-Control': 'no-cache, no-store, must-revalidate'
+        },
+        cache: 'no-store',
         credentials: 'same-origin'
       });
 
@@ -1162,7 +1166,7 @@ class CAEADataStore {
 
   init() {
     const DATA_VERSION_KEY = 'caea_data_version';
-    const CURRENT_VERSION = 'v26_normalize_pins_and_schema';
+    const CURRENT_VERSION = 'v28_mysql_live_sync';
     const storedVersion = localStorage.getItem(DATA_VERSION_KEY);
 
     if (storedVersion !== CURRENT_VERSION) {
