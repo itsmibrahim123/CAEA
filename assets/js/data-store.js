@@ -1166,7 +1166,7 @@ class CAEADataStore {
 
   init() {
     const DATA_VERSION_KEY = 'caea_data_version';
-    const CURRENT_VERSION = 'v28_mysql_live_sync';
+    const CURRENT_VERSION = 'v29_mysql_live_sync';
     const storedVersion = localStorage.getItem(DATA_VERSION_KEY);
 
     if (storedVersion !== CURRENT_VERSION) {

@@ -1694,9 +1694,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  let ourWorkListenersBound = false;
+
   function initOurWorkPage() {
     applyOurWorkPageSettings();
+    renderFossilArticleLinks();
+    renderClimateArticleLinks();
+    renderOurWorkArticles();
+
     const barBanners = document.querySelectorAll('.expandable-bar-banner');
+    if (!barBanners || !barBanners.length) return;
+
+    // Guard: Only bind interactive events once to prevent double-toggle bugs
+    if (ourWorkListenersBound) return;
+    ourWorkListenersBound = true;
 
     function getScrollOffset() {
       const fixedHeaderHeight = 72;
@@ -1884,15 +1895,18 @@ document.addEventListener('DOMContentLoaded', () => {
         banner.classList.remove('is-expanded');
         banner.setAttribute('aria-expanded', 'false');
         drawer.classList.remove('is-open');
+        drawer.style.display = 'none';
         stopAutoScroll();
       } else {
         // Expand
         banner.classList.add('is-expanded');
         banner.setAttribute('aria-expanded', 'true');
         drawer.classList.add('is-open');
+        drawer.style.display = 'block';
 
         // Initial smooth scroll to bring banner into view
-        const bannerTop = banner.getBoundingClientRect().top + window.pageYOffset;
+        const scrollY = window.scrollY !== undefined ? window.scrollY : window.pageYOffset;
+        const bannerTop = banner.getBoundingClientRect().top + scrollY;
         const offsetPosition = bannerTop - getScrollOffset();
         window.scrollTo({
           top: Math.max(0, offsetPosition),
@@ -1913,19 +1927,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Expandable Bar Banners Accordion
     barBanners.forEach(banner => {
       banner.addEventListener('click', (e) => {
-        // Don't toggle if clicking directly on a button inside bar
-        if (e.target.closest('.btn-bar-action')) return;
+        if (e.target.closest('a')) return;
+        e.preventDefault();
         toggleBanner(banner);
       });
-
-      // Handle button inside banner specifically
-      const btnAction = banner.querySelector('.btn-bar-action');
-      if (btnAction) {
-        btnAction.addEventListener('click', (e) => {
-          e.stopPropagation();
-          toggleBanner(banner);
-        });
-      }
     });
 
     function expandBannerByTarget(targetId) {
@@ -1979,14 +1984,6 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-    // Fossil Fuel Phaseout Article Links & Published Reports
-    renderFossilArticleLinks();
-
-    // Climate Justice Article Links & Publications
-    renderClimateArticleLinks();
-
-    // Legacy Articles Reader (if container exists)
-    renderOurWorkArticles();
   }
 
   function renderFossilArticleLinks() {
