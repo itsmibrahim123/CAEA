@@ -428,8 +428,12 @@ body.our-work-page {
   overflow: hidden;
 }
 
+.expandable-drawer-content:not(.is-open) {
+  display: none !important;
+}
+
 .expandable-drawer-content.is-open {
-  display: block;
+  display: block !important;
   animation: drawerFadeIn 0.35s ease forwards;
 }
 

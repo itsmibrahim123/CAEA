@@ -1895,14 +1895,14 @@ document.addEventListener('DOMContentLoaded', () => {
         banner.classList.remove('is-expanded');
         banner.setAttribute('aria-expanded', 'false');
         drawer.classList.remove('is-open');
-        drawer.style.display = 'none';
+        drawer.style.removeProperty('display');
         stopAutoScroll();
       } else {
         // Expand
         banner.classList.add('is-expanded');
         banner.setAttribute('aria-expanded', 'true');
         drawer.classList.add('is-open');
-        drawer.style.display = 'block';
+        drawer.style.removeProperty('display');
 
         // Initial smooth scroll to bring banner into view
         const scrollY = window.scrollY !== undefined ? window.scrollY : window.pageYOffset;
@@ -1926,11 +1926,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Expandable Bar Banners Accordion
     barBanners.forEach(banner => {
-      banner.addEventListener('click', (e) => {
+      banner.onclick = (e) => {
         if (e.target.closest('a')) return;
         e.preventDefault();
         toggleBanner(banner);
-      });
+      };
+
+      const btnAction = banner.querySelector('.btn-bar-action');
+      if (btnAction) {
+        btnAction.onclick = (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          toggleBanner(banner);
+        };
+      }
     });
 
     function expandBannerByTarget(targetId) {
