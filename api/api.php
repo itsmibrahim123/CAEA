@@ -26,7 +26,7 @@ $id = $_GET['id'] ?? $inputData['id'] ?? null;
 // Handle special bulk / maintenance actions
 if ($action === 'status') {
     $counts = [];
-    $tables = ['activities', 'people', 'articles', 'fossil_article_links', 'climate_article_links', 'textile_cards', 'opportunities', 'applications', 'media', 'map_pins', 'page_settings'];
+    $tables = ['activities', 'people', 'articles', 'fossil_article_links', 'climate_article_links', 'textile_cards', 'climate_reports', 'opportunities', 'applications', 'media', 'map_pins', 'page_settings'];
     foreach ($tables as $t) {
         $counts[$t] = (int)$pdo->query("SELECT COUNT(*) FROM $t")->fetchColumn();
     }
@@ -41,7 +41,7 @@ if ($action === 'status') {
 
 if ($action === 'export' || $action === 'all') {
     $export = [];
-    $tables = ['activities', 'people', 'articles', 'fossil_article_links', 'climate_article_links', 'textile_cards', 'opportunities', 'applications', 'media', 'map_pins'];
+    $tables = ['activities', 'people', 'articles', 'fossil_article_links', 'climate_article_links', 'textile_cards', 'climate_reports', 'opportunities', 'applications', 'media', 'map_pins'];
     foreach ($tables as $t) {
         $rows = $pdo->query("SELECT * FROM $t")->fetchAll();
         if ($t === 'map_pins') {
@@ -93,7 +93,7 @@ if ($action === 'import' && ($method === 'POST' || $method === 'PUT')) {
 
     $pdo->beginTransaction();
     try {
-        $tables = ['activities', 'people', 'articles', 'fossil_article_links', 'climate_article_links', 'textile_cards', 'opportunities', 'applications', 'media', 'map_pins', 'page_settings'];
+        $tables = ['activities', 'people', 'articles', 'fossil_article_links', 'climate_article_links', 'textile_cards', 'climate_reports', 'opportunities', 'applications', 'media', 'map_pins', 'page_settings'];
         foreach ($tables as $t) {
             $pdo->exec("DELETE FROM $t");
         }
@@ -101,7 +101,7 @@ if ($action === 'import' && ($method === 'POST' || $method === 'PUT')) {
         $now = date('Y-m-d H:i:s');
 
         // Insert standard tables
-        foreach (['activities', 'people', 'articles', 'fossil_article_links', 'climate_article_links', 'textile_cards', 'opportunities', 'applications', 'media', 'map_pins'] as $tbl) {
+        foreach (['activities', 'people', 'articles', 'fossil_article_links', 'climate_article_links', 'textile_cards', 'climate_reports', 'opportunities', 'applications', 'media', 'map_pins'] as $tbl) {
             if (!empty($payload[$tbl]) && is_array($payload[$tbl])) {
                 foreach ($payload[$tbl] as $row) {
                     $keys = array_keys($row);
@@ -131,7 +131,7 @@ if ($action === 'import' && ($method === 'POST' || $method === 'PUT')) {
 
 if ($action === 'reset' && $method === 'POST') {
     try {
-        $tables = ['activities', 'people', 'articles', 'fossil_article_links', 'climate_article_links', 'textile_cards', 'opportunities', 'applications', 'media', 'map_pins', 'page_settings'];
+        $tables = ['activities', 'people', 'articles', 'fossil_article_links', 'climate_article_links', 'textile_cards', 'climate_reports', 'opportunities', 'applications', 'media', 'map_pins', 'page_settings'];
         foreach ($tables as $t) {
             $pdo->exec("DELETE FROM $t");
         }
@@ -164,6 +164,8 @@ $validTables = [
     'fast_fashion_cards' => 'textile_cards',
     'fastfashioncards' => 'textile_cards',
     'fastfashion' => 'textile_cards',
+    'climate_reports' => 'climate_reports',
+    'climatereports' => 'climate_reports',
     'opportunities' => 'opportunities',
     'applications' => 'applications',
     'media' => 'media',
@@ -309,6 +311,20 @@ if ($method === 'GET') {
 }
 
 // 2. CREATE (POST)
+$tableColumnWhitelist = [
+    'activities' => ['id', 'title', 'category', 'date', 'dateFormatted', 'location', 'description', 'image', 'images', 'featured', 'quote', 'quoteAuthor', 'sortOrder', 'createdAt', 'updatedAt'],
+    'people' => ['id', 'name', 'role', 'category', 'bio', 'image', 'email', 'sortOrder', 'showInGrid', 'createdAt', 'updatedAt'],
+    'articles' => ['id', 'title', 'subtitle', 'kicker', 'author', 'date', 'dateFormatted', 'excerpt', 'content', 'image', 'sortOrder', 'createdAt', 'updatedAt'],
+    'opportunities' => ['id', 'title', 'subtitle', 'category', 'type', 'theme', 'description', 'status', 'image', 'gridArea', 'sortOrder', 'createdAt', 'updatedAt'],
+    'applications' => ['id', 'fullName', 'email', 'phone', 'city', 'opportunityId', 'opportunityTitle', 'category', 'commitment', 'message', 'experience', 'status', 'date', 'dateFormatted', 'notes', 'createdAt', 'updatedAt'],
+    'media' => ['id', 'title', 'category', 'path', 'tags', 'date', 'sortOrder', 'createdAt'],
+    'map_pins' => ['id', 'city', 'leftPos', 'topPos', 'badge', 'description', 'sortOrder', 'createdAt', 'updatedAt'],
+    'fossil_article_links' => ['id', 'title', 'publisher', 'badge', 'category', 'url', 'description', 'sortOrder', 'createdAt', 'updatedAt'],
+    'climate_article_links' => ['id', 'title', 'publisher', 'badge', 'category', 'url', 'description', 'sortOrder', 'createdAt', 'updatedAt'],
+    'textile_cards' => ['id', 'title', 'publisher', 'category', 'url', 'description', 'sortOrder', 'createdAt', 'updatedAt'],
+    'climate_reports' => ['id', 'title', 'subtitle', 'category', 'author', 'date', 'dateFormatted', 'summary', 'content', 'pdfUrl', 'image', 'status', 'sortOrder', 'createdAt', 'updatedAt']
+];
+
 if ($method === 'POST' && $action !== 'delete' && $action !== 'update') {
     $record = $inputData['data'] ?? $inputData;
     unset($record['collection'], $record['action']);
@@ -322,7 +338,7 @@ if ($method === 'POST' && $action !== 'delete' && $action !== 'update') {
     $record['createdAt'] = $record['createdAt'] ?? $now;
     $record['updatedAt'] = $now;
 
-    // Convert boolean to integer for sqlite
+    // Convert boolean to integer for sqlite/mysql
     if (isset($record['featured'])) {
         $record['featured'] = $record['featured'] ? 1 : 0;
     }
@@ -347,6 +363,11 @@ if ($method === 'POST' && $action !== 'delete' && $action !== 'update') {
             $record['topPos'] = $record['top'];
         }
         unset($record['left'], $record['top']);
+    }
+
+    // Filter against column whitelist to prevent unknown column SQL errors
+    if (isset($tableColumnWhitelist[$tableName])) {
+        $record = array_intersect_key($record, array_flip($tableColumnWhitelist[$tableName]));
     }
 
     $columns = array_keys($record);
@@ -403,6 +424,11 @@ if ($method === 'PUT' || ($method === 'POST' && ($action === 'update' || !empty(
             $record['topPos'] = $record['top'];
         }
         unset($record['left'], $record['top']);
+    }
+
+    // Filter against column whitelist to prevent unknown column SQL errors
+    if (isset($tableColumnWhitelist[$tableName])) {
+        $record = array_intersect_key($record, array_flip($tableColumnWhitelist[$tableName]));
     }
 
     $setClauses = [];

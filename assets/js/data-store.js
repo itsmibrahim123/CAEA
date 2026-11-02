@@ -213,6 +213,39 @@ const SEED_DATA = {
       email: 'spogmai@climateactionenergyaccess.org',
       showInGrid: true,
       sortOrder: 10
+    },
+    {
+      id: 'ppl-11',
+      name: 'Rohail',
+      role: 'Office Assistant',
+      category: 'Core Team',
+      bio: 'Rohail works as an Office Assistant at Climate Action & Energy Access (CAEA), where he supports daily office operations, manages routine administrative tasks, and assists with logistics and office arrangements. He plays an important role in keeping the workplace organized and ensuring smooth day-to-day activities.',
+      image: 'assets/team/Rohail.png',
+      email: 'rohail@climateactionenergyaccess.org',
+      showInGrid: false,
+      sortOrder: 11
+    },
+    {
+      id: 'ppl-12',
+      name: 'Chaandan Gadi',
+      role: 'Software Developer',
+      category: 'Core Team',
+      bio: 'Chaandan Gadi is a Software Developer at Climate Action & Energy Access (CAEA), where he manages and maintains the organization\'s natural gas and renewable energy dashboard, supporting data accessibility and digital tools for energy research and analysis.',
+      image: 'assets/team/Chandan.png',
+      email: 'chaandangadi@climateactionenergyaccess.org',
+      showInGrid: true,
+      sortOrder: 12
+    },
+    {
+      id: 'ppl-13',
+      name: 'Laiba Siddiqi',
+      role: 'Senior Associate - Textiles',
+      category: 'Core Team',
+      bio: 'Laiba Siddiqi is a researcher and analyst focusing on energy policy, clean energy transitions, and the experiences of local communities in the midst of climatic upheaval. She graduated from the Lahore University of Management Sciences in 2023 with a Bachelors in Political Science and History. At CAEA, she heads the Climate Justice in Textiles campaign against fast fashion and its contributions to ecological degradation. More broadly, her interest lies in exploring how local and international public institutions and public decision-making can be made accessible to communities on the frontlines of the climate crisis.',
+      image: 'assets/CAEA-Navbar-Logo.png',
+      email: 'laibasiddiqi@climateactionenergyaccess.org',
+      showInGrid: false,
+      sortOrder: 13
     }
   ],
 
@@ -981,7 +1014,7 @@ class CAEADataStore {
     if (typeof window === 'undefined' || !window.location) return null;
     if (window.CAEA_API_BASE) return window.CAEA_API_BASE.replace(/\/$/, '');
     if (window.location.protocol === 'file:') return null;
-    
+
     // In web browsers, root-relative '/api' works cleanly across all clean URL routes
     const path = window.location.pathname || '';
     if (window.location.origin) {
@@ -1011,7 +1044,7 @@ class CAEADataStore {
     try {
       const resp = await fetch(url, {
         method: 'GET',
-        headers: { 
+        headers: {
           'Accept': 'application/json',
           'Cache-Control': 'no-cache, no-store, must-revalidate'
         },
@@ -1025,7 +1058,7 @@ class CAEADataStore {
         this.isServerConnected = true;
         console.log('[CAEA DataStore] Connected to Hostinger MySQL Database');
         const d = json.data || json.collections;
-        if (d.activities && Array.isArray(d.activities)) {
+        if (d.activities && Array.isArray(d.activities) && d.activities.length > 0) {
           const normActs = d.activities.map(act => {
             if (typeof act.images === 'string') {
               try { act.images = JSON.parse(act.images); } catch (e) { act.images = [act.image]; }
@@ -1035,21 +1068,35 @@ class CAEADataStore {
           });
           localStorage.setItem(STORAGE_KEYS.ACTIVITIES, JSON.stringify(normActs));
         }
-        if (d.people && Array.isArray(d.people)) {
+        if (d.people && Array.isArray(d.people) && d.people.length > 0) {
           const normPeople = d.people.map(p => {
             p.showInGrid = (p.showInGrid === true || p.showInGrid === 1 || p.showInGrid === '1' || p.showInGrid === 'true');
             return p;
           });
           localStorage.setItem(STORAGE_KEYS.PEOPLE, JSON.stringify(normPeople));
         }
-        if (d.articles) localStorage.setItem(STORAGE_KEYS.ARTICLES, JSON.stringify(d.articles));
-        if (d.fossil_article_links) localStorage.setItem(STORAGE_KEYS.FOSSIL_LINKS, JSON.stringify(d.fossil_article_links));
-        if (d.climate_article_links) localStorage.setItem(STORAGE_KEYS.CLIMATE_LINKS, JSON.stringify(d.climate_article_links));
-        if (d.textile_cards) localStorage.setItem(STORAGE_KEYS.TEXTILE_CARDS, JSON.stringify(d.textile_cards));
-        if (d.opportunities) localStorage.setItem(STORAGE_KEYS.OPPORTUNITIES, JSON.stringify(d.opportunities));
-        if (d.applications) localStorage.setItem(STORAGE_KEYS.APPLICATIONS, JSON.stringify(d.applications));
-        if (d.media) localStorage.setItem(STORAGE_KEYS.MEDIA, JSON.stringify(d.media));
-        if (d.map_pins && Array.isArray(d.map_pins)) {
+        if (Array.isArray(d.articles) && d.articles.length > 0) {
+          localStorage.setItem(STORAGE_KEYS.ARTICLES, JSON.stringify(d.articles));
+        }
+        if (Array.isArray(d.fossil_article_links) && d.fossil_article_links.length > 0) {
+          localStorage.setItem(STORAGE_KEYS.FOSSIL_LINKS, JSON.stringify(d.fossil_article_links));
+        }
+        if (Array.isArray(d.climate_article_links) && d.climate_article_links.length > 0) {
+          localStorage.setItem(STORAGE_KEYS.CLIMATE_LINKS, JSON.stringify(d.climate_article_links));
+        }
+        if (Array.isArray(d.textile_cards) && d.textile_cards.length > 0) {
+          localStorage.setItem(STORAGE_KEYS.TEXTILE_CARDS, JSON.stringify(d.textile_cards));
+        }
+        if (Array.isArray(d.opportunities) && d.opportunities.length > 0) {
+          localStorage.setItem(STORAGE_KEYS.OPPORTUNITIES, JSON.stringify(d.opportunities));
+        }
+        if (Array.isArray(d.applications) && d.applications.length > 0) {
+          localStorage.setItem(STORAGE_KEYS.APPLICATIONS, JSON.stringify(d.applications));
+        }
+        if (Array.isArray(d.media) && d.media.length > 0) {
+          localStorage.setItem(STORAGE_KEYS.MEDIA, JSON.stringify(d.media));
+        }
+        if (d.map_pins && Array.isArray(d.map_pins) && d.map_pins.length > 0) {
           const normPins = d.map_pins.map(pin => ({
             ...pin,
             left: pin.left || pin.leftPos || '50%',
@@ -1059,7 +1106,9 @@ class CAEADataStore {
           }));
           localStorage.setItem(STORAGE_KEYS.MAP_PINS, JSON.stringify(normPins));
         }
-        if (d.page_settings) localStorage.setItem(STORAGE_KEYS.PAGE_SETTINGS, JSON.stringify(d.page_settings));
+        if (d.page_settings && typeof d.page_settings === 'object' && Object.keys(d.page_settings).length > 0) {
+          localStorage.setItem(STORAGE_KEYS.PAGE_SETTINGS, JSON.stringify(d.page_settings));
+        }
 
         this.dispatchUpdate('all');
         return true;
@@ -1166,7 +1215,7 @@ class CAEADataStore {
 
   init() {
     const DATA_VERSION_KEY = 'caea_data_version';
-    const CURRENT_VERSION = 'v29_mysql_live_sync';
+    const CURRENT_VERSION = 'v31_fix_sync_and_seed_stability';
     const storedVersion = localStorage.getItem(DATA_VERSION_KEY);
 
     if (storedVersion !== CURRENT_VERSION) {
@@ -1183,7 +1232,7 @@ class CAEADataStore {
               .replace(/\/Assets\//g, '/assets/');
             localStorage.setItem(k, migrated);
           }
-        } catch (e) {}
+        } catch (e) { }
       });
       // Refresh seed activities, people, media, mapPins, textileCards, climateReports, and pageSettings
       localStorage.setItem(STORAGE_KEYS.ACTIVITIES, JSON.stringify(SEED_DATA.activities));
@@ -1194,13 +1243,28 @@ class CAEADataStore {
       localStorage.setItem(STORAGE_KEYS.CLIMATE_REPORTS, JSON.stringify(SEED_DATA.climateReports));
       localStorage.setItem(STORAGE_KEYS.FOSSIL_LINKS, JSON.stringify(SEED_DATA.fossilArticleLinks));
       localStorage.setItem(STORAGE_KEYS.CLIMATE_LINKS, JSON.stringify(SEED_DATA.climateArticleLinks));
-      if (!localStorage.getItem(STORAGE_KEYS.OPPORTUNITIES)) {
+      try {
+        const storedOpps = JSON.parse(localStorage.getItem(STORAGE_KEYS.OPPORTUNITIES) || '[]');
+        if (!Array.isArray(storedOpps) || storedOpps.length === 0) {
+          localStorage.setItem(STORAGE_KEYS.OPPORTUNITIES, JSON.stringify(SEED_DATA.opportunities));
+        }
+      } catch (e) {
         localStorage.setItem(STORAGE_KEYS.OPPORTUNITIES, JSON.stringify(SEED_DATA.opportunities));
       }
-      if (!localStorage.getItem(STORAGE_KEYS.ARTICLES)) {
+      try {
+        const storedArts = JSON.parse(localStorage.getItem(STORAGE_KEYS.ARTICLES) || '[]');
+        if (!Array.isArray(storedArts) || storedArts.length === 0) {
+          localStorage.setItem(STORAGE_KEYS.ARTICLES, JSON.stringify(SEED_DATA.articles));
+        }
+      } catch (e) {
         localStorage.setItem(STORAGE_KEYS.ARTICLES, JSON.stringify(SEED_DATA.articles));
       }
-      if (!localStorage.getItem(STORAGE_KEYS.APPLICATIONS)) {
+      try {
+        const storedApps = JSON.parse(localStorage.getItem(STORAGE_KEYS.APPLICATIONS) || '[]');
+        if (!Array.isArray(storedApps) || storedApps.length === 0) {
+          localStorage.setItem(STORAGE_KEYS.APPLICATIONS, JSON.stringify(SEED_DATA.applications));
+        }
+      } catch (e) {
         localStorage.setItem(STORAGE_KEYS.APPLICATIONS, JSON.stringify(SEED_DATA.applications));
       }
       localStorage.setItem(STORAGE_KEYS.PAGE_SETTINGS, JSON.stringify(SEED_DATA.pageSettings));
@@ -1218,13 +1282,15 @@ class CAEADataStore {
         const storedPeople = JSON.parse(localStorage.getItem(STORAGE_KEYS.PEOPLE) || '[]');
         if (Array.isArray(storedPeople) && storedPeople.length > 0) {
           let changed = false;
-          if (!storedPeople.find(p => p.id === 'ppl-10' || (p.name && p.name.includes('Spogmai')))) {
-            const spogmaiSeed = SEED_DATA.people.find(p => p.id === 'ppl-10');
-            if (spogmaiSeed) {
-              storedPeople.push(spogmaiSeed);
-              changed = true;
+          ['ppl-10', 'ppl-11', 'ppl-12', 'ppl-13'].forEach(seedId => {
+            if (!storedPeople.find(p => p.id === seedId)) {
+              const seedPerson = SEED_DATA.people.find(p => p.id === seedId);
+              if (seedPerson) {
+                storedPeople.push(seedPerson);
+                changed = true;
+              }
             }
-          }
+          });
           storedPeople.forEach(p => {
             if (p.showInGrid === undefined) {
               const isLogo = p.image && p.image.includes('CAEA-Navbar-Logo');
@@ -1239,12 +1305,18 @@ class CAEADataStore {
       } catch (e) {
         console.warn('Migration for showInGrid failed:', e);
       }
-      if (!localStorage.getItem(STORAGE_KEYS.ARTICLES)) {
-        localStorage.setItem(STORAGE_KEYS.ARTICLES, JSON.stringify(SEED_DATA.articles));
-      }
-      if (!localStorage.getItem(STORAGE_KEYS.OPPORTUNITIES)) {
-        localStorage.setItem(STORAGE_KEYS.OPPORTUNITIES, JSON.stringify(SEED_DATA.opportunities));
-      }
+      try {
+        const storedArticles = JSON.parse(localStorage.getItem(STORAGE_KEYS.ARTICLES) || '[]');
+        if (!Array.isArray(storedArticles) || storedArticles.length === 0) {
+          localStorage.setItem(STORAGE_KEYS.ARTICLES, JSON.stringify(SEED_DATA.articles));
+        }
+      } catch (e) { }
+      try {
+        const storedOpps = JSON.parse(localStorage.getItem(STORAGE_KEYS.OPPORTUNITIES) || '[]');
+        if (!Array.isArray(storedOpps) || storedOpps.length === 0) {
+          localStorage.setItem(STORAGE_KEYS.OPPORTUNITIES, JSON.stringify(SEED_DATA.opportunities));
+        }
+      } catch (e) { }
       if (!localStorage.getItem(STORAGE_KEYS.APPLICATIONS)) {
         localStorage.setItem(STORAGE_KEYS.APPLICATIONS, JSON.stringify(SEED_DATA.applications));
       }
@@ -1396,10 +1468,10 @@ class CAEADataStore {
         }
 
         return items.sort((a, b) => {
-          const orderA = (a && a.sortOrder !== undefined && a.sortOrder !== null && a.sortOrder !== '') ? Number(a.sortOrder) : 
-                         (a && a.orderIndex !== undefined ? Number(a.orderIndex) : 999);
-          const orderB = (b && b.sortOrder !== undefined && b.sortOrder !== null && b.sortOrder !== '') ? Number(b.sortOrder) : 
-                         (b && b.orderIndex !== undefined ? Number(b.orderIndex) : 999);
+          const orderA = (a && a.sortOrder !== undefined && a.sortOrder !== null && a.sortOrder !== '') ? Number(a.sortOrder) :
+            (a && a.orderIndex !== undefined ? Number(a.orderIndex) : 999);
+          const orderB = (b && b.sortOrder !== undefined && b.sortOrder !== null && b.sortOrder !== '') ? Number(b.sortOrder) :
+            (b && b.orderIndex !== undefined ? Number(b.orderIndex) : 999);
           return orderA - orderB;
         });
       }
@@ -1426,7 +1498,7 @@ class CAEADataStore {
       const data = localStorage.getItem(STORAGE_KEYS.PAGE_SETTINGS);
       const parsed = data ? JSON.parse(data) : JSON.parse(JSON.stringify(SEED_DATA.pageSettings));
       const defaults = SEED_DATA.pageSettings;
-      
+
       const merged = {
         home: { ...defaults.home, ...(parsed.home || {}) },
         activities: { ...defaults.activities, ...(parsed.activities || {}) },
@@ -1537,11 +1609,11 @@ class CAEADataStore {
   add(collection, item) {
     const items = this.get(collection);
     const prefix = collection.toLowerCase().startsWith('app') ? 'app' :
-                   collection.toLowerCase().startsWith('opp') ? 'opp' :
-                   collection.toLowerCase().startsWith('med') ? 'med' :
-                   collection.toLowerCase().startsWith('map') || collection.toLowerCase().startsWith('pin') ? 'pin' :
-                   collection.toLowerCase().startsWith('tex') || collection.toLowerCase().startsWith('fast') ? 'tex' :
-                   collection.substring(0, 3);
+      collection.toLowerCase().startsWith('opp') ? 'opp' :
+        collection.toLowerCase().startsWith('med') ? 'med' :
+          collection.toLowerCase().startsWith('map') || collection.toLowerCase().startsWith('pin') ? 'pin' :
+            collection.toLowerCase().startsWith('tex') || collection.toLowerCase().startsWith('fast') ? 'tex' :
+              collection.substring(0, 3);
     const defaultSortOrder = (item.sortOrder !== undefined && item.sortOrder !== null && item.sortOrder !== '') ? parseInt(item.sortOrder, 10) : (items.length + 1);
     const newItem = {
       id: `${prefix}-${Date.now()}`,
@@ -1550,20 +1622,27 @@ class CAEADataStore {
       sortOrder: defaultSortOrder
     };
 
-    // Format date if provided
-    if (newItem.date && !newItem.dateFormatted) {
-      const d = new Date(newItem.date);
-      const day = String(d.getDate()).padStart(2, '0');
-      const month = String(d.getMonth() + 1).padStart(2, '0');
-      const year = d.getFullYear();
-      newItem.dateFormatted = `${day}.${month}.${year}`;
-    } else if (!newItem.date && !newItem.dateFormatted) {
-      const d = new Date();
-      const day = String(d.getDate()).padStart(2, '0');
-      const month = String(d.getMonth() + 1).padStart(2, '0');
-      const year = d.getFullYear();
-      newItem.date = d.toISOString().split('T')[0];
-      newItem.dateFormatted = `${day}.${month}.${year}`;
+    // Format date only for collections that actually use date
+    const dateCollections = ['activities', 'activity', 'gatherings', 'gathering', 'articles', 'applications', 'submissions', 'media'];
+    const colLower = collection.toLowerCase();
+    if (dateCollections.includes(colLower)) {
+      if (newItem.date && !newItem.dateFormatted) {
+        const d = new Date(newItem.date);
+        const day = String(d.getDate()).padStart(2, '0');
+        const month = String(d.getMonth() + 1).padStart(2, '0');
+        const year = d.getFullYear();
+        newItem.dateFormatted = `${day}.${month}.${year}`;
+      } else if (!newItem.date && !newItem.dateFormatted) {
+        const d = new Date();
+        const day = String(d.getDate()).padStart(2, '0');
+        const month = String(d.getMonth() + 1).padStart(2, '0');
+        const year = d.getFullYear();
+        newItem.date = d.toISOString().split('T')[0];
+        newItem.dateFormatted = `${day}.${month}.${year}`;
+      }
+    } else {
+      delete newItem.date;
+      delete newItem.dateFormatted;
     }
 
     // Activities & Gatherings specific enhancements
@@ -1615,12 +1694,19 @@ class CAEADataStore {
       updatedAt: new Date().toISOString()
     };
 
-    if (updatedFields.date) {
-      const d = new Date(updatedFields.date);
-      const day = String(d.getDate()).padStart(2, '0');
-      const month = String(d.getMonth() + 1).padStart(2, '0');
-      const year = d.getFullYear();
-      updatedItem.dateFormatted = `${day}.${month}.${year}`;
+    const dateCollections = ['activities', 'activity', 'gatherings', 'gathering', 'articles', 'applications', 'submissions', 'media'];
+    const colLower = collection.toLowerCase();
+    if (dateCollections.includes(colLower)) {
+      if (updatedFields.date) {
+        const d = new Date(updatedFields.date);
+        const day = String(d.getDate()).padStart(2, '0');
+        const month = String(d.getMonth() + 1).padStart(2, '0');
+        const year = d.getFullYear();
+        updatedItem.dateFormatted = `${day}.${month}.${year}`;
+      }
+    } else {
+      delete updatedItem.date;
+      delete updatedItem.dateFormatted;
     }
 
     // Activities & Gatherings specific enhancements

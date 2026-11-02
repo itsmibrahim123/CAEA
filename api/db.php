@@ -230,6 +230,25 @@ class Database {
             updatedAt {$dtType}
         ){$tableEngine};");
 
+        // Table: climate_reports (Legal Claims, Loss & Damage, Case Studies)
+        $pdo->exec("CREATE TABLE IF NOT EXISTS climate_reports (
+            id VARCHAR(64) PRIMARY KEY,
+            title VARCHAR(255) NOT NULL,
+            subtitle VARCHAR(255),
+            category VARCHAR(64) DEFAULT 'Loss and Damage',
+            author VARCHAR(255) NOT NULL,
+            date DATE,
+            dateFormatted VARCHAR(32),
+            summary {$longTextType},
+            content {$longTextType},
+            pdfUrl VARCHAR(512),
+            image VARCHAR(512),
+            status VARCHAR(32) DEFAULT 'Published',
+            sortOrder INTEGER DEFAULT 0,
+            createdAt {$dtType},
+            updatedAt {$dtType}
+        ){$tableEngine};");
+
         // Table: page_settings
         $pdo->exec("CREATE TABLE IF NOT EXISTS page_settings (
             pageKey VARCHAR(64) PRIMARY KEY,
@@ -285,6 +304,27 @@ class Database {
             $pdo->exec("ALTER TABLE people ADD COLUMN showInGrid INTEGER DEFAULT 1");
         } catch (Exception $e) {
             // Column already exists
+        }
+
+        // Ensure new team members (Spogmai, Rohail, Chaandan, Laiba) exist in people table
+        try {
+            $newPeople = [
+                ['ppl-10', 'Spogmai Rabnawaz Maken', 'Creative Director', 'Core Team', 'Spogmai Rabnawaz Maken serves as Creative Director at CAEA, leading visual identity, campaign narratives, grassroots media production, and creative communications at the intersection of climate action and environmental justice.', 'assets/team/grid-2-3-spogmai.png', 'spogmai@climateactionenergyaccess.org', 10, 1],
+                ['ppl-11', 'Rohail', 'Office Assistant', 'Core Team', 'Rohail works as an Office Assistant at Climate Action & Energy Access (CAEA), where he supports daily office operations, manages routine administrative tasks, and assists with logistics and office arrangements. He plays an important role in keeping the workplace organized and ensuring smooth day-to-day activities.', 'assets/team/Rohail.jpg', 'rohail@climateactionenergyaccess.org', 11, 1],
+                ['ppl-12', 'Chaandan Gadi', 'Software Developer', 'Core Team', "Chaandan Gadi is a Software Developer at Climate Action & Energy Access (CAEA), where he manages and maintains the organization's natural gas and renewable energy dashboard, supporting data accessibility and digital tools for energy research and analysis.", 'assets/team/Chandan.jpg', 'chaandangadi@climateactionenergyaccess.org', 12, 1],
+                ['ppl-13', 'Laiba Siddiqi', 'Senior Associate - Textiles', 'Core Team', 'Laiba Siddiqi is a researcher and analyst focusing on energy policy, clean energy transitions, and the experiences of local communities in the midst of climatic upheaval. She graduated from the Lahore University of Management Sciences in 2023 with a Bachelors in Political Science and History. At CAEA, she heads the Climate Justice in Textiles campaign against fast fashion and its contributions to ecological degradation. More broadly, her interest lies in exploring how local and international public institutions and public decision-making can be made accessible to communities on the frontlines of the climate crisis.', 'assets/CAEA-Navbar-Logo.png', 'laibasiddiqi@climateactionenergyaccess.org', 13, 0]
+            ];
+            $now = date('Y-m-d H:i:s');
+            $checkStmt = $pdo->prepare("SELECT COUNT(*) FROM people WHERE id = ?");
+            $insertStmt = $pdo->prepare("INSERT INTO people (id, name, role, category, bio, image, email, sortOrder, showInGrid, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            foreach ($newPeople as $np) {
+                $checkStmt->execute([$np[0]]);
+                if ((int)$checkStmt->fetchColumn() === 0) {
+                    $insertStmt->execute([$np[0], $np[1], $np[2], $np[3], $np[4], $np[5], $np[6], $np[7], $np[8], $now, $now]);
+                }
+            }
+        } catch (Exception $e) {
+            // Non-critical seed check
         }
 
         // Ensure fossil_article_links has default seed data if table is empty
@@ -357,14 +397,10 @@ class Database {
     }
 
     private static function seedDatabaseIfEmpty(PDO $pdo): void {
-        $count = $pdo->query("SELECT COUNT(*) FROM activities")->fetchColumn();
-        if ($count > 0) {
-            return; // Already seeded
-        }
-
         $now = date('Y-m-d H:i:s');
 
         // 1. Seed Activities (with image galleries and sort order)
+        if ((int)$pdo->query("SELECT COUNT(*) FROM activities")->fetchColumn() === 0) {
         $activities = [
             [
                 'id' => 'act-1',
@@ -452,8 +488,10 @@ class Database {
         foreach ($activities as $a) {
             $stmt->execute([$a['id'], $a['title'], $a['category'], $a['date'], $a['dateFormatted'], $a['location'], $a['description'], $a['image'], $a['images'], $a['featured'], $a['quote'], $a['quoteAuthor'], $a['sortOrder'], $now, $now]);
         }
+    }
 
-        // 2. Seed People (All 10 Team Members with full bios, sortOrder & showInGrid)
+    // 2. Seed People (All 10 Team Members with full bios, sortOrder & showInGrid)
+    if ((int)$pdo->query("SELECT COUNT(*) FROM people")->fetchColumn() === 0) {
         $people = [
             [
                 'id' => 'ppl-1',
@@ -564,6 +602,39 @@ class Database {
                 'email' => 'spogmai@climateactionenergyaccess.org',
                 'sortOrder' => 10,
                 'showInGrid' => 1
+            ],
+            [
+                'id' => 'ppl-11',
+                'name' => 'Rohail',
+                'role' => 'Office Assistant',
+                'category' => 'Core Team',
+                'bio' => 'Rohail works as an Office Assistant at Climate Action & Energy Access (CAEA), where he supports daily office operations, manages routine administrative tasks, and assists with logistics and office arrangements. He plays an important role in keeping the workplace organized and ensuring smooth day-to-day activities.',
+                'image' => 'assets/team/Rohail.png',
+                'email' => 'rohail@climateactionenergyaccess.org',
+                'sortOrder' => 11,
+                'showInGrid' => 0
+            ],
+            [
+                'id' => 'ppl-12',
+                'name' => 'Chaandan Gadi',
+                'role' => 'Software Developer',
+                'category' => 'Core Team',
+                'bio' => "Chaandan Gadi is a Software Developer at Climate Action & Energy Access (CAEA), where he manages and maintains the organization's natural gas and renewable energy dashboard, supporting data accessibility and digital tools for energy research and analysis.",
+                'image' => 'assets/team/Chandan.png',
+                'email' => 'chaandangadi@climateactionenergyaccess.org',
+                'sortOrder' => 12,
+                'showInGrid' => 1
+            ],
+            [
+                'id' => 'ppl-13',
+                'name' => 'Laiba Siddiqi',
+                'role' => 'Senior Associate - Textiles',
+                'category' => 'Core Team',
+                'bio' => 'Laiba Siddiqi is a researcher and analyst focusing on energy policy, clean energy transitions, and the experiences of local communities in the midst of climatic upheaval. She graduated from the Lahore University of Management Sciences in 2023 with a Bachelors in Political Science and History. At CAEA, she heads the Climate Justice in Textiles campaign against fast fashion and its contributions to ecological degradation. More broadly, her interest lies in exploring how local and international public institutions and public decision-making can be made accessible to communities on the frontlines of the climate crisis.',
+                'image' => 'assets/CAEA-Navbar-Logo.png',
+                'email' => 'laibasiddiqi@climateactionenergyaccess.org',
+                'sortOrder' => 13,
+                'showInGrid' => 0
             ]
         ];
 
@@ -571,8 +642,10 @@ class Database {
         foreach ($people as $p) {
             $stmt->execute([$p['id'], $p['name'], $p['role'], $p['category'], $p['bio'], $p['image'], $p['email'], $p['sortOrder'], $p['showInGrid'], $now, $now]);
         }
+    }
 
-        // 3. Seed Articles (All 4 Core Articles)
+    // 3. Seed Articles (All 4 Core Articles)
+    if ((int)$pdo->query("SELECT COUNT(*) FROM articles")->fetchColumn() === 0) {
         $articles = [
             [
                 'id' => 'art-1',
@@ -632,8 +705,10 @@ class Database {
         foreach ($articles as $art) {
             $stmt->execute([$art['id'], $art['title'], $art['subtitle'], $art['kicker'], $art['author'], $art['date'], $art['dateFormatted'], $art['excerpt'], $art['content'], $art['image'], $art['sortOrder'], $now, $now]);
         }
+    }
 
-        // 4. Seed Opportunities
+    // 4. Seed Opportunities
+    if ((int)$pdo->query("SELECT COUNT(*) FROM opportunities")->fetchColumn() === 0) {
         $opportunities = [
             [
                 'id' => 'opp-1',
@@ -693,8 +768,10 @@ class Database {
         foreach ($opportunities as $opp) {
             $stmt->execute([$opp['id'], $opp['title'], $opp['subtitle'], $opp['category'], $opp['type'], $opp['theme'], $opp['description'], $opp['status'], $opp['image'], $opp['gridArea'], $opp['sortOrder'], $now, $now]);
         }
+    }
 
-        // 5. Seed Applications
+    // 5. Seed Applications
+    if ((int)$pdo->query("SELECT COUNT(*) FROM applications")->fetchColumn() === 0) {
         $applications = [
             [
                 'id' => 'app-1',
@@ -753,8 +830,10 @@ class Database {
         foreach ($applications as $app) {
             $stmt->execute([$app['id'], $app['fullName'], $app['email'], $app['phone'], $app['city'], $app['opportunityId'], $app['opportunityTitle'], $app['category'], $app['commitment'], $app['message'], $app['experience'], $app['status'], $app['date'], $app['dateFormatted'], $app['notes'], $now, $now]);
         }
+    }
 
-        // 6. Seed Map Pins (Accurate Pakistan Geo Coordinates)
+    // 6. Seed Map Pins (Accurate Pakistan Geo Coordinates)
+    if ((int)$pdo->query("SELECT COUNT(*) FROM map_pins")->fetchColumn() === 0) {
         $mapPins = [
             [
                 'id' => 'pin-hunza',
@@ -807,8 +886,10 @@ class Database {
         foreach ($mapPins as $pin) {
             $stmt->execute([$pin['id'], $pin['city'], $pin['leftPos'], $pin['topPos'], $pin['badge'], $pin['description'], $pin['sortOrder'], $now, $now]);
         }
+    }
 
-        // 7. Seed Page Settings
+    // 7. Seed Page Settings
+    if ((int)$pdo->query("SELECT COUNT(*) FROM page_settings")->fetchColumn() === 0) {
         $pageSettings = [
             'home' => [
                 'heroQuote' => 'The climate crisis is a call to transform the systems that brought us here.',
@@ -915,8 +996,10 @@ class Database {
         foreach ($pageSettings as $pageKey => $settings) {
             $stmt->execute([$pageKey, json_encode($settings, JSON_UNESCAPED_UNICODE), $now]);
         }
+    }
 
-        // 8. Seed Fossil Article Links
+    // 8. Seed Fossil Article Links
+    if ((int)$pdo->query("SELECT COUNT(*) FROM fossil_article_links")->fetchColumn() === 0) {
         $fossilLinks = [
             [
                 'id' => 'flink-1',
@@ -974,8 +1057,10 @@ class Database {
         foreach ($fossilLinks as $link) {
             $stmt->execute([$link['id'], $link['title'], $link['publisher'], $link['badge'], $link['category'], $link['url'], $link['description'], $link['sortOrder'], $now, $now]);
         }
+    }
 
-        // 9. Seed Climate Justice Article Links
+    // 9. Seed Climate Justice Article Links
+    if ((int)$pdo->query("SELECT COUNT(*) FROM climate_article_links")->fetchColumn() === 0) {
         $climateLinks = [
             [
                 'id' => 'clink-1',
@@ -1063,8 +1148,10 @@ class Database {
         foreach ($climateLinks as $link) {
             $stmt->execute([$link['id'], $link['title'], $link['publisher'], $link['badge'], $link['category'], $link['url'], $link['description'], $link['sortOrder'], $now, $now]);
         }
+    }
 
-        // 10. Seed Textile & Fast Fashion Article Links
+    // 10. Seed Textile & Fast Fashion Article Links
+    if ((int)$pdo->query("SELECT COUNT(*) FROM textile_cards")->fetchColumn() === 0) {
         $textileCards = [
             [
                 'id' => 'tex-1',
@@ -1109,4 +1196,5 @@ class Database {
             $stmt->execute([$card['id'], $card['title'], $card['publisher'], $card['category'], $card['url'], $card['description'], $card['sortOrder'], $now, $now]);
         }
     }
+}
 }
