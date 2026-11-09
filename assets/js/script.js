@@ -2221,7 +2221,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <p class="article-card-excerpt">${escapeHtml(item.excerpt || item.description || '')}</p>
         </div>
       `).join('') + `
-        <a href="/pages/our-analytics.html" class="btn-more-work">
+        <a href="/pages/our-work.html" class="btn-more-work">
           <span>MORE WORK</span>
           <span>&gt;</span>
         </a>

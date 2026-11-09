@@ -339,7 +339,7 @@ const SEED_DATA = {
       id: 'flink-4',
       title: 'CAEA Climate Action & Energy Access Dashboard',
       publisher: 'Live Interactive Platform',
-      url: '/pages/our-analytics.html',
+      url: 'https://dashboard.climateactionenergyaccess.com/',
       badge: 'DATA DASHBOARD',
       category: 'dashboard',
       description: 'Interactive data portal for real-time energy capacity, transmission data, and emissions.',
@@ -1215,7 +1215,7 @@ class CAEADataStore {
 
   init() {
     const DATA_VERSION_KEY = 'caea_data_version';
-    const CURRENT_VERSION = 'v31_fix_sync_and_seed_stability';
+    const CURRENT_VERSION = 'v32_dashboard_external_redirect';
     const storedVersion = localStorage.getItem(DATA_VERSION_KEY);
 
     if (storedVersion !== CURRENT_VERSION) {

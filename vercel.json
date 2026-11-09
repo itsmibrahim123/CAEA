@@ -6,6 +6,16 @@
       "source": "/index.html",
       "destination": "/",
       "permanent": true
+    },
+    {
+      "source": "/our-analytics",
+      "destination": "https://dashboard.climateactionenergyaccess.com/",
+      "permanent": true
+    },
+    {
+      "source": "/pages/our-analytics.html",
+      "destination": "https://dashboard.climateactionenergyaccess.com/",
+      "permanent": true
     }
   ],
   "rewrites": [
@@ -28,10 +38,6 @@
     {
       "source": "/our-work",
       "destination": "/pages/our-work.html"
-    },
-    {
-      "source": "/our-analytics",
-      "destination": "/pages/our-analytics.html"
     },
     {
       "source": "/get-involved",

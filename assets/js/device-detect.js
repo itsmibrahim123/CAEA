@@ -274,7 +274,7 @@
                 </ul>
               </li>
               <li class="mobile-nav-item">
-                <a href="${pagesPath}our-analytics.html" class="mobile-nav-link ${isAnalytics ? 'active' : ''}">
+                <a href="https://dashboard.climateactionenergyaccess.com/" class="mobile-nav-link" target="_blank" rel="noopener noreferrer">
                   <span class="mobile-nav-text">Our Analytics</span>
                   <span class="mobile-nav-arrow" aria-hidden="true">&rarr;</span>
                 </a>

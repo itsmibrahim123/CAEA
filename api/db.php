@@ -337,7 +337,7 @@ class Database {
                     ['flink-1', 'RLNG disruption: a bane?', 'Dawn · Opinion & Analysis', 'DAWN', 'articles', 'https://www.dawn.com/news/1997175?utm_source=whatsapp', 'Analysis of LNG contract obligations, supply disruptions, and power sector vulnerabilities in Pakistan.', 1],
                     ['flink-2', 'Our Remarkable Natural Gas Overshoot', 'The News on Sunday · Special Report', 'THE NEWS', 'articles', 'https://www.thenews.pk/tns/detail/1397737-our-remarkable-natural-gas-overshoot', 'An investigative review of Pakistan’s structural natural gas over-reliance and the urgent imperative for industrial phase-out.', 2],
                     ['flink-3', 'Political Economy of Power, Energy, Climate and Justice', 'CAEA Research Publication (PDF)', 'RESEARCH REPORT', 'research', 'https://drive.google.com/file/d/1LuXInnvuC11GMiHBM_NM4HoWxkRP_Fpa/view?usp=drive_link', 'Flagship policy report on power sector subsidies, circular debt, and the political ecology of fossil extraction.', 3],
-                    ['flink-4', 'CAEA Climate Action & Energy Access Dashboard', 'Live Interactive Platform', 'DATA DASHBOARD', 'dashboard', '/pages/our-analytics.html', 'Interactive data portal for real-time energy capacity, transmission data, and emissions.', 4],
+                    ['flink-4', 'CAEA Climate Action & Energy Access Dashboard', 'Live Interactive Platform', 'DATA DASHBOARD', 'dashboard', 'https://dashboard.climateactionenergyaccess.com/', 'Interactive data portal for real-time energy capacity, transmission data, and emissions.', 4],
                     ['flink-5', 'Policy Analysis & Regulatory Briefs', 'CAEA Policy Briefs', 'POLICY ANALYSIS', 'policy', '#', 'Upcoming policy briefs, regulatory submissions to NEPRA, and power sector restructuring proposals.', 5]
                 ];
                 foreach ($fossilLinks as $link) {
@@ -1037,7 +1037,7 @@ class Database {
                 'publisher' => 'Live Interactive Platform',
                 'badge' => 'DATA DASHBOARD',
                 'category' => 'dashboard',
-                'url' => '/pages/our-analytics.html',
+                'url' => 'https://dashboard.climateactionenergyaccess.com/',
                 'description' => 'Interactive data portal for real-time energy capacity, transmission data, and emissions.',
                 'sortOrder' => 4
             ],
