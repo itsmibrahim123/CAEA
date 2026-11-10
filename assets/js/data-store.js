@@ -1133,9 +1133,19 @@ class CAEADataStore {
         credentials: 'same-origin',
         body: body ? JSON.stringify(body) : undefined
       });
-      return await resp.json();
+      const data = await resp.json().catch(() => null);
+      if (!resp.ok || (data && data.success === false)) {
+        console.error('[CAEA DataStore] Server mutation error:', data ? (data.error || data.message) : resp.statusText);
+        if (typeof window !== 'undefined' && typeof window.showToast === 'function') {
+          window.showToast('Server sync warning: Database could not save this change. Check MySQL password in api/config.php.', 'warning');
+        }
+      }
+      return data;
     } catch (e) {
       console.warn('API mutation background dispatch failed:', e);
+      if (typeof window !== 'undefined' && typeof window.showToast === 'function') {
+        window.showToast('Server offline: Change saved only in local browser memory.', 'warning');
+      }
       return null;
     }
   }

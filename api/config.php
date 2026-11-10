@@ -19,19 +19,24 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// Optional local override file (never committed to Git or overwritten by zip uploads)
+if (file_exists(__DIR__ . '/config.local.php')) {
+    require_once __DIR__ . '/config.local.php';
+}
+
 // Database Configuration
-define('DB_DRIVER', 'mysql'); // Explicitly set to MySQL for Hostinger
+if (!defined('DB_DRIVER')) define('DB_DRIVER', 'mysql'); // Explicitly set to MySQL for Hostinger
 
 // SQLite Configuration (Fallback)
-define('SQLITE_FILE', __DIR__ . '/../data/database.sqlite');
+if (!defined('SQLITE_FILE')) define('SQLITE_FILE', __DIR__ . '/../data/database.sqlite');
 
 // MySQL Configuration (Hostinger MySQL)
-define('DB_HOST', 'localhost');
-define('DB_PORT', '3306');
-define('DB_NAME', 'u139314753_db_ko6NBXr5');
-define('DB_USER', 'u139314753_usr_ko6NBXr5');
-define('DB_PASS', '<USER_DB_PASSWORD>'); // Enter your MySQL user password
-define('DB_CHARSET', 'utf8mb4');
+if (!defined('DB_HOST')) define('DB_HOST', 'localhost');
+if (!defined('DB_PORT')) define('DB_PORT', '3306');
+if (!defined('DB_NAME')) define('DB_NAME', 'u139314753_db_ko6NBXr5');
+if (!defined('DB_USER')) define('DB_USER', 'u139314753_usr_ko6NBXr5');
+if (!defined('DB_PASS')) define('DB_PASS', '<USER_DB_PASSWORD>'); // Enter your MySQL user password
+if (!defined('DB_CHARSET')) define('DB_CHARSET', 'utf8mb4');
 
 // Upload Paths
 define('UPLOAD_DIR', __DIR__ . '/../uploads/');

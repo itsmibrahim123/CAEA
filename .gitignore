@@ -27,5 +27,8 @@ data/*.log
 # Local Documentation & Context Notes
 context/
 
+# Local Configuration & Overrides
+api/config.local.php
+
 # Deployment archives
 *.zip
