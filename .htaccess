@@ -43,6 +43,7 @@ AddDefaultCharset UTF-8
     RewriteRule ^assets/Allies/(.*)$ assets/allies/$1 [NC,L]
     RewriteRule ^assets/Video/(.*)$ assets/video/$1 [NC,L]
     RewriteRule ^assets/Media/(.*)$ assets/media/$1 [NC,L]
+    RewriteRule ^assets/Articles/(.*)$ assets/articles/$1 [NC,L]
     RewriteRule ^assets/Css/(.*)$ assets/css/$1 [NC,L]
     RewriteRule ^assets/Js/(.*)$ assets/js/$1 [NC,L]
 

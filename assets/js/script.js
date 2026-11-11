@@ -2063,9 +2063,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const isPdf = url.includes('.pdf') || url.includes('drive.google.com');
         const isDashboard = url.includes('dashboard.') || url.includes('our-analytics');
         const actionText = isPdf ? 'View Document (PDF) &rarr;' : isDashboard ? 'Explore Live Dashboard &rarr;' : 'Read Article &rarr;';
+        const targetAttr = (url.startsWith('http') || isPdf) ? 'target="_blank" rel="noopener noreferrer"' : '';
 
         return `
-          <a href="${escapeHtml(url)}" ${url.startsWith('http') ? 'target="_blank" rel="noopener noreferrer"' : ''} class="fossil-link-card">
+          <a href="${escapeHtml(url)}" ${targetAttr} class="fossil-link-card" data-category="${escapeHtml(link.category || '')}">
             <div class="fossil-link-card-top">
               <span class="fossil-link-badge">${escapeHtml(badge)}</span>
               <span class="fossil-link-arrow" aria-hidden="true">&#8599;</span>

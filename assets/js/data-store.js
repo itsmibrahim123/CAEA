@@ -336,6 +336,16 @@ const SEED_DATA = {
       sortOrder: 3
     },
     {
+      id: 'flink-6',
+      title: 'Monthly Gas Market Review: October 2026',
+      publisher: 'CAEA Research Publication (PDF)',
+      url: '/assets/articles/MonthlyGasReview.pdf',
+      badge: 'RESEARCH REPORT',
+      category: 'research',
+      description: 'Monthly review tracking Pakistan’s natural gas production, LNG import trends, power sector consumption, and energy transition dynamics.',
+      sortOrder: 4
+    },
+    {
       id: 'flink-4',
       title: 'CAEA Climate Action & Energy Access Dashboard',
       publisher: 'Live Interactive Platform',
@@ -343,7 +353,7 @@ const SEED_DATA = {
       badge: 'DATA DASHBOARD',
       category: 'dashboard',
       description: 'Interactive data portal for real-time energy capacity, transmission data, and emissions.',
-      sortOrder: 4
+      sortOrder: 5
     },
     {
       id: 'flink-5',
@@ -353,7 +363,7 @@ const SEED_DATA = {
       badge: 'POLICY ANALYSIS',
       category: 'policy',
       description: 'Upcoming policy briefs, regulatory submissions to NEPRA, and power sector restructuring proposals.',
-      sortOrder: 5
+      sortOrder: 6
     }
   ],
 
@@ -1225,7 +1235,7 @@ class CAEADataStore {
 
   init() {
     const DATA_VERSION_KEY = 'caea_data_version';
-    const CURRENT_VERSION = 'v32_dashboard_external_redirect';
+    const CURRENT_VERSION = 'v33_monthly_gas_review_pdf';
     const storedVersion = localStorage.getItem(DATA_VERSION_KEY);
 
     if (storedVersion !== CURRENT_VERSION) {

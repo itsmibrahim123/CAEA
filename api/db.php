@@ -337,8 +337,9 @@ class Database {
                     ['flink-1', 'RLNG disruption: a bane?', 'Dawn · Opinion & Analysis', 'DAWN', 'articles', 'https://www.dawn.com/news/1997175?utm_source=whatsapp', 'Analysis of LNG contract obligations, supply disruptions, and power sector vulnerabilities in Pakistan.', 1],
                     ['flink-2', 'Our Remarkable Natural Gas Overshoot', 'The News on Sunday · Special Report', 'THE NEWS', 'articles', 'https://www.thenews.pk/tns/detail/1397737-our-remarkable-natural-gas-overshoot', 'An investigative review of Pakistan’s structural natural gas over-reliance and the urgent imperative for industrial phase-out.', 2],
                     ['flink-3', 'Political Economy of Power, Energy, Climate and Justice', 'CAEA Research Publication (PDF)', 'RESEARCH REPORT', 'research', 'https://drive.google.com/file/d/1LuXInnvuC11GMiHBM_NM4HoWxkRP_Fpa/view?usp=drive_link', 'Flagship policy report on power sector subsidies, circular debt, and the political ecology of fossil extraction.', 3],
-                    ['flink-4', 'CAEA Climate Action & Energy Access Dashboard', 'Live Interactive Platform', 'DATA DASHBOARD', 'dashboard', 'https://dashboard.climateactionenergyaccess.com/', 'Interactive data portal for real-time energy capacity, transmission data, and emissions.', 4],
-                    ['flink-5', 'Policy Analysis & Regulatory Briefs', 'CAEA Policy Briefs', 'POLICY ANALYSIS', 'policy', '#', 'Upcoming policy briefs, regulatory submissions to NEPRA, and power sector restructuring proposals.', 5]
+                    ['flink-6', 'Monthly Gas Market Review: October 2026', 'CAEA Research Publication (PDF)', 'RESEARCH REPORT', 'research', '/assets/articles/MonthlyGasReview.pdf', 'Monthly review tracking Pakistan’s natural gas production, LNG import trends, power sector consumption, and energy transition dynamics.', 4],
+                    ['flink-4', 'CAEA Climate Action & Energy Access Dashboard', 'Live Interactive Platform', 'DATA DASHBOARD', 'dashboard', 'https://dashboard.climateactionenergyaccess.com/', 'Interactive data portal for real-time energy capacity, transmission data, and emissions.', 5],
+                    ['flink-5', 'Policy Analysis & Regulatory Briefs', 'CAEA Policy Briefs', 'POLICY ANALYSIS', 'policy', '#', 'Upcoming policy briefs, regulatory submissions to NEPRA, and power sector restructuring proposals.', 6]
                 ];
                 foreach ($fossilLinks as $link) {
                     $stmt->execute([$link[0], $link[1], $link[2], $link[3], $link[4], $link[5], $link[6], $link[7], $now, $now]);
@@ -1032,6 +1033,16 @@ class Database {
                 'sortOrder' => 3
             ],
             [
+                'id' => 'flink-6',
+                'title' => 'Monthly Gas Market Review: October 2026',
+                'publisher' => 'CAEA Research Publication (PDF)',
+                'badge' => 'RESEARCH REPORT',
+                'category' => 'research',
+                'url' => '/assets/articles/MonthlyGasReview.pdf',
+                'description' => 'Monthly review tracking Pakistan’s natural gas production, LNG import trends, power sector consumption, and energy transition dynamics.',
+                'sortOrder' => 4
+            ],
+            [
                 'id' => 'flink-4',
                 'title' => 'CAEA Climate Action & Energy Access Dashboard',
                 'publisher' => 'Live Interactive Platform',
@@ -1039,7 +1050,7 @@ class Database {
                 'category' => 'dashboard',
                 'url' => 'https://dashboard.climateactionenergyaccess.com/',
                 'description' => 'Interactive data portal for real-time energy capacity, transmission data, and emissions.',
-                'sortOrder' => 4
+                'sortOrder' => 5
             ],
             [
                 'id' => 'flink-5',
@@ -1049,7 +1060,7 @@ class Database {
                 'category' => 'policy',
                 'url' => '#',
                 'description' => 'Upcoming policy briefs, regulatory submissions to NEPRA, and power sector restructuring proposals.',
-                'sortOrder' => 5
+                'sortOrder' => 6
             ]
         ];
 
